@@ -4,17 +4,21 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = BiometricManager
 TEMPLATE = app
+DBUS_INTERFACES += cn.kylinos.Biometric.xml
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+    mainwindow.cpp \
+    customtype.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    customtype.h \
+    devicespec.h
 
 FORMS    += mainwindow.ui
