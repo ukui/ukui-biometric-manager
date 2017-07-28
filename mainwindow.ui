@@ -20,12 +20,12 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="tabFingerprint">
+      <widget class="QWidget" name="pageFingerprint">
        <attribute name="title">
         <string>指纹识别</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tabFingerVein">
+      <widget class="QWidget" name="pageFingervein">
        <attribute name="title">
         <string>指静脉识别</string>
        </attribute>
@@ -35,7 +35,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabIris">
+      <widget class="QWidget" name="pageIris">
        <attribute name="title">
         <string>虹膜识别</string>
        </attribute>
