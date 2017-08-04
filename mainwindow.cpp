@@ -261,26 +261,32 @@ void MainWindow::on_comboBoxUname_currentIndexChanged(int index)
  */
 void MainWindow::showBiometrics()
 {
-	QList<QDBusVariant> qlist;
-	BiometricInfo *biometricInfo;
-	int listsize;
+	QList<QVariant> args;
 
 	if (!deviceIsEnable(currentBiotype))
 		return;
+	/* 不能用clear()，它会将表头也清掉 */
+	modelFingervein->setRowCount(0);
 
-	modelFingervein->clear();
-	QDBusPendingReply<int, QList<QDBusVariant> > reply =
-				biometricInterface->GetFeatureList(
-					deviceInfoMap.value(currentBiotype)->driver_id,
-					currentUid, 0, -1);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-		return;
-	}
+	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
+		<< QVariant(currentUid) << QVariant(0) << QVariant(-1);
+	biometricInterface->callWithCallback("GetFeatureList", args, this,
+						SLOT(showBiometricsCallback(QDBusMessage)),
+						SLOT(errorCallback(QDBusError)));
+}
 
-	listsize = reply.argumentAt(0).value<int>();
-	reply.argumentAt(1).value<QDBusArgument>() >> qlist;
+/**
+ * @brief 特征列表返回后回调函数进行显示
+ * @param callbackReply
+ */
+void MainWindow::showBiometricsCallback(QDBusMessage callbackReply)
+{
+	QList<QDBusVariant> qlist;
+	BiometricInfo *biometricInfo;
+	int listsize;
+	QList<QVariant> variantList = callbackReply.arguments();
+	listsize = variantList[0].value<int>();
+	variantList[1].value<QDBusArgument>() >> qlist;
 	for (int i = 0; i < listsize; i++) {
 		biometricInfo = new BiometricInfo();
 		qlist[i].variant().value<QDBusArgument>() >> *biometricInfo;

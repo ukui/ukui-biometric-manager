@@ -41,6 +41,7 @@ private slots:
 	void setOperationMsg();
 	void cancelOperation(); /* 普通 SLOT，不是DBus回调 */
 	void cancelCallback(QDBusMessage callbackReply);
+	void showBiometricsCallback(QDBusMessage callbackReply);
 
 private:
 	Ui::MainWindow *ui;
