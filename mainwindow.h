@@ -3,9 +3,11 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QProgressDialog>
+#include <QMessageBox>
 #include "biometric_interface.h"
-#include "devicespec.h"
 #include "customtype.h"
+#include "promptdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,26 +23,41 @@ public:
 
 private slots:
 	void on_tabWidget_currentChanged(int index);
-
-	void on_comboBoxUname_activated(int index);
+	void on_comboBoxUname_currentIndexChanged(int index);
+	void on_btnAdd_clicked();
 
 private:
-	void getDeviceInfoList();
-	bool deviceIsEnable();
+	void getDeviceInfo();
+	bool deviceIsEnable(enum BioType biotype);
 	void showBiometrics();
-	void getUserList();
+	void showUserList();
+	void trackAllBiometricIndex();
+	int findFreeBiometricIndex();
+	void setEnableWidgets(bool status);
+
+private slots:
+	void dbusCallback(QDBusMessage callbackReply);
+	void errorCallback(QDBusError error);
+	void setOperationMsg();
+	void cancelOperation(); /* 普通 SLOT，不是DBus回调 */
+	void cancelCallback(QDBusMessage callbackReply);
 
 private:
 	Ui::MainWindow *ui;
 	/* 用于和远端 DBus 对象交互的代理接口 */
 	cn::kylinos::Biometric *biometricInterface;
 	int deviceCount;
-	QMap<enum BIOTYPE,DeviceInfo *> deviceInfoMap;
-	enum BIOTYPE currentBiotype;
+	QMap<enum BioType,DeviceInfo *> deviceInfoMap;
+	enum BioType currentBiotype;
 	int currentUid;
 	QStandardItemModel *modelFingervein;
 	/* 记录标签页是否是第一次被展示 */
 	bool pageFirstShow[3];
+	/* 设备占用的index */
+	QMap<enum BioType, QList<int> > biometricIndexMap;
+	/* 进度提示弹框 */
+	PromptDialog *promptDialog;
+	QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

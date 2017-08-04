@@ -15,10 +15,15 @@ DBUS_INTERFACES += cn.kylinos.Biometric.xml
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    customtype.cpp
+    customtype.cpp \
+    promptdialog.cpp
 
 HEADERS  += mainwindow.h \
     customtype.h \
-    devicespec.h
+    promptdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    promptdialog.ui
+
+RESOURCES += \
+    assets.qrc

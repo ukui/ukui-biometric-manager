@@ -3,6 +3,22 @@
 
 #include <QDBusArgument>
 
+enum BioType {
+	BIOTYPE_FINGERVEIN = 1,
+	BIOTYPE_FINGERPRINT = 2,
+	BIOTYPE_IRIS = 3,
+	__MAX_NR_BIOTYPES
+};
+
+enum OpsCode {
+	OPS_SUCCESS,
+	OPS_FAILED,
+	OPS_ERROR,
+	OPS_CANCEL,
+	OPS_TIMEOUT,
+	__MAX_NR_OPSCODES
+};
+
 struct DeviceInfo {
 	int driver_id;
 	QString device_shortname;
