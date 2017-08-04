@@ -51,6 +51,15 @@
        <attribute name="title">
         <string>指纹识别</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTreeView" name="treeViewFingerprint">
+          <property name="indentation">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="pageFingervein">
        <attribute name="title">
@@ -73,6 +82,15 @@
        <attribute name="title">
         <string>虹膜识别</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTreeView" name="treeViewIris">
+          <property name="indentation">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

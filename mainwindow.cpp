@@ -24,12 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	trackAllBiometricIndex();
 	/* 所有标签页初始情况下都处于未被展示过的状态，都需要在切换标签页时被展示 */
 	pageFirstShow[0] = pageFirstShow[1] = pageFirstShow[2] = true;
-	/* 设置 TreeView 的 Model */
-	modelFingervein = new QStandardItemModel(ui->treeViewFingervein);
-	ui->treeViewFingervein->setModel(modelFingervein);
-	modelFingervein->setHorizontalHeaderLabels(
-			QStringList() << QString("特征名称") << QString("index"));
-	ui->treeViewFingervein->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	/* 设置数据模型 */
+	setModel();
 	/* 界面初开的设备类型 */
 	currentBiotype = BIOTYPE_FINGERVEIN;
 	/* 初始化计时器供后面的进度显示弹窗使用 */
@@ -41,6 +37,32 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+/**
+ * @brief 设置数据模型
+ */
+void MainWindow::setModel()
+{
+	/* 设置 TreeView 的 Model */
+	QStandardItemModel *modelFingerprint = new QStandardItemModel(ui->treeViewFingerprint);
+	QStandardItemModel *modelFingervein = new QStandardItemModel(ui->treeViewFingervein);
+	QStandardItemModel *modelIris = new QStandardItemModel(ui->treeViewIris);
+	ui->treeViewFingerprint->setModel(modelFingerprint);
+	ui->treeViewFingervein->setModel(modelFingervein);
+	ui->treeViewIris->setModel(modelIris);
+	modelFingerprint->setHorizontalHeaderLabels(
+			QStringList() << QString("特征名称") << QString("index"));
+	modelFingervein->setHorizontalHeaderLabels(
+			QStringList() << QString("特征名称") << QString("index"));
+	modelIris->setHorizontalHeaderLabels(
+			QStringList() << QString("特征名称") << QString("index"));
+	ui->treeViewFingerprint->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	ui->treeViewFingervein->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	ui->treeViewIris->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	modelMap.insert(BIOTYPE_FINGERPRINT, modelFingerprint);
+	modelMap.insert(BIOTYPE_FINGERVEIN, modelFingervein);
+	modelMap.insert(BIOTYPE_IRIS, modelIris);
 }
 
 /**
@@ -119,7 +141,7 @@ void MainWindow::trackAllBiometricIndex()
 {
 	QList<QDBusVariant> qlist;
 	BiometricInfo *biometricInfo;
-	QList<int> indexList;
+	QList<int> *indexList;
 	int listsize;
 
 	for (int i = BIOTYPE_FINGERPRINT; i <= __MAX_NR_BIOTYPES; i++) {
@@ -139,12 +161,13 @@ void MainWindow::trackAllBiometricIndex()
 		listsize = reply.argumentAt(0).value<int>();
 		reply.argumentAt(1).value<QDBusArgument>() >> qlist;
 
+		indexList = new QList<int>;
 		for (int j = 0; j < listsize; j++) {
 			biometricInfo = new BiometricInfo();
 			qlist[j].variant().value<QDBusArgument>() >> *biometricInfo;
-			indexList.append(biometricInfo->index);
+			indexList->append(biometricInfo->index);
 		}
-		qSort(indexList);
+		qSort(*indexList);
 		biometricIndexMap.insert(biotype, indexList);
 	}
 }
@@ -160,9 +183,6 @@ int binary_search(QList<int> &indexList, int left, int right)
 {
 	int mid;
 	int targetPos;
-	/* 只有一个元素 */
-	if (right == -1)
-		return left;
 	/* 本段连续 */
 	if ((indexList[right] - indexList[left]) == right - left)
 		return -1;
@@ -182,18 +202,23 @@ int binary_search(QList<int> &indexList, int left, int right)
  */
 int MainWindow::findFreeBiometricIndex()
 {
-	QList<int> indexList;
+	QList<int> *indexList;
 	indexList = biometricIndexMap.value(currentBiotype);
-	int free_index;
+	int free_index, target_pos;
+	if (indexList->isEmpty()){
+		free_index = 1; /* 特征从1开始使用 */
+		indexList->append(free_index);
+		return free_index;
+	}
 	/* target_pos 是间隙的前一个元素的下标 */
-	int target_pos = binary_search(indexList, 0, indexList.length()-1);
+	target_pos = binary_search(*indexList, 0, indexList->length()-1);
 	if (target_pos != -1){
-		free_index = indexList[target_pos] + 1;
-		indexList.insert(target_pos + 1, free_index);
+		free_index = (*indexList)[target_pos] + 1;
+		indexList->insert(target_pos + 1, free_index);
 	}
 	else {
-		free_index = indexList.last() + 1;
-		indexList.append(free_index);
+		free_index = indexList->last() + 1;
+		indexList->append(free_index);
 	}
 
 	return free_index;
@@ -239,7 +264,7 @@ void MainWindow::on_tabWidget_currentChanged(int pageIndex)
 		break;
 	}
 
-	setEnableWidgets(deviceEnable);
+	setWidgetsEnabled(deviceEnable);
 	showBiometrics();
 }
 
@@ -266,7 +291,7 @@ void MainWindow::showBiometrics()
 	if (!deviceIsEnable(currentBiotype))
 		return;
 	/* 不能用clear()，它会将表头也清掉 */
-	modelFingervein->setRowCount(0);
+	modelMap.value(currentBiotype)->setRowCount(0);
 
 	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
 		<< QVariant(currentUid) << QVariant(0) << QVariant(-1);
@@ -293,7 +318,7 @@ void MainWindow::showBiometricsCallback(QDBusMessage callbackReply)
 		QList<QStandardItem *> row;
 		row.append(new QStandardItem(biometricInfo->index_name));
 		row.append(new QStandardItem(QString::number(biometricInfo->index)));
-		modelFingervein->appendRow(row);
+		modelMap.value(currentBiotype)->appendRow(row);
 	}
 }
 
@@ -301,7 +326,7 @@ void MainWindow::showBiometricsCallback(QDBusMessage callbackReply)
  * @brief 集中设置部分操作控件的激活状态
  * @param status
  */
-void MainWindow::setEnableWidgets(bool status)
+void MainWindow::setWidgetsEnabled(bool status)
 {
 	ui->comboBoxUname->setEnabled(status);
 	ui->btnAdd->setEnabled(status);

@@ -33,7 +33,8 @@ private:
 	void showUserList();
 	void trackAllBiometricIndex();
 	int findFreeBiometricIndex();
-	void setEnableWidgets(bool status);
+	void setWidgetsEnabled(bool status);
+	void setModel();
 
 private slots:
 	void dbusCallback(QDBusMessage callbackReply);
@@ -51,11 +52,12 @@ private:
 	QMap<enum BioType,DeviceInfo *> deviceInfoMap;
 	enum BioType currentBiotype;
 	int currentUid;
-	QStandardItemModel *modelFingervein;
+	/* 数据模型影射表 */
+	QMap<enum BioType, QStandardItemModel *> modelMap;
 	/* 记录标签页是否是第一次被展示 */
 	bool pageFirstShow[3];
 	/* 各个设备占用的特征index */
-	QMap<enum BioType, QList<int> > biometricIndexMap;
+	QMap<enum BioType, QList<int> *> biometricIndexMap;
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
 	QTimer *timer;
