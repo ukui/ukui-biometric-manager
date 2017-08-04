@@ -122,7 +122,7 @@ void MainWindow::trackAllBiometricIndex()
 	QList<int> indexList;
 	int listsize;
 
-	for (int i = BIOTYPE_FINGERVEIN; i <= __MAX_NR_BIOTYPES; i++) {
+	for (int i = BIOTYPE_FINGERPRINT; i <= __MAX_NR_BIOTYPES; i++) {
 		enum BioType biotype = static_cast<enum BioType>(i);
 		if (!deviceIsEnable(biotype))
 			continue;
