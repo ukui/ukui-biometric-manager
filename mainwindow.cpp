@@ -32,10 +32,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->treeViewFingervein->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	/* 界面初开的设备类型 */
 	currentBiotype = BIOTYPE_FINGERVEIN;
+	/* 初始化计时器供后面的进度显示弹窗使用 */
+	timer = new QTimer();
 	/* 获取并显示用户列表, 也会触发 showBiometrics，需要在 model 初始化后才能调用  */
 	showUserList();
-	/* 初始化计时器 */
-	timer = new QTimer();
 }
 
 MainWindow::~MainWindow()
