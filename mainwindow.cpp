@@ -388,7 +388,6 @@ void MainWindow::dbusCallback(QDBusMessage callbackReply)
 		break;
 	}
 	promptDialog->onlyShowOK();
-	timer->stop();
 }
 
 /**
