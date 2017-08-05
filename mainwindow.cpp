@@ -58,9 +58,14 @@ void MainWindow::setModel()
 	ui->treeViewFingerprint->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	ui->treeViewFingervein->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	ui->treeViewIris->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	/* 设备与数据模型的映射 */
 	modelMap.insert(BIOTYPE_FINGERPRINT, modelFingerprint);
 	modelMap.insert(BIOTYPE_FINGERVEIN, modelFingervein);
 	modelMap.insert(BIOTYPE_IRIS, modelIris);
+	/* 设备与 TreeView 的映射 */
+	treeViewMap.insert(BIOTYPE_FINGERPRINT, ui->treeViewFingerprint);
+	treeViewMap.insert(BIOTYPE_FINGERVEIN, ui->treeViewFingervein);
+	treeViewMap.insert(BIOTYPE_IRIS, ui->treeViewIris);
 }
 
 /**
@@ -242,24 +247,19 @@ void MainWindow::on_tabWidget_currentChanged(int pageIndex)
 	switch (pageIndex) {
 	case 0:
 		currentBiotype = BIOTYPE_FINGERPRINT;
-		deviceEnable = deviceIsEnable(currentBiotype);
-		ui->pageFingerprint->setEnabled(deviceEnable);
 		break;
 	case 1:
 		currentBiotype = BIOTYPE_FINGERVEIN;
-		deviceEnable = deviceIsEnable(currentBiotype);
-		ui->pageFingervein->setEnabled(deviceEnable);
 		break;
 	case 2:
 		currentBiotype = BIOTYPE_IRIS;
-		deviceEnable = deviceIsEnable(currentBiotype);
-		ui->pageIris->setEnabled(deviceEnable);
 		break;
 	default:
 		qDebug() << "GUI:" << "tabWidget page index = -1";
 		break;
 	}
 
+	deviceEnable = deviceIsEnable(currentBiotype);
 	setWidgetsEnabled(deviceEnable);
 	showBiometrics();
 }
@@ -324,6 +324,7 @@ void MainWindow::showBiometricsCallback(QDBusMessage callbackReply)
  */
 void MainWindow::setWidgetsEnabled(bool status)
 {
+	treeViewMap.value(currentBiotype)->setEnabled(status);
 	ui->comboBoxUname->setEnabled(status);
 	ui->btnAdd->setEnabled(status);
 	ui->btnDelete->setEnabled(status);

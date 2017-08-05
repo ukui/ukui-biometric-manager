@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QProgressDialog>
-#include <QMessageBox>
+#include <QTreeView>
 #include "biometric_interface.h"
 #include "customtype.h"
 #include "promptdialog.h"
@@ -52,6 +52,8 @@ private:
 	QMap<enum BioType,DeviceInfo *> deviceInfoMap;
 	enum BioType currentBiotype;
 	int currentUid;
+	/* TreeView 影射表 */
+	QMap<enum BioType, QTreeView *> treeViewMap;
 	/* 数据模型影射表 */
 	QMap<enum BioType, QStandardItemModel *> modelMap;
 	/* 各个设备占用的特征index */
