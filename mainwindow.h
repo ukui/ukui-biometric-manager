@@ -58,7 +58,8 @@ private:
 	bool pageFirstShow[3];
 	/* 各个设备占用的特征index */
 	QMap<enum BioType, QList<int> *> biometricIndexMap;
-	int freeIndexPos;
+	int freeIndexPos; /* 录入时所用的特征 index 在追踪列表中的下标 */
+	QString indexName; /* 录入时用户输入的特征名称 */
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
 	QTimer *timer;

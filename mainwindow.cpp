@@ -3,7 +3,7 @@
 #include <QDBusArgument>
 #include "customtype.h"
 #include <QTimer>
-#include <QMessageBox>
+#include <QInputDialog>
 #include "promptdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -340,6 +340,13 @@ void MainWindow::on_btnAdd_clicked()
 {
 	int free_index = findFreeBiometricIndex();
 	QList<QVariant> args;
+	bool ok;
+	QString text = QInputDialog::getText(this, "请输入特征名称",
+					"特征名称", QLineEdit::Normal,
+					"", &ok);
+	if (!ok || text.isEmpty())
+		return;
+	indexName = text;
 	/*
 	 * 异步回调参考资料：
 	 * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
@@ -395,19 +402,20 @@ void MainWindow::dbusCallback(QDBusMessage callbackReply)
 				deviceInfoMap.value(currentBiotype)->driver_id);
 	reply.waitForFinished();
 	opsStatus = reply.argumentAt(3).value<int>();
+	QList<QStandardItem *> row;
 	switch (opsStatus%100) {
 	case OPS_SUCCESS:
+		row.append(new QStandardItem(indexName));
+		row.append(new QStandardItem(QString::number(
+			biometricIndexMap.value(currentBiotype)->at(freeIndexPos)
+		)));
+		modelMap.value(currentBiotype)->appendRow(row);
 		break;
 	case OPS_FAILED:
-		break;
 	case OPS_ERROR:
-		break;
 	case OPS_CANCEL:
-		qDebug() << "GUI:" << "用户取消操作, 窗口已被cancelCallback关闭";
-		break;
 	case OPS_TIMEOUT:
-		break;
-	default:
+		biometricIndexMap.value(currentBiotype)->removeAt(freeIndexPos);
 		break;
 	}
 	promptDialog->onlyShowOK();
