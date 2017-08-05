@@ -54,8 +54,6 @@ private:
 	int currentUid;
 	/* 数据模型影射表 */
 	QMap<enum BioType, QStandardItemModel *> modelMap;
-	/* 记录标签页是否是第一次被展示 */
-	bool pageFirstShow[3];
 	/* 各个设备占用的特征index */
 	QMap<enum BioType, QList<int> *> biometricIndexMap;
 	int freeIndexPos; /* 录入时所用的特征 index 在追踪列表中的下标 */

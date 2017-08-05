@@ -22,8 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	getDeviceInfo();
 	/* 获取所有设备已经使用的生物特征 index 列表 */
 	trackAllBiometricIndex();
-	/* 所有标签页初始情况下都处于未被展示过的状态，都需要在切换标签页时被展示 */
-	pageFirstShow[0] = pageFirstShow[1] = pageFirstShow[2] = true;
 	/* 设置数据模型 */
 	setModel();
 	/* 界面初开的设备类型 */
