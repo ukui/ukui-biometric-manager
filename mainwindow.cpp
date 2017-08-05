@@ -182,7 +182,7 @@ void MainWindow::trackAllBiometricIndex()
 int binary_search(QList<int> &indexList, int left, int right)
 {
 	int mid;
-	int targetPos;
+	int boundaryPos;
 	/* 本段连续 */
 	if ((indexList[right] - indexList[left]) == right - left)
 		return -1;
@@ -191,9 +191,9 @@ int binary_search(QList<int> &indexList, int left, int right)
 		return left;
 
 	mid = (left + right)/2;
-	targetPos = binary_search(indexList, left, mid);
-	if (targetPos != -1)
-		return targetPos;
+	boundaryPos = binary_search(indexList, left, mid);
+	if (boundaryPos != -1)
+		return boundaryPos;
 	return binary_search(indexList, mid, right);
 }
 /**
@@ -204,24 +204,22 @@ int MainWindow::findFreeBiometricIndex()
 {
 	QList<int> *indexList;
 	indexList = biometricIndexMap.value(currentBiotype);
-	int free_index, target_pos;
+	int freeIndex, boundaryPos;
 	if (indexList->isEmpty()){
-		free_index = 1; /* 特征从1开始使用 */
-		indexList->append(free_index);
-		return free_index;
+		freeIndex = 1; /* 特征从1开始使用 */
+		indexList->append(freeIndex);
+		return freeIndex;
 	}
-	/* target_pos 是间隙的前一个元素的下标 */
-	target_pos = binary_search(*indexList, 0, indexList->length()-1);
-	if (target_pos != -1){
-		free_index = (*indexList)[target_pos] + 1;
-		indexList->insert(target_pos + 1, free_index);
-	}
-	else {
-		free_index = indexList->last() + 1;
-		indexList->append(free_index);
-	}
+	/* boundaryPos 是间隙的前一个元素的下标 */
+	boundaryPos = binary_search(*indexList, 0, indexList->length()-1);
+	if (boundaryPos == -1) /* 整个列表都是连续的 */
+		boundaryPos = indexList->length() -1;
+	freeIndex = indexList->at(boundaryPos) + 1;
+	/* 将空闲index插入追踪列表 */
+	freeIndexPos = boundaryPos + 1;
+	indexList->insert(freeIndexPos, freeIndex);
 
-	return free_index;
+	return freeIndex;
 }
 
 /**

@@ -58,6 +58,7 @@ private:
 	bool pageFirstShow[3];
 	/* 各个设备占用的特征index */
 	QMap<enum BioType, QList<int> *> biometricIndexMap;
+	int freeIndexPos;
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
 	QTimer *timer;
