@@ -59,9 +59,9 @@ void MainWindow::setModel()
 	ui->treeViewFingervein->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	ui->treeViewIris->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	/* 设备与数据模型的映射 */
-	modelMap.insert(BIOTYPE_FINGERPRINT, modelFingerprint);
-	modelMap.insert(BIOTYPE_FINGERVEIN, modelFingervein);
-	modelMap.insert(BIOTYPE_IRIS, modelIris);
+	dataModelMap.insert(BIOTYPE_FINGERPRINT, modelFingerprint);
+	dataModelMap.insert(BIOTYPE_FINGERVEIN, modelFingervein);
+	dataModelMap.insert(BIOTYPE_IRIS, modelIris);
 	/* 设备与 TreeView 的映射 */
 	treeViewMap.insert(BIOTYPE_FINGERPRINT, ui->treeViewFingerprint);
 	treeViewMap.insert(BIOTYPE_FINGERVEIN, ui->treeViewFingervein);
@@ -287,7 +287,7 @@ void MainWindow::showBiometrics()
 	if (!deviceIsEnable(currentBiotype))
 		return;
 	/* 不能用clear()，它会将表头也清掉 */
-	modelMap.value(currentBiotype)->setRowCount(0);
+	dataModelMap.value(currentBiotype)->setRowCount(0);
 
 	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
 		<< QVariant(currentUid) << QVariant(0) << QVariant(-1);
@@ -314,7 +314,7 @@ void MainWindow::showBiometricsCallback(QDBusMessage callbackReply)
 		QList<QStandardItem *> row;
 		row.append(new QStandardItem(biometricInfo->index_name));
 		row.append(new QStandardItem(QString::number(biometricInfo->index)));
-		modelMap.value(currentBiotype)->appendRow(row);
+		dataModelMap.value(currentBiotype)->appendRow(row);
 	}
 }
 
@@ -408,7 +408,7 @@ void MainWindow::dbusCallback(QDBusMessage callbackReply)
 		row.append(new QStandardItem(QString::number(
 			biometricIndexMap.value(currentBiotype)->at(freeIndexPos)
 		)));
-		modelMap.value(currentBiotype)->appendRow(row);
+		dataModelMap.value(currentBiotype)->appendRow(row);
 		break;
 	case OPS_FAILED:
 	case OPS_ERROR:

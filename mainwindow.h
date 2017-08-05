@@ -55,7 +55,7 @@ private:
 	/* TreeView 影射表 */
 	QMap<enum BioType, QTreeView *> treeViewMap;
 	/* 数据模型影射表 */
-	QMap<enum BioType, QStandardItemModel *> modelMap;
+	QMap<enum BioType, QStandardItemModel *> dataModelMap;
 	/* 各个设备占用的特征index */
 	QMap<enum BioType, QList<int> *> biometricIndexMap;
 	int freeIndexPos; /* 录入时所用的特征 index 在追踪列表中的下标 */
