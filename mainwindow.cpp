@@ -493,6 +493,7 @@ void MainWindow::on_btnDelete_clicked()
 		qDebug() << "GUI:" << reply.error();
 		return;
 	}
+	biometricIndexMap.value(currentBiotype)->removeOne(deleteIndex);
 	dataModelMap.value(currentBiotype)->removeRow(clickedModelIndex.row(),
 						clickedModelIndex.parent());
 }
@@ -510,5 +511,6 @@ void MainWindow::on_btnDrop_clicked()
 		qDebug() << "GUI:" << reply.error();
 		return;
 	}
+	biometricIndexMap.value(currentBiotype)->clear();
 	dataModelMap.value(currentBiotype)->setRowCount(0);
 }
