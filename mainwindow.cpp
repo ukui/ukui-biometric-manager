@@ -203,24 +203,21 @@ int binary_search(QList<int> &indexList, int left, int right)
  * @brief 查找一个空闲的特征 index
  * @return
  */
-int MainWindow::findFreeBiometricIndex()
+int findGap(QList<int> &indexList)
 {
-	QList<int> *indexList;
-	indexList = biometricIndexMap.value(currentBiotype);
 	int freeIndex, boundaryPos;
-	if (indexList->isEmpty()){
+	if (indexList.isEmpty()){
 		freeIndex = 1; /* 特征从1开始使用 */
-		indexList->append(freeIndex);
+		indexList.append(freeIndex);
 		return freeIndex;
 	}
 	/* boundaryPos 是间隙的前一个元素的下标 */
-	boundaryPos = binary_search(*indexList, 0, indexList->length()-1);
+	boundaryPos = binary_search(indexList, 0, indexList.length()-1);
 	if (boundaryPos == -1) /* 整个列表都是连续的 */
-		boundaryPos = indexList->length() -1;
-	freeIndex = indexList->at(boundaryPos) + 1;
+		boundaryPos = indexList.length() -1;
+	freeIndex = indexList[boundaryPos] + 1;
 	/* 将空闲index插入追踪列表 */
-	freeIndexPos = boundaryPos + 1;
-	indexList->insert(freeIndexPos, freeIndex);
+	indexList.insert(boundaryPos + 1, freeIndex);
 
 	return freeIndex;
 }
@@ -337,7 +334,6 @@ void MainWindow::setWidgetsEnabled(bool status)
  */
 void MainWindow::on_btnAdd_clicked()
 {
-	int free_index = findFreeBiometricIndex();
 	QList<QVariant> args;
 	bool ok;
 	QString text = QInputDialog::getText(this, "请输入特征名称",
@@ -346,12 +342,15 @@ void MainWindow::on_btnAdd_clicked()
 	if (!ok || text.isEmpty())
 		return;
 	indexName = text;
+	/* 查找空闲 index */
+	QList<int> *indexList = biometricIndexMap.value(currentBiotype);
+	freeIndex = findGap(*indexList);
 	/*
 	 * 异步回调参考资料：
 	 * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
 	 */
 	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
-		<< QVariant(currentUid) << QVariant(free_index) << QVariant("xxx");
+		<< QVariant(currentUid) << QVariant(freeIndex) << QVariant("xxx");
 	biometricInterface->callWithCallback("Enroll", args, this,
 						SLOT(dbusCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
@@ -405,16 +404,14 @@ void MainWindow::dbusCallback(QDBusMessage callbackReply)
 	switch (opsStatus%100) {
 	case OPS_SUCCESS:
 		row.append(new QStandardItem(indexName));
-		row.append(new QStandardItem(QString::number(
-			biometricIndexMap.value(currentBiotype)->at(freeIndexPos)
-		)));
+		row.append(new QStandardItem(QString::number(freeIndex)));
 		dataModelMap.value(currentBiotype)->appendRow(row);
 		break;
 	case OPS_FAILED:
 	case OPS_ERROR:
 	case OPS_CANCEL:
 	case OPS_TIMEOUT:
-		biometricIndexMap.value(currentBiotype)->removeAt(freeIndexPos);
+		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
 		break;
 	}
 	promptDialog->onlyShowOK();
