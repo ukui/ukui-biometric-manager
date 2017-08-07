@@ -515,3 +515,42 @@ void MainWindow::on_btnDrop_clicked()
 	biometricIndexMap.value(currentBiotype)->clear();
 	dataModelMap.value(currentBiotype)->setRowCount(0);
 }
+
+/**
+ * @brief 生物特征验证
+ */
+void MainWindow::on_btnVerify_clicked()
+{
+	QList<QVariant> args;
+	QModelIndex clickedModelIndex, indexModelIndex;
+	int verifyIndex;
+	clickedModelIndex = treeViewMap.value(currentBiotype)->currentIndex();
+	if (clickedModelIndex.row() == -1)
+		return;
+	indexModelIndex = dataModelMap.value(currentBiotype)->index(
+					clickedModelIndex.row(), 1,
+					clickedModelIndex.parent()
+					);
+	verifyIndex = indexModelIndex.data().value<QString>().toInt();
+	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
+		<< QVariant(currentUid) << QVariant(verifyIndex);
+	biometricInterface->callWithCallback("Verify", args, this,
+						SLOT(verifyCallback(QDBusMessage)),
+						SLOT(errorCallback(QDBusError)));
+	promptDialog = new PromptDialog(this);
+	promptDialog->onlyShowCancle();
+	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
+	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
+	timer->start(600);
+	promptDialog->exec();
+	timer->stop();
+}
+
+/**
+ * @brief 特征验证 DBus 异步回调函数
+ * @param callbackReply
+ */
+void MainWindow::verifyCallback(QDBusMessage callbackReply)
+{
+	promptDialog->onlyShowOK();
+}
