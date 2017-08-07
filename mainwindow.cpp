@@ -500,3 +500,19 @@ void MainWindow::on_btnDelete_clicked()
 	dataModelMap.value(currentBiotype)->removeRow(clickedModelIndex.row(),
 						clickedModelIndex.parent());
 }
+
+/**
+ * @brief 清空当前设备的所有特征值存储
+ */
+void MainWindow::on_btnDrop_clicked()
+{
+	QDBusPendingReply<int> reply = biometricInterface->Clean(
+				deviceInfoMap.value(currentBiotype)->driver_id,
+				currentUid, 0, -1);
+	reply.waitForFinished();
+	if (reply.isError()) {
+		qDebug() << "GUI:" << reply.error();
+		return;
+	}
+	dataModelMap.value(currentBiotype)->setRowCount(0);
+}

@@ -26,6 +26,7 @@ private slots:
 	void on_comboBoxUname_currentIndexChanged(int index);
 	void on_btnAdd_clicked();
 	void on_btnDelete_clicked();
+	void on_btnDrop_clicked();
 
 private:
 	void getDeviceInfo();
