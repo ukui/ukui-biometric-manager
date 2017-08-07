@@ -39,7 +39,7 @@ private:
 	void setModel();
 
 private slots:
-	void dbusCallback(QDBusMessage callbackReply);
+	void enrollCallback(QDBusMessage callbackReply);
 	void errorCallback(QDBusError error);
 	void setOperationMsg();
 	void cancelOperation(); /* 普通 SLOT，不是DBus回调 */

@@ -351,7 +351,7 @@ void MainWindow::on_btnAdd_clicked()
 	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
 		<< QVariant(currentUid) << QVariant(freeIndex) << QVariant(indexName);
 	biometricInterface->callWithCallback("Enroll", args, this,
-						SLOT(dbusCallback(QDBusMessage)),
+						SLOT(enrollCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(this);
 	promptDialog->onlyShowCancle();
@@ -367,9 +367,10 @@ void MainWindow::on_btnAdd_clicked()
 }
 
 /**
- * @brief DBus 异步回调函数
+ * @brief 特征录入 DBus 异步回调函数
+ * @param callbackReply
  */
-void MainWindow::dbusCallback(QDBusMessage callbackReply)
+void MainWindow::enrollCallback(QDBusMessage callbackReply)
 {
 	/*
 	 * 该状态返回值指示了操作成功-0/操作失败-1/设备忙-2/没有设备-3
