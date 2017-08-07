@@ -472,3 +472,31 @@ void MainWindow::cancelCallback(QDBusMessage callbackReply)
 {
 	promptDialog->closeDialog();
 }
+
+/**
+ * @brief 删除生物特征
+ */
+void MainWindow::on_btnDelete_clicked()
+{
+	/* 用户光标点击的 QModelIndex */
+	QModelIndex clickedModelIndex = treeViewMap.value(currentBiotype)->currentIndex();
+	if (clickedModelIndex.row() == -1)
+		return;
+	/* 获取特征 index 所在的 QModelIndex */
+	QModelIndex indexModelIndex = dataModelMap.value(currentBiotype)->index(
+					clickedModelIndex.row(), 1,
+					clickedModelIndex.parent()
+					);
+	int deleteIndex = indexModelIndex.data().value<QString>().toInt();
+
+	QDBusPendingReply<int> reply = biometricInterface->Clean(
+				deviceInfoMap.value(currentBiotype)->driver_id,
+				currentUid, deleteIndex, deleteIndex);
+	reply.waitForFinished();
+	if (reply.isError()) {
+		qDebug() << "GUI:" << reply.error();
+		return;
+	}
+	dataModelMap.value(currentBiotype)->removeRow(clickedModelIndex.row(),
+						clickedModelIndex.parent());
+}
