@@ -180,7 +180,7 @@ void MainWindow::trackAllBiometricIndex()
  * @param indexList
  * @param left
  * @param right
- * @return -1 表示本段连续，否则就是空隙的起始下标
+ * @return -1 表示本段连续，否则就是空隙的左边界下标
  */
 int binary_search(QList<int> &indexList, int left, int right)
 {
@@ -201,23 +201,22 @@ int binary_search(QList<int> &indexList, int left, int right)
 }
 /**
  * @brief 查找一个空闲的特征 index
- * @return
+ * @return 特征 index 从 1 开始使用
  */
 int findGap(QList<int> &indexList)
 {
 	int freeIndex, boundaryPos;
-	if (indexList.isEmpty()){
-		freeIndex = 1; /* 特征从1开始使用 */
-		indexList.append(freeIndex);
-		return freeIndex;
-	}
-	/* boundaryPos 是间隙的前一个元素的下标 */
+	/* 插入占位index,值为0,简化处理逻辑的同时也保证index从1开始利用，不会在前面出现断层 */
+	indexList.prepend(0);
+	/* boundaryPos 是空隙的左边界下标 */
 	boundaryPos = binary_search(indexList, 0, indexList.length()-1);
 	if (boundaryPos == -1) /* 整个列表都是连续的 */
 		boundaryPos = indexList.length() -1;
 	freeIndex = indexList[boundaryPos] + 1;
 	/* 将空闲index插入追踪列表 */
 	indexList.insert(boundaryPos + 1, freeIndex);
+	/* 删除插入的占位元素 */
+	indexList.removeFirst();
 
 	return freeIndex;
 }
