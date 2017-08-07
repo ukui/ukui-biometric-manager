@@ -349,7 +349,7 @@ void MainWindow::on_btnAdd_clicked()
 	 * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
 	 */
 	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
-		<< QVariant(currentUid) << QVariant(freeIndex) << QVariant("xxx");
+		<< QVariant(currentUid) << QVariant(freeIndex) << QVariant(indexName);
 	biometricInterface->callWithCallback("Enroll", args, this,
 						SLOT(dbusCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
