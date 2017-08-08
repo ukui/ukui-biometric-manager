@@ -582,8 +582,6 @@ void MainWindow::on_btnSearch_clicked()
  */
 void MainWindow::searchCallback(QDBusMessage callbackReply)
 {
-	timer->stop();
-
 	QList<QVariant> variantList = callbackReply.arguments();
 	int result, hitUid, hitIndex;
 	QString hitUname, msg, hitIndexName;
@@ -591,10 +589,15 @@ void MainWindow::searchCallback(QDBusMessage callbackReply)
 	hitUid = variantList[1].value<int>();
 	hitIndex = variantList[2].value<int>();
 	hitIndexName = variantList[3].value<QString>();
-	qDebug() << "GUI:" << result;
 
-	if (result != 0)
-		return;
+	/* 没搜到/超时/用户取消 */
+	if (result != 0){
+		promptDialog->onlyShowOK();
+		return; /* 直接返回，具体的错误信息由定时器提供 */
+	}
+
+	timer->stop();
+
 	for (int i = 0; i < ui->comboBoxUname->count(); i++) {
 		if (ui->comboBoxUname->itemData(i).value<int>() == hitUid)
 			hitUname = ui->comboBoxUname->itemText(i);
