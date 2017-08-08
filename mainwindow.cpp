@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
 				"/cn/kylinos/Biometric",
 				QDBusConnection::systemBus(), this);
-	biometricInterface->setTimeout(6000000);
+	biometricInterface->setTimeout(2147483647); /* 微秒 */
 	/* 获取设备列表 */
 	getDeviceInfo();
 	/* 获取所有设备已经使用的生物特征 index 列表 */
