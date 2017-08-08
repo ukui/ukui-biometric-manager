@@ -3,6 +3,7 @@
 #include <QMovie>
 #include <QPushButton>
 #include <QDebug>
+#include <QCloseEvent>
 
 PromptDialog::PromptDialog(QWidget *parent) :
 	QDialog(parent),
@@ -62,19 +63,25 @@ void PromptDialog::on_btnOK_clicked()
  */
 void PromptDialog::on_btnCancel_clicked()
 {
+	/* 触发主窗口内的函数进行 DBus 相关操作 */
 	emit canceled();
 }
 
 /**
- * @brief 关闭弹窗
+ * @brief 调用以主动关闭弹窗
  */
 void PromptDialog::closeDialog()
 {
 	accept();
 }
 
-void PromptDialog::closeEvent(QCloseEvent *e)
+/**
+ * @brief 重写 X 按钮事件，与取消按钮逻辑相同
+ * @param event
+ */
+void PromptDialog::closeEvent(QCloseEvent *event)
 {
 	qDebug() << "GUI:" << "Click CLOSE";
 	emit canceled();
+	event->ignore(); /* 不再后续处理，否则弹窗会被立刻关闭 */
 }

@@ -33,7 +33,7 @@ private:
 	Ui::PromptDialog *ui;
 
 protected:
-	void closeEvent(QCloseEvent *e);
+	void closeEvent(QCloseEvent *event);
 };
 
 #endif // PROMPTDIALOG_H
