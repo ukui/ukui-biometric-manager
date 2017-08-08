@@ -118,6 +118,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnSearch">
+        <property name="text">
+         <string>搜索</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnDrop">
         <property name="text">
          <string>清空所有</string>

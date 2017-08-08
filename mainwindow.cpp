@@ -326,6 +326,7 @@ void MainWindow::setWidgetsEnabled(bool status)
 	ui->btnDelete->setEnabled(status);
 	ui->btnDrop->setEnabled(status);
 	ui->btnVerify->setEnabled(status);
+	ui->btnSearch->setEnabled(status);
 }
 
 /**
@@ -552,5 +553,53 @@ void MainWindow::on_btnVerify_clicked()
  */
 void MainWindow::verifyCallback(QDBusMessage callbackReply)
 {
+	promptDialog->onlyShowOK();
+}
+
+/**
+ * @brief 生物特征搜索
+ */
+void MainWindow::on_btnSearch_clicked()
+{
+	QList<QVariant> args;
+	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
+		<< QVariant(currentUid) << QVariant(0) << QVariant(-1);
+	biometricInterface->callWithCallback("Search", args, this,
+						SLOT(searchCallback(QDBusMessage)),
+						SLOT(errorCallback(QDBusError)));
+	promptDialog = new PromptDialog(this);
+	promptDialog->onlyShowCancle();
+	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
+	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
+	timer->start(600);
+	promptDialog->exec();
+	timer->stop();
+}
+
+/**
+ * @brief 特征搜索 DBus 异步回调函数
+ * @param callbackReply
+ */
+void MainWindow::searchCallback(QDBusMessage callbackReply)
+{
+	timer->stop();
+
+	QList<QVariant> variantList = callbackReply.arguments();
+	int result, hitUid, hitIndex;
+	QString hitUname, msg, hitIndexName;
+	result = variantList[0].value<int>();
+	hitUid = variantList[1].value<int>();
+	hitIndex = variantList[2].value<int>();
+	hitIndexName = variantList[3].value<QString>();
+	qDebug() << "GUI:" << result;
+
+	if (result != 0)
+		return;
+	for (int i = 0; i < ui->comboBoxUname->count(); i++) {
+		if (ui->comboBoxUname->itemData(i).value<int>() == hitUid)
+			hitUname = ui->comboBoxUname->itemText(i);
+	}
+	msg = QString("搜索成功！用户名：%1，特征名称：%2").arg(hitUname).arg(hitIndexName);
+	promptDialog->setLabelText(msg);
 	promptDialog->onlyShowOK();
 }

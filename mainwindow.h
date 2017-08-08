@@ -28,6 +28,7 @@ private slots:
 	void on_btnDelete_clicked();
 	void on_btnDrop_clicked();
 	void on_btnVerify_clicked();
+	void on_btnSearch_clicked();
 
 private:
 	void getDeviceInfo();
@@ -47,6 +48,7 @@ private slots:
 	void cancelCallback(QDBusMessage callbackReply);
 	void showBiometricsCallback(QDBusMessage callbackReply);
 	void verifyCallback(QDBusMessage callbackReply);
+	void searchCallback(QDBusMessage callbackReply);
 
 private:
 	Ui::MainWindow *ui;
