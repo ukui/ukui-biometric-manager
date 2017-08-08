@@ -55,7 +55,7 @@ void PromptDialog::onlyShowOK()
  */
 void PromptDialog::on_btnOK_clicked()
 {
-	accept();
+	accept(); /* 用户确定，关闭窗口 */
 }
 
 /**
@@ -63,7 +63,7 @@ void PromptDialog::on_btnOK_clicked()
  */
 void PromptDialog::on_btnCancel_clicked()
 {
-	/* 触发主窗口内的函数进行 DBus 相关操作 */
+	/* 使用自定义信号触发主窗口内的函数进行 DBus 相关操作 */
 	emit canceled();
 }
 
@@ -72,7 +72,7 @@ void PromptDialog::on_btnCancel_clicked()
  */
 void PromptDialog::closeDialog()
 {
-	accept();
+	accept(); /* 关闭窗口，也可以用 reject()函数 */
 }
 
 /**
@@ -82,6 +82,6 @@ void PromptDialog::closeDialog()
 void PromptDialog::closeEvent(QCloseEvent *event)
 {
 	qDebug() << "GUI:" << "Click CLOSE";
-	emit canceled();
+	emit canceled(); /* 自定义信号 */
 	event->ignore(); /* 不再后续处理，否则弹窗会被立刻关闭 */
 }

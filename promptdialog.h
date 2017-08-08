@@ -16,7 +16,7 @@ public:
 	~PromptDialog();
 
 signals:
-	void canceled();
+	void canceled(); /* 自定义信号，用于触发主窗口内的 slot */
 
 public:
 	void setLabelText(QString text);
