@@ -99,7 +99,7 @@
       <item>
        <widget class="QPushButton" name="btnAdd">
         <property name="text">
-         <string>添加</string>
+         <string>录入</string>
         </property>
        </widget>
       </item>
