@@ -355,7 +355,7 @@ void MainWindow::on_btnAdd_clicked()
 						SLOT(enrollCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(this);
-	promptDialog->onlyShowCancle();
+	promptDialog->onlyShowCancel();
 	/*
 	connect(promptDialog, &PromptDialog::rejected, [this]{
 						this->canceledByUser=true;
@@ -539,7 +539,7 @@ void MainWindow::on_btnVerify_clicked()
 						SLOT(verifyCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(this);
-	promptDialog->onlyShowCancle();
+	promptDialog->onlyShowCancel();
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
 	timer->start(600);
@@ -568,7 +568,7 @@ void MainWindow::on_btnSearch_clicked()
 						SLOT(searchCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(this);
-	promptDialog->onlyShowCancle();
+	promptDialog->onlyShowCancel();
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
 	timer->start(600);

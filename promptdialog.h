@@ -20,7 +20,7 @@ signals:
 
 public:
 	void setLabelText(QString text);
-	void onlyShowCancle();
+	void onlyShowCancel();
 	void onlyShowOK();
 	void closeDialog();
 

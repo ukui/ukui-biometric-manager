@@ -14,7 +14,7 @@ PromptDialog::PromptDialog(QWidget *parent) :
 	QMovie *movie = new QMovie(":/images/assets/progressbar.gif");
 	ui->labelImage->setMovie(movie);
 	movie->start();
-	onlyShowCancle();
+	onlyShowCancel();
 	setLabelText("操作中，请稍后...");
 }
 
@@ -35,7 +35,7 @@ void PromptDialog::setLabelText(QString text)
 /**
  * @brief 只显示取消按钮
  */
-void PromptDialog::onlyShowCancle()
+void PromptDialog::onlyShowCancel()
 {
 	ui->btnCancel->show();
 	ui->btnOK->hide();
