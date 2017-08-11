@@ -43,8 +43,8 @@ private:
 private slots:
 	void enrollCallback(QDBusMessage callbackReply);
 	void errorCallback(QDBusError error);
-	void setOperationMsg();
-	void cancelOperation(); /* 普通 SLOT，不是DBus回调 */
+	void setOperationMsg(); /* 普通 Qt SLOT，QTimer 定时器响应函数 */
+	void cancelOperation(); /* 普通 Qt SLOT，不是DBus回调，用于接收弹窗按钮事件 */
 	void cancelCallback(QDBusMessage callbackReply);
 	void showBiometricsCallback(QDBusMessage callbackReply);
 	void verifyCallback(QDBusMessage callbackReply);
