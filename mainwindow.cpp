@@ -24,8 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	trackAllBiometricIndex();
 	/* 设置数据模型 */
 	setModel();
-	/* 界面初开的设备类型 */
+	/* 界面默认的设备类型为指纹设备 */
 	currentBiotype = BIOTYPE_FINGERPRINT;
+	/* 界面初次显示时不会触发标签页切换事件，所以要手动检测默认的指纹设备的可用性 */
+	setWidgetsEnabled(deviceIsEnable(currentBiotype));
 	/* 初始化计时器供后面的进度显示弹窗使用 */
 	timer = new QTimer();
 	/* 获取并显示用户列表, 也会触发 showBiometrics，需要在 model 初始化后才能调用  */
