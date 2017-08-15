@@ -16,6 +16,13 @@ PromptDialog::PromptDialog(QWidget *parent) :
 	movie->start();
 	onlyShowCancel();
 	setLabelText("操作中，请稍后...");
+
+	/* 设置 CSS */
+	QFile qssFile(":/css/assets/dialog_stylesheet.qss");
+	qssFile.open(QFile::ReadOnly);
+	QString styleSheet = QLatin1String(qssFile.readAll());
+	qApp->setStyleSheet(styleSheet);
+	qssFile.close();
 }
 
 PromptDialog::~PromptDialog()
