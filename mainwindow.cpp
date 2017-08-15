@@ -4,6 +4,7 @@
 #include "customtype.h"
 #include <QTimer>
 #include <QInputDialog>
+#include <QFile>
 #include "promptdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -121,7 +122,7 @@ void MainWindow::showUserList()
 	int uid;
 
 	if(!file.open(QIODevice::ReadOnly)) {
-		qDebug() << "GUI:" << ":";
+		qDebug() << "GUI:" << "/etc/passwd 文件打开失败";
 	}
 
 	QTextStream in(&file);
@@ -137,6 +138,7 @@ void MainWindow::showUserList()
 			/* 这里会触发 currentIndexChanged 信号 */
 			ui->comboBoxUname->addItem(uname, QVariant(uid));
 	}
+	file.close();
 }
 
 /**
