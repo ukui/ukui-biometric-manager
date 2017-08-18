@@ -1,0 +1,19 @@
+Source: biometric-manager
+Section: x11
+Priority: optional
+Maintainer: lihao <lihao@kylinos.cn>
+Build-Depends: debhelper (>= 9),
+               lsb-release,
+	       qt5-default,
+	       qt5-qmake,
+	       biometric-auth,
+	       biometric-driver-r301,
+	       biometric-driver-ud650,
+	       libbiometric,
+	       libbiometric-dev
+Standards-Version: 3.9.5
+
+Package: biometric-manager
+Architecture: any
+Depends: ${misc:Depends}, qt5-default, biometric-auth
+Description: Kylin Biometric Manager
