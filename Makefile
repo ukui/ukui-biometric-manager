@@ -1,19 +1,22 @@
 XML="/usr/share/dbus-1/interfaces/cn.kylinos.Biometric.xml"
+QMAKE_OPTIONS =
+PAM_MAKE_OPTIONS =
 QMAKE = qmake5
-QMAKE_DEBUG =
 QT_MAKEFILE = QtMakefile
 INSTALL_DIR = /usr/local/BiometricManager
 
-all: executable
 
-debug: QMAKE_DEBUG += CONFIG+=debug
-debug: executable
+all: debug
 
-executable: BiometricManager
+debug: QMAKE_OPTIONS += CONFIG+=debug
+debug: BiometricManager
+
+release: QMAKE_OPTIONS +=
+release: BiometricManager
 
 BiometricManager:
 	cp -f $(XML) ./
-	$(QMAKE) $(QMAKE_DEBUG) -o $(QT_MAKEFILE)
+	$(QMAKE) $(QMAKE_OPTIONS) -o $(QT_MAKEFILE)
 	make -f $(QT_MAKEFILE)
 
 install:
