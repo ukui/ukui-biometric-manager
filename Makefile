@@ -1,7 +1,7 @@
 XML="/usr/share/dbus-1/interfaces/cn.kylinos.Biometric.xml"
 QMAKE_OPTIONS =
 PAM_MAKE_OPTIONS =
-QMAKE = qmake5
+QMAKE = qmake
 QT_MAKEFILE = QtMakefile
 INSTALL_DIR = /usr/local/BiometricManager
 
