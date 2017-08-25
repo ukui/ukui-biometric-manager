@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=生物特征管理工具
+Comment=生物特征管理工具
+Icon=/usr/local/BiometricManager/icon.png
+Exec=BiometricManager
+Terminal=false
+Categories=GTK;System;Utility;Core;
+OnlyShowIn=MATE;

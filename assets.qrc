@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/images">
-	<file>assets/progressbar.gif</file>
+        <file>assets/progressbar.gif</file>
+        <file>assets/icon.png</file>
     </qresource>
     <qresource prefix="/css">
-	<file>assets/dialog_stylesheet.qss</file>
+        <file>assets/dialog_stylesheet.qss</file>
     </qresource>
 </RCC>

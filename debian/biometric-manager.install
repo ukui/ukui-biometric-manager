@@ -1,1 +1,3 @@
 ./BiometricManager /usr/local/BiometricManager/
+./assets/icon.png /usr/local/BiometricManager/
+./data/biometric-manager.desktop /usr/share/applications/
