@@ -16,4 +16,5 @@ Standards-Version: 3.9.5
 Package: biometric-manager
 Architecture: any
 Depends: ${misc:Depends}, qt5-default, biometric-auth
+Conflicts: kylin-fingerprint, kylin-fprint-login
 Description: Kylin Biometric Manager
