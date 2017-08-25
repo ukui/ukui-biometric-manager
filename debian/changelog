@@ -1,3 +1,9 @@
+biometric-manager (1.0~rc2) juniper; urgency=medium
+
+  * Release Candidate
+
+ -- lihao <lihao@kylinos.cn>  Fri, 25 Aug 2017 14:23:19 +0800
+
 biometric-manager (1.0~rc1) juniper; urgency=medium
 
   * Release Candidate
