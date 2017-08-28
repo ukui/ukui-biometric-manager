@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	/* 设置窗口图标 */
+	QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
 	/* 连接 DBus Daemon */
