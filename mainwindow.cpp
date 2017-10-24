@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QInputDialog>
 #include <QFile>
+#include <QProcessEnvironment>
 #include "promptdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -129,6 +130,8 @@ void MainWindow::showUserList()
 
 	QTextStream in(&file);
 
+	/* 阻止 addItem 触发 currentIndexChanged 信号 */
+	ui->comboBoxUname->blockSignals(true);
 	while(!in.atEnd()) {
 		line = in.readLine();
 		fields = line.split(":");
@@ -137,10 +140,14 @@ void MainWindow::showUserList()
 		if (uid == 65534) /* nobody 用户 */
 			continue;
 		if (uid >=1000 || uid == 0)
-			/* 这里会触发 currentIndexChanged 信号 */
 			ui->comboBoxUname->addItem(uname, QVariant(uid));
 	}
 	file.close();
+	ui->comboBoxUname->blockSignals(false);
+	/* 获取当前用户名 */
+	QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+	/* 触发 currentIndexChanged 信号 */
+	ui->comboBoxUname->setCurrentText(environment.value("USER"));
 }
 
 /**
