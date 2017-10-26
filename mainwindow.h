@@ -24,7 +24,7 @@ public:
 private slots:
 	void on_tabWidget_currentChanged(int index);
 	void on_comboBoxUname_currentIndexChanged(int index);
-	void on_btnAdd_clicked();
+	void on_btnEnroll_clicked();
 	void on_btnDelete_clicked();
 	void on_btnDrop_clicked();
 	void on_btnVerify_clicked();
@@ -58,9 +58,9 @@ private:
 	QMap<enum BioType,DeviceInfo *> deviceInfoMap;
 	enum BioType currentBiotype;
 	int currentUid;
-	/* TreeView 影射表 */
+	/* TreeView 映射表 */
 	QMap<enum BioType, QTreeView *> treeViewMap;
-	/* 数据模型影射表 */
+	/* 数据模型映射表 */
 	QMap<enum BioType, QStandardItemModel *> dataModelMap;
 	/* 各个设备占用的特征index */
 	QMap<enum BioType, QList<int> *> biometricIndexMap;

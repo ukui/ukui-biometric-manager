@@ -332,7 +332,7 @@ void MainWindow::setWidgetsEnabled(bool status)
 {
 	treeViewMap.value(currentBiotype)->setEnabled(status);
 	ui->comboBoxUname->setEnabled(status);
-	ui->btnAdd->setEnabled(status);
+	ui->btnEnroll->setEnabled(status);
 	ui->btnDelete->setEnabled(status);
 	ui->btnDrop->setEnabled(status);
 	ui->btnVerify->setEnabled(status);
@@ -342,7 +342,7 @@ void MainWindow::setWidgetsEnabled(bool status)
 /**
  * @brief 录入
  */
-void MainWindow::on_btnAdd_clicked()
+void MainWindow::on_btnEnroll_clicked()
 {
 	QList<QVariant> args;
 	bool ok;
