@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include <QDBusArgument>
 #include "customtype.h"
-#include <QTimer>
 #include <QInputDialog>
 #include <QFile>
 #include <QProcessEnvironment>
@@ -32,8 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	currentBiotype = BIOTYPE_FINGERPRINT;
 	/* 界面初次显示时不会触发标签页切换事件，所以要手动检测默认的指纹设备的可用性 */
 	setWidgetsEnabled(deviceIsEnable(currentBiotype));
-	/* 初始化计时器供后面的进度显示弹窗使用 */
-	timer = new QTimer();
 	/* 获取并显示用户列表, 也会触发 showBiometrics，需要在 model 初始化后才能调用  */
 	showUserList();
 }
@@ -374,10 +371,9 @@ void MainWindow::on_btnAdd_clicked()
 						this->canceledByUser=true;
 						});*/
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
-	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
-	timer->start(600);
+	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
-	timer->stop();
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 }
 
 /**
@@ -388,7 +384,7 @@ void MainWindow::enrollCallback(QDBusMessage callbackReply)
 {
 	/*
 	 * 该状态返回值指示了操作成功-0/操作失败-1/设备忙-2/没有设备-3
-	 * 显示给用户的信息还是由定时器提供
+	 * 显示给用户的信息由 StatusChanged 信号触发函数提供
 	 */
 	int dbusStatus, opsStatus;
 	dbusStatus  = callbackReply.arguments()[0].value<int>();
@@ -441,11 +437,17 @@ void MainWindow::errorCallback(QDBusError error)
 }
 
 /**
- * @brief 周期性设置弹窗的提示文字
+ * @brief 设置操作进度提示，被 D-Bus 信号 StatusChanged 触发
+ * @param driverID
+ * @param statusType
  */
-void MainWindow::setOperationMsg()
+void MainWindow::setOperationMsg(int driverID, int statusType)
 {
-	QString msg;
+	if (statusType != STATUS_NOTIFY)
+		return;
+	int currentDriverID = deviceInfoMap.value(currentBiotype)->driver_id;
+	if (driverID != currentDriverID)
+		return;
 	QDBusPendingReply<QString> reply =
 			biometricInterface->GetNotifyMesg(
 				deviceInfoMap.value(currentBiotype)->driver_id);
@@ -456,6 +458,7 @@ void MainWindow::setOperationMsg()
 		return;
 	}
 
+	QString msg;
 	msg = reply.argumentAt(0).value<QString>();
 	promptDialog->setLabelText(msg);
 }
@@ -466,7 +469,6 @@ void MainWindow::setOperationMsg()
 void MainWindow::cancelOperation()
 {
 	QList<QVariant> args;
-	timer->stop();
 	args << QVariant(deviceInfoMap.value(currentBiotype)->driver_id)
 		<< QVariant(5);
 	biometricInterface->callWithCallback("StopOps", args, this,
@@ -554,10 +556,9 @@ void MainWindow::on_btnVerify_clicked()
 	promptDialog = new PromptDialog(this);
 	promptDialog->onlyShowCancel();
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
-	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
-	timer->start(600);
+	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
-	timer->stop();
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 }
 
 /**
@@ -583,10 +584,9 @@ void MainWindow::on_btnSearch_clicked()
 	promptDialog = new PromptDialog(this);
 	promptDialog->onlyShowCancel();
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
-	connect(timer, &QTimer::timeout, this, &MainWindow::setOperationMsg);
-	timer->start(600);
+	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
-	timer->stop();
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 }
 
 /**
@@ -603,13 +603,13 @@ void MainWindow::searchCallback(QDBusMessage callbackReply)
 	hitIndex = variantList[2].value<int>();
 	hitIndexName = variantList[3].value<QString>();
 
+	/* 经过测试，本函数会在最后一次 StatusChanged 信号触发后才会执行，所以可以将提示信息覆盖一下 */
 	/* 没搜到/超时/用户取消 */
 	if (result != 0){
+		promptDialog->setLabelText("未搜索到指定特征");
 		promptDialog->onlyShowOK();
-		return; /* 直接返回，具体的错误信息由定时器提供 */
+		return;
 	}
-
-	timer->stop();
 
 	for (int i = 0; i < ui->comboBoxUname->count(); i++) {
 		if (ui->comboBoxUname->itemData(i).value<int>() == hitUid)

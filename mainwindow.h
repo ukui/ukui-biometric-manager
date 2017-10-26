@@ -43,12 +43,12 @@ private:
 private slots:
 	void enrollCallback(QDBusMessage callbackReply);
 	void errorCallback(QDBusError error);
-	void setOperationMsg(); /* 普通 Qt SLOT，QTimer 定时器响应函数 */
 	void cancelOperation(); /* 普通 Qt SLOT，不是DBus回调，用于接收弹窗按钮事件 */
 	void cancelCallback(QDBusMessage callbackReply);
 	void showBiometricsCallback(QDBusMessage callbackReply);
 	void verifyCallback(QDBusMessage callbackReply);
 	void searchCallback(QDBusMessage callbackReply);
+	void setOperationMsg(int driverID, int statusType); /* 普通 Qt SLOT，被 D-Bus 信号 StatusChanged 触发 */
 
 private:
 	Ui::MainWindow *ui;
@@ -68,7 +68,6 @@ private:
 	QString indexName; /* 录入时用户输入的特征名称 */
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
-	QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

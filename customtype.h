@@ -42,6 +42,13 @@ struct BiometricInfo {
 	QString index_name;
 };
 
+/* StatusChanged D-Bus 信号触发时的状态变化类型 */
+enum StatusType {
+	STATUS_DEVICE,
+	STATUS_OPERATION,
+	STATUS_NOTIFY
+};
+
 Q_DECLARE_METATYPE(DeviceInfo)
 Q_DECLARE_METATYPE(BiometricInfo)
 Q_DECLARE_METATYPE(QList<QDBusVariant>)
