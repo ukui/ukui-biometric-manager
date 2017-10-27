@@ -53,11 +53,11 @@ void MainWindow::setModel()
 	ui->treeViewFingervein->setModel(modelFingervein);
 	ui->treeViewIris->setModel(modelIris);
 	modelFingerprint->setHorizontalHeaderLabels(
-			QStringList() << QString("特征名称") << QString("index"));
+			QStringList() << QString(tr("Feature name")) << QString(tr("index")));
 	modelFingervein->setHorizontalHeaderLabels(
-			QStringList() << QString("特征名称") << QString("index"));
+			QStringList() << QString(tr("Feature name")) << QString(tr("index")));
 	modelIris->setHorizontalHeaderLabels(
-			QStringList() << QString("特征名称") << QString("index"));
+			QStringList() << QString(tr("Feature name")) << QString(tr("index")));
 	ui->treeViewFingerprint->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	ui->treeViewFingervein->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	ui->treeViewIris->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -122,7 +122,7 @@ void MainWindow::showUserList()
 	int uid;
 
 	if(!file.open(QIODevice::ReadOnly)) {
-		qDebug() << "GUI:" << "/etc/passwd 文件打开失败";
+		qDebug() << "GUI:" << "/etc/passwd can not be opened";
 	}
 
 	QTextStream in(&file);
@@ -346,8 +346,8 @@ void MainWindow::on_btnEnroll_clicked()
 {
 	QList<QVariant> args;
 	bool ok;
-	QString text = QInputDialog::getText(this, "请输入特征名称",
-					"特征名称", QLineEdit::Normal,
+	QString text = QInputDialog::getText(this, tr("Please input a feature name"),
+					tr("Feature name"), QLineEdit::Normal,
 					"", &ok);
 	if (!ok || text.isEmpty())
 		return;
@@ -390,16 +390,16 @@ void MainWindow::enrollCallback(QDBusMessage callbackReply)
 	dbusStatus  = callbackReply.arguments()[0].value<int>();
 	switch (dbusStatus) {
 	case 0:
-		qDebug() << "GUI:" << "操作成功";
+		qDebug() << "GUI:" << "Enroll successfully";
 		break;
 	case 1:
-		qDebug() << "GUI:" << "操作失败或用户取消";
+		qDebug() << "GUI:" << "Enroll failed or canceled by user";
 		break;
 	case 2:
-		qDebug() << "GUI:" << "设备忙";
+		qDebug() << "GUI:" << "Device is busy";
 		break;
 	case 3:
-		qDebug() << "GUI:" << "设备不存在";
+		qDebug() << "GUI:" << "No such device";
 		break;
 	default:
 		break;
@@ -454,7 +454,7 @@ void MainWindow::setOperationMsg(int driverID, int statusType)
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
-		promptDialog->setLabelText("读取操作信息失败");
+		promptDialog->setLabelText(tr("Failed to get notify message"));
 		return;
 	}
 
@@ -474,7 +474,7 @@ void MainWindow::cancelOperation()
 	biometricInterface->callWithCallback("StopOps", args, this,
 						SLOT(cancelCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
-	promptDialog->setLabelText("取消中...请稍后...");
+	promptDialog->setLabelText(tr("In progress, please wait..."));
 }
 
 /**
@@ -606,7 +606,7 @@ void MainWindow::searchCallback(QDBusMessage callbackReply)
 	/* 经过测试，本函数会在最后一次 StatusChanged 信号触发后才会执行，所以可以将提示信息覆盖一下 */
 	/* 没搜到/超时/用户取消 */
 	if (result != 0){
-		promptDialog->setLabelText("未搜索到指定特征");
+		promptDialog->setLabelText(tr("Not Found"));
 		promptDialog->onlyShowOK();
 		return;
 	}
@@ -615,7 +615,7 @@ void MainWindow::searchCallback(QDBusMessage callbackReply)
 		if (ui->comboBoxUname->itemData(i).value<int>() == hitUid)
 			hitUname = ui->comboBoxUname->itemText(i);
 	}
-	msg = QString("搜索成功！用户名：%1，特征名称：%2").arg(hitUname).arg(hitIndexName);
+	msg = QString(tr("Found! Username: %1, Feature name: %2")).arg(hitUname).arg(hitIndexName);
 	promptDialog->setLabelText(msg);
 	promptDialog->onlyShowOK();
 }

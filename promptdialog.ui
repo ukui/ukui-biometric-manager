@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>当前进度</string>
+   <string>Current Progress</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -39,14 +39,14 @@
      <item>
       <widget class="QPushButton" name="btnOK">
        <property name="text">
-        <string>确定</string>
+        <string>Ok</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btnCancel">
        <property name="text">
-        <string>取消</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>

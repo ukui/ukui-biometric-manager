@@ -10,7 +10,8 @@ Build-Depends: debhelper (>= 9),
 	       biometric-driver-r301,
 	       biometric-driver-ud650,
 	       libbiometric,
-	       libbiometric-dev
+	       libbiometric-dev,
+	       qttools5-dev-tools
 Standards-Version: 3.9.5
 
 Package: biometric-manager

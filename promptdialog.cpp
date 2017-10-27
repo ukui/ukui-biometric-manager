@@ -15,7 +15,7 @@ PromptDialog::PromptDialog(QWidget *parent) :
 	ui->labelImage->setMovie(movie);
 	movie->start();
 	onlyShowCancel();
-	setLabelText("操作中，请稍后...");
+	setLabelText(tr("Operations are in progress. Please wait..."));
 
 	/* 设置 CSS */
 	QFile qssFile(":/css/assets/dialog_stylesheet.qss");
