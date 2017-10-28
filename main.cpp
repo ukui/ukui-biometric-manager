@@ -2,7 +2,7 @@
 #include <QApplication>
 #include <QTranslator>
 
-#define WORKING_DIRECTORY "/usr/local/BiometricManager"
+#define WORKING_DIRECTORY "/usr/local/biometric-manager"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	QString locale = QLocale::system().name();
 	QTranslator translator;
 	if(locale == "zh_CN") {
-		translator.load(WORKING_DIRECTORY"/i18n/zh_CN.qm");
+		translator.load(WORKING_DIRECTORY"/i18n_qm/zh_CN.qm");
 		a.installTranslator(&translator);
 	}
 

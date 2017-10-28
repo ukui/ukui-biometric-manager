@@ -1,35 +1,74 @@
-XML="/usr/share/dbus-1/interfaces/cn.kylinos.Biometric.xml"
-QMAKE_OPTIONS =
-PAM_MAKE_OPTIONS =
-QMAKE = qmake
-QT_MAKEFILE = QtMakefile
-INSTALL_DIR = /usr/local/BiometricManager
+# The default options are compiling with debugging information
+mode = debug
+
+# QDBus XML file and the installation directory
+XML = /usr/share/dbus-1/interfaces/cn.kylinos.Biometric.xml
+INSTALL_DIR = /usr/local/biometric-manager
+
+# Translation file directory
+I18N_SRC = i18n_ts/
+
+ifeq ($(mode), debug)
+	QMAKE_OPTIONS = CONFIG+=debug
+else
+	QMAKE_OPTIONS =
+endif
 
 
-all: debug
+# Target
+all: biometric-manager i18n
 
-debug: QMAKE_OPTIONS += CONFIG+=debug
-debug: BiometricManager
+#
+# Compilation
+#
 
-release: QMAKE_OPTIONS +=
-release: BiometricManager
-
-BiometricManager:
+# Compile Biometric Manager
+biometric-manager:
 	cp -f $(XML) ./
-	lrelease i18n/zh_CN.ts -qm i18n/zh_CN.qm
-	$(QMAKE) $(QMAKE_OPTIONS) -o $(QT_MAKEFILE)
-	make -f $(QT_MAKEFILE)
+	qmake $(QMAKE_OPTIONS) -o QtMakefile
+	make -f QtMakefile
 
-install:
-	install -D BiometricManager $(DESTDIR)$(INSTALL_DIR)/BiometricManager
-	install -D i18n/zh_CN.qm $(DESTDIR)$(INSTALL_DIR)/i18n/zh_CN.qm
+# Generate Qt translation file
+i18n:
+	$(MAKE) -C $(I18N_SRC)
 
-uninstall:
+#
+# Installation
+#
+
+install: install-manager install-i18n
+
+install-manager:
+	# Install Biometric Manager
+	install -D biometric-manager $(DESTDIR)$(INSTALL_DIR)/biometric-manager
+
+install-i18n:
+	# Install i18n
+	$(MAKE) -C $(I18N_SRC) install
+
+#
+# Uninstallation
+#
+
+uninstall: uninstall-manager uninstall-i18n
+
+uninstall-manager:
+	# Uninstall Biometric Manager
 	rm -rf $(DESTDIR)$(INSTALL_DIR)
 
+uninstall-i18n:
+	# Uninstall i18n
+	$(MAKE) -C $(I18N_SRC) uninstall
+
+#
+# Clean intermediate file
+#
+
 clean:
-	rm -f *.o BiometricManager QtMakefile biometric_interface.cpp \
+	rm -f *.o biometric-manager QtMakefile biometric_interface.cpp \
 		biometric_interface.h moc_biometric_interface.cpp \
 		moc_mainwindow.cpp ui_mainwindow.h \
 		moc_promptdialog.cpp ui_promptdialog.h \
-		qrc_assets.cpp cn.kylinos.Biometric.xml i18n/zh_CN.qm
+		qrc_assets.cpp cn.kylinos.Biometric.xml
+	# Clean i18n intermediate files
+	$(MAKE) -C $(I18N_SRC) clean

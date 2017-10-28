@@ -6,6 +6,6 @@ export NO_PKG_MANGLE=1
 	dh $@ 
 
 override_dh_auto_build:
-	make release
+	make all mode=release
 
 override_dh_usrlocal:
