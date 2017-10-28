@@ -388,12 +388,17 @@ void MainWindow::enrollCallback(QDBusMessage callbackReply)
 	 */
 	int dbusStatus, opsStatus;
 	dbusStatus  = callbackReply.arguments()[0].value<int>();
+	QList<QStandardItem *> row;
 	switch (dbusStatus) {
 	case 0:
 		qDebug() << "GUI:" << "Enroll successfully";
+		row.append(new QStandardItem(indexName));
+		row.append(new QStandardItem(QString::number(freeIndex)));
+		dataModelMap.value(currentBiotype)->appendRow(row);
 		break;
 	case 1:
 		qDebug() << "GUI:" << "Enroll failed or canceled by user";
+		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
 		break;
 	case 2:
 		qDebug() << "GUI:" << "Device is busy";
@@ -405,6 +410,7 @@ void MainWindow::enrollCallback(QDBusMessage callbackReply)
 		break;
 	}
 	/* 读取本次设备操作的最终状态 */
+	/*
 	QDBusPendingReply<int, int, int, int, int> reply =
 			biometricInterface->UpdateStatus(
 				deviceInfoMap.value(currentBiotype)->driver_id);
@@ -424,6 +430,7 @@ void MainWindow::enrollCallback(QDBusMessage callbackReply)
 		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
 		break;
 	}
+	*/
 	promptDialog->onlyShowOK();
 }
 
@@ -510,6 +517,9 @@ void MainWindow::on_btnDelete_clicked()
 		qDebug() << "GUI:" << reply.error();
 		return;
 	}
+	int result = reply.argumentAt(0).value<int>();
+	if (result != 0) /* 操作失败，可能是没有权限 */
+		return;
 	biometricIndexMap.value(currentBiotype)->removeOne(deleteIndex);
 	dataModelMap.value(currentBiotype)->removeRow(clickedModelIndex.row(),
 						clickedModelIndex.parent());
