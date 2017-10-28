@@ -1,3 +1,9 @@
+biometric-manager (1.0) juniper; urgency=medium
+
+  * 生物特征管理工具基本开发完成
+
+ -- lihao <lihao@kylinos.cn>  Sat, 28 Oct 2017 14:48:34 +0800
+
 biometric-manager (1.0~rc3) juniper; urgency=medium
 
   * Release Candidate
