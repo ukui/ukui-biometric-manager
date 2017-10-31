@@ -5,13 +5,13 @@
 #include <QDebug>
 #include <QCloseEvent>
 
-PromptDialog::PromptDialog(QWidget *parent) :
+PromptDialog::PromptDialog(QString gif, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::PromptDialog)
 {
 	ui->setupUi(this);
 	setAttribute(Qt::WA_DeleteOnClose); /* 关闭时自动销毁 */
-	QMovie *movie = new QMovie(":/images/assets/progressbar.gif");
+	QMovie *movie = new QMovie(gif);
 	ui->labelImage->setMovie(movie);
 	movie->start();
 	onlyShowCancel();

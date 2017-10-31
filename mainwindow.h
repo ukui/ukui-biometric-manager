@@ -68,6 +68,8 @@ private:
 	QString indexName; /* 录入时用户输入的特征名称 */
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
+	/* 存储设备类型和 GIF 的映射关系 */
+	QMap<enum BioType, QString> gifMap;
 };
 
 #endif // MAINWINDOW_H

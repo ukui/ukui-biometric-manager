@@ -12,6 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	/* 设备类型与 GIF 的映射关系 */
+	gifMap.insert(BIOTYPE_FINGERPRINT, ":/images/assets/fingerprint.gif");
+	gifMap.insert(BIOTYPE_FINGERVEIN, ":/images/assets/fingervein.gif");
+	gifMap.insert(BIOTYPE_IRIS, ":/images/assets/iris.gif");
+
 	/* 设置窗口图标 */
 	QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
 	/* 向 QDBus 类型系统注册自定义数据类型 */
@@ -364,7 +369,7 @@ void MainWindow::on_btnEnroll_clicked()
 	biometricInterface->callWithCallback("Enroll", args, this,
 						SLOT(enrollCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
-	promptDialog = new PromptDialog(this);
+	promptDialog = new PromptDialog(gifMap.value(currentBiotype), this);
 	promptDialog->onlyShowCancel();
 	/*
 	connect(promptDialog, &PromptDialog::rejected, [this]{
@@ -563,7 +568,7 @@ void MainWindow::on_btnVerify_clicked()
 	biometricInterface->callWithCallback("Verify", args, this,
 						SLOT(verifyCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
-	promptDialog = new PromptDialog(this);
+	promptDialog = new PromptDialog(gifMap.value(currentBiotype), this);
 	promptDialog->onlyShowCancel();
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
@@ -591,7 +596,7 @@ void MainWindow::on_btnSearch_clicked()
 	biometricInterface->callWithCallback("Search", args, this,
 						SLOT(searchCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
-	promptDialog = new PromptDialog(this);
+	promptDialog = new PromptDialog(gifMap.value(currentBiotype), this);
 	promptDialog->onlyShowCancel();
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));

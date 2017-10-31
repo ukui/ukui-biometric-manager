@@ -12,7 +12,7 @@ class PromptDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit PromptDialog(QWidget *parent = 0);
+	explicit PromptDialog(QString gif, QWidget *parent = 0);
 	~PromptDialog();
 
 signals:
