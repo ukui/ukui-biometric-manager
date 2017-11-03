@@ -387,55 +387,53 @@ void MainWindow::on_btnEnroll_clicked()
  */
 void MainWindow::enrollCallback(QDBusMessage callbackReply)
 {
-	/*
-	 * 该状态返回值指示了操作成功-0/操作失败-1/设备忙-2/没有设备-3
-	 * 显示给用户的信息由 StatusChanged 信号触发函数提供
-	 */
-	int dbusStatus, opsStatus;
-	dbusStatus  = callbackReply.arguments()[0].value<int>();
+	int result;
+	result = callbackReply.arguments()[0].value<int>();
 	QList<QStandardItem *> row;
-	switch (dbusStatus) {
-	case 0:
-		qDebug() << "GUI:" << "Enroll successfully";
+	switch(result) {
+	case DBUS_RESULT_SUCCESS: /* 录入成功 */
 		row.append(new QStandardItem(indexName));
 		row.append(new QStandardItem(QString::number(freeIndex)));
 		dataModelMap.value(currentBiotype)->appendRow(row);
+		promptDialog->setLabelText(tr("Enroll successfully"));
 		break;
-	case 1:
-		qDebug() << "GUI:" << "Enroll failed or canceled by user";
+	case DBUS_RESULT_ERROR: /* 录入未成功，具体原因还需要进一步读取底层设备的操作状态 */
+		{
 		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
-		break;
-	case 2:
-		qDebug() << "GUI:" << "Device is busy";
-		break;
-	case 3:
-		qDebug() << "GUI:" << "No such device";
-		break;
-	default:
-		break;
-	}
-	/* 读取本次设备操作的最终状态 */
-	/*
-	QDBusPendingReply<int, int, int, int, int> reply =
-			biometricInterface->UpdateStatus(
+		QDBusPendingReply<int, int, int, int, int> reply =
+				biometricInterface->UpdateStatus(
 				deviceInfoMap.value(currentBiotype)->driver_id);
-	reply.waitForFinished();
-	opsStatus = reply.argumentAt(3).value<int>();
-	QList<QStandardItem *> row;
-	switch (opsStatus%100) {
-	case OPS_SUCCESS:
-		row.append(new QStandardItem(indexName));
-		row.append(new QStandardItem(QString::number(freeIndex)));
-		dataModelMap.value(currentBiotype)->appendRow(row);
+		reply.waitForFinished();
+		if (reply.isError()) {
+			qDebug() << "GUI:" << reply.error();
+			promptDialog->setLabelText(tr("D-Bus calling error"));
+			return;
+		}
+		int opsStatus = reply.argumentAt(3).value<int>();
+		opsStatus = opsStatus % 100;
+		if (opsStatus == OPS_FAILED)
+			promptDialog->setLabelText(tr("Failed to enroll"));
+		else if (opsStatus == OPS_ERROR)/* 设备底层发生了错误 */
+			promptDialog->setLabelText(tr("Device encounters an error"));
+		else if (opsStatus == OPS_CANCEL) /* 用户取消 */
+			promptDialog->setLabelText(tr("Canceled by user"));
+		else if (opsStatus == OPS_TIMEOUT) /* 超时未操作 */
+			promptDialog->setLabelText(tr("Operation timeout"));
 		break;
-	case OPS_FAILED:
-	case OPS_ERROR:
-	case OPS_CANCEL:
-	case OPS_TIMEOUT:
+		}
+	case DBUS_RESULT_DEVICEBUSY: /* 设备忙 */
 		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
+		promptDialog->setLabelText(tr("Device is busy"));
+		break;
+	case DBUS_RESULT_NOSUCHDEVICE: /* 设备不存在 */
+		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
+		promptDialog->setLabelText(tr("No such device"));
+		break;
+	case DBUS_RESULT_PERMISSIONDENIED: /* 没有权限 */
+		biometricIndexMap.value(currentBiotype)->removeOne(freeIndex);
+		promptDialog->setLabelText(tr("Permission denied"));
 		break;
 	}
-	*/
 	promptDialog->onlyShowOK();
 }
 

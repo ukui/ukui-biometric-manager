@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN" sourcelanguage="en_US">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
@@ -54,42 +54,87 @@
         <translation>清空所有</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="56"/>
-        <location filename="../mainwindow.cpp" line="58"/>
-        <location filename="../mainwindow.cpp" line="60"/>
-        <location filename="../mainwindow.cpp" line="351"/>
+        <location filename="../mainwindow.cpp" line="61"/>
+        <location filename="../mainwindow.cpp" line="63"/>
+        <location filename="../mainwindow.cpp" line="65"/>
+        <location filename="../mainwindow.cpp" line="356"/>
         <source>Feature name</source>
         <translation>特征名称</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="56"/>
-        <location filename="../mainwindow.cpp" line="58"/>
-        <location filename="../mainwindow.cpp" line="60"/>
+        <location filename="../mainwindow.cpp" line="61"/>
+        <location filename="../mainwindow.cpp" line="63"/>
+        <location filename="../mainwindow.cpp" line="65"/>
         <source>index</source>
         <translation>索引</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="350"/>
+        <location filename="../mainwindow.cpp" line="355"/>
         <source>Please input a feature name</source>
         <translation>请输入特征名称</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="458"/>
+        <location filename="../mainwindow.cpp" line="399"/>
+        <source>Enroll successfully</source>
+        <translation>录入成功</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="410"/>
+        <source>D-Bus calling error</source>
+        <translation>D-Bus 调用错误</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="416"/>
+        <source>Failed to enroll</source>
+        <translation>录入失败</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="418"/>
+        <source>Device encounters an error</source>
+        <translation>设备遇到错误</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="420"/>
+        <source>Canceled by user</source>
+        <translation>用户取消操作</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="422"/>
+        <source>Operation Timeout</source>
+        <translation>操作超时</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="427"/>
+        <source>Device is busy</source>
+        <translation>设备忙</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="431"/>
+        <source>No such device</source>
+        <translation>设备不存在</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="435"/>
+        <source>Permission denied</source>
+        <translation>没有权限</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="468"/>
         <source>Failed to get notify message</source>
         <translation>读取操作信息失败</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="478"/>
+        <location filename="../mainwindow.cpp" line="488"/>
         <source>In progress, please wait...</source>
         <translation>取消中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="610"/>
+        <location filename="../mainwindow.cpp" line="623"/>
         <source>Not Found</source>
         <translation>未搜索到</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="619"/>
+        <location filename="../mainwindow.cpp" line="632"/>
         <source>Found! Username: %1, Feature name: %2</source>
         <translation>搜索成功！用户名：%1，特征名称：%2</translation>
     </message>
@@ -108,12 +153,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../promptdialog.ui" line="42"/>
+        <location filename="../promptdialog.ui" line="45"/>
         <source>Ok</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../promptdialog.ui" line="49"/>
+        <location filename="../promptdialog.ui" line="52"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

@@ -10,7 +10,17 @@ enum BioType {
 	__MAX_NR_BIOTYPES
 };
 
-enum OpsCode {
+/* 录入/删除/搜索等 D-Bus 调用的最终结果，即返回值里的 result */
+enum DBusResult {
+	DBUS_RESULT_SUCCESS = 0,
+	DBUS_RESULT_ERROR,
+	DBUS_RESULT_DEVICEBUSY,
+	DBUS_RESULT_NOSUCHDEVICE,
+	DBUS_RESULT_PERMISSIONDENIED
+};
+
+/* 设备操作结果 ops_status，由 UpdateStatus 函数获得 */
+enum OpsStatus {
 	OPS_SUCCESS,
 	OPS_FAILED,
 	OPS_ERROR,
