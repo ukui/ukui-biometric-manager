@@ -49,6 +49,7 @@ private slots:
 	void verifyCallback(QDBusMessage callbackReply);
 	void searchCallback(QDBusMessage callbackReply);
 	void setOperationMsg(int driverID, int statusType); /* 普通 Qt SLOT，被 D-Bus 信号 StatusChanged 触发 */
+	void setPreEnrollMsg(int driverID, int statusType); /* StatusChanged 信号的第二个 SLOT */
 
 private:
 	Ui::MainWindow *ui;

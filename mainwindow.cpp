@@ -377,8 +377,11 @@ void MainWindow::on_btnEnroll_clicked()
 						});*/
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+	/* 绑定第二个 SLOT，判别录入过程等待 Polkit 授权的阶段，输出特殊提示覆盖 Polkit 搜索操作造成的搜索提示 */
+	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
 	promptDialog->exec();
 	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
 }
 
 /**
@@ -471,6 +474,37 @@ void MainWindow::setOperationMsg(int driverID, int statusType)
 	QString msg;
 	msg = reply.argumentAt(0).value<QString>();
 	promptDialog->setLabelText(msg);
+}
+
+/**
+ * @brief 针对录入操作，在等待Polkit授权的阶段输出特殊的提示
+ * @param driverID
+ * @param statusType
+ */
+void MainWindow::setPreEnrollMsg(int driverID, int statusType)
+{
+	if (statusType != STATUS_NOTIFY)
+		return;
+	int currentDriverID = deviceInfoMap.value(currentBiotype)->driver_id;
+	if (driverID != currentDriverID)
+		return;
+	QDBusPendingReply<int, int, int, int, int> reply =
+			biometricInterface->UpdateStatus(
+				deviceInfoMap.value(currentBiotype)->driver_id);
+	reply.waitForFinished();
+	if (reply.isError()) {
+		qDebug() << "GUI:" << reply.error();
+		return;
+	}
+
+	int devStatus = reply.argumentAt(2).value<int>();
+	/*
+	 * 如果此时设备正在进行搜索操作(Polkit等待授权)则将弹窗上的搜索提示覆盖，防止用户迷惑
+	 * devStatus=101/601/901 分别对应打开设备、正在搜索、关闭设备三种动作
+	 */
+	if (devStatus ==101 || devStatus == 601 || devStatus == 901)
+		promptDialog->setLabelText(tr("Permission is required. Please "
+					      "authenticate yourself to continue"));
 }
 
 /**
