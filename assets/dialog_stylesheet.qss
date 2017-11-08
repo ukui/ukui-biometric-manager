@@ -1,4 +1,4 @@
 #labelText {
 	font-size: 20px;
-	min-height: 40px; max-height: 40px;
+	min-height: 50px; max-height: 50px;
 }
