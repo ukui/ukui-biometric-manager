@@ -419,7 +419,7 @@ void MainWindow::enrollCallback(QDBusMessage callbackReply)
 		else if (opsStatus == OPS_ERROR)/* 设备底层发生了错误 */
 			promptDialog->setLabelText(tr("Device encounters an error"));
 		else if (opsStatus == OPS_CANCEL) /* 用户取消 */
-			promptDialog->setLabelText(tr("Canceled by user"));
+			return; /* 对于取消操作，弹窗会迅速关闭所以不需要设置信息或改变按钮 */
 		else if (opsStatus == OPS_TIMEOUT) /* 超时未操作 */
 			promptDialog->setLabelText(tr("Operation timeout"));
 		break;

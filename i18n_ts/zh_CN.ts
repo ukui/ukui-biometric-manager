@@ -57,7 +57,7 @@
         <location filename="../mainwindow.cpp" line="61"/>
         <location filename="../mainwindow.cpp" line="63"/>
         <location filename="../mainwindow.cpp" line="65"/>
-        <location filename="../mainwindow.cpp" line="356"/>
+        <location filename="../mainwindow.cpp" line="355"/>
         <source>Feature name</source>
         <translation>特征名称</translation>
     </message>
@@ -69,77 +69,72 @@
         <translation>索引</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="355"/>
+        <location filename="../mainwindow.cpp" line="354"/>
         <source>Please input a feature name</source>
         <translation>请输入特征名称</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="402"/>
+        <location filename="../mainwindow.cpp" line="401"/>
         <source>Enroll successfully</source>
         <translation>录入成功</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="413"/>
+        <location filename="../mainwindow.cpp" line="412"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus 调用错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="419"/>
+        <location filename="../mainwindow.cpp" line="418"/>
         <source>Failed to enroll</source>
         <translation>录入失败</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="421"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>Device encounters an error</source>
         <translation>设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="423"/>
-        <source>Canceled by user</source>
-        <translation>用户取消操作</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="425"/>
+        <location filename="../mainwindow.cpp" line="424"/>
         <source>Operation Timeout</source>
         <translation>操作超时</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="434"/>
+        <location filename="../mainwindow.cpp" line="433"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="438"/>
+        <location filename="../mainwindow.cpp" line="437"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="471"/>
+        <location filename="../mainwindow.cpp" line="470"/>
         <source>Failed to get notify message</source>
         <translation>读取操作信息失败</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="507"/>
+        <location filename="../mainwindow.cpp" line="506"/>
         <source>Permission is required. Please authenticate yourself to continue</source>
         <translation>需要授权，请先进行认证以继续操作</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="522"/>
+        <location filename="../mainwindow.cpp" line="521"/>
         <source>In progress, please wait...</source>
         <translation>取消中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="657"/>
+        <location filename="../mainwindow.cpp" line="656"/>
         <source>Not Found</source>
         <translation>未搜索到</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="666"/>
+        <location filename="../mainwindow.cpp" line="665"/>
         <source>Found! Username: %1, Feature name: %2</source>
         <translation>搜索成功！用户名：%1，特征名称：%2</translation>
     </message>
