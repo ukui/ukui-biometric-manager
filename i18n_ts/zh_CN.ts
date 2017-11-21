@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
+<TS version="2.0" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
@@ -57,7 +57,7 @@
         <location filename="../mainwindow.cpp" line="61"/>
         <location filename="../mainwindow.cpp" line="63"/>
         <location filename="../mainwindow.cpp" line="65"/>
-        <location filename="../mainwindow.cpp" line="355"/>
+        <location filename="../mainwindow.cpp" line="358"/>
         <source>Feature name</source>
         <translation>特征名称</translation>
     </message>
@@ -69,72 +69,82 @@
         <translation>索引</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="354"/>
+        <location filename="../mainwindow.cpp" line="355"/>
+        <source>OK</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="356"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="357"/>
         <source>Please input a feature name</source>
         <translation>请输入特征名称</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="404"/>
         <source>Enroll successfully</source>
         <translation>录入成功</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="412"/>
+        <location filename="../mainwindow.cpp" line="415"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus 调用错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="418"/>
+        <location filename="../mainwindow.cpp" line="421"/>
         <source>Failed to enroll</source>
         <translation>录入失败</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="420"/>
+        <location filename="../mainwindow.cpp" line="423"/>
         <source>Device encounters an error</source>
         <translation>设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="424"/>
+        <location filename="../mainwindow.cpp" line="427"/>
         <source>Operation Timeout</source>
         <translation>操作超时</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="432"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="433"/>
+        <location filename="../mainwindow.cpp" line="436"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="437"/>
+        <location filename="../mainwindow.cpp" line="440"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="470"/>
+        <location filename="../mainwindow.cpp" line="473"/>
         <source>Failed to get notify message</source>
         <translation>读取操作信息失败</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="506"/>
+        <location filename="../mainwindow.cpp" line="509"/>
         <source>Permission is required. Please authenticate yourself to continue</source>
         <translation>需要授权，请先进行认证以继续操作</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="521"/>
+        <location filename="../mainwindow.cpp" line="524"/>
         <source>In progress, please wait...</source>
         <translation>取消中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="656"/>
+        <location filename="../mainwindow.cpp" line="659"/>
         <source>Not Found</source>
         <translation>未搜索到</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="665"/>
+        <location filename="../mainwindow.cpp" line="668"/>
         <source>Found! Username: %1, Feature name: %2</source>
         <translation>搜索成功！用户名：%1，特征名称：%2</translation>
     </message>

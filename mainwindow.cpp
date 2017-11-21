@@ -351,7 +351,10 @@ void MainWindow::on_btnEnroll_clicked()
 {
 	QList<QVariant> args;
 	bool ok;
-	QString text = QInputDialog::getText(this, tr("Please input a feature name"),
+	QInputDialog *inputDialog = new QInputDialog();
+	inputDialog->setOkButtonText(tr("OK"));
+	inputDialog->setCancelButtonText(tr("Cancel"));
+	QString text = inputDialog->getText(this, tr("Please input a feature name"),
 					tr("Feature name"), QLineEdit::Normal,
 					"", &ok);
 	if (!ok || text.isEmpty())
