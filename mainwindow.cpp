@@ -7,7 +7,8 @@
 #include <QProcessEnvironment>
 #include "promptdialog.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
+	usernameFromCmd(usernameFromCmd),
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
@@ -146,10 +147,15 @@ void MainWindow::showUserList()
 	}
 	file.close();
 	ui->comboBoxUname->blockSignals(false);
-	/* 获取当前用户名 */
-	QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-	/* 触发 currentIndexChanged 信号 */
-	ui->comboBoxUname->setCurrentText(environment.value("USER"));
+
+	/* 设置下拉列表的当前项，触发 currentIndexChanged 信号 */
+	if (usernameFromCmd == "") {
+		/* 获取当前执行程序的用户名 */
+		QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+		ui->comboBoxUname->setCurrentText(environment.value("USER"));
+	} else {
+		ui->comboBoxUname->setCurrentText(usernameFromCmd);
+	}
 }
 
 /**

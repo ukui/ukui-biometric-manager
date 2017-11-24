@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget *parent = 0);
+	explicit MainWindow(QString usernameFromCmd, QWidget *parent = 0);
 	~MainWindow();
 
 private slots:
@@ -71,6 +71,8 @@ private:
 	PromptDialog *promptDialog;
 	/* 存储设备类型和 GIF 的映射关系 */
 	QMap<enum BioType, QString> gifMap;
+	/* 通过命令行参数传入的用户名 */
+	QString usernameFromCmd;
 };
 
 #endif // MAINWINDOW_H
