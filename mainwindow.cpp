@@ -626,6 +626,46 @@ void MainWindow::on_btnVerify_clicked()
  */
 void MainWindow::verifyCallback(QDBusMessage callbackReply)
 {
+	int result;
+	result = callbackReply.arguments()[0].value<int>();
+	QList<QStandardItem *> row;
+	switch(result) {
+	case DBUS_RESULT_SUCCESS:
+		promptDialog->setLabelText(tr("Match successfully"));
+		break;
+	case DBUS_RESULT_ERROR:
+		{
+		QDBusPendingReply<int, int, int, int, int> reply =
+				biometricInterface->UpdateStatus(
+				deviceInfoMap.value(currentBiotype)->driver_id);
+		reply.waitForFinished();
+		if (reply.isError()) {
+			qDebug() << "GUI:" << reply.error();
+			promptDialog->setLabelText(tr("D-Bus calling error"));
+			return;
+		}
+		int opsStatus = reply.argumentAt(3).value<int>();
+		opsStatus = opsStatus % 100;
+		if (opsStatus == OPS_FAILED)
+			promptDialog->setLabelText(tr("Failed to match"));
+		else if (opsStatus == OPS_ERROR)
+			promptDialog->setLabelText(tr("Device encounters an error"));
+		else if (opsStatus == OPS_CANCEL)
+			return;
+		else if (opsStatus == OPS_TIMEOUT)
+			promptDialog->setLabelText(tr("Operation timeout"));
+		break;
+		}
+	case DBUS_RESULT_DEVICEBUSY:
+		promptDialog->setLabelText(tr("Device is busy"));
+		break;
+	case DBUS_RESULT_NOSUCHDEVICE:
+		promptDialog->setLabelText(tr("No such device"));
+		break;
+	case DBUS_RESULT_PERMISSIONDENIED:
+		promptDialog->setLabelText(tr("Permission denied"));
+		break;
+	}
 	promptDialog->onlyShowOK();
 }
 
@@ -662,19 +702,48 @@ void MainWindow::searchCallback(QDBusMessage callbackReply)
 	hitIndex = variantList[2].value<int>();
 	hitIndexName = variantList[3].value<QString>();
 
-	/* 经过测试，本函数会在最后一次 StatusChanged 信号触发后才会执行，所以可以将提示信息覆盖一下 */
-	/* 没搜到/超时/用户取消 */
-	if (result != DBUS_RESULT_SUCCESS){
-		promptDialog->setLabelText(tr("Not Found"));
-		promptDialog->onlyShowOK();
-		return;
+	QList<QStandardItem *> row;
+	switch(result) {
+	case DBUS_RESULT_SUCCESS:
+		for (int i = 0; i < ui->comboBoxUname->count(); i++) {
+			if (ui->comboBoxUname->itemData(i).value<int>() == hitUid)
+				hitUname = ui->comboBoxUname->itemText(i);
+		}
+		msg = QString(tr("Found! Username: %1, Feature name: %2")).arg(hitUname).arg(hitIndexName);
+		promptDialog->setLabelText(msg);
+		break;
+	case DBUS_RESULT_ERROR:
+		{
+		QDBusPendingReply<int, int, int, int, int> reply =
+				biometricInterface->UpdateStatus(
+				deviceInfoMap.value(currentBiotype)->driver_id);
+		reply.waitForFinished();
+		if (reply.isError()) {
+			qDebug() << "GUI:" << reply.error();
+			promptDialog->setLabelText(tr("D-Bus calling error"));
+			return;
+		}
+		int opsStatus = reply.argumentAt(3).value<int>();
+		opsStatus = opsStatus % 100;
+		if (opsStatus == OPS_FAILED)
+			promptDialog->setLabelText(tr("Not Found"));
+		else if (opsStatus == OPS_ERROR)
+			promptDialog->setLabelText(tr("Device encounters an error"));
+		else if (opsStatus == OPS_CANCEL)
+			return;
+		else if (opsStatus == OPS_TIMEOUT)
+			promptDialog->setLabelText(tr("Operation timeout"));
+		break;
+		}
+	case DBUS_RESULT_DEVICEBUSY:
+		promptDialog->setLabelText(tr("Device is busy"));
+		break;
+	case DBUS_RESULT_NOSUCHDEVICE:
+		promptDialog->setLabelText(tr("No such device"));
+		break;
+	case DBUS_RESULT_PERMISSIONDENIED:
+		promptDialog->setLabelText(tr("Permission denied"));
+		break;
 	}
-
-	for (int i = 0; i < ui->comboBoxUname->count(); i++) {
-		if (ui->comboBoxUname->itemData(i).value<int>() == hitUid)
-			hitUname = ui->comboBoxUname->itemText(i);
-	}
-	msg = QString(tr("Found! Username: %1, Feature name: %2")).arg(hitUname).arg(hitIndexName);
-	promptDialog->setLabelText(msg);
 	promptDialog->onlyShowOK();
 }
