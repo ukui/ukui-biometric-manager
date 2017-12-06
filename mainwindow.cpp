@@ -389,8 +389,6 @@ void MainWindow::on_btnEnroll_clicked()
 	/* 绑定第二个 SLOT，判别录入过程等待 Polkit 授权的阶段，输出特殊提示覆盖 Polkit 搜索操作造成的搜索提示 */
 	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
 	promptDialog->exec();
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
 }
 
 /**
@@ -399,6 +397,10 @@ void MainWindow::on_btnEnroll_clicked()
  */
 void MainWindow::enrollCallback(QDBusMessage callbackReply)
 {
+	/* 最终结果信息由本函数输出，断开操作信息的信号触发 */
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
+
 	int result;
 	result = callbackReply.arguments()[0].value<int>();
 	QList<QStandardItem *> row;
@@ -617,7 +619,6 @@ void MainWindow::on_btnVerify_clicked()
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 }
 
 /**
@@ -626,6 +627,8 @@ void MainWindow::on_btnVerify_clicked()
  */
 void MainWindow::verifyCallback(QDBusMessage callbackReply)
 {
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+
 	int result;
 	result = callbackReply.arguments()[0].value<int>();
 	QList<QStandardItem *> row;
@@ -685,7 +688,6 @@ void MainWindow::on_btnSearch_clicked()
 	connect(promptDialog, &PromptDialog::canceled, this, &MainWindow::cancelOperation);
 	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 }
 
 /**
@@ -694,6 +696,8 @@ void MainWindow::on_btnSearch_clicked()
  */
 void MainWindow::searchCallback(QDBusMessage callbackReply)
 {
+	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+
 	QList<QVariant> variantList = callbackReply.arguments();
 	int result, hitUid, hitIndex;
 	QString hitUname, msg, hitIndexName;
