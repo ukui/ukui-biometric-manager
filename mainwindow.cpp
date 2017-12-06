@@ -8,9 +8,9 @@
 #include "promptdialog.h"
 
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
-	usernameFromCmd(usernameFromCmd),
 	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+	ui(new Ui::MainWindow),
+	usernameFromCmd(usernameFromCmd)
 {
 	ui->setupUi(this);
 	/* 设备类型与 GIF 的映射关系 */
@@ -584,6 +584,9 @@ void MainWindow::on_btnDrop_clicked()
 		qDebug() << "GUI:" << reply.error();
 		return;
 	}
+	int result = reply.argumentAt(0).value<int>();
+	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
+		return;
 	biometricIndexMap.value(currentBiotype)->clear();
 	dataModelMap.value(currentBiotype)->setRowCount(0);
 }
