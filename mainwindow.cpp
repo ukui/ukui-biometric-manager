@@ -564,7 +564,7 @@ void MainWindow::on_btnDelete_clicked()
 		return;
 	}
 	int result = reply.argumentAt(0).value<int>();
-	if (result != 0) /* 操作失败，可能是没有权限 */
+	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
 		return;
 	biometricIndexMap.value(currentBiotype)->removeOne(deleteIndex);
 	dataModelMap.value(currentBiotype)->removeRow(clickedModelIndex.row(),
@@ -661,7 +661,7 @@ void MainWindow::searchCallback(QDBusMessage callbackReply)
 
 	/* 经过测试，本函数会在最后一次 StatusChanged 信号触发后才会执行，所以可以将提示信息覆盖一下 */
 	/* 没搜到/超时/用户取消 */
-	if (result != 0){
+	if (result != DBUS_RESULT_SUCCESS){
 		promptDialog->setLabelText(tr("Not Found"));
 		promptDialog->onlyShowOK();
 		return;
