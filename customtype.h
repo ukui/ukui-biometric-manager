@@ -1,7 +1,9 @@
 #ifndef CUSTOMTYPE_H
 #define CUSTOMTYPE_H
 
-#include <QDBusArgument>
+#include <QtDBus/QtDBus>
+
+#define UNUSED(x) (void)x
 
 enum BioType {
 	BIOTYPE_FINGERPRINT,

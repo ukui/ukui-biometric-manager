@@ -69,6 +69,7 @@ clean:
 		biometric_interface.h moc_biometric_interface.cpp \
 		moc_mainwindow.cpp ui_mainwindow.h \
 		moc_promptdialog.cpp ui_promptdialog.h \
+		moc_contentpane.cpp ui_contentpane.h \
 		qrc_assets.cpp cn.kylinos.Biometric.xml
 	# Clean i18n intermediate files
 	$(MAKE) -C $(I18N_SRC) clean
