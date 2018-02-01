@@ -18,7 +18,7 @@ PromptDialog::PromptDialog(QString gif, QWidget *parent) :
 	setLabelText(tr("Operations are in progress. Please wait..."));
 
 	/* 设置 CSS */
-	QFile qssFile(":/css/assets/dialog_stylesheet.qss");
+	QFile qssFile(":/css/assets/promptdialog.qss");
 	qssFile.open(QFile::ReadOnly);
 	QString styleSheet = QLatin1String(qssFile.readAll());
 	qApp->setStyleSheet(styleSheet);

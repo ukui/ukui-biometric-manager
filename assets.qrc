@@ -6,6 +6,6 @@
         <file>assets/iris.gif</file>
     </qresource>
     <qresource prefix="/css">
-        <file>assets/dialog_stylesheet.qss</file>
+        <file>assets/promptdialog.qss</file>
     </qresource>
 </RCC>
