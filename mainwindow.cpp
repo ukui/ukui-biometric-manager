@@ -14,6 +14,12 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	ui->setupUi(this);
 	/* 设置窗口图标 */
 	QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
+	/* 设置 CSS */
+	QFile qssFile(":/css/assets/mainwindow.qss");
+	qssFile.open(QFile::ReadOnly);
+	QString styleSheet = QLatin1String(qssFile.readAll());
+	qApp->setStyleSheet(styleSheet);
+	qssFile.close();
 
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
@@ -135,6 +141,23 @@ void MainWindow::getDeviceInfo()
 	}
 }
 
+void MainWindow::on_tabWidgetMain_currentChanged(int index)
+{
+	QObject *currentPage = ui->tabWidgetMain->widget(index);
+	QString pageName = currentPage->objectName();
+	QListWidget *lw;
+	if (pageName == "pageDashboard")
+		return;
+	else if (pageName == "pageFingerprint")
+		lw = ui->listWidgetFingerprint;
+	else if (pageName == "pageFingervein")
+		lw = ui->listWidgetFingervein;
+	else if (pageName == "pageIris")
+		lw = ui->listWidgetIris;
+	if (lw->count() >= 1)
+		lw->setCurrentRow(0);
+}
+
 #define widgetAppendToTabPage(biometric) do {				\
 	QListWidget *lw = ui->listWidget##biometric;			\
 	QString sn = deviceInfoList[i]->device_shortname;		\
@@ -185,21 +208,3 @@ void MainWindow::changeContentPane(int index)
 	ContentPane *currentContentPane = (ContentPane *)sw->widget(index);
 	currentContentPane->showBiometrics();
 }
-
-void MainWindow::on_tabWidgetMain_currentChanged(int index)
-{
-	QObject *currentPage = ui->tabWidgetMain->widget(index);
-	QString pageName = currentPage->objectName();
-	QListWidget *lw;
-	if (pageName == "pageDashboard")
-		return;
-	else if (pageName == "pageFingerprint")
-		lw = ui->listWidgetFingerprint;
-	else if (pageName == "pageFingervein")
-		lw = ui->listWidgetFingervein;
-	else if (pageName == "pageIris")
-		lw = ui->listWidgetIris;
-	if (lw->count() >= 1)
-		lw->setCurrentRow(0);
-}
-

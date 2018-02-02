@@ -7,5 +7,6 @@
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>
+        <file>assets/mainwindow.qss</file>
     </qresource>
 </RCC>
