@@ -37,7 +37,8 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	setDefaultUser();
 
 	/* Other initializations */
-	tabPageInit();
+	dashboardPageInit();
+	biometricPageInit();
 }
 
 MainWindow::~MainWindow()
@@ -168,7 +169,7 @@ void MainWindow::on_tabWidgetMain_currentChanged(int index)
 	connect(this, &MainWindow::selectedUserChanged,			\
 			contentPane, &ContentPane::setSelectedUser);	\
 } while(0)
-void MainWindow::tabPageInit()
+void MainWindow::biometricPageInit()
 {
 	for (int i = 0; i < deviceCount; i++) {
 		switch (deviceInfoList[i]->biotype) {
@@ -207,4 +208,67 @@ void MainWindow::changeContentPane(int index)
 	sw->setCurrentIndex(index);
 	ContentPane *currentContentPane = (ContentPane *)sw->widget(index);
 	currentContentPane->showBiometrics();
+}
+
+void MainWindow::dashboardPageInit()
+{
+	/* Systemd */
+	QProcess process;
+	process.start("systemctl is-active biometric-authentication.service");
+	process.waitForFinished();
+	QString output = process.readAllStandardOutput();
+	if (output.contains("active")) {
+		ui->lblServiceStatus->setText(tr("Started"));
+		ui->btnStartService->setEnabled(false);
+		ui->btnStopService->setEnabled(true);
+	} else {
+		ui->lblServiceStatus->setText(tr("Stopped"));
+		ui->btnStartService->setEnabled(true);
+		ui->btnStopService->setEnabled(false);
+	}
+
+	/* Driver */
+	QSettings settings(QString("/etc/biometric-auth/biometric-auth.conf"),
+							QSettings::IniFormat);
+	QStringList groups = settings.childGroups();
+	ui->tableWidgetDriver->setRowCount(groups.count());
+	ui->tableWidgetDriver->setColumnCount(3);
+	ui->tableWidgetDriver->horizontalHeader()->setStretchLastSection(true);
+	for (int i = 0; i < groups.count(); i++) {
+		bool enable = settings.value(groups[i] + "/Enable").toBool();
+		ui->tableWidgetDriver->setItem(i, 0, new QTableWidgetItem(groups[i]));
+		if (enable)
+			ui->tableWidgetDriver->setItem(i, 1, new QTableWidgetItem(tr("Enabled")));
+		else
+			ui->tableWidgetDriver->setItem(i, 1, new QTableWidgetItem(tr("Disabled")));
+	}
+
+	/* Authentication */
+	process.start("bioctl status");
+	process.waitForFinished();
+	output = process.readAllStandardOutput();
+	if (output.contains("enable", Qt::CaseInsensitive)) {
+		ui->lblBioAuthStatus->setText(tr("Enabled"));
+		ui->btnEnableBioAuth->setEnabled(false);
+		ui->btnDisableBioAuth->setEnabled(true);
+	} else {
+		ui->lblBioAuthStatus->setText(tr("Disabled"));
+		ui->btnEnableBioAuth->setEnabled(true);
+		ui->btnDisableBioAuth->setEnabled(false);
+	}
+}
+
+void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
+{
+	UNUSED(current);
+	UNUSED(previous);
+	int currentIndex = ui->tableWidgetDriver->currentRow();
+	QString status = ui->tableWidgetDriver->item(currentIndex, 1)->text();
+	if (status == tr("Enabled")) {
+		ui->btnEnableDriver->setEnabled(false);
+		ui->btnDisableDriver->setEnabled(true);
+	} else {
+		ui->btnEnableDriver->setEnabled(true);
+		ui->btnDisableDriver->setEnabled(false);
+	}
 }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "biometric_interface.h"
 #include "customtype.h"
+#include <QTableWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -21,14 +22,16 @@ public:
 private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
 	void on_tabWidgetMain_currentChanged(int index);
+	void on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
 	void changeContentPane(int index);
 
 /* Normal functions */
 private:
 	void getDeviceInfo();
-	void tabPageInit();
+	void biometricPageInit();
 	void showUserList();
 	void setDefaultUser();
+	void dashboardPageInit();
 
 /* Signals */
 signals:
