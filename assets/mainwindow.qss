@@ -11,3 +11,8 @@ QGroupBox::title {
 	left: 10px;
 	padding: 0 3px 0 3px;
 }
+
+#lblWindow {
+	font-size:30px;
+	margin-bottom: 10px;
+}
