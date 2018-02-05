@@ -32,6 +32,9 @@ private:
 	void showUserList();
 	void setDefaultUser();
 	void dashboardPageInit();
+	void setServiceButtonStatus(bool status);
+	void setDriverButtonStatus(bool status);
+	void setBioAuthButtonStatus(bool status);
 
 /* Signals */
 signals:

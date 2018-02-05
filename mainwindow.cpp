@@ -210,14 +210,12 @@ void MainWindow::changeContentPane(int index)
 	currentContentPane->showBiometrics();
 }
 
-void MainWindow::dashboardPageInit()
+/*
+ * Set button status
+ */
+void MainWindow::setServiceButtonStatus(bool status)
 {
-	/* Systemd */
-	QProcess process;
-	process.start("systemctl is-active biometric-authentication.service");
-	process.waitForFinished();
-	QString output = process.readAllStandardOutput();
-	if (output.contains("active")) {
+	if (status) {
 		ui->lblServiceStatus->setText(tr("Started"));
 		ui->btnStartService->setEnabled(false);
 		ui->btnStopService->setEnabled(true);
@@ -226,6 +224,43 @@ void MainWindow::dashboardPageInit()
 		ui->btnStartService->setEnabled(true);
 		ui->btnStopService->setEnabled(false);
 	}
+}
+
+void MainWindow::setDriverButtonStatus(bool status)
+{
+	if (status) {
+		ui->btnEnableDriver->setEnabled(false);
+		ui->btnDisableDriver->setEnabled(true);
+	} else {
+		ui->btnEnableDriver->setEnabled(true);
+		ui->btnDisableDriver->setEnabled(false);
+	}
+}
+
+void MainWindow::setBioAuthButtonStatus(bool status)
+{
+	if (status) {
+		ui->lblBioAuthStatus->setText(tr("Enabled"));
+		ui->btnEnableBioAuth->setEnabled(false);
+		ui->btnDisableBioAuth->setEnabled(true);
+	} else {
+		ui->lblBioAuthStatus->setText(tr("Disabled"));
+		ui->btnEnableBioAuth->setEnabled(true);
+		ui->btnDisableBioAuth->setEnabled(false);
+	}
+}
+
+void MainWindow::dashboardPageInit()
+{
+	/* Systemd */
+	QProcess process;
+	process.start("systemctl is-active biometric-authentication.service");
+	process.waitForFinished();
+	QString output = process.readAllStandardOutput();
+	if (output.contains("active"))
+		setServiceButtonStatus(true);
+	else
+		setServiceButtonStatus(false);
 
 	/* Driver */
 	QSettings settings(QString("/etc/biometric-auth/biometric-auth.conf"),
@@ -247,15 +282,10 @@ void MainWindow::dashboardPageInit()
 	process.start("bioctl status");
 	process.waitForFinished();
 	output = process.readAllStandardOutput();
-	if (output.contains("enable", Qt::CaseInsensitive)) {
-		ui->lblBioAuthStatus->setText(tr("Enabled"));
-		ui->btnEnableBioAuth->setEnabled(false);
-		ui->btnDisableBioAuth->setEnabled(true);
-	} else {
-		ui->lblBioAuthStatus->setText(tr("Disabled"));
-		ui->btnEnableBioAuth->setEnabled(true);
-		ui->btnDisableBioAuth->setEnabled(false);
-	}
+	if (output.contains("enable", Qt::CaseInsensitive))
+		setBioAuthButtonStatus(true);
+	else
+		setBioAuthButtonStatus(false);
 }
 
 void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
@@ -264,11 +294,8 @@ void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *curre
 	UNUSED(previous);
 	int currentIndex = ui->tableWidgetDriver->currentRow();
 	QString status = ui->tableWidgetDriver->item(currentIndex, 1)->text();
-	if (status == tr("Enabled")) {
-		ui->btnEnableDriver->setEnabled(false);
-		ui->btnDisableDriver->setEnabled(true);
-	} else {
-		ui->btnEnableDriver->setEnabled(true);
-		ui->btnDisableDriver->setEnabled(false);
-	}
+	if (status == tr("Enabled"))
+		setDriverButtonStatus(true);
+	else
+		setDriverButtonStatus(false);
 }
