@@ -300,6 +300,9 @@ void MainWindow::dashboardPageInit()
 
 	connect(ui->btnEnableBioAuth, &QPushButton::clicked, this, &MainWindow::manageBioAuthStatus);
 	connect(ui->btnDisableBioAuth, &QPushButton::clicked, this, &MainWindow::manageBioAuthStatus);
+
+	/* Set default selection */
+	ui->tableWidgetDriver->setCurrentCell(0, 0);
 }
 
 void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
