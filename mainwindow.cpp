@@ -228,10 +228,13 @@ void MainWindow::setServiceButtonStatus(bool status)
 
 void MainWindow::setDriverButtonStatus(bool status)
 {
+	int currentIndex = ui->tableWidgetDriver->currentRow();
 	if (status) {
+		ui->tableWidgetDriver->item(currentIndex, 1)->setText(tr("Enabled"));
 		ui->btnEnableDriver->setEnabled(false);
 		ui->btnDisableDriver->setEnabled(true);
 	} else {
+		ui->tableWidgetDriver->item(currentIndex, 1)->setText(tr("Disabled"));
 		ui->btnEnableDriver->setEnabled(true);
 		ui->btnDisableDriver->setEnabled(false);
 	}
@@ -291,6 +294,9 @@ void MainWindow::dashboardPageInit()
 	connect(ui->btnStartService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
 	connect(ui->btnStopService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
 	connect(ui->btnRestartService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
+
+	connect(ui->btnEnableDriver, &QPushButton::clicked, this, &MainWindow::manageDriverStatus);
+	connect(ui->btnDisableDriver, &QPushButton::clicked, this, &MainWindow::manageDriverStatus);
 }
 
 void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
@@ -325,5 +331,25 @@ void MainWindow::manageServiceStatus()
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			setServiceButtonStatus(true);
+	}
+}
+
+void MainWindow::manageDriverStatus()
+{
+	QProcess process;
+	int currentIndex = ui->tableWidgetDriver->currentRow();
+	QString configGroupName = ui->tableWidgetDriver->item(currentIndex, 0)->text();
+	QObject *senderObject = sender();
+	QString senderName = senderObject->objectName();
+	if (senderName == "btnEnableDriver") {
+		process.start("pkexec biometric-config-tool enable-driver " + configGroupName);
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setDriverButtonStatus(true);
+	} else if (senderName == "btnDisableDriver") {
+		process.start("pkexec biometric-config-tool disable-driver " + configGroupName);
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setDriverButtonStatus(false);
 	}
 }

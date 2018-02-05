@@ -25,6 +25,7 @@ private slots:
 	void on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
 	void changeContentPane(int index);
 	void manageServiceStatus();
+	void manageDriverStatus();
 
 /* Normal functions */
 private:
