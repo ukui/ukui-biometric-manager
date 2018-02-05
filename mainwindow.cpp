@@ -297,6 +297,9 @@ void MainWindow::dashboardPageInit()
 
 	connect(ui->btnEnableDriver, &QPushButton::clicked, this, &MainWindow::manageDriverStatus);
 	connect(ui->btnDisableDriver, &QPushButton::clicked, this, &MainWindow::manageDriverStatus);
+
+	connect(ui->btnEnableBioAuth, &QPushButton::clicked, this, &MainWindow::manageBioAuthStatus);
+	connect(ui->btnDisableBioAuth, &QPushButton::clicked, this, &MainWindow::manageBioAuthStatus);
 }
 
 void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
@@ -351,5 +354,23 @@ void MainWindow::manageDriverStatus()
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			setDriverButtonStatus(false);
+	}
+}
+
+void MainWindow::manageBioAuthStatus()
+{
+	QProcess process;
+	QObject *senderObject = sender();
+	QString senderName = senderObject->objectName();
+	if (senderName == "btnEnableBioAuth") {
+		process.start("pkexec bioctl enable");
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setBioAuthButtonStatus(true);
+	} else if (senderName == "btnDisableBioAuth") {
+		process.start("pkexec bioctl disable");
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setBioAuthButtonStatus(false);
 	}
 }

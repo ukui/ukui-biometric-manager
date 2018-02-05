@@ -26,6 +26,7 @@ private slots:
 	void changeContentPane(int index);
 	void manageServiceStatus();
 	void manageDriverStatus();
+	void manageBioAuthStatus();
 
 /* Normal functions */
 private:
