@@ -286,6 +286,11 @@ void MainWindow::dashboardPageInit()
 		setBioAuthButtonStatus(true);
 	else
 		setBioAuthButtonStatus(false);
+
+	/* Signals */
+	connect(ui->btnStartService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
+	connect(ui->btnStopService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
+	connect(ui->btnRestartService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
 }
 
 void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
@@ -298,4 +303,27 @@ void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *curre
 		setDriverButtonStatus(true);
 	else
 		setDriverButtonStatus(false);
+}
+
+void MainWindow::manageServiceStatus()
+{
+	QProcess process;
+	QObject *senderObject = sender();
+	QString senderName = senderObject->objectName();
+	if (senderName == "btnStartService") {
+		process.start("systemctl start biometric-authentication.service");
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setServiceButtonStatus(true);
+	} else if (senderName == "btnStopService") {
+		process.start("systemctl stop biometric-authentication.service");
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setServiceButtonStatus(false);
+	} else if (senderName == "btnRestartService") {
+		process.start("systemctl restart biometric-authentication.service");
+		process.waitForFinished();
+		if (process.exitCode() == 0)
+			setServiceButtonStatus(true);
+	}
 }
