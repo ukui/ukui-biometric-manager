@@ -174,6 +174,8 @@ void ContentPane::showBiometrics()
 {
 	if (!deviceIsEnabled())
 		return;
+
+	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 	QList<QVariant> args;
 
 	/* 不能用clear()，它会将表头也清掉 */
@@ -206,6 +208,7 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 		row.append(new QStandardItem(QString::number(biometricInfo->index)));
 		dataModel->appendRow(row);
 	}
+	QApplication::restoreOverrideCursor();
 }
 
 /**
