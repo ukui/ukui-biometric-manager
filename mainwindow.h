@@ -23,7 +23,6 @@ private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
 	void on_tabWidgetMain_currentChanged(int index);
 	void on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
-	void changeContentPane(int index);
 	void manageServiceStatus();
 	void manageDriverStatus();
 	void manageBioAuthStatus();

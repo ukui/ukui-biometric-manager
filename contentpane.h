@@ -30,10 +30,9 @@ private slots:
 	void on_btnDrop_clicked();
 
 /* Normal functions */
-public:
-	void showBiometrics();
 private:
 	void showDeviceInfo();
+	void showBiometrics();
 	void setPromptDialogGIF();
 	bool deviceIsEnabled();
 	void setModel();

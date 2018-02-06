@@ -22,6 +22,7 @@ ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 	setModel();
 	trackUsedBiometricIndex();
 	showDeviceInfo();
+	showBiometrics();
 }
 
 ContentPane::~ContentPane()
@@ -60,6 +61,7 @@ void ContentPane::setModel()
 void ContentPane::setSelectedUser(int uid)
 {
 	selectedUid = uid;
+	showBiometrics();
 }
 
 /**

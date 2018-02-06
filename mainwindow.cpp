@@ -185,29 +185,11 @@ void MainWindow::biometricPageInit()
 		}
 	}
 	connect(ui->listWidgetFingerprint, &QListWidget::currentRowChanged,
-		this, &MainWindow::changeContentPane);
+		ui->stackedWidgetFingerprint, &QStackedWidget::setCurrentIndex);
 	connect(ui->listWidgetFingervein, &QListWidget::currentRowChanged,
-		this, &MainWindow::changeContentPane);
+		ui->stackedWidgetFingervein, &QStackedWidget::setCurrentIndex);
 	connect(ui->listWidgetIris, &QListWidget::currentRowChanged,
-		this, &MainWindow::changeContentPane);
-}
-
-void MainWindow::changeContentPane(int index)
-{
-	QObject *senderObject = sender();
-	QString senderName = senderObject->objectName();
-	QStackedWidget *sw;
-	if (senderName == "listWidgetFingerprint")
-		sw = ui->stackedWidgetFingerprint;
-	else if (senderName == "listWidgetFingervein")
-		sw = ui->stackedWidgetFingervein;
-	else if (senderName == "listWidgetIris")
-		sw = ui->stackedWidgetIris;
-	qDebug() << "GUI:" << "ContentPane Changed by" << senderName;
-	/* 切换 ContentPane 并显示数据 */
-	sw->setCurrentIndex(index);
-	ContentPane *currentContentPane = (ContentPane *)sw->widget(index);
-	currentContentPane->showBiometrics();
+		ui->stackedWidgetIris, &QStackedWidget::setCurrentIndex);
 }
 
 /*
