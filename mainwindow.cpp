@@ -149,7 +149,9 @@ void MainWindow::getDeviceInfo()
 #define widgetAppendToTabPage(biometric) do {				\
 	QListWidget *lw = ui->listWidget##biometric;			\
 	QString sn = deviceInfoList[i]->device_shortname;		\
-	lw->insertItem(lw->count(), sn);				\
+	QListWidgetItem *item = new QListWidgetItem(sn);		\
+	item->setTextAlignment(Qt::AlignCenter);			\
+	lw->insertItem(lw->count(), item);				\
 	QStackedWidget *sw = ui->stackedWidget##biometric;		\
 	ContentPane *contentPane = new ContentPane(deviceInfoList[i]);	\
 	sw->addWidget(contentPane);					\
@@ -159,8 +161,17 @@ void MainWindow::getDeviceInfo()
 #define widgetConnectSignal(biometric) do {				\
 	connect(ui->listWidget##biometric, &QListWidget::currentRowChanged,\
 		ui->stackedWidget##biometric, &QStackedWidget::setCurrentIndex);\
-	if (ui->listWidget##biometric->count() >= 1)			\
+	if (ui->listWidget##biometric->count() >= 1) {			\
 		ui->listWidget##biometric->setCurrentRow(0);		\
+	} else {							\
+		delete ui->listWidget##biometric;			\
+		delete ui->stackedWidget##biometric;			\
+		QLabel *lblNoDevice = new QLabel(tr("No Any Device"));	\
+		lblNoDevice->setObjectName("lblNoDevice"#biometric);	\
+		ui->horizontalLayout##biometric->addStretch();		\
+		ui->horizontalLayout##biometric->addWidget(lblNoDevice);\
+		ui->horizontalLayout##biometric->addStretch();		\
+	}								\
 } while(0)
 void MainWindow::biometricPageInit()
 {
