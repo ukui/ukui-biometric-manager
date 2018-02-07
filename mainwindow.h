@@ -21,7 +21,6 @@ public:
 /* Qt slots */
 private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
-	void on_tabWidgetMain_currentChanged(int index);
 	void on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
 	void manageServiceStatus();
 	void manageDriverStatus();

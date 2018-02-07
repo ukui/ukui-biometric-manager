@@ -146,23 +146,6 @@ void MainWindow::getDeviceInfo()
 	}
 }
 
-void MainWindow::on_tabWidgetMain_currentChanged(int index)
-{
-	QObject *currentPage = ui->tabWidgetMain->widget(index);
-	QString pageName = currentPage->objectName();
-	QListWidget *lw;
-	if (pageName == "pageDashboard")
-		return;
-	else if (pageName == "pageFingerprint")
-		lw = ui->listWidgetFingerprint;
-	else if (pageName == "pageFingervein")
-		lw = ui->listWidgetFingervein;
-	else if (pageName == "pageIris")
-		lw = ui->listWidgetIris;
-	if (lw->count() >= 1)
-		lw->setCurrentRow(0);
-}
-
 #define widgetAppendToTabPage(biometric) do {				\
 	QListWidget *lw = ui->listWidget##biometric;			\
 	QString sn = deviceInfoList[i]->device_shortname;		\
@@ -172,6 +155,12 @@ void MainWindow::on_tabWidgetMain_currentChanged(int index)
 	sw->addWidget(contentPane);					\
 	connect(this, &MainWindow::selectedUserChanged,			\
 			contentPane, &ContentPane::setSelectedUser);	\
+} while(0)
+#define widgetConnectSignal(biometric) do {				\
+	connect(ui->listWidget##biometric, &QListWidget::currentRowChanged,\
+		ui->stackedWidget##biometric, &QStackedWidget::setCurrentIndex);\
+	if (ui->listWidget##biometric->count() >= 1)			\
+		ui->listWidget##biometric->setCurrentRow(0);		\
 } while(0)
 void MainWindow::biometricPageInit()
 {
@@ -188,12 +177,9 @@ void MainWindow::biometricPageInit()
 			break;
 		}
 	}
-	connect(ui->listWidgetFingerprint, &QListWidget::currentRowChanged,
-		ui->stackedWidgetFingerprint, &QStackedWidget::setCurrentIndex);
-	connect(ui->listWidgetFingervein, &QListWidget::currentRowChanged,
-		ui->stackedWidgetFingervein, &QStackedWidget::setCurrentIndex);
-	connect(ui->listWidgetIris, &QListWidget::currentRowChanged,
-		ui->stackedWidgetIris, &QStackedWidget::setCurrentIndex);
+	widgetConnectSignal(Fingerprint);
+	widgetConnectSignal(Fingervein);
+	widgetConnectSignal(Iris);
 }
 
 /*
