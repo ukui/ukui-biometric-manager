@@ -29,6 +29,7 @@ private slots:
 
 /* Normal functions */
 private:
+	void prettify();
 	void getDeviceInfo();
 	void biometricPageInit();
 	void showUserList();

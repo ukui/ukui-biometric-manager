@@ -12,14 +12,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	usernameFromCmd(usernameFromCmd)
 {
 	ui->setupUi(this);
-	/* 设置窗口图标 */
-	QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
-	/* 设置 CSS */
-	QFile qssFile(":/css/assets/mainwindow.qss");
-	qssFile.open(QFile::ReadOnly);
-	QString styleSheet = QLatin1String(qssFile.readAll());
-	qApp->setStyleSheet(styleSheet);
-	qssFile.close();
+	prettify();
 
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
@@ -46,6 +39,17 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::prettify()
+{
+	/* 设置窗口图标 */
+	QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
+	/* 设置 CSS */
+	QFile qssFile(":/css/assets/mainwindow.qss");
+	qssFile.open(QFile::ReadOnly);
+	QString styleSheet = QLatin1String(qssFile.readAll());
+	qApp->setStyleSheet(styleSheet);
+	qssFile.close();
+}
 
 /**
  * @brief 获取并显示用户列表
