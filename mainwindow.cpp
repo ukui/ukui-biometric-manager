@@ -242,7 +242,7 @@ void MainWindow::dashboardPageInit()
 							QSettings::IniFormat);
 	QStringList groups = settings.childGroups();
 	ui->tableWidgetDriver->setRowCount(groups.count());
-	ui->tableWidgetDriver->setColumnCount(3);
+	ui->tableWidgetDriver->setColumnCount(2);
 	ui->tableWidgetDriver->horizontalHeader()->setStretchLastSection(true);
 	for (int i = 0; i < groups.count(); i++) {
 		bool enable = settings.value(groups[i] + "/Enable").toBool();
