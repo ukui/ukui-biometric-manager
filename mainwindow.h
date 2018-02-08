@@ -31,6 +31,7 @@ private:
 	void prettify();
 	void getDeviceInfo();
 	void biometricPageInit();
+	QIcon *getUserAvatar(QString username);
 	void showUserList();
 	void setDefaultUser();
 	void dashboardPageInit();

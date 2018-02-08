@@ -51,6 +51,31 @@ void MainWindow::prettify()
 	qssFile.close();
 }
 
+QIcon *MainWindow::getUserAvatar(QString username)
+{
+	QString iconPath;
+	QDBusInterface userIface( "org.freedesktop.Accounts", "/org/freedesktop/Accounts",
+		      "org.freedesktop.Accounts", QDBusConnection::systemBus());
+	if (!userIface.isValid())
+		qDebug() << "GUI:" << "userIface is invalid";
+	QDBusReply<QDBusObjectPath> userReply = userIface.call("FindUserByName", username);
+	if (!userReply.isValid()) {
+		qDebug() << "GUI:" << "userReply is invalid";
+		iconPath = "/usr/share/kylin-greeter/default_face.png";
+	}
+	QDBusInterface iconIface( "org.freedesktop.Accounts", userReply.value().path(),
+			"org.freedesktop.DBus.Properties", QDBusConnection::systemBus());
+	if (!iconIface.isValid())
+		qDebug() << "GUI:" << "IconIface is invalid";
+	QDBusReply<QDBusVariant> iconReply = iconIface.call("Get", "org.freedesktop.Accounts.User", "IconFile");
+	if (!iconReply.isValid()) {
+		qDebug() << "GUI:" << "iconReply is invalid";
+		iconPath = "/usr/share/kylin-greeter/default_face.png";
+	}
+	iconPath = iconReply.value().variant().toString();
+	return new QIcon(iconPath);
+}
+
 /**
  * @brief 获取并显示用户列表
  */
@@ -59,7 +84,7 @@ void MainWindow::showUserList()
 	QFile file("/etc/passwd");
 	QString line;
 	QStringList fields;
-	QString uname;
+	QString username;
 	int uid;
 
 	if(!file.open(QIODevice::ReadOnly)) {
@@ -73,12 +98,13 @@ void MainWindow::showUserList()
 	while(!in.atEnd()) {
 		line = in.readLine();
 		fields = line.split(":");
-		uname = fields[0];
+		username = fields[0];
 		uid = fields[2].toInt();
 		if (uid == 65534) /* nobody 用户 */
 			continue;
 		if (uid >=1000 || uid == 0)
-			ui->comboBoxUsername->addItem(uname, QVariant(uid));
+			ui->comboBoxUsername->addItem(*getUserAvatar(username),
+							username, QVariant(uid));
 	}
 	file.close();
 	ui->comboBoxUsername->blockSignals(false);
