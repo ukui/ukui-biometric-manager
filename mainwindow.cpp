@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QProcessEnvironment>
 #include "contentpane.h"
+#include <unistd.h>
 
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QMainWindow(parent),
@@ -73,6 +74,8 @@ QIcon *MainWindow::getUserAvatar(QString username)
 		iconPath = "/usr/share/kylin-greeter/default_face.png";
 	}
 	iconPath = iconReply.value().variant().toString();
+	if (access(qPrintable(iconPath), R_OK) != 0) /* No Access Permission */
+		iconPath = "/usr/share/kylin-greeter/default_face.png";
 	return new QIcon(iconPath);
 }
 
