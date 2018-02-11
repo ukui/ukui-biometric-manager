@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayoutHeader">
       <item>
        <widget class="QLabel" name="lblWindow">
         <property name="text">
@@ -222,7 +222,7 @@
        <attribute name="title">
         <string>Fingerprint</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayoutFingerprint">
         <item>
          <widget class="QListWidget" name="listWidgetFingerprint"/>
         </item>
@@ -235,7 +235,7 @@
        <attribute name="title">
         <string>Fingervein</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayoutFingervein">
         <item>
          <widget class="QListWidget" name="listWidgetFingervein"/>
         </item>
@@ -248,7 +248,7 @@
        <attribute name="title">
         <string>Iris</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayoutIris">
         <item>
          <widget class="QListWidget" name="listWidgetIris"/>
         </item>
