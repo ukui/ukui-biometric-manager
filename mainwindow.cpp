@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QProcessEnvironment>
 #include "contentpane.h"
+#include "toggleswitch.h"
 #include <unistd.h>
 
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :

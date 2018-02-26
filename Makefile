@@ -70,6 +70,7 @@ clean:
 		moc_mainwindow.cpp ui_mainwindow.h \
 		moc_promptdialog.cpp ui_promptdialog.h \
 		moc_contentpane.cpp ui_contentpane.h \
+		moc_toggleswitch.cpp \
 		qrc_assets.cpp cn.kylinos.Biometric.xml
 	# Clean i18n intermediate files
 	$(MAKE) -C $(I18N_SRC) clean
