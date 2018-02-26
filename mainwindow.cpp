@@ -50,6 +50,15 @@ void MainWindow::prettify()
 	QString styleSheet = QLatin1String(qssFile.readAll());
 	qApp->setStyleSheet(styleSheet);
 	qssFile.close();
+
+	/* Set Icon for each tab on tabwidget */
+	ui->tabWidgetMain->setTabIcon(0, QIcon(":/images/assets/tab-dashboard.png"));
+	ui->tabWidgetMain->setTabIcon(1, QIcon(":/images/assets/tab-fingerprint.png"));
+	ui->tabWidgetMain->setTabIcon(2, QIcon(":/images/assets/tab-fingervein.png"));
+	ui->tabWidgetMain->setTabIcon(3, QIcon(":/images/assets/tab-iris.png"));
+	ui->tabWidgetMain->setIconSize(QSize(32, 32));
+	/* Set icon on lblIcon */
+	ui->lblIcon->setPixmap(QPixmap(":/images/assets/icon.png").scaled(QSize(64, 64)));
 }
 
 QIcon *MainWindow::getUserAvatar(QString username)

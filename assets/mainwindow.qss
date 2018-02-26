@@ -1,3 +1,5 @@
+/* Base color: #0A77B5 */
+
 QGroupBox {
 	font-size: 16px;
 	font-weight: bold;
@@ -15,4 +17,30 @@ QGroupBox::title {
 #lblWindow {
 	font-size:30px;
 	margin-bottom: 10px;
+}
+
+QTabBar::tab {
+	min-height: 60px;
+	padding-left: 50px;
+	padding-right: 50px;
+	background-color: white;
+	border: 1px solid #bbbbbb;
+	border-bottom-width: 0px;
+	margin-right: -1px;
+	top: 6px;
+}
+
+QTabBar::tab:selected {
+	border-bottom-width: 0px;
+	padding-top: 3px;
+	top: 0px;
+	border-top: 2px solid #aaaaaa;
+}
+
+QTabBar::tab:last {
+	margin-right: 0px;
+}
+
+QTabWidget::Pane {
+	margin-top: 5px;
 }

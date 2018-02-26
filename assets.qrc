@@ -4,6 +4,10 @@
         <file>assets/fingerprint.gif</file>
         <file>assets/fingervein.gif</file>
         <file>assets/iris.gif</file>
+        <file>assets/tab-dashboard.png</file>
+        <file>assets/tab-fingerprint.png</file>
+        <file>assets/tab-fingervein.png</file>
+        <file>assets/tab-iris.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>

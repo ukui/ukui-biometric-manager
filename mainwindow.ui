@@ -18,6 +18,13 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayoutHeader">
       <item>
+       <widget class="QLabel" name="lblIcon">
+        <property name="text">
+         <string>Icon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="lblWindow">
         <property name="text">
          <string>Biometric Manager</string>
