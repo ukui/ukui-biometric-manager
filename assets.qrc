@@ -8,6 +8,9 @@
         <file>assets/tab-fingerprint.png</file>
         <file>assets/tab-fingervein.png</file>
         <file>assets/tab-iris.png</file>
+        <file>assets/restart.png</file>
+        <file>assets/add.png</file>
+        <file>assets/remove.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>

@@ -8,6 +8,10 @@
 #include "toggleswitch.h"
 #include <unistd.h>
 
+#define ICON_SIZE 32
+#define DRIVER_TS_W 45 /* The width of ToggleSwitch in driver list */
+#define DRIVER_TS_H 26
+
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow),
@@ -232,170 +236,125 @@ void MainWindow::biometricPageInit()
 	widgetConnectSignal(Iris);
 }
 
-/*
- * Set button status
- */
-void MainWindow::setServiceButtonStatus(bool status)
-{
-	if (status) {
-		ui->lblServiceStatus->setText(tr("Started"));
-		ui->btnStartService->setEnabled(false);
-		ui->btnStopService->setEnabled(true);
-	} else {
-		ui->lblServiceStatus->setText(tr("Stopped"));
-		ui->btnStartService->setEnabled(true);
-		ui->btnStopService->setEnabled(false);
-	}
-}
-
-void MainWindow::setDriverButtonStatus(bool status)
-{
-	int currentIndex = ui->tableWidgetDriver->currentRow();
-	if (status) {
-		ui->tableWidgetDriver->item(currentIndex, 1)->setText(tr("Enabled"));
-		ui->btnEnableDriver->setEnabled(false);
-		ui->btnDisableDriver->setEnabled(true);
-	} else {
-		ui->tableWidgetDriver->item(currentIndex, 1)->setText(tr("Disabled"));
-		ui->btnEnableDriver->setEnabled(true);
-		ui->btnDisableDriver->setEnabled(false);
-	}
-}
-
-void MainWindow::setBioAuthButtonStatus(bool status)
-{
-	if (status) {
-		ui->lblBioAuthStatus->setText(tr("Enabled"));
-		ui->btnEnableBioAuth->setEnabled(false);
-		ui->btnDisableBioAuth->setEnabled(true);
-	} else {
-		ui->lblBioAuthStatus->setText(tr("Disabled"));
-		ui->btnEnableBioAuth->setEnabled(true);
-		ui->btnDisableBioAuth->setEnabled(false);
-	}
-}
-
 void MainWindow::dashboardPageInit()
 {
+	ToggleSwitch *toggleSwitch;
+
 	/* Systemd */
 	QProcess process;
 	process.start("systemctl is-active biometric-authentication.service");
 	process.waitForFinished();
 	QString output = process.readAllStandardOutput();
-	if (output.contains("active"))
-		setServiceButtonStatus(true);
+	if (output.startsWith("active"))
+		toggleSwitch = new ToggleSwitch(true);
 	else
-		setServiceButtonStatus(false);
+		toggleSwitch = new ToggleSwitch(false);
+	QHBoxLayout *hBoxLayout = (QHBoxLayout *)ui->groupBoxService->layout();
+	QPushButton *btnRestartService = new QPushButton();
+	btnRestartService->setIcon(QIcon(":/images/assets/restart.png"));
+	btnRestartService->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	btnRestartService->setObjectName("btnRestartService");
+	hBoxLayout->addWidget(toggleSwitch);
+	hBoxLayout->addWidget(btnRestartService);
+	hBoxLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
+	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageServiceStatus);
+	connect(btnRestartService, &QPushButton::clicked, this, &MainWindow::restartService);
 
 	/* Driver */
 	QSettings settings(QString("/etc/biometric-auth/biometric-auth.conf"),
 							QSettings::IniFormat);
 	QStringList groups = settings.childGroups();
-	ui->tableWidgetDriver->setRowCount(groups.count());
-	ui->tableWidgetDriver->setColumnCount(2);
-	ui->tableWidgetDriver->horizontalHeader()->setStretchLastSection(true);
+	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
 	for (int i = 0; i < groups.count(); i++) {
 		bool enable = settings.value(groups[i] + "/Enable").toBool();
-		ui->tableWidgetDriver->setItem(i, 0, new QTableWidgetItem(groups[i]));
 		if (enable)
-			ui->tableWidgetDriver->setItem(i, 1, new QTableWidgetItem(tr("Enabled")));
+			toggleSwitch = new ToggleSwitch(true, DRIVER_TS_W, DRIVER_TS_H);
 		else
-			ui->tableWidgetDriver->setItem(i, 1, new QTableWidgetItem(tr("Disabled")));
+			toggleSwitch = new ToggleSwitch(false, DRIVER_TS_W, DRIVER_TS_H);
+		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
+		gridLayout->addWidget(new QLabel(groups[i]), i, 0);
+		gridLayout->addWidget(toggleSwitch, i, 1);
+
+		QPushButton *btnRemoveDriver = new QPushButton();
+		btnRemoveDriver->setObjectName("btnRemoveDriver");
+		btnRemoveDriver->setIcon(QIcon(":/images/assets/remove.png"));
+		btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+		gridLayout->addWidget(btnRemoveDriver, i, 2);
 	}
+	ui->btnAddDriver->setIcon(QIcon(":/images/assets/add.png"));
+	ui->btnAddDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 
 	/* Authentication */
 	process.start("bioctl status");
 	process.waitForFinished();
 	output = process.readAllStandardOutput();
 	if (output.contains("enable", Qt::CaseInsensitive))
-		setBioAuthButtonStatus(true);
+		toggleSwitch = new ToggleSwitch(true);
 	else
-		setBioAuthButtonStatus(false);
-
-	/* Signals */
-	connect(ui->btnStartService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
-	connect(ui->btnStopService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
-	connect(ui->btnRestartService, &QPushButton::clicked, this, &MainWindow::manageServiceStatus);
-
-	connect(ui->btnEnableDriver, &QPushButton::clicked, this, &MainWindow::manageDriverStatus);
-	connect(ui->btnDisableDriver, &QPushButton::clicked, this, &MainWindow::manageDriverStatus);
-
-	connect(ui->btnEnableBioAuth, &QPushButton::clicked, this, &MainWindow::manageBioAuthStatus);
-	connect(ui->btnDisableBioAuth, &QPushButton::clicked, this, &MainWindow::manageBioAuthStatus);
-
-	/* Set default selection */
-	ui->tableWidgetDriver->setCurrentCell(0, 0);
+		toggleSwitch = new ToggleSwitch(false);
+	ui->horizontalLayoutBioAuth->addWidget(toggleSwitch);
+	ui->horizontalLayoutBioAuth->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
+	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageBioAuthStatus);
 }
 
-void MainWindow::on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
+void MainWindow::manageServiceStatus(bool toState)
 {
-	UNUSED(current);
-	UNUSED(previous);
-	int currentIndex = ui->tableWidgetDriver->currentRow();
-	QString status = ui->tableWidgetDriver->item(currentIndex, 1)->text();
-	if (status == tr("Enabled"))
-		setDriverButtonStatus(true);
-	else
-		setDriverButtonStatus(false);
-}
-
-void MainWindow::manageServiceStatus()
-{
+	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
 	QProcess process;
-	QObject *senderObject = sender();
-	QString senderName = senderObject->objectName();
-	if (senderName == "btnStartService") {
+	if (toState) {
 		process.start("systemctl start biometric-authentication.service");
 		process.waitForFinished();
 		if (process.exitCode() == 0)
-			setServiceButtonStatus(true);
-	} else if (senderName == "btnStopService") {
+			toggleSwitch->acceptStateChange();
+	} else {
 		process.start("systemctl stop biometric-authentication.service");
 		process.waitForFinished();
 		if (process.exitCode() == 0)
-			setServiceButtonStatus(false);
-	} else if (senderName == "btnRestartService") {
-		process.start("systemctl restart biometric-authentication.service");
-		process.waitForFinished();
-		if (process.exitCode() == 0)
-			setServiceButtonStatus(true);
+			toggleSwitch->acceptStateChange();
 	}
 }
 
-void MainWindow::manageDriverStatus()
+void MainWindow::restartService()
 {
 	QProcess process;
-	int currentIndex = ui->tableWidgetDriver->currentRow();
-	QString configGroupName = ui->tableWidgetDriver->item(currentIndex, 0)->text();
-	QObject *senderObject = sender();
-	QString senderName = senderObject->objectName();
-	if (senderName == "btnEnableDriver") {
+	process.start("systemctl restart biometric-authentication.service");
+	process.waitForFinished();
+}
+
+void MainWindow::manageDriverStatus(bool toState)
+{
+	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
+	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
+	int index = gridLayout->indexOf(toggleSwitch);
+	QLabel *label = (QLabel *)gridLayout->itemAt(index - 1)->widget();
+	QProcess process;
+	QString configGroupName = label->text();
+	if (toState) {
 		process.start("pkexec biometric-config-tool enable-driver " + configGroupName);
 		process.waitForFinished();
 		if (process.exitCode() == 0)
-			setDriverButtonStatus(true);
-	} else if (senderName == "btnDisableDriver") {
+			toggleSwitch->acceptStateChange();
+	} else {
 		process.start("pkexec biometric-config-tool disable-driver " + configGroupName);
 		process.waitForFinished();
 		if (process.exitCode() == 0)
-			setDriverButtonStatus(false);
+			toggleSwitch->acceptStateChange();
 	}
 }
 
-void MainWindow::manageBioAuthStatus()
+void MainWindow::manageBioAuthStatus(bool toState)
 {
+	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
 	QProcess process;
-	QObject *senderObject = sender();
-	QString senderName = senderObject->objectName();
-	if (senderName == "btnEnableBioAuth") {
+	if (toState) {
 		process.start("pkexec bioctl enable");
 		process.waitForFinished();
 		if (process.exitCode() == 0)
-			setBioAuthButtonStatus(true);
-	} else if (senderName == "btnDisableBioAuth") {
+			toggleSwitch->acceptStateChange();
+	} else {
 		process.start("pkexec bioctl disable");
 		process.waitForFinished();
 		if (process.exitCode() == 0)
-			setBioAuthButtonStatus(false);
+			toggleSwitch->acceptStateChange();
 	}
 }

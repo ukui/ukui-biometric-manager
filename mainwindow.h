@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "biometric_interface.h"
 #include "customtype.h"
+#include "toggleswitch.h"
 #include <QTableWidgetItem>
 
 namespace Ui {
@@ -21,10 +22,10 @@ public:
 /* Qt slots */
 private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
-	void on_tableWidgetDriver_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
-	void manageServiceStatus();
-	void manageDriverStatus();
-	void manageBioAuthStatus();
+	void manageServiceStatus(bool toState);
+	void restartService();
+	void manageDriverStatus(bool toState);
+	void manageBioAuthStatus(bool toState);
 
 /* Normal functions */
 private:
@@ -35,9 +36,6 @@ private:
 	void showUserList();
 	void setDefaultUser();
 	void dashboardPageInit();
-	void setServiceButtonStatus(bool status);
-	void setDriverButtonStatus(bool status);
-	void setBioAuthButtonStatus(bool status);
 
 /* Signals */
 signals:
