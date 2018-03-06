@@ -7,6 +7,9 @@
 #include "contentpane.h"
 #include "toggleswitch.h"
 #include <unistd.h>
+#include <QScrollBar>
+#include <driverinputdialog.h>
+#include <QMessageBox>
 
 #define ICON_SIZE 32
 #define DRIVER_TS_W 45 /* The width of ToggleSwitch in driver list */
@@ -265,6 +268,7 @@ void MainWindow::dashboardPageInit()
 							QSettings::IniFormat);
 	QStringList groups = settings.childGroups();
 	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
+	gridLayout->setAlignment(Qt::AlignTop);
 	for (int i = 0; i < groups.count(); i++) {
 		bool enable = settings.value(groups[i] + "/Enable").toBool();
 		if (enable)
@@ -280,9 +284,11 @@ void MainWindow::dashboardPageInit()
 		btnRemoveDriver->setIcon(QIcon(":/images/assets/remove.png"));
 		btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 		gridLayout->addWidget(btnRemoveDriver, i, 2);
+		connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
 	}
 	ui->btnAddDriver->setIcon(QIcon(":/images/assets/add.png"));
 	ui->btnAddDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	connect(ui->btnAddDriver, &QPushButton::clicked, this, &MainWindow::addDriver);
 
 	/* Authentication */
 	process.start("bioctl status");
@@ -339,6 +345,84 @@ void MainWindow::manageDriverStatus(bool toState)
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
+	}
+}
+
+void MainWindow::addDriver()
+{
+	DriverInputDialog *dialog = new DriverInputDialog();
+	connect(dialog, &DriverInputDialog::inputCompleted, this, &MainWindow::addDriverCallback);
+	dialog->exec();
+}
+
+void MainWindow::addDriverCallback(QString driverName, bool status, QString driverPath, QString devicePath)
+{
+	QProcess process;
+	process.start("pkexec biometric-config-tool add-driver " + driverName + " " + driverPath);
+	process.waitForFinished();
+	if (process.exitCode() != 0) {
+		QMessageBox *messageBox = new QMessageBox(QMessageBox::Information,
+							tr("Error"),
+							tr("Fail to add driver"),
+							QMessageBox::Ok);
+		messageBox->exec();
+		return;
+	}
+	if (devicePath != "")
+		process.start("pkexec biometric-config-tool set-key "
+					+ driverName + " Path " + driverPath);
+	process.waitForFinished();
+	if (!status)
+		process.start("pkexec biometric-config-tool disable-driver " + driverName);
+	process.waitForFinished();
+
+	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
+	int rowCount = gridLayout->rowCount();
+	ToggleSwitch *toggleSwitch = new ToggleSwitch(status, DRIVER_TS_W, DRIVER_TS_H);
+	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
+	gridLayout->addWidget(new QLabel(driverName), rowCount, 0);
+	gridLayout->addWidget(toggleSwitch, rowCount, 1);
+
+	QPushButton *btnRemoveDriver = new QPushButton();
+	btnRemoveDriver->setObjectName("btnRemoveDriver");
+	btnRemoveDriver->setIcon(QIcon(":/images/assets/remove.png"));
+	btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	gridLayout->addWidget(btnRemoveDriver, rowCount, 2);
+	connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
+
+	/* https://stackoverflow.com/a/23978797/4112667 */
+	int maximum = ui->scrollAreaDriver->verticalScrollBar()->maximum();
+	maximum += ICON_SIZE; /* Increase maximum manually */
+	ui->scrollAreaDriver->verticalScrollBar()->setMaximum(maximum);
+	ui->scrollAreaDriver->verticalScrollBar()->setValue(maximum);
+}
+
+void MainWindow::removeDriver()
+{
+	QPushButton *btnRemoveDriver = (QPushButton *)sender();
+	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
+	int index = gridLayout->indexOf(btnRemoveDriver);
+
+	QLabel *lbl;
+	lbl = (QLabel *)gridLayout->itemAt(index - 2)->widget();
+	QProcess process;
+	process.start("pkexec biometric-config-tool remove-driver " + lbl->text());
+	process.waitForFinished();
+	if (process.exitCode() != 0) {
+		QMessageBox *messageBox = new QMessageBox(QMessageBox::Information,
+							tr("Error"),
+							tr("Fail to remove driver"),
+							QMessageBox::Ok);
+		messageBox->exec();
+		return;
+	}
+
+	QWidget *widget;
+	for (int i = 1; i <= 3; i++) {
+		widget = gridLayout->itemAt(index - 2)->widget();
+		gridLayout->removeWidget(widget);
+		widget->deleteLater();
+		delete widget;
 	}
 }
 

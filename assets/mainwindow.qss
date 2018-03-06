@@ -14,6 +14,10 @@ QGroupBox::title {
 	padding: 0 3px 0 3px;
 }
 
+#groupBoxDriverInputDialog {
+	border: none;
+}
+
 #lblWindow {
 	font-size:30px;
 	margin-bottom: 10px;
