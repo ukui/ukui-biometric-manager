@@ -31,6 +31,7 @@ private slots:
 
 /* Normal functions */
 private:
+	void setButtonIcons();
 	void showDeviceInfo();
 	void showBiometrics();
 	void setPromptDialogGIF();

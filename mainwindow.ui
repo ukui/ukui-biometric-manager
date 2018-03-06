@@ -170,6 +170,9 @@
         <string>Fingerprint</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayoutFingerprint">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QListWidget" name="listWidgetFingerprint"/>
         </item>
@@ -183,6 +186,9 @@
         <string>Fingervein</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayoutFingervein">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QListWidget" name="listWidgetFingervein"/>
         </item>
@@ -196,6 +202,9 @@
         <string>Iris</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayoutIris">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QListWidget" name="listWidgetIris"/>
         </item>

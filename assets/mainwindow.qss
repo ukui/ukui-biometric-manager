@@ -70,3 +70,35 @@ QTabWidget::Pane {
 	outline: none;
 	border-style:none;
 }
+
+QListWidget {
+	border-style: none;
+	max-width: 100px;
+	font: normal normal 16px;
+}
+
+QListWidget::item {
+	/*color: white;*/
+	font: normal normal 10px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bbbbbb;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	min-height: 30px;
+}
+
+QListWidget::item:selected {
+	border-right-style: none;
+}
+
+#stackedWidgetFingerprint, #stackedWidgetFingervein, #stackedWidgetIris {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bbbbbb;
+}
+
+#labelFeatureList {
+	margin-top: 10px;
+	font: bold normal 15px;
+}

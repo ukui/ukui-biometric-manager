@@ -3,6 +3,8 @@
 #include "contentpane.h"
 #include "ui_contentpane.h"
 
+#define ICON_SIZE 32
+
 ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::ContentPane)
@@ -18,6 +20,7 @@ ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 				QDBusConnection::systemBus(), this);
 	biometricInterface->setTimeout(2147483647); /* 微秒 */
 	setPromptDialogGIF();
+	setButtonIcons();
 	/* 设置数据模型 */
 	setModel();
 	trackUsedBiometricIndex();
@@ -28,6 +31,20 @@ ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 ContentPane::~ContentPane()
 {
 	delete ui;
+}
+
+void ContentPane::setButtonIcons()
+{
+	ui->btnEnroll->setIcon(QIcon(":/images/assets/enroll.png"));
+	ui->btnEnroll->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	ui->btnDelete->setIcon(QIcon(":/images/assets/delete.png"));
+	ui->btnDelete->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	ui->btnVerify->setIcon(QIcon(":/images/assets/verify.png"));
+	ui->btnVerify->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	ui->btnSearch->setIcon(QIcon(":/images/assets/search.png"));
+	ui->btnSearch->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
+	ui->btnDrop->setIcon(QIcon(":/images/assets/drop.png"));
+	ui->btnDrop->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 }
 
 void ContentPane::setPromptDialogGIF()
@@ -85,7 +102,6 @@ void ContentPane::showDeviceInfo()
 	ui->labelStorageType->setText(QString::number(deviceInfo->stotype));
 	ui->labelIdentificationType->setText(QString::number(deviceInfo->idtype));
 	ui->labelDeviceStatus->setText(QString::number(deviceInfo->dev_status));
-	ui->checkBox->setChecked(deviceIsEnabled());
 }
 
 /**

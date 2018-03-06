@@ -51,13 +51,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QCheckBox" name="checkBox">
-       <property name="text">
-        <string>Enable</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="1">
       <widget class="QLabel" name="label_2">
        <property name="text">
@@ -138,7 +131,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="label_9">
+    <widget class="QLabel" name="labelFeatureList">
      <property name="text">
       <string>Biometric Feature List</string>
      </property>

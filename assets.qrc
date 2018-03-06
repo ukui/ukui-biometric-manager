@@ -11,6 +11,11 @@
         <file>assets/restart.png</file>
         <file>assets/add.png</file>
         <file>assets/remove.png</file>
+        <file>assets/drop.png</file>
+        <file>assets/search.png</file>
+        <file>assets/verify.png</file>
+        <file>assets/delete.png</file>
+        <file>assets/enroll.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>
