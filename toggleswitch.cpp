@@ -119,6 +119,9 @@ void ToggleSwitch::onTimeout()
 		if (thumbX <= 0)
 			timer->stop();
 	}
+	/* 3 may not be an integer multiple of distance */
+	if (thumbX > trackWidth - thumbWidth) thumbX = trackWidth - thumbWidth;
+	if (thumbX < 0) thumbX = 0;
 	update();
 }
 
