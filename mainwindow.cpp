@@ -101,6 +101,15 @@ QIcon *MainWindow::getUserAvatar(QString username)
  */
 void MainWindow::showUserList()
 {
+	/* The style sheet won't be applied to the combobox item view without this line. */
+	ui->comboBoxUsername->setView(new QListView());
+	/* Set the size of QIcon which is in item */
+	ui->comboBoxUsername->setIconSize(QSize(45, 45));
+	/* Set the font of combobox */
+	ui->comboBoxUsername->setFont(QFont("Monospace", 16, QFont::Bold));
+	/* Set font size of item */
+	ui->comboBoxUsername->view()->setFont(QFont("Monospace", 16, QFont::Bold));
+
 	QFile file("/etc/passwd");
 	QString line;
 	QStringList fields;

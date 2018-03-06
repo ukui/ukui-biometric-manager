@@ -102,3 +102,16 @@ QListWidget::item:selected {
 	margin-top: 10px;
 	font: bold normal 15px;
 }
+
+QComboBox {
+	min-height: 45px;
+	padding: 2px;
+}
+
+QComboBox QAbstractItemView::item {
+	min-height: 45px;
+}
+
+QComboBox::drop-down{
+	border-width: 0px;
+}
