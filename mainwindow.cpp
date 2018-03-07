@@ -175,7 +175,7 @@ void MainWindow::getDeviceInfo()
 	DeviceInfo *deviceInfo;
 
 	/* 返回值为 i -- int 和 av -- array of variant */
-	QDBusPendingReply<int, QList<QDBusVariant> > reply = biometricInterface->GetDevList();
+	QDBusPendingReply<int, QList<QDBusVariant> > reply = biometricInterface->GetDrvList();
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
