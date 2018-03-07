@@ -1,3 +1,15 @@
+biometric-manager (1.2) juniper; urgency=medium
+
+  * [Fixed] 虹膜录入中取消操作导致段错误
+  * [Minor] 对特征名称输入弹窗的按钮进行国际化
+  * [New] 增加命令行选项 -u/--username
+  * [Minor] 搜索/删除操作对 DBus 回调结果的判断统一使用定义的枚举类型
+  * [Fixed] 清空操作没有对结果进行判断
+  * [Fixed] 虹膜设备取消验证或取消搜索会导致崩溃
+  * [Improved] 在录入/验证/搜索回调函数内断开 setOperationMsg 信号函数
+
+ -- lihao <lihao@kylinos.cn>  Tue, 21 Nov 2017 17:09:14 +0800
+
 biometric-manager (1.1) juniper; urgency=medium
 
   * 功能已经稳定
