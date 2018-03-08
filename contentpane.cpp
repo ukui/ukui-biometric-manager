@@ -101,7 +101,6 @@ void ContentPane::showDeviceInfo()
 	ui->labelBusType->setText(QString::number(deviceInfo->bustype));
 	ui->labelStorageType->setText(QString::number(deviceInfo->stotype));
 	ui->labelIdentificationType->setText(QString::number(deviceInfo->idtype));
-	ui->labelDeviceStatus->setText(QString::number(deviceInfo->dev_status));
 }
 
 /**
