@@ -352,14 +352,14 @@ void MainWindow::manageDriverStatus(bool toState)
 	int index = gridLayout->indexOf(toggleSwitch);
 	QLabel *label = (QLabel *)gridLayout->itemAt(index - 1)->widget();
 	QProcess process;
-	QString configGroupName = label->text();
+	QString driverName = label->text();
 	if (toState) {
-		process.start("pkexec biometric-config-tool enable-driver " + configGroupName);
+		process.start("pkexec biometric-config-tool enable-driver " + driverName);
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
 	} else {
-		process.start("pkexec biometric-config-tool disable-driver " + configGroupName);
+		process.start("pkexec biometric-config-tool disable-driver " + driverName);
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
