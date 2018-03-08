@@ -41,6 +41,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	/* Other initializations */
 	dashboardPageInit();
 	biometricPageInit();
+	clearNoDevicePage();
 }
 
 MainWindow::~MainWindow()
@@ -201,7 +202,7 @@ void MainWindow::getDeviceInfo()
 	}
 }
 
-#define widgetAppendToTabPage(biometric) do {				\
+#define initializeBiometricPage(biometric) do {				\
 	QListWidget *lw = ui->listWidget##biometric;			\
 	QString sn = deviceInfoList[i]->device_shortname;		\
 	QListWidgetItem *item = new QListWidgetItem(sn);		\
@@ -213,9 +214,7 @@ void MainWindow::getDeviceInfo()
 	connect(this, &MainWindow::selectedUserChanged,			\
 			contentPane, &ContentPane::setSelectedUser);	\
 } while(0)
-#define widgetConnectSignal(biometric) do {				\
-	connect(ui->listWidget##biometric, &QListWidget::currentRowChanged,\
-		ui->stackedWidget##biometric, &QStackedWidget::setCurrentIndex);\
+#define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
 		ui->listWidget##biometric->setCurrentRow(0);		\
 	} else {							\
@@ -233,19 +232,29 @@ void MainWindow::biometricPageInit()
 	for (int i = 0; i < deviceCount; i++) {
 		switch (deviceInfoList[i]->biotype) {
 		case BIOTYPE_FINGERPRINT:
-			widgetAppendToTabPage(Fingerprint);
+			initializeBiometricPage(Fingerprint);
 			break;
 		case BIOTYPE_FINGERVEIN:
-			widgetAppendToTabPage(Fingervein);
+			initializeBiometricPage(Fingervein);
 			break;
 		case BIOTYPE_IRIS:
-			widgetAppendToTabPage(Iris);
+			initializeBiometricPage(Iris);
 			break;
 		}
 	}
-	widgetConnectSignal(Fingerprint);
-	widgetConnectSignal(Fingervein);
-	widgetConnectSignal(Iris);
+	connect(ui->listWidgetFingerprint, &QListWidget::currentRowChanged,
+		ui->stackedWidgetFingerprint, &QStackedWidget::setCurrentIndex);
+	connect(ui->listWidgetFingervein, &QListWidget::currentRowChanged,
+		ui->stackedWidgetFingervein, &QStackedWidget::setCurrentIndex);
+	connect(ui->listWidgetIris, &QListWidget::currentRowChanged,
+		ui->stackedWidgetIris, &QStackedWidget::setCurrentIndex);
+}
+
+void MainWindow::clearNoDevicePage()
+{
+	checkBiometricPage(Fingerprint);
+	checkBiometricPage(Fingervein);
+	checkBiometricPage(Iris);
 }
 
 void MainWindow::dashboardPageInit()
