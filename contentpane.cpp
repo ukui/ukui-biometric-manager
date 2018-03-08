@@ -95,6 +95,10 @@ bool ContentPane::deviceIsEnabled()
 void ContentPane::showDeviceInfo()
 {
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
+	if (deviceInfo->enable)
+		ui->labelStatus->setText(tr("Enabled"));
+	else
+		ui->labelStatus->setText(tr("Disabled"));
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
 	ui->labelBiometricType->setText(QString::number(deviceInfo->biotype));
 	ui->labelVerifyType->setText(QString::number(deviceInfo->vertype));
