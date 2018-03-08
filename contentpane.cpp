@@ -188,8 +188,10 @@ int ContentPane::findFreeBiometricIndex()
  */
 void ContentPane::showBiometrics()
 {
-	if (!deviceIsEnabled())
+	if (!deviceIsEnabled()) {
+		setWidgetsEnabled(false);
 		return;
+	}
 
 	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 	QList<QVariant> args;
@@ -225,6 +227,16 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 		dataModel->appendRow(row);
 	}
 	QApplication::restoreOverrideCursor();
+}
+
+void ContentPane::setWidgetsEnabled(bool enabled)
+{
+	ui->btnEnroll->setEnabled(enabled);
+	ui->btnDelete->setEnabled(enabled);
+	ui->btnVerify->setEnabled(enabled);
+	ui->btnSearch->setEnabled(enabled);
+	ui->btnDrop->setEnabled(enabled);
+	ui->treeView->setEnabled(enabled);
 }
 
 /**
