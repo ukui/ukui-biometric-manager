@@ -35,12 +35,12 @@ private:
 	void showDeviceInfo();
 	void showBiometrics();
 	void setPromptDialogGIF();
-	bool deviceIsEnabled();
+	bool deviceIsAvailable();
 	void setModel();
 	void trackUsedBiometricIndex();
 	int findFreeBiometricIndex();
 public:
-	void setDeviceEnabled(bool state);
+	void setDeviceAvailable(bool state);
 
 /* DBus */
 private slots:

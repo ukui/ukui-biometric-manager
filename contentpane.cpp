@@ -81,7 +81,7 @@ void ContentPane::setSelectedUser(int uid)
 	showBiometrics();
 }
 
-void ContentPane::setDeviceEnabled(bool state)
+void ContentPane::setDeviceAvailable(bool state)
 {
 	deviceInfo->device_available = state;
 	if (deviceInfo->device_available)
@@ -101,7 +101,7 @@ void ContentPane::setDeviceEnabled(bool state)
  * @param biotype
  * @return
  */
-bool ContentPane::deviceIsEnabled()
+bool ContentPane::deviceIsAvailable()
 {
 	return deviceInfo->device_available;
 }
@@ -110,7 +110,7 @@ bool ContentPane::deviceIsEnabled()
 void ContentPane::showDeviceInfo()
 {
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	setDeviceEnabled(deviceInfo->device_available);
+	setDeviceAvailable(deviceInfo->device_available);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
 	ui->labelBiometricType->setText(QString::number(deviceInfo->biotype));
 	ui->labelVerifyType->setText(QString::number(deviceInfo->vertype));
@@ -124,7 +124,7 @@ void ContentPane::showDeviceInfo()
  */
 void ContentPane::trackUsedBiometricIndex()
 {
-	if (!deviceIsEnabled())
+	if (!deviceIsAvailable())
 		return;
 
 	QList<QDBusVariant> qlist;
@@ -203,7 +203,7 @@ int ContentPane::findFreeBiometricIndex()
  */
 void ContentPane::showBiometrics()
 {
-	if (!deviceIsEnabled())
+	if (!deviceIsAvailable())
 		return;
 
 	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));

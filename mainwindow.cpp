@@ -408,7 +408,7 @@ void MainWindow::manageDriverStatus(bool toState)
 	}
 	if (process.exitCode() == 0) {
 		toggleSwitch->acceptStateChange();
-		contentPaneMap.value(driverName)->setDeviceEnabled(toState);
+		contentPaneMap.value(driverName)->setDeviceAvailable(toState);
 	}
 }
 
