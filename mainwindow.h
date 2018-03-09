@@ -52,7 +52,7 @@ private:
 	/* 用于和远端 DBus 对象交互的代理接口 */
 	cn::kylinos::Biometric *biometricInterface;
 	int deviceCount;
-	DeviceInfo *deviceInfoList[16];
+	QMap<QString, DeviceInfo *> deviceInfoMap;
 	QMap<QString, ContentPane *> contentPaneMap;
 	/* 通过命令行参数传入的用户名 */
 	QString usernameFromCmd;

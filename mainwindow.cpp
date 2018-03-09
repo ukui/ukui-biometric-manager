@@ -191,6 +191,7 @@ void MainWindow::getDeviceInfo()
 	argument = variant.value<QDBusArgument>(); /* 解封装，获取QDBusArgument对象 */
 	argument >> qlist; /* 使用运算符重载提取 argument 对象里面存储的列表对象 */
 
+	deviceInfoMap.clear();
 	for (int i = 0; i < deviceCount; i++) {
 		item = qlist[i]; /* 取出一个元素 */
 		variant = item.variant(); /* 转为普通QVariant对象 */
@@ -198,20 +199,19 @@ void MainWindow::getDeviceInfo()
 		argument = variant.value<QDBusArgument>();
 		deviceInfo = new DeviceInfo();
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
-		deviceInfoList[i] = deviceInfo;
+		deviceInfoMap.insert(deviceInfo->device_shortname, deviceInfo);
 	}
 }
 
 #define initializeBiometricPage(biometric) do {				\
 	QListWidget *lw = ui->listWidget##biometric;			\
-	QString sn = deviceInfoList[i]->device_shortname;		\
-	QListWidgetItem *item = new QListWidgetItem(sn);		\
+	QListWidgetItem *item = new QListWidgetItem(driverName);	\
 	item->setTextAlignment(Qt::AlignCenter);			\
 	lw->insertItem(lw->count(), item);				\
 	QStackedWidget *sw = ui->stackedWidget##biometric;		\
-	ContentPane *contentPane = new ContentPane(deviceInfoList[i]);	\
+	ContentPane *contentPane = new ContentPane(deviceInfo);		\
 	sw->addWidget(contentPane);					\
-	contentPaneMap.insert(sn, contentPane);				\
+	contentPaneMap.insert(driverName, contentPane);			\
 	connect(this, &MainWindow::selectedUserChanged,			\
 			contentPane, &ContentPane::setSelectedUser);	\
 } while(0)
@@ -230,8 +230,9 @@ void MainWindow::getDeviceInfo()
 } while(0)
 void MainWindow::biometricPageInit()
 {
-	for (int i = 0; i < deviceCount; i++) {
-		switch (deviceInfoList[i]->biotype) {
+	for (QString driverName: deviceInfoMap.keys()) {
+		DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+		switch (deviceInfo->biotype) {
 		case BIOTYPE_FINGERPRINT:
 			initializeBiometricPage(Fingerprint);
 			break;
