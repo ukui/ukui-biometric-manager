@@ -6,6 +6,7 @@
 #include "customtype.h"
 #include "toggleswitch.h"
 #include <QTableWidgetItem>
+#include <contentpane.h>
 
 namespace Ui {
 class MainWindow;
@@ -52,6 +53,7 @@ private:
 	cn::kylinos::Biometric *biometricInterface;
 	int deviceCount;
 	DeviceInfo *deviceInfoList[16];
+	QMap<QString, ContentPane *> contentPaneMap;
 	/* 通过命令行参数传入的用户名 */
 	QString usernameFromCmd;
 };

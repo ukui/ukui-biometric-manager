@@ -211,6 +211,7 @@ void MainWindow::getDeviceInfo()
 	QStackedWidget *sw = ui->stackedWidget##biometric;		\
 	ContentPane *contentPane = new ContentPane(deviceInfoList[i]);	\
 	sw->addWidget(contentPane);					\
+	contentPaneMap.insert(sn, contentPane);				\
 	connect(this, &MainWindow::selectedUserChanged,			\
 			contentPane, &ContentPane::setSelectedUser);	\
 } while(0)
@@ -288,7 +289,8 @@ void MainWindow::dashboardPageInit()
 	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
 	gridLayout->setAlignment(Qt::AlignTop);
 	for (int i = 0; i < groups.count(); i++) {
-		bool enable = settings.value(groups[i] + "/Enable").toBool();
+		QString driverName = groups[i];
+		bool enable = settings.value(driverName + "/Enable").toBool();
 		if (enable)
 			toggleSwitch = new ToggleSwitch(true, DRIVER_TS_W, DRIVER_TS_H);
 		else
@@ -356,13 +358,13 @@ void MainWindow::manageDriverStatus(bool toState)
 	if (toState) {
 		process.start("pkexec biometric-config-tool enable-driver " + driverName);
 		process.waitForFinished();
-		if (process.exitCode() == 0)
-			toggleSwitch->acceptStateChange();
 	} else {
 		process.start("pkexec biometric-config-tool disable-driver " + driverName);
 		process.waitForFinished();
-		if (process.exitCode() == 0)
-			toggleSwitch->acceptStateChange();
+	}
+	if (process.exitCode() == 0) {
+		toggleSwitch->acceptStateChange();
+		contentPaneMap.value(driverName)->setDriverEnabled(toState);
 	}
 }
 
