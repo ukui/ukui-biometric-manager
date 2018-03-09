@@ -39,7 +39,8 @@ private:
 	void setModel();
 	void trackUsedBiometricIndex();
 	int findFreeBiometricIndex();
-	void setWidgetsEnabled(bool enabled);
+public:
+	void setDriverEnabled(bool state);
 
 /* DBus */
 private slots:

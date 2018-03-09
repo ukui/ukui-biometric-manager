@@ -81,6 +81,21 @@ void ContentPane::setSelectedUser(int uid)
 	showBiometrics();
 }
 
+void ContentPane::setDriverEnabled(bool state)
+{
+	deviceInfo->enable = state;
+	if (deviceInfo->enable)
+		ui->labelStatus->setText(tr("Enabled"));
+	else
+		ui->labelStatus->setText(tr("Disabled"));
+	ui->btnEnroll->setEnabled(state);
+	ui->btnDelete->setEnabled(state);
+	ui->btnVerify->setEnabled(state);
+	ui->btnSearch->setEnabled(state);
+	ui->btnDrop->setEnabled(state);
+	ui->treeView->setEnabled(state);
+}
+
 /**
  * @brief 检测某种生物识别设备是否存在
  * @param biotype
@@ -95,10 +110,7 @@ bool ContentPane::deviceIsEnabled()
 void ContentPane::showDeviceInfo()
 {
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	if (deviceInfo->enable)
-		ui->labelStatus->setText(tr("Enabled"));
-	else
-		ui->labelStatus->setText(tr("Disabled"));
+	setDriverEnabled(deviceInfo->enable);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
 	ui->labelBiometricType->setText(QString::number(deviceInfo->biotype));
 	ui->labelVerifyType->setText(QString::number(deviceInfo->vertype));
@@ -191,10 +203,8 @@ int ContentPane::findFreeBiometricIndex()
  */
 void ContentPane::showBiometrics()
 {
-	if (!deviceIsEnabled()) {
-		setWidgetsEnabled(false);
+	if (!deviceIsEnabled())
 		return;
-	}
 
 	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 	QList<QVariant> args;
@@ -230,16 +240,6 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 		dataModel->appendRow(row);
 	}
 	QApplication::restoreOverrideCursor();
-}
-
-void ContentPane::setWidgetsEnabled(bool enabled)
-{
-	ui->btnEnroll->setEnabled(enabled);
-	ui->btnDelete->setEnabled(enabled);
-	ui->btnVerify->setEnabled(enabled);
-	ui->btnSearch->setEnabled(enabled);
-	ui->btnDrop->setEnabled(enabled);
-	ui->treeView->setEnabled(enabled);
 }
 
 /**
