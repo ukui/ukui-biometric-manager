@@ -32,8 +32,8 @@ enum OpsStatus {
 };
 
 struct DeviceInfo {
-	int driver_id;
-	QString device_shortname;
+	int device_id;
+	QString device_shortname; /* aka driverName */
 	QString device_fullname;
 	int enable;
 	int biotype;
@@ -49,7 +49,7 @@ struct DeviceInfo {
 struct BiometricInfo {
 	int uid;
 	int biotype;
-	QString driver_shortname;
+	QString device_shortname;
 	int index;
 	QString index_name;
 };

@@ -81,7 +81,7 @@ void ContentPane::setSelectedUser(int uid)
 	showBiometrics();
 }
 
-void ContentPane::setDriverEnabled(bool state)
+void ContentPane::setDeviceEnabled(bool state)
 {
 	deviceInfo->enable = state;
 	if (deviceInfo->enable)
@@ -110,7 +110,7 @@ bool ContentPane::deviceIsEnabled()
 void ContentPane::showDeviceInfo()
 {
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	setDriverEnabled(deviceInfo->enable);
+	setDeviceEnabled(deviceInfo->enable);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
 	ui->labelBiometricType->setText(QString::number(deviceInfo->biotype));
 	ui->labelVerifyType->setText(QString::number(deviceInfo->vertype));
@@ -132,7 +132,7 @@ void ContentPane::trackUsedBiometricIndex()
 	int listsize;
 
 	QDBusPendingReply<int, QList<QDBusVariant> > reply =
-		biometricInterface->GetFeatureList(deviceInfo->driver_id, -1, 0, -1);
+		biometricInterface->GetFeatureList(deviceInfo->device_id, -1, 0, -1);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -212,7 +212,7 @@ void ContentPane::showBiometrics()
 	/* 不能用clear()，它会将表头也清掉 */
 	dataModel->setRowCount(0);
 
-	args << QVariant(deviceInfo->driver_id)
+	args << QVariant(deviceInfo->device_id)
 		<< QVariant(selectedUid) << QVariant(0) << QVariant(-1);
 	biometricInterface->callWithCallback("GetFeatureList", args, this,
 						SLOT(showBiometricsCallback(QDBusMessage)),
@@ -264,7 +264,7 @@ void ContentPane::on_btnEnroll_clicked()
 	 * 异步回调参考资料：
 	 * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
 	 */
-	args << QVariant(deviceInfo->driver_id)
+	args << QVariant(deviceInfo->device_id)
 		<< QVariant(selectedUid) << QVariant(freeIndex) << QVariant(indexName);
 	biometricInterface->callWithCallback("Enroll", args, this,
 						SLOT(enrollCallback(QDBusMessage)),
@@ -306,7 +306,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 		{
 		usedIndexList->removeOne(freeIndex);
 		QDBusPendingReply<int, int, int, int, int> reply =
-				biometricInterface->UpdateStatus(deviceInfo->driver_id);
+				biometricInterface->UpdateStatus(deviceInfo->device_id);
 		reply.waitForFinished();
 		if (reply.isError()) {
 			qDebug() << "GUI:" << reply.error();
@@ -352,15 +352,15 @@ void ContentPane::errorCallback(QDBusError error)
 
 /**
  * @brief 设置操作进度提示，被 D-Bus 信号 StatusChanged 触发
- * @param driverID
+ * @param deviceID
  * @param statusType
  */
-void ContentPane::setOperationMsg(int driverID, int statusType)
+void ContentPane::setOperationMsg(int deviceID, int statusType)
 {
-	if (!(driverID == deviceInfo->driver_id && statusType == STATUS_NOTIFY))
+	if (!(deviceID == deviceInfo->device_id && statusType == STATUS_NOTIFY))
 		return;
 	QDBusPendingReply<QString> reply =
-			biometricInterface->GetNotifyMesg(deviceInfo->driver_id);
+			biometricInterface->GetNotifyMesg(deviceInfo->device_id);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -375,15 +375,15 @@ void ContentPane::setOperationMsg(int driverID, int statusType)
 
 /**
  * @brief 针对录入操作，在等待Polkit授权的阶段输出特殊的提示
- * @param driverID
+ * @param deviceID
  * @param statusType
  */
-void ContentPane::setPreEnrollMsg(int driverID, int statusType)
+void ContentPane::setPreEnrollMsg(int deviceID, int statusType)
 {
-	if (!(driverID == deviceInfo->driver_id && statusType == STATUS_NOTIFY))
+	if (!(deviceID == deviceInfo->device_id && statusType == STATUS_NOTIFY))
 		return;
 	QDBusPendingReply<int, int, int, int, int> reply =
-			biometricInterface->UpdateStatus(deviceInfo->driver_id);
+			biometricInterface->UpdateStatus(deviceInfo->device_id);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -406,7 +406,7 @@ void ContentPane::setPreEnrollMsg(int driverID, int statusType)
 void ContentPane::cancelOperation()
 {
 	QList<QVariant> args;
-	args << QVariant(deviceInfo->driver_id) << QVariant(5);
+	args << QVariant(deviceInfo->device_id) << QVariant(5);
 	biometricInterface->callWithCallback("StopOps", args, this,
 						SLOT(cancelCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
@@ -438,7 +438,7 @@ void ContentPane::on_btnDelete_clicked()
 	int deleteIndex = indexModelIndex.data().value<QString>().toInt();
 
 	QDBusPendingReply<int> reply = biometricInterface->Clean(
-			deviceInfo->driver_id, selectedUid, deleteIndex, deleteIndex);
+			deviceInfo->device_id, selectedUid, deleteIndex, deleteIndex);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -457,7 +457,7 @@ void ContentPane::on_btnDelete_clicked()
 void ContentPane::on_btnDrop_clicked()
 {
 	QDBusPendingReply<int> reply = biometricInterface->Clean(
-					deviceInfo->driver_id, selectedUid, 0, -1);
+					deviceInfo->device_id, selectedUid, 0, -1);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -484,7 +484,7 @@ void ContentPane::on_btnVerify_clicked()
 	indexModelIndex = dataModel->index(clickedModelIndex.row(), 1,
 						clickedModelIndex.parent());
 	verifyIndex = indexModelIndex.data().value<QString>().toInt();
-	args << QVariant(deviceInfo->driver_id) << QVariant(selectedUid)
+	args << QVariant(deviceInfo->device_id) << QVariant(selectedUid)
 						<< QVariant(verifyIndex);
 	biometricInterface->callWithCallback("Verify", args, this,
 						SLOT(verifyCallback(QDBusMessage)),
@@ -514,7 +514,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 	case DBUS_RESULT_ERROR:
 		{
 		QDBusPendingReply<int, int, int, int, int> reply =
-				biometricInterface->UpdateStatus(deviceInfo->driver_id);
+				biometricInterface->UpdateStatus(deviceInfo->device_id);
 		reply.waitForFinished();
 		if (reply.isError()) {
 			qDebug() << "GUI:" << reply.error();
@@ -552,7 +552,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 void ContentPane::on_btnSearch_clicked()
 {
 	QList<QVariant> args;
-	args << QVariant(deviceInfo->driver_id) << QVariant(selectedUid)
+	args << QVariant(deviceInfo->device_id) << QVariant(selectedUid)
 						<< QVariant(0) << QVariant(-1);
 	biometricInterface->callWithCallback("Search", args, this,
 						SLOT(searchCallback(QDBusMessage)),
@@ -592,7 +592,7 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
 	case DBUS_RESULT_ERROR:
 		{
 		QDBusPendingReply<int, int, int, int, int> reply =
-				biometricInterface->UpdateStatus(deviceInfo->driver_id);
+				biometricInterface->UpdateStatus(deviceInfo->device_id);
 		reply.waitForFinished();
 		if (reply.isError()) {
 			qDebug() << "GUI:" << reply.error();

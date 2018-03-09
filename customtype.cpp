@@ -12,7 +12,7 @@ void registerCustomTypes()
 QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &deviceInfo)
 {
     argument.beginStructure();
-    argument << deviceInfo.driver_id << deviceInfo.device_shortname
+    argument << deviceInfo.device_id << deviceInfo.device_shortname
 		<< deviceInfo.device_fullname << deviceInfo.enable
 		<< deviceInfo.biotype << deviceInfo.stotype
 		<< deviceInfo.eigtype << deviceInfo.vertype
@@ -25,7 +25,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &deviceInfo)
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &deviceInfo)
 {
     argument.beginStructure();
-    argument >> deviceInfo.driver_id >> deviceInfo.device_shortname
+    argument >> deviceInfo.device_id >> deviceInfo.device_shortname
 		>> deviceInfo.device_fullname >> deviceInfo.enable
 		>> deviceInfo.biotype >> deviceInfo.stotype
 		>> deviceInfo.eigtype >> deviceInfo.vertype
@@ -40,7 +40,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const BiometricInfo &biometri
 {
     argument.beginStructure();
     argument << biometricInfo.uid << biometricInfo.biotype
-		<< biometricInfo.driver_shortname << biometricInfo.index
+		<< biometricInfo.device_shortname << biometricInfo.index
 		<< biometricInfo.index_name;
     argument.endStructure();
     return argument;
@@ -50,7 +50,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, BiometricInfo &bi
 {
     argument.beginStructure();
     argument >> biometricInfo.uid >> biometricInfo.biotype
-		>> biometricInfo.driver_shortname >> biometricInfo.index
+		>> biometricInfo.device_shortname >> biometricInfo.index
 		>> biometricInfo.index_name;
     argument.endStructure();
     return argument;

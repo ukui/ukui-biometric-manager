@@ -180,19 +180,19 @@ void MainWindow::getDeviceInfo()
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
-		deviceCount = 0;
+		driverCount = 0;
 		return;
 	}
 
 	/* 解析 DBus 返回值，reply 有两个返回值，都是 QVariant 类型 */
 	variant = reply.argumentAt(0); /* 得到第一个返回值 */
-	deviceCount = variant.value<int>(); /* 解封装得到设备个数 */
+	driverCount = variant.value<int>(); /* 解封装得到设备个数 */
 	variant = reply.argumentAt(1); /* 得到第二个返回值 */
 	argument = variant.value<QDBusArgument>(); /* 解封装，获取QDBusArgument对象 */
 	argument >> qlist; /* 使用运算符重载提取 argument 对象里面存储的列表对象 */
 
 	deviceInfoMap.clear();
-	for (int i = 0; i < deviceCount; i++) {
+	for (int i = 0; i < driverCount; i++) {
 		item = qlist[i]; /* 取出一个元素 */
 		variant = item.variant(); /* 转为普通QVariant对象 */
 		/* 解封装得到 QDBusArgument 对象 */
@@ -365,7 +365,7 @@ void MainWindow::manageDriverStatus(bool toState)
 	}
 	if (process.exitCode() == 0) {
 		toggleSwitch->acceptStateChange();
-		contentPaneMap.value(driverName)->setDriverEnabled(toState);
+		contentPaneMap.value(driverName)->setDeviceEnabled(toState);
 	}
 }
 

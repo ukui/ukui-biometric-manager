@@ -40,7 +40,7 @@ private:
 	void trackUsedBiometricIndex();
 	int findFreeBiometricIndex();
 public:
-	void setDriverEnabled(bool state);
+	void setDeviceEnabled(bool state);
 
 /* DBus */
 private slots:
@@ -51,8 +51,8 @@ private slots:
 	void cancelCallback(QDBusMessage callbackReply);
 	void verifyCallback(QDBusMessage callbackReply);
 	void searchCallback(QDBusMessage callbackReply);
-	void setOperationMsg(int driverID, int statusType); /* 普通 Qt SLOT，被 D-Bus 信号 StatusChanged 触发 */
-	void setPreEnrollMsg(int driverID, int statusType); /* StatusChanged 信号的第二个 SLOT */
+	void setOperationMsg(int deviceID, int statusType); /* 普通 Qt SLOT，被 D-Bus 信号 StatusChanged 触发 */
+	void setPreEnrollMsg(int deviceID, int statusType); /* StatusChanged 信号的第二个 SLOT */
 
 /* Members */
 private:
