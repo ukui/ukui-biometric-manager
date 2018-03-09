@@ -35,7 +35,8 @@ struct DeviceInfo {
 	int device_id;
 	QString device_shortname; /* aka driverName */
 	QString device_fullname;
-	int enable;
+	int driver_enable; /* The corresponding driver is enabled/disabled */
+	int device_available; /* The driver is enabled and the device is connected */
 	int biotype;
 	int stotype;
 	int eigtype;

@@ -35,6 +35,8 @@ private slots:
 private:
 	void prettify();
 	void getDeviceInfo();
+	/* Temporarily set device_avaliable before we can get it from D-Bus directly. */
+	void tmpSetDeviceAvaliable();
 	void biometricPageInit();
 	void clearNoDevicePage();
 	void dashboardPageInit();

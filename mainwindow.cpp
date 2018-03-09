@@ -201,6 +201,49 @@ void MainWindow::getDeviceInfo()
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
 		deviceInfoMap.insert(deviceInfo->device_shortname, deviceInfo);
 	}
+
+	/*
+	 * The D-Bus result doesn't have the field device_available because the
+	 * backend hasn't implemented it. We use the following function to set it
+	 * manually. If the backend completes it implements, we can remove this
+	 * function directly and then modify the customtype.cpp to use >> operator
+	 * to do that.
+	 */
+	tmpSetDeviceAvailable();
+}
+
+void MainWindow::tmpSetDeviceAvailable()
+{
+	QVariant variant;
+	QDBusArgument argument;
+	QList<QDBusVariant> qlist;
+	QDBusVariant item;
+	DeviceInfo *availableDeviceInfo;
+
+	QDBusPendingReply<int, QList<QDBusVariant> > reply = biometricInterface->GetDevList();
+	reply.waitForFinished();
+	if (reply.isError()) {
+		qDebug() << "GUI:" << reply.error();
+		return;
+	}
+
+	variant = reply.argumentAt(0);
+	int availableDeviceCount = variant.value<int>();
+	variant = reply.argumentAt(1);
+	argument = variant.value<QDBusArgument>();
+	argument >> qlist;
+
+	for (DeviceInfo *info: deviceInfoMap.values())
+		info->device_available = 0;
+
+	for (int i = 0; i < availableDeviceCount; i++) {
+		item = qlist[i];
+		variant = item.variant();
+		argument = variant.value<QDBusArgument>();
+		availableDeviceInfo = new DeviceInfo();
+		argument >> *availableDeviceInfo;
+		deviceInfoMap.value(availableDeviceInfo->device_shortname)->device_available = 1;
+	}
 }
 
 #define initializeBiometricPage(biometric) do {				\

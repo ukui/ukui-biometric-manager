@@ -13,7 +13,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &deviceInfo)
 {
     argument.beginStructure();
     argument << deviceInfo.device_id << deviceInfo.device_shortname
-		<< deviceInfo.device_fullname << deviceInfo.enable
+		<< deviceInfo.device_fullname << deviceInfo.driver_enable
 		<< deviceInfo.biotype << deviceInfo.stotype
 		<< deviceInfo.eigtype << deviceInfo.vertype
 		<< deviceInfo.idtype << deviceInfo.bustype
@@ -26,7 +26,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &devic
 {
     argument.beginStructure();
     argument >> deviceInfo.device_id >> deviceInfo.device_shortname
-		>> deviceInfo.device_fullname >> deviceInfo.enable
+		>> deviceInfo.device_fullname >> deviceInfo.driver_enable
 		>> deviceInfo.biotype >> deviceInfo.stotype
 		>> deviceInfo.eigtype >> deviceInfo.vertype
 		>> deviceInfo.idtype >> deviceInfo.bustype

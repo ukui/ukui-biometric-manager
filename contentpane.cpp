@@ -83,8 +83,8 @@ void ContentPane::setSelectedUser(int uid)
 
 void ContentPane::setDeviceEnabled(bool state)
 {
-	deviceInfo->enable = state;
-	if (deviceInfo->enable)
+	deviceInfo->device_available = state;
+	if (deviceInfo->device_available)
 		ui->labelStatus->setText(tr("Enabled"));
 	else
 		ui->labelStatus->setText(tr("Disabled"));
@@ -103,14 +103,14 @@ void ContentPane::setDeviceEnabled(bool state)
  */
 bool ContentPane::deviceIsEnabled()
 {
-	return deviceInfo->enable;
+	return deviceInfo->device_available;
 }
 
 
 void ContentPane::showDeviceInfo()
 {
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	setDeviceEnabled(deviceInfo->enable);
+	setDeviceEnabled(deviceInfo->device_available);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
 	ui->labelBiometricType->setText(QString::number(deviceInfo->biotype));
 	ui->labelVerifyType->setText(QString::number(deviceInfo->vertype));
