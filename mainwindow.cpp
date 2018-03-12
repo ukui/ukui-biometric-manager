@@ -494,6 +494,11 @@ void MainWindow::addDriverCallback(QString driverName, bool status, QString driv
 	maximum += ICON_SIZE; /* Increase maximum manually */
 	ui->scrollAreaDriver->verticalScrollBar()->setMaximum(maximum);
 	ui->scrollAreaDriver->verticalScrollBar()->setValue(maximum);
+
+	/* Add corresponding contentPane to biometric page */
+	restartService(); /* Make the addition take effect */
+	getDeviceInfo(); /* Refresh */
+	addContentPane(driverName);
 }
 
 void MainWindow::removeDriver()
@@ -524,6 +529,11 @@ void MainWindow::removeDriver()
 		widget->deleteLater();
 		delete widget;
 	}
+
+	/* Remove corresponding contentPane from biometric page */
+	removeContentPane(driverName);
+	restartService();
+	deviceInfoMap.remove(driverName);
 }
 
 void MainWindow::manageBioAuthStatus(bool toState)
