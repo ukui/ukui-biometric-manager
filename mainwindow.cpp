@@ -482,10 +482,10 @@ void MainWindow::removeDriver()
 	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
 	int index = gridLayout->indexOf(btnRemoveDriver);
 
-	QLabel *lbl;
-	lbl = (QLabel *)gridLayout->itemAt(index - 2)->widget();
+	QLabel *lbl = (QLabel *)gridLayout->itemAt(index - 2)->widget();
+	QString driverName = lbl->text();
 	QProcess process;
-	process.start("pkexec biometric-config-tool remove-driver " + lbl->text());
+	process.start("pkexec biometric-config-tool remove-driver " + driverName);
 	process.waitForFinished();
 	if (process.exitCode() != 0) {
 		QMessageBox *messageBox = new QMessageBox(QMessageBox::Information,
@@ -496,6 +496,7 @@ void MainWindow::removeDriver()
 		return;
 	}
 
+	/* Remove table row */
 	QWidget *widget;
 	for (int i = 1; i <= 3; i++) {
 		widget = gridLayout->itemAt(index - 2)->widget();
