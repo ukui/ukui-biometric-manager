@@ -272,6 +272,26 @@ void MainWindow::addContentPane(QString driverName)
 	connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
 }
 
+void MainWindow::removeContentPane(QString driverName)
+{
+	QListWidget *lw;
+	QStackedWidget *sw;
+	DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
+		lw = ui->listWidgetFingerprint;
+		sw = ui->stackedWidgetFingerprint;
+	} else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN) {
+		lw = ui->listWidgetFingervein;
+		sw = ui->stackedWidgetFingervein;
+	} else {
+		lw = ui->listWidgetIris;
+		sw = ui->stackedWidgetIris;
+	}
+	int index = sw->indexOf(contentPaneMap.value(driverName));
+	lw->removeItemWidget(lw->item(index));
+	sw->removeWidget(contentPaneMap.value(driverName));
+}
+
 void MainWindow::biometricPageInit()
 {
 	for (QString driverName: deviceInfoMap.keys())
