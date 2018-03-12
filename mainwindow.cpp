@@ -246,18 +246,38 @@ void MainWindow::tmpSetDeviceAvailable()
 	}
 }
 
-#define initializeBiometricPage(biometric) do {				\
-	QListWidget *lw = ui->listWidget##biometric;			\
-	QListWidgetItem *item = new QListWidgetItem(driverName);	\
-	item->setTextAlignment(Qt::AlignCenter);			\
-	lw->insertItem(lw->count(), item);				\
-	QStackedWidget *sw = ui->stackedWidget##biometric;		\
-	ContentPane *contentPane = new ContentPane(deviceInfo);		\
-	sw->addWidget(contentPane);					\
-	contentPaneMap.insert(driverName, contentPane);			\
-	connect(this, &MainWindow::selectedUserChanged,			\
-			contentPane, &ContentPane::setSelectedUser);	\
-} while(0)
+void MainWindow::addContentPane(QString driverName)
+{
+	QListWidget *lw;
+	QStackedWidget *sw;
+	DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
+		lw = ui->listWidgetFingerprint;
+		sw = ui->stackedWidgetFingerprint;
+	} else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN) {
+		lw = ui->listWidgetFingervein;
+		sw = ui->stackedWidgetFingervein;
+	} else {
+		lw = ui->listWidgetIris;
+		sw = ui->stackedWidgetIris;
+	}
+	QListWidgetItem *item = new QListWidgetItem(driverName);
+	item->setTextAlignment(Qt::AlignCenter);
+	lw->insertItem(lw->count(), item);
+	ContentPane *contentPane = new ContentPane(deviceInfo);
+	sw->addWidget(contentPane);
+	contentPaneMap.insert(driverName, contentPane);
+	connect(this, &MainWindow::selectedUserChanged,
+			contentPane, &ContentPane::setSelectedUser);
+	connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
+}
+
+void MainWindow::biometricPageInit()
+{
+	for (QString driverName: deviceInfoMap.keys())
+		addContentPane(driverName);
+}
+
 #define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
 		ui->listWidget##biometric->setCurrentRow(0);		\
@@ -271,29 +291,6 @@ void MainWindow::tmpSetDeviceAvailable()
 		ui->horizontalLayout##biometric->addStretch();		\
 	}								\
 } while(0)
-void MainWindow::biometricPageInit()
-{
-	for (QString driverName: deviceInfoMap.keys()) {
-		DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
-		switch (deviceInfo->biotype) {
-		case BIOTYPE_FINGERPRINT:
-			initializeBiometricPage(Fingerprint);
-			break;
-		case BIOTYPE_FINGERVEIN:
-			initializeBiometricPage(Fingervein);
-			break;
-		case BIOTYPE_IRIS:
-			initializeBiometricPage(Iris);
-			break;
-		}
-	}
-	connect(ui->listWidgetFingerprint, &QListWidget::currentRowChanged,
-		ui->stackedWidgetFingerprint, &QStackedWidget::setCurrentIndex);
-	connect(ui->listWidgetFingervein, &QListWidget::currentRowChanged,
-		ui->stackedWidgetFingervein, &QStackedWidget::setCurrentIndex);
-	connect(ui->listWidgetIris, &QListWidget::currentRowChanged,
-		ui->stackedWidgetIris, &QStackedWidget::setCurrentIndex);
-}
 
 void MainWindow::clearNoDevicePage()
 {
