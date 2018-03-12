@@ -40,6 +40,7 @@ private:
 	void trackUsedBiometricIndex();
 	int findFreeBiometricIndex();
 public:
+	void setDriverEnable(bool state);
 	void setDeviceAvailable(bool state);
 
 /* DBus */

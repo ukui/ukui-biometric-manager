@@ -81,6 +81,11 @@ void ContentPane::setSelectedUser(int uid)
 	showBiometrics();
 }
 
+void ContentPane::setDriverEnable(bool state)
+{
+	deviceInfo->driver_enable = state;
+}
+
 void ContentPane::setDeviceAvailable(bool state)
 {
 	deviceInfo->device_available = state;
