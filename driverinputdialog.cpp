@@ -6,11 +6,18 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QFile>
 
 #define WIDGET_WIDTH 160
 
 DriverInputDialog::DriverInputDialog()
 {
+	QFile qssFile(":/css/assets/driverinputdialog.qss");
+	qssFile.open(QFile::ReadOnly);
+	QString styleSheet = QLatin1String(qssFile.readAll());
+	this->setStyleSheet(styleSheet);
+	qssFile.close();
+
 	editDriverName = new QLineEdit();
 	editDriverName->setFixedWidth(WIDGET_WIDTH);
 	editDriverName->setPlaceholderText(tr("Required Field"));

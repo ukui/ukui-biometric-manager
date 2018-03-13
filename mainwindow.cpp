@@ -57,7 +57,7 @@ void MainWindow::prettify()
 	QFile qssFile(":/css/assets/mainwindow.qss");
 	qssFile.open(QFile::ReadOnly);
 	QString styleSheet = QLatin1String(qssFile.readAll());
-	qApp->setStyleSheet(styleSheet);
+	this->setStyleSheet(styleSheet);
 	qssFile.close();
 
 	/* Set Icon for each tab on tabwidget */
