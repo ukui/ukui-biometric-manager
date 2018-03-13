@@ -380,6 +380,10 @@ void MainWindow::dashboardPageInit()
 		connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
 		btnRemoveDriver->hide(); /* Temporarily hide this feature */
 	}
+	/* Resize the column width automatically */
+	gridLayout->setColumnStretch(0, 1);
+	gridLayout->setColumnStretch(1, 1);
+
 	ui->btnAddDriver->setIcon(QIcon(":/images/assets/add.png"));
 	ui->btnAddDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 	connect(ui->btnAddDriver, &QPushButton::clicked, this, &MainWindow::addDriver);
