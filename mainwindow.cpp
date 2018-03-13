@@ -397,10 +397,14 @@ void MainWindow::manageDriverStatus(bool toState)
 	QProcess process;
 	QString driverName = label->text();
 	if (toState) {
-		process.start("pkexec biometric-config-tool enable-driver " + driverName);
+		process.start("pkexec sh -c \"biometric-config-tool enable-driver "
+				+ driverName
+				+ " && systemctl restart biometric-authentication.service");
 		process.waitForFinished();
 	} else {
-		process.start("pkexec biometric-config-tool disable-driver " + driverName);
+		process.start("pkexec sh -c \"biometric-config-tool disable-driver "
+				+ driverName
+				+ " && systemctl restart biometric-authentication.service");
 		process.waitForFinished();
 	}
 	if (process.exitCode() != 0)
