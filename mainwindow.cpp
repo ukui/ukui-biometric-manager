@@ -403,9 +403,23 @@ void MainWindow::manageDriverStatus(bool toState)
 		process.start("pkexec biometric-config-tool disable-driver " + driverName);
 		process.waitForFinished();
 	}
-	if (process.exitCode() == 0) {
-		toggleSwitch->acceptStateChange();
-		contentPaneMap.value(driverName)->setDeviceAvailable(toState);
+	if (process.exitCode() != 0)
+		return;
+	toggleSwitch->acceptStateChange();
+	/*
+	 * There is a condition that the driver is enabled while the device is
+	 * not connected. So, if user enables the driver, we need to update the
+	 * deviceinfo array to make sure the device is indeed available. If user
+	 * disabled the driver, the device must can't be used and therefor we
+	 * don't need to update the deviceinfo array.
+	 */
+	ContentPane *contentPane = contentPaneMap.value(driverName);
+	contentPane->setDriverEnable(toState);
+	if (toState) {
+		getDeviceInfo();
+		contentPane->setDeviceAvailable(deviceInfoMap.value(driverName)->device_available);
+	} else {
+		contentPane->setDeviceAvailable(false);
 	}
 }
 
