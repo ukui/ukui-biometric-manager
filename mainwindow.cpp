@@ -425,7 +425,7 @@ void MainWindow::manageDriverStatus(bool toState)
 	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
 	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
 	int index = gridLayout->indexOf(toggleSwitch);
-	QLabel *label = (QLabel *)gridLayout->itemAt(index - 1)->widget();
+	QLabel *label = (QLabel *)gridLayout->itemAt(index-2)->widget(); /* Relative to toggleSwitch */
 	QProcess process;
 	QString driverName = label->text();
 	if (toState) {
@@ -519,7 +519,7 @@ void MainWindow::removeDriver()
 	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
 	int index = gridLayout->indexOf(btnRemoveDriver);
 
-	QLabel *lbl = (QLabel *)gridLayout->itemAt(index - 2)->widget();
+	QLabel *lbl = (QLabel *)gridLayout->itemAt(index-3)->widget(); /* Relative to btnRemoveDriver */
 	QString driverName = lbl->text();
 	QProcess process;
 	process.start("pkexec biometric-config-tool remove-driver " + driverName);
@@ -536,7 +536,7 @@ void MainWindow::removeDriver()
 	/* Remove table row */
 	QWidget *widget;
 	for (int i = 1; i <= 3; i++) {
-		widget = gridLayout->itemAt(index - 2)->widget();
+		widget = gridLayout->itemAt(index-3)->widget(); /* Relative to btnRemoveDriver */
 		gridLayout->removeWidget(widget);
 		widget->deleteLater();
 		delete widget;
