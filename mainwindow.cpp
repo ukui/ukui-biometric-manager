@@ -36,12 +36,13 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 
 	/* 获取并显示用户列表 */
 	showUserList();
-	setDefaultUser();
 
 	/* Other initializations */
 	dashboardPageInit();
 	biometricPageInit();
 	clearNoDevicePage();
+
+	setDefaultUser();
 }
 
 MainWindow::~MainWindow()
