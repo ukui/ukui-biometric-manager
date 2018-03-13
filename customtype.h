@@ -72,4 +72,30 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &devic
 QDBusArgument &operator<<(QDBusArgument &argument, const BiometricInfo &biometricInfo);
 const QDBusArgument &operator>>(const QDBusArgument &argument, BiometricInfo &biometricInfo);
 
+enum VerifyType {
+	VERIFY_HARDWARE,
+	VERIFY_SOFTWARE,
+	VERIFY_MIX,
+	VERIFY_OTHER
+};
+
+enum StorageType {
+	STORAGE_DEVICE,
+	STORAGE_OS,
+	STORAGE_MIX
+};
+
+enum BusType {
+	BUS_SERIAL,
+	BUS_USB,
+	BUS_PCIE
+};
+
+enum IdentifyType {
+	IDENTIFY_HARDWARE,
+	IDENTIFY_SOFTWARE,
+	IDENTIFY_MIX,
+	IDENTIFY_OTHER
+};
+
 #endif // CUSTOMTYPE_H

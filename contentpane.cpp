@@ -117,11 +117,51 @@ void ContentPane::showDeviceInfo()
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
 	setDeviceAvailable(deviceInfo->device_available);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
-	ui->labelBiometricType->setText(QString::number(deviceInfo->biotype));
-	ui->labelVerifyType->setText(QString::number(deviceInfo->vertype));
-	ui->labelBusType->setText(QString::number(deviceInfo->bustype));
-	ui->labelStorageType->setText(QString::number(deviceInfo->stotype));
-	ui->labelIdentificationType->setText(QString::number(deviceInfo->idtype));
+
+	QString text;
+	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
+		text = QString(tr("Fingerprint"));
+	else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
+		text = QString(tr("Fingervein"));
+	else if (deviceInfo->biotype == BIOTYPE_IRIS)
+		text = QString(tr("Iris"));
+	ui->labelBiometricType->setText(text);
+
+	if (deviceInfo->vertype == VERIFY_HARDWARE)
+		text = QString(tr("Hardware Verification"));
+	else if (deviceInfo->vertype == VERIFY_SOFTWARE)
+		text = QString(tr("Software Verification"));
+	else if (deviceInfo->vertype == VERIFY_MIX)
+		text = QString(tr("Mix Verification"));
+	else if (deviceInfo->vertype == VERIFY_OTHER)
+		text = QString(tr("Other Verification"));
+	ui->labelVerifyType->setText(text);
+
+	if (deviceInfo->bustype == BUS_SERIAL)
+		text = QString(tr("Serial"));
+	else if (deviceInfo->bustype == BUS_USB)
+		text = QString(tr("USB"));
+	else if (deviceInfo->bustype == BUS_PCIE)
+		text = QString(tr("PCIE"));
+	ui->labelBusType->setText(text);
+
+	if (deviceInfo->stotype == STORAGE_DEVICE)
+		text = QString(tr("Device Storage"));
+	else if (deviceInfo->stotype == STORAGE_OS)
+		text = QString(tr("OS Storage"));
+	else if (deviceInfo->stotype == STORAGE_MIX)
+		text = QString(tr("Mix Storage"));
+	ui->labelStorageType->setText(text);
+
+	if (deviceInfo->idtype == IDENTIFY_HARDWARE)
+		text = QString(tr("Hardware Identification"));
+	else if (deviceInfo->idtype == IDENTIFY_SOFTWARE)
+		text = QString(tr("Software Identification"));
+	else if (deviceInfo->idtype == IDENTIFY_MIX)
+		text = QString(tr("Mix Identification"));
+	else if (deviceInfo->idtype == IDENTIFY_OTHER)
+		text = QString(tr("Other Identification"));
+	ui->labelIdentificationType->setText(text);
 }
 
 /**
