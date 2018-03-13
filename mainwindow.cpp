@@ -378,10 +378,12 @@ void MainWindow::dashboardPageInit()
 		btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 		gridLayout->addWidget(btnRemoveDriver, i, 3);
 		connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
+		btnRemoveDriver->hide(); /* Temporarily hide this feature */
 	}
 	ui->btnAddDriver->setIcon(QIcon(":/images/assets/add.png"));
 	ui->btnAddDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 	connect(ui->btnAddDriver, &QPushButton::clicked, this, &MainWindow::addDriver);
+	ui->btnAddDriver->hide(); /* Temporarily hide this feature */
 
 	/* Authentication */
 	process.start("bioctl status");
