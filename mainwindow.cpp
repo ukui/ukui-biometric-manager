@@ -319,6 +319,17 @@ void MainWindow::clearNoDevicePage()
 	checkBiometricPage(Iris);
 }
 
+QString MainWindow::mapReadableDeviceName(QString driverName)
+{
+	DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
+		return QString(tr("Fingerprint"));
+	else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
+		return QString(tr("Fingervein"));
+	else
+		return QString(tr("Iris"));
+}
+
 void MainWindow::dashboardPageInit()
 {
 	ToggleSwitch *toggleSwitch;
@@ -358,13 +369,14 @@ void MainWindow::dashboardPageInit()
 			toggleSwitch = new ToggleSwitch(false, DRIVER_TS_W, DRIVER_TS_H);
 		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
 		gridLayout->addWidget(new QLabel(groups[i]), i, 0);
-		gridLayout->addWidget(toggleSwitch, i, 1);
+		gridLayout->addWidget(new QLabel(mapReadableDeviceName(driverName)), i, 1);
+		gridLayout->addWidget(toggleSwitch, i, 2);
 
 		QPushButton *btnRemoveDriver = new QPushButton();
 		btnRemoveDriver->setObjectName("btnRemoveDriver");
 		btnRemoveDriver->setIcon(QIcon(":/images/assets/remove.png"));
 		btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-		gridLayout->addWidget(btnRemoveDriver, i, 2);
+		gridLayout->addWidget(btnRemoveDriver, i, 3);
 		connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
 	}
 	ui->btnAddDriver->setIcon(QIcon(":/images/assets/add.png"));

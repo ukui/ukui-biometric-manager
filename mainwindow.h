@@ -40,6 +40,7 @@ private:
 	void addContentPane(QString driverName);
 	void removeContentPane(QString driverName);
 	void biometricPageInit();
+	QString mapReadableDeviceName(QString driverName);
 	void clearNoDevicePage();
 	void dashboardPageInit();
 	QIcon *getUserAvatar(QString username);
