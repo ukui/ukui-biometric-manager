@@ -629,10 +629,15 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
 
 	QList<QStandardItem *> row;
 	switch(result) {
-	case DBUS_RESULT_SUCCESS:
-		hitUsername = "Wait for getting";
+	case DBUS_RESULT_SUCCESS: {
+		QProcess process;
+		process.start("id -nu " + QString::number(hitUid));
+		process.waitForFinished();
+		QString output = process.readAllStandardOutput();
+		hitUsername = output.remove(QRegularExpression("[\n]"));
 		msg = QString(tr("Found! Username: %1, Feature name: %2")).arg(hitUsername).arg(hitIndexName);
 		promptDialog->setLabelText(msg);
+		}
 		break;
 	case DBUS_RESULT_ERROR:
 		{
