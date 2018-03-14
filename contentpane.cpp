@@ -314,7 +314,9 @@ void ContentPane::on_btnEnroll_clicked()
 	biometricInterface->callWithCallback("Enroll", args, this,
 						SLOT(enrollCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
-	promptDialog = new PromptDialog(promptDialogGIF, this);
+	promptDialog = new PromptDialog(promptDialogGIF, this,
+					tr("Permission is required. Please "
+					"authenticate yourself to continue"));
 	promptDialog->onlyShowCancel();
 	/*
 	connect(promptDialog, &PromptDialog::rejected, [this]{

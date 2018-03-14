@@ -12,7 +12,9 @@ class PromptDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit PromptDialog(QString gif, QWidget *parent = 0);
+	explicit PromptDialog(QString gif,
+		QWidget *parent = 0,
+		QString msg = tr("Operations are in progress. Please wait..."));
 	~PromptDialog();
 
 signals:

@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QCloseEvent>
 
-PromptDialog::PromptDialog(QString gif, QWidget *parent) :
+PromptDialog::PromptDialog(QString gif, QWidget *parent, QString msg) :
 	QDialog(parent),
 	ui(new Ui::PromptDialog)
 {
@@ -15,7 +15,7 @@ PromptDialog::PromptDialog(QString gif, QWidget *parent) :
 	ui->labelImage->setMovie(movie);
 	movie->start();
 	onlyShowCancel();
-	setLabelText(tr("Operations are in progress. Please wait..."));
+	setLabelText(msg);
 
 	/* 设置 CSS */
 	QFile qssFile(":/css/assets/promptdialog.qss");
