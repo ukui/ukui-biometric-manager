@@ -558,14 +558,15 @@ void MainWindow::removeDriver()
 void MainWindow::manageBioAuthStatus(bool toState)
 {
 	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
+	QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
 	QProcess process;
 	if (toState) {
-		process.start("pkexec bioctl enable");
+		process.start("pkexec bioctl enable -u " + environment.value("USER"));
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
 	} else {
-		process.start("pkexec bioctl disable");
+		process.start("pkexec bioctl disable -u " + environment.value("USER"));
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
