@@ -23,25 +23,39 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	ui->setupUi(this);
 	prettify();
 
-	/* 向 QDBus 类型系统注册自定义数据类型 */
-	registerCustomTypes();
-	/* 连接 DBus Daemon */
-	biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
-				"/cn/kylinos/Biometric",
-				QDBusConnection::systemBus(), this);
-	biometricInterface->setTimeout(2147483647); /* 微秒 */
+	QProcess process;
+	process.start("systemctl is-active biometric-authentication.service");
+	process.waitForFinished();
+	QString output = process.readAllStandardOutput();
+	systemdActive = output.startsWith("active");
 
-	/* 获取设备列表 */
-	getDeviceInfo();
+	if (systemdActive) {
+		/* 向 QDBus 类型系统注册自定义数据类型 */
+		registerCustomTypes();
+		/* 连接 DBus Daemon */
+		biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
+								"/cn/kylinos/Biometric",
+								QDBusConnection::systemBus(),
+								this);
+		biometricInterface->setTimeout(2147483647); /* 微秒 */
+
+		/* 获取设备列表 */
+		getDeviceInfo();
+
+		/* Other initializations */
+		dashboardPageInit();
+		biometricPageInit();
+		clearNoDevicePage();
+	} else {
+		dashboardSystemdSection();
+		dashboardBioAuthSection();
+		ui->tabWidgetMain->setTabEnabled(1, false);
+		ui->tabWidgetMain->setTabEnabled(2, false);
+		ui->tabWidgetMain->setTabEnabled(3, false);
+	}
 
 	/* 获取并显示用户列表 */
 	showUserList();
-
-	/* Other initializations */
-	dashboardPageInit();
-	biometricPageInit();
-	clearNoDevicePage();
-
 	setDefaultUser();
 }
 
@@ -341,11 +355,7 @@ void MainWindow::dashboardPageInit()
 void MainWindow::dashboardSystemdSection()
 {
 	ToggleSwitch *toggleSwitch;
-	QProcess process;
-	process.start("systemctl is-active biometric-authentication.service");
-	process.waitForFinished();
-	QString output = process.readAllStandardOutput();
-	if (output.startsWith("active"))
+	if (systemdActive)
 		toggleSwitch = new ToggleSwitch(true);
 	else
 		toggleSwitch = new ToggleSwitch(false);

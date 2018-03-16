@@ -57,6 +57,7 @@ signals:
 /* Members */
 private:
 	Ui::MainWindow *ui;
+	bool systemdActive;
 	/* 用于和远端 DBus 对象交互的代理接口 */
 	cn::kylinos::Biometric *biometricInterface;
 	int driverCount;
