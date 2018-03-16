@@ -21,6 +21,7 @@ ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 	biometricInterface->setTimeout(2147483647); /* 微秒 */
 	setPromptDialogGIF();
 	setButtonIcons();
+	updateWidgetStatus();
 	/* 设置数据模型 */
 	setModel();
 	trackUsedBiometricIndex();
@@ -89,10 +90,18 @@ void ContentPane::setDriverEnable(bool state)
 void ContentPane::setDeviceAvailable(bool state)
 {
 	deviceInfo->device_available = state;
-	if (deviceInfo->device_available)
+	updateWidgetStatus();
+}
+
+void ContentPane::updateWidgetStatus()
+{
+	bool state = false;
+	if (deviceInfo->device_available) {
 		ui->labelStatus->setText(tr("Enabled"));
-	else
+		state = true;
+	} else {
 		ui->labelStatus->setText(tr("Disabled"));
+	}
 	ui->btnEnroll->setEnabled(state);
 	ui->btnDelete->setEnabled(state);
 	ui->btnVerify->setEnabled(state);
@@ -115,7 +124,6 @@ bool ContentPane::deviceIsAvailable()
 void ContentPane::showDeviceInfo()
 {
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	setDeviceAvailable(deviceInfo->device_available);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
 
 	QString text;

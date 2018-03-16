@@ -39,6 +39,7 @@ private:
 	void setModel();
 	void trackUsedBiometricIndex();
 	int findFreeBiometricIndex();
+	void updateWidgetStatus();
 public:
 	void setDriverEnable(bool state);
 	void setDeviceAvailable(bool state);
