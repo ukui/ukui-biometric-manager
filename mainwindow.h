@@ -43,6 +43,9 @@ private:
 	QString mapReadableDeviceName(QString driverName);
 	void clearNoDevicePage();
 	void dashboardPageInit();
+	void dashboardSystemdSection();
+	void dashboardDriverSection();
+	void dashboardBioAuthSection();
 	QIcon *getUserAvatar(QString username);
 	void showUserList();
 	void setDefaultUser();

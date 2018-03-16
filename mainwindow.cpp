@@ -333,9 +333,14 @@ QString MainWindow::mapReadableDeviceName(QString driverName)
 
 void MainWindow::dashboardPageInit()
 {
-	ToggleSwitch *toggleSwitch;
+	dashboardSystemdSection();
+	dashboardDriverSection();
+	dashboardBioAuthSection();
+}
 
-	/* Systemd */
+void MainWindow::dashboardSystemdSection()
+{
+	ToggleSwitch *toggleSwitch;
 	QProcess process;
 	process.start("systemctl is-active biometric-authentication.service");
 	process.waitForFinished();
@@ -354,8 +359,11 @@ void MainWindow::dashboardPageInit()
 	hBoxLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
 	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageServiceStatus);
 	connect(btnRestartService, &QPushButton::clicked, this, &MainWindow::restartService);
+}
 
-	/* Driver */
+void MainWindow::dashboardDriverSection()
+{
+	ToggleSwitch *toggleSwitch;
 	QSettings settings(QString("/etc/biometric-auth/biometric-auth.conf"),
 							QSettings::IniFormat);
 	QStringList groups = settings.childGroups();
@@ -389,11 +397,15 @@ void MainWindow::dashboardPageInit()
 	ui->btnAddDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
 	connect(ui->btnAddDriver, &QPushButton::clicked, this, &MainWindow::addDriver);
 	ui->btnAddDriver->hide(); /* Temporarily hide this feature */
+}
 
-	/* Authentication */
+void MainWindow::dashboardBioAuthSection()
+{
+	ToggleSwitch *toggleSwitch;
+	QProcess process;
 	process.start("bioctl status");
 	process.waitForFinished();
-	output = process.readAllStandardOutput();
+	QString output = process.readAllStandardOutput();
 	if (output.contains("enable", Qt::CaseInsensitive))
 		toggleSwitch = new ToggleSwitch(true);
 	else
