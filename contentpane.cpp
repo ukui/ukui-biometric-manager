@@ -96,9 +96,11 @@ void ContentPane::setDeviceAvailable(bool state)
 void ContentPane::updateWidgetStatus()
 {
 	bool state = false;
-	if (deviceInfo->device_available) {
+	if (deviceInfo->driver_enable && deviceInfo->device_available) {
 		ui->labelStatus->setText(tr("Enabled"));
 		state = true;
+	} else if (deviceInfo->driver_enable) {
+		ui->labelStatus->setText(tr("Device is not connected"));
 	} else {
 		ui->labelStatus->setText(tr("Disabled"));
 	}
