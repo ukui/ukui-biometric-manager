@@ -364,20 +364,17 @@ void MainWindow::dashboardSystemdSection()
 void MainWindow::dashboardDriverSection()
 {
 	ToggleSwitch *toggleSwitch;
-	QSettings settings(QString("/etc/biometric-auth/biometric-auth.conf"),
-							QSettings::IniFormat);
-	QStringList groups = settings.childGroups();
 	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
 	gridLayout->setAlignment(Qt::AlignTop);
-	for (int i = 0; i < groups.count(); i++) {
-		QString driverName = groups[i];
-		bool enable = settings.value(driverName + "/Enable").toBool();
-		if (enable)
+	int i = 0;
+	for (QString driverName: deviceInfoMap.keys()) {
+		bool driverEnable = deviceInfoMap.value(driverName)->driver_enable;
+		if (driverEnable)
 			toggleSwitch = new ToggleSwitch(true, DRIVER_TS_W, DRIVER_TS_H);
 		else
 			toggleSwitch = new ToggleSwitch(false, DRIVER_TS_W, DRIVER_TS_H);
 		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
-		gridLayout->addWidget(new QLabel(groups[i]), i, 0);
+		gridLayout->addWidget(new QLabel(driverName), i, 0);
 		gridLayout->addWidget(new QLabel(mapReadableDeviceName(driverName)), i, 1);
 		gridLayout->addWidget(toggleSwitch, i, 2);
 
@@ -388,6 +385,7 @@ void MainWindow::dashboardDriverSection()
 		gridLayout->addWidget(btnRemoveDriver, i, 3);
 		connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
 		btnRemoveDriver->hide(); /* Temporarily hide this feature */
+		i++;
 	}
 	/* Resize the column width automatically */
 	gridLayout->setColumnStretch(0, 1);
