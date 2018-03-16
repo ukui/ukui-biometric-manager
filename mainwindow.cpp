@@ -47,6 +47,26 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::checkAPICompatibility()
+{
+	QDBusPendingReply<int> reply = biometricInterface->CheckAppApiVersion(1, 3, 9);
+	reply.waitForFinished();
+	if (reply.isError()) {
+		qDebug() << "GUI:" << reply.error();
+		return;
+	}
+	int result = reply.argumentAt(0).value<int>();
+	if (result != 0) {
+		QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+							tr("Fatal Error"),
+							tr("API version is not compatible"),
+							QMessageBox::Ok);
+		messageBox->exec();
+		/* https://stackoverflow.com/a/31081379/4112667 */
+		QTimer::singleShot(0, qApp, &QCoreApplication::quit);
+	}
+}
+
 void MainWindow::prettify()
 {
 	/* 设置窗口图标 */
@@ -198,6 +218,8 @@ void MainWindow::initialize()
 							QDBusConnection::systemBus(),
 							this);
 	biometricInterface->setTimeout(2147483647); /* 微秒 */
+
+	checkAPICompatibility();
 
 	/* 获取设备列表 */
 	getDeviceInfo();

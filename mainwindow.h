@@ -33,6 +33,7 @@ private slots:
 
 /* Normal functions */
 private:
+	void checkAPICompatibility();
 	void prettify();
 	void getDeviceInfo();
 	/* Temporarily set device_avaliable before we can get it from D-Bus directly. */
