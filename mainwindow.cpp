@@ -27,32 +27,15 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	process.start("systemctl is-active biometric-authentication.service");
 	process.waitForFinished();
 	QString output = process.readAllStandardOutput();
-	systemdActive = output.startsWith("active");
+	bool systemdActive = output.startsWith("active");
 
-	if (systemdActive) {
-		/* 向 QDBus 类型系统注册自定义数据类型 */
-		registerCustomTypes();
-		/* 连接 DBus Daemon */
-		biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
-								"/cn/kylinos/Biometric",
-								QDBusConnection::systemBus(),
-								this);
-		biometricInterface->setTimeout(2147483647); /* 微秒 */
+	dashboardSystemdSection(systemdActive);
+	dashboardBioAuthSection();
 
-		/* 获取设备列表 */
-		getDeviceInfo();
-
-		/* Other initializations */
-		dashboardPageInit();
-		biometricPageInit();
-		clearNoDevicePage();
-	} else {
-		dashboardSystemdSection();
-		dashboardBioAuthSection();
-		ui->tabWidgetMain->setTabEnabled(1, false);
-		ui->tabWidgetMain->setTabEnabled(2, false);
-		ui->tabWidgetMain->setTabEnabled(3, false);
-	}
+	if (systemdActive)
+		initialize();
+	else
+		disableBiometricTabs();
 
 	/* 获取并显示用户列表 */
 	showUserList();
@@ -178,6 +161,66 @@ void MainWindow::on_comboBoxUsername_currentIndexChanged(int index)
 	emit selectedUserChanged(uid);
 }
 
+void MainWindow::clearAllData()
+{
+	/* Clear Driver List */
+	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
+	QLayoutItem *layoutItem;
+	while ((layoutItem = gridLayout->itemAt(0)) != 0) {
+		QWidget *widget = layoutItem->widget();
+		gridLayout->removeWidget(widget);
+		widget->deleteLater();
+		delete widget;
+	}
+
+	/* Clear Biometric Page */
+	ui->listWidgetFingerprint->clear();
+	ui->listWidgetFingervein->clear();
+	ui->listWidgetIris->clear();
+	for (ContentPane *contentPane: contentPaneMap.values()) {
+		contentPane->deleteLater();
+		delete contentPane;
+	}
+
+	/* Empty data structures */
+	contentPaneMap.clear();
+	driverCount = 0;
+	deviceInfoMap.clear();
+}
+
+void MainWindow::initialize()
+{
+	/* 向 QDBus 类型系统注册自定义数据类型 */
+	registerCustomTypes();
+	/* 连接 DBus Daemon */
+	biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
+							"/cn/kylinos/Biometric",
+							QDBusConnection::systemBus(),
+							this);
+	biometricInterface->setTimeout(2147483647); /* 微秒 */
+
+	/* 获取设备列表 */
+	getDeviceInfo();
+
+	/* Other initializations */
+	dashboardDriverSection();
+	biometricPageInit();
+	clearNoDevicePage();
+}
+
+void MainWindow::enableBiometricTabs()
+{
+	ui->tabWidgetMain->setTabEnabled(1, true);
+	ui->tabWidgetMain->setTabEnabled(2, true);
+	ui->tabWidgetMain->setTabEnabled(3, true);
+}
+
+void MainWindow::disableBiometricTabs()
+{
+	ui->tabWidgetMain->setTabEnabled(1, false);
+	ui->tabWidgetMain->setTabEnabled(2, false);
+	ui->tabWidgetMain->setTabEnabled(3, false);
+}
 
 /**
  * @brief 获取设备列表并存储起来备用
@@ -345,14 +388,7 @@ QString MainWindow::mapReadableDeviceName(QString driverName)
 		return QString(tr("Iris"));
 }
 
-void MainWindow::dashboardPageInit()
-{
-	dashboardSystemdSection();
-	dashboardDriverSection();
-	dashboardBioAuthSection();
-}
-
-void MainWindow::dashboardSystemdSection()
+void MainWindow::dashboardSystemdSection(bool systemdActive)
 {
 	ToggleSwitch *toggleSwitch;
 	if (systemdActive)
@@ -432,11 +468,15 @@ void MainWindow::manageServiceStatus(bool toState)
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
+		initialize();
+		enableBiometricTabs();
 	} else {
 		process.start("systemctl stop biometric-authentication.service");
 		process.waitForFinished();
 		if (process.exitCode() == 0)
 			toggleSwitch->acceptStateChange();
+		clearAllData();
+		disableBiometricTabs();
 	}
 }
 

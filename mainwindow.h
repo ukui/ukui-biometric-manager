@@ -39,13 +39,16 @@ private:
 	void tmpSetDeviceAvaliable();
 	void addContentPane(QString driverName);
 	void removeContentPane(QString driverName);
+	void initialize();
+	void enableBiometricTabs();
+	void disableBiometricTabs();
 	void biometricPageInit();
 	QString mapReadableDeviceName(QString driverName);
 	void clearNoDevicePage();
-	void dashboardPageInit();
-	void dashboardSystemdSection();
+	void dashboardSystemdSection(bool systemdActive);
 	void dashboardDriverSection();
 	void dashboardBioAuthSection();
+	void clearAllData();
 	QIcon *getUserAvatar(QString username);
 	void showUserList();
 	void setDefaultUser();
@@ -57,7 +60,6 @@ signals:
 /* Members */
 private:
 	Ui::MainWindow *ui;
-	bool systemdActive;
 	/* 用于和远端 DBus 对象交互的代理接口 */
 	cn::kylinos::Biometric *biometricInterface;
 	int driverCount;
