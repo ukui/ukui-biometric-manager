@@ -1,3 +1,11 @@
+biometric-manager (1.3~rc1) juniper; urgency=medium
+
+  * 界面重新设计
+  * 增加 Dashboard 页面用于管理所有相关设置
+  * 自定义 ToggleSwitch 控件
+
+ -- lihao <lihao@kylinos.cn>  Fri, 16 Mar 2018 15:55:28 +0800
+
 biometric-manager (1.2) juniper; urgency=medium
 
   * [Fixed] 虹膜录入中取消操作导致段错误
