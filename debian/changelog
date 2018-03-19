@@ -1,4 +1,4 @@
-biometric-manager (1.3~rc1) juniper; urgency=medium
+biometric-manager (1.3~rc2) juniper; urgency=medium
 
   * 界面重新设计
   * 增加 Dashboard 页面用于管理所有相关设置
