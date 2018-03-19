@@ -36,8 +36,6 @@ private:
 	void checkAPICompatibility();
 	void prettify();
 	void getDeviceInfo();
-	/* Temporarily set device_avaliable before we can get it from D-Bus directly. */
-	void tmpSetDeviceAvaliable();
 	void addContentPane(QString driverName);
 	void removeContentPane(QString driverName);
 	void initialize();
