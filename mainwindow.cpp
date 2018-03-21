@@ -446,17 +446,19 @@ void MainWindow::manageServiceStatus(bool toState)
 	if (toState) {
 		process.start("systemctl start biometric-authentication.service");
 		process.waitForFinished();
-		if (process.exitCode() == 0)
+		if (process.exitCode() == 0) {
 			toggleSwitch->acceptStateChange();
-		initialize();
-		enableBiometricTabs();
+			initialize();
+			enableBiometricTabs();
+		}
 	} else {
 		process.start("systemctl stop biometric-authentication.service");
 		process.waitForFinished();
-		if (process.exitCode() == 0)
+		if (process.exitCode() == 0) {
 			toggleSwitch->acceptStateChange();
-		clearAllData();
-		disableBiometricTabs();
+			clearAllData();
+			disableBiometricTabs();
+		}
 	}
 }
 
