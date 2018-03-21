@@ -335,26 +335,24 @@ void MainWindow::biometricPageInit()
 		addContentPane(driverName);
 }
 
-#define checkBiometricPage(biometric, msg) do {				\
+#define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
 		ui->listWidget##biometric->setCurrentRow(0);		\
+		ui->listWidget##biometric->show();			\
+		ui->stackedWidget##biometric->show();			\
+		ui->lblNoDevice##biometric->hide();			\
 	} else {							\
-		delete ui->listWidget##biometric;			\
-		delete ui->stackedWidget##biometric;			\
-		QLabel *lblNoDevice = new QLabel(msg);			\
-		lblNoDevice->setObjectName("lblNoDevice"#biometric);	\
-		ui->horizontalLayout##biometric->addStretch();		\
-		ui->horizontalLayout##biometric->addWidget(lblNoDevice);\
-		ui->horizontalLayout##biometric->addStretch();		\
+		ui->listWidget##biometric->hide();			\
+		ui->stackedWidget##biometric->hide();			\
+		ui->lblNoDevice##biometric->show();			\
 	}								\
 } while(0)
 
 void MainWindow::clearNoDevicePage()
 {
-	QString msg(tr("No Any Device"));
-	checkBiometricPage(Fingerprint, msg);
-	checkBiometricPage(Fingervein, msg);
-	checkBiometricPage(Iris, msg);
+	checkBiometricPage(Fingerprint);
+	checkBiometricPage(Fingervein);
+	checkBiometricPage(Iris);
 }
 
 QString MainWindow::mapReadableDeviceName(QString driverName)

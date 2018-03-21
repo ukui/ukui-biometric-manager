@@ -177,6 +177,16 @@
          <widget class="QListWidget" name="listWidgetFingerprint"/>
         </item>
         <item>
+         <widget class="QLabel" name="lblNoDeviceFingerprint">
+          <property name="text">
+           <string>No Any Device</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QStackedWidget" name="stackedWidgetFingerprint"/>
         </item>
        </layout>
@@ -193,6 +203,16 @@
          <widget class="QListWidget" name="listWidgetFingervein"/>
         </item>
         <item>
+         <widget class="QLabel" name="lblNoDeviceFingervein">
+          <property name="text">
+           <string>No Any Device</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QStackedWidget" name="stackedWidgetFingervein"/>
         </item>
        </layout>
@@ -207,6 +227,16 @@
         </property>
         <item>
          <widget class="QListWidget" name="listWidgetIris"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblNoDeviceIris">
+          <property name="text">
+           <string>No Any Device</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QStackedWidget" name="stackedWidgetIris"/>
