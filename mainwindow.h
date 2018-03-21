@@ -43,7 +43,6 @@ private:
 	void disableBiometricTabs();
 	void biometricPageInit();
 	QString mapReadableDeviceName(QString driverName);
-	void clearNoDevicePage();
 	void dashboardSystemdSection(bool systemdActive);
 	void dashboardDriverSection();
 	void dashboardBioAuthSection();

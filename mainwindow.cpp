@@ -227,7 +227,6 @@ void MainWindow::initialize()
 	/* Other initializations */
 	dashboardDriverSection();
 	biometricPageInit();
-	clearNoDevicePage();
 }
 
 void MainWindow::enableBiometricTabs()
@@ -329,12 +328,6 @@ void MainWindow::removeContentPane(QString driverName)
 	sw->removeWidget(contentPaneMap.value(driverName));
 }
 
-void MainWindow::biometricPageInit()
-{
-	for (QString driverName: deviceInfoMap.keys())
-		addContentPane(driverName);
-}
-
 #define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
 		ui->listWidget##biometric->setCurrentRow(0);		\
@@ -348,8 +341,10 @@ void MainWindow::biometricPageInit()
 	}								\
 } while(0)
 
-void MainWindow::clearNoDevicePage()
+void MainWindow::biometricPageInit()
 {
+	for (QString driverName: deviceInfoMap.keys())
+		addContentPane(driverName);
 	checkBiometricPage(Fingerprint);
 	checkBiometricPage(Fingervein);
 	checkBiometricPage(Iris);
