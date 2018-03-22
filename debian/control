@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: lihao <lihao@kylinos.cn>
 Build-Depends: debhelper (>= 9),
-	       qt5-default,
+	       qtbase5-dev,
 	       biometric-auth,
 	       biometric-driver-r301,
 	       biometric-driver-ud650,
