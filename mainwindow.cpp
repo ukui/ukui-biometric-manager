@@ -28,7 +28,6 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QString output = process.readAllStandardOutput();
 	bool systemdActive = output.startsWith("active");
 
-	dashboardSystemdSection(systemdActive);
 	dashboardBioAuthSection();
 
 	if (systemdActive)
@@ -180,33 +179,6 @@ void MainWindow::on_comboBoxUsername_currentIndexChanged(int index)
 	emit selectedUserChanged(uid);
 }
 
-void MainWindow::clearAllData()
-{
-	/* Clear Driver List */
-	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
-	QLayoutItem *layoutItem;
-	while ((layoutItem = gridLayout->itemAt(0)) != 0) {
-		QWidget *widget = layoutItem->widget();
-		gridLayout->removeWidget(widget);
-		widget->deleteLater();
-		delete widget;
-	}
-
-	/* Clear Biometric Page */
-	ui->listWidgetFingerprint->clear();
-	ui->listWidgetFingervein->clear();
-	ui->listWidgetIris->clear();
-	for (ContentPane *contentPane: contentPaneMap.values()) {
-		contentPane->deleteLater();
-		delete contentPane;
-	}
-
-	/* Empty data structures */
-	contentPaneMap.clear();
-	driverCount = 0;
-	deviceInfoMap.clear();
-}
-
 void MainWindow::initialize()
 {
 	/* 向 QDBus 类型系统注册自定义数据类型 */
@@ -340,25 +312,6 @@ QString MainWindow::mapReadableDeviceName(QString driverName)
 		return QString(tr("Iris"));
 }
 
-void MainWindow::dashboardSystemdSection(bool systemdActive)
-{
-	ToggleSwitch *toggleSwitch;
-	if (systemdActive)
-		toggleSwitch = new ToggleSwitch(true);
-	else
-		toggleSwitch = new ToggleSwitch(false);
-	QHBoxLayout *hBoxLayout = (QHBoxLayout *)ui->groupBoxService->layout();
-	QPushButton *btnRestartService = new QPushButton();
-	btnRestartService->setIcon(QIcon(":/images/assets/restart.png"));
-	btnRestartService->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	btnRestartService->setObjectName("btnRestartService");
-	hBoxLayout->addWidget(toggleSwitch);
-	hBoxLayout->addWidget(btnRestartService);
-	hBoxLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
-	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageServiceStatus);
-	connect(btnRestartService, &QPushButton::clicked, this, &MainWindow::restartService);
-}
-
 void MainWindow::dashboardDriverSection()
 {
 	ToggleSwitch *toggleSwitch;
@@ -396,29 +349,6 @@ void MainWindow::dashboardBioAuthSection()
 	ui->horizontalLayoutBioAuth->addWidget(toggleSwitch);
 	ui->horizontalLayoutBioAuth->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
 	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageBioAuthStatus);
-}
-
-void MainWindow::manageServiceStatus(bool toState)
-{
-	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
-	QProcess process;
-	if (toState) {
-		process.start("systemctl start biometric-authentication.service");
-		process.waitForFinished();
-		if (process.exitCode() == 0) {
-			toggleSwitch->acceptStateChange();
-			initialize();
-			enableBiometricTabs();
-		}
-	} else {
-		process.start("systemctl stop biometric-authentication.service");
-		process.waitForFinished();
-		if (process.exitCode() == 0) {
-			toggleSwitch->acceptStateChange();
-			clearAllData();
-			disableBiometricTabs();
-		}
-	}
 }
 
 void MainWindow::restartService()

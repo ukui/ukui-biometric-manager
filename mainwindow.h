@@ -23,7 +23,6 @@ public:
 /* Qt slots */
 private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
-	void manageServiceStatus(bool toState);
 	void restartService();
 	void manageDriverStatus(bool toState);
 	void manageBioAuthStatus(bool toState);
@@ -39,10 +38,8 @@ private:
 	void disableBiometricTabs();
 	void biometricPageInit();
 	QString mapReadableDeviceName(QString driverName);
-	void dashboardSystemdSection(bool systemdActive);
 	void dashboardDriverSection();
 	void dashboardBioAuthSection();
-	void clearAllData();
 	QIcon *getUserAvatar(QString username);
 	void showUserList();
 	void setDefaultUser();
