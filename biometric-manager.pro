@@ -19,15 +19,13 @@ SOURCES += main.cpp\
     customtype.cpp \
     promptdialog.cpp \
     contentpane.cpp \
-    toggleswitch.cpp \
-    driverinputdialog.cpp
+    toggleswitch.cpp
 
 HEADERS  += mainwindow.h \
     customtype.h \
     promptdialog.h \
     contentpane.h \
-    toggleswitch.h \
-    driverinputdialog.h
+    toggleswitch.h
 
 FORMS    += mainwindow.ui \
     promptdialog.ui \

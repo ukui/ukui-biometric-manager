@@ -26,9 +26,6 @@ private slots:
 	void manageServiceStatus(bool toState);
 	void restartService();
 	void manageDriverStatus(bool toState);
-	void addDriver();
-	void addDriverCallback(QString editDriverName, bool editStatus, QString editDriverPath, QString editDevicePath);
-	void removeDriver();
 	void manageBioAuthStatus(bool toState);
 
 /* Normal functions */
@@ -37,7 +34,6 @@ private:
 	void prettify();
 	void getDeviceInfo();
 	void addContentPane(QString driverName);
-	void removeContentPane(QString driverName);
 	void initialize();
 	void enableBiometricTabs();
 	void disableBiometricTabs();

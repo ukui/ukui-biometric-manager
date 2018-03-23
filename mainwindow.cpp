@@ -8,7 +8,6 @@
 #include "toggleswitch.h"
 #include <unistd.h>
 #include <QScrollBar>
-#include <driverinputdialog.h>
 #include <QMessageBox>
 
 #define ICON_SIZE 32
@@ -308,26 +307,6 @@ void MainWindow::addContentPane(QString driverName)
 	connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
 }
 
-void MainWindow::removeContentPane(QString driverName)
-{
-	QListWidget *lw;
-	QStackedWidget *sw;
-	DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
-	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
-		lw = ui->listWidgetFingerprint;
-		sw = ui->stackedWidgetFingerprint;
-	} else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN) {
-		lw = ui->listWidgetFingervein;
-		sw = ui->stackedWidgetFingervein;
-	} else {
-		lw = ui->listWidgetIris;
-		sw = ui->stackedWidgetIris;
-	}
-	int index = sw->indexOf(contentPaneMap.value(driverName));
-	lw->removeItemWidget(lw->item(index));
-	sw->removeWidget(contentPaneMap.value(driverName));
-}
-
 #define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
 		ui->listWidget##biometric->setCurrentRow(0);		\
@@ -396,24 +375,11 @@ void MainWindow::dashboardDriverSection()
 		gridLayout->addWidget(new QLabel(driverName), i, 0);
 		gridLayout->addWidget(new QLabel(mapReadableDeviceName(driverName)), i, 1);
 		gridLayout->addWidget(toggleSwitch, i, 2);
-
-		QPushButton *btnRemoveDriver = new QPushButton();
-		btnRemoveDriver->setObjectName("btnRemoveDriver");
-		btnRemoveDriver->setIcon(QIcon(":/images/assets/remove.png"));
-		btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-		gridLayout->addWidget(btnRemoveDriver, i, 3);
-		connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
-		btnRemoveDriver->hide(); /* Temporarily hide this feature */
 		i++;
 	}
 	/* Resize the column width automatically */
 	gridLayout->setColumnStretch(0, 1);
 	gridLayout->setColumnStretch(1, 1);
-
-	ui->btnAddDriver->setIcon(QIcon(":/images/assets/add.png"));
-	ui->btnAddDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	connect(ui->btnAddDriver, &QPushButton::clicked, this, &MainWindow::addDriver);
-	ui->btnAddDriver->hide(); /* Temporarily hide this feature */
 }
 
 void MainWindow::dashboardBioAuthSection()
@@ -499,95 +465,6 @@ void MainWindow::manageDriverStatus(bool toState)
 	} else {
 		contentPane->setDeviceAvailable(false);
 	}
-}
-
-void MainWindow::addDriver()
-{
-	DriverInputDialog *dialog = new DriverInputDialog();
-	connect(dialog, &DriverInputDialog::inputCompleted, this, &MainWindow::addDriverCallback);
-	dialog->exec();
-}
-
-void MainWindow::addDriverCallback(QString driverName, bool status, QString driverPath, QString devicePath)
-{
-	QProcess process;
-	process.start("pkexec biometric-config-tool add-driver " + driverName + " " + driverPath);
-	process.waitForFinished();
-	if (process.exitCode() != 0) {
-		QMessageBox *messageBox = new QMessageBox(QMessageBox::Information,
-							tr("Error"),
-							tr("Fail to add driver"),
-							QMessageBox::Ok);
-		messageBox->exec();
-		return;
-	}
-	if (devicePath != "")
-		process.start("pkexec biometric-config-tool set-key "
-					+ driverName + " Path " + driverPath);
-	process.waitForFinished();
-	if (!status)
-		process.start("pkexec biometric-config-tool disable-driver " + driverName);
-	process.waitForFinished();
-
-	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
-	int rowCount = gridLayout->rowCount();
-	ToggleSwitch *toggleSwitch = new ToggleSwitch(status, DRIVER_TS_W, DRIVER_TS_H);
-	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
-	gridLayout->addWidget(new QLabel(driverName), rowCount, 0);
-	gridLayout->addWidget(toggleSwitch, rowCount, 1);
-
-	QPushButton *btnRemoveDriver = new QPushButton();
-	btnRemoveDriver->setObjectName("btnRemoveDriver");
-	btnRemoveDriver->setIcon(QIcon(":/images/assets/remove.png"));
-	btnRemoveDriver->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	gridLayout->addWidget(btnRemoveDriver, rowCount, 2);
-	connect(btnRemoveDriver, &QPushButton::clicked, this, &MainWindow::removeDriver);
-
-	/* https://stackoverflow.com/a/23978797/4112667 */
-	int maximum = ui->scrollAreaDriver->verticalScrollBar()->maximum();
-	maximum += ICON_SIZE; /* Increase maximum manually */
-	ui->scrollAreaDriver->verticalScrollBar()->setMaximum(maximum);
-	ui->scrollAreaDriver->verticalScrollBar()->setValue(maximum);
-
-	/* Add corresponding contentPane to biometric page */
-	restartService(); /* Make the addition take effect */
-	getDeviceInfo(); /* Refresh */
-	addContentPane(driverName);
-}
-
-void MainWindow::removeDriver()
-{
-	QPushButton *btnRemoveDriver = (QPushButton *)sender();
-	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
-	int index = gridLayout->indexOf(btnRemoveDriver);
-
-	QLabel *lbl = (QLabel *)gridLayout->itemAt(index-3)->widget(); /* Relative to btnRemoveDriver */
-	QString driverName = lbl->text();
-	QProcess process;
-	process.start("pkexec biometric-config-tool remove-driver " + driverName);
-	process.waitForFinished();
-	if (process.exitCode() != 0) {
-		QMessageBox *messageBox = new QMessageBox(QMessageBox::Information,
-							tr("Error"),
-							tr("Fail to remove driver"),
-							QMessageBox::Ok);
-		messageBox->exec();
-		return;
-	}
-
-	/* Remove table row */
-	QWidget *widget;
-	for (int i = 1; i <= 3; i++) {
-		widget = gridLayout->itemAt(index-3)->widget(); /* Relative to btnRemoveDriver */
-		gridLayout->removeWidget(widget);
-		widget->deleteLater();
-		delete widget;
-	}
-
-	/* Remove corresponding contentPane from biometric page */
-	removeContentPane(driverName);
-	restartService();
-	deviceInfoMap.remove(driverName);
 }
 
 void MainWindow::manageBioAuthStatus(bool toState)

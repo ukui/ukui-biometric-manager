@@ -115,19 +115,12 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>786</width>
+                <width>834</width>
                 <height>327</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_2"/>
              </widget>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnAddDriver">
-             <property name="text">
-              <string/>
-             </property>
             </widget>
            </item>
           </layout>

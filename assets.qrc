@@ -20,6 +20,5 @@
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>
         <file>assets/mainwindow.qss</file>
-        <file>assets/driverinputdialog.qss</file>
     </qresource>
 </RCC>
