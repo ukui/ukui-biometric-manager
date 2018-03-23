@@ -78,21 +78,29 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QGroupBox" name="groupBoxService">
+         <widget class="QGroupBox" name="groupBoxBioAuth">
           <property name="title">
-           <string>Service Management</string>
+           <string>Authentication Management</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QLabel" name="lblServiceStatus">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayoutBioAuth">
+             <item>
+              <widget class="QLabel" name="lblBioAuthStatus">
+               <property name="text">
+                <string>Biometric Authentication Status:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblAuthNote">
              <property name="text">
-              <string>Service Status:</string>
+              <string>Biometric Authentication can take over system authentication processes which include Login, Screensaver, sudo/su and Polkit.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -121,36 +129,6 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_2"/>
              </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBoxBioAuth">
-          <property name="title">
-           <string>Authentication Management</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayoutBioAuth">
-             <item>
-              <widget class="QLabel" name="lblBioAuthStatus">
-               <property name="text">
-                <string>Biometric Authentication Status:</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QLabel" name="lblAuthNote">
-             <property name="text">
-              <string>Biometric Authentication can take over system authentication processes which include Login, Screensaver, sudo/su and Polkit.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
             </widget>
            </item>
           </layout>
