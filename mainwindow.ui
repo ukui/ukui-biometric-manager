@@ -114,22 +114,58 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <widget class="QScrollArea" name="scrollAreaDriver">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>834</width>
-                <height>327</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_2"/>
-             </widget>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayoutFingerprint">
+             <item>
+              <widget class="QLabel" name="labelTableFingerprint">
+               <property name="text">
+                <string>Fingerprint Devices</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidgetFingerprint">
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayoutFingervein">
+             <item>
+              <widget class="QLabel" name="labelTableFingervein">
+               <property name="text">
+                <string>Fingervein Devices</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidgetFingervein">
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayoutIris">
+             <item>
+              <widget class="QLabel" name="labelTableIris">
+               <property name="text">
+                <string>Iris Devices</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidgetIris">
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

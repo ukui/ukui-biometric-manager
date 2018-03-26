@@ -301,38 +301,52 @@ void MainWindow::biometricPageInit()
 	checkBiometricPage(Iris);
 }
 
-QString MainWindow::mapReadableDeviceName(QString driverName)
-{
-	DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
-	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
-		return QString(tr("Fingerprint"));
-	else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
-		return QString(tr("Fingervein"));
-	else
-		return QString(tr("Iris"));
-}
-
+#define SET_TABLE_ATTRIBUTE(tw) do {					\
+	tw->setColumnCount(2);						\
+	tw->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);\
+	tw->setHorizontalHeaderLabels(QStringList()			\
+		<< QString(tr("Device Name")) << QString(tr("Status")));\
+	tw->verticalHeader()->setVisible(false);			\
+	tw->horizontalHeader()->setSectionResizeMode(1,			\
+					QHeaderView::ResizeToContents);	\
+	tw->setSelectionMode(QAbstractItemView::NoSelection);		\
+} while (0);
 void MainWindow::dashboardDriverSection()
 {
 	ToggleSwitch *toggleSwitch;
-	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
-	gridLayout->setAlignment(Qt::AlignTop);
-	int i = 0;
+
+	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingerprint);
+	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingervein);
+	SET_TABLE_ATTRIBUTE(ui->tableWidgetIris);
 	for (QString driverName: deviceInfoMap.keys()) {
+		DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+		QTableWidget *tw = NULL;
+		if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
+			tw = ui->tableWidgetFingerprint;
+		else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
+			tw = ui->tableWidgetFingervein;
+		else if (deviceInfo->biotype == BIOTYPE_IRIS)
+			tw = ui->tableWidgetIris;
+
 		bool driverEnable = deviceInfoMap.value(driverName)->driver_enable;
-		if (driverEnable)
-			toggleSwitch = new ToggleSwitch(true, DRIVER_TS_W, DRIVER_TS_H);
-		else
-			toggleSwitch = new ToggleSwitch(false, DRIVER_TS_W, DRIVER_TS_H);
+		toggleSwitch = new ToggleSwitch(driverEnable, DRIVER_TS_W, DRIVER_TS_H);
 		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
-		gridLayout->addWidget(new QLabel(driverName), i, 0);
-		gridLayout->addWidget(new QLabel(mapReadableDeviceName(driverName)), i, 1);
-		gridLayout->addWidget(toggleSwitch, i, 2);
-		i++;
+
+		/* 0 - column */
+		int new_index = tw->rowCount();
+		tw->insertRow(new_index);
+		QTableWidgetItem *item = new QTableWidgetItem(driverName);
+		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+		tw->setItem(new_index, 0, item);
+
+		/* 1 - column */
+		QWidget *cellAlignWidget = new QWidget();
+		QVBoxLayout *vbox = new QVBoxLayout();
+		vbox->addWidget(toggleSwitch);
+		vbox->setContentsMargins(3, 2, 0, 0); /* center in vertical and horizontal */
+		cellAlignWidget->setLayout(vbox);
+		tw->setCellWidget(new_index, 1, cellAlignWidget);
 	}
-	/* Resize the column width automatically */
-	gridLayout->setColumnStretch(0, 1);
-	gridLayout->setColumnStretch(1, 1);
 }
 
 void MainWindow::dashboardBioAuthSection()
@@ -361,11 +375,17 @@ void MainWindow::restartService()
 void MainWindow::manageDriverStatus(bool toState)
 {
 	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
-	QGridLayout *gridLayout = (QGridLayout *)ui->scrollAreaWidgetContents->layout();
-	int index = gridLayout->indexOf(toggleSwitch);
-	QLabel *label = (QLabel *)gridLayout->itemAt(index-2)->widget(); /* Relative to toggleSwitch */
+	QWidget *cellAlignWidget = toggleSwitch->parentWidget();
+	QTableWidget *tableWidget = (QTableWidget *)(cellAlignWidget->parentWidget()->parentWidget());
+	QTableWidgetItem *driverNameItem;
+	for (int i = 0; i < tableWidget->rowCount(); i++) {
+		if (tableWidget->cellWidget(i, 1) == cellAlignWidget) {
+			driverNameItem = tableWidget->item(i, 0);
+			break;
+		}
+	}
+	QString driverName = driverNameItem->text();
 	QProcess process;
-	QString driverName = label->text();
 	if (toState) {
 		process.start("pkexec sh -c \"biometric-config-tool enable-driver "
 				+ driverName

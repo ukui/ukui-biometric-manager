@@ -37,7 +37,6 @@ private:
 	void enableBiometricTabs();
 	void disableBiometricTabs();
 	void biometricPageInit();
-	QString mapReadableDeviceName(QString driverName);
 	void dashboardDriverSection();
 	void dashboardBioAuthSection();
 	QIcon *getUserAvatar(QString username);
