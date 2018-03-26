@@ -82,11 +82,6 @@ void ContentPane::setSelectedUser(int uid)
 	showBiometrics();
 }
 
-void ContentPane::setDriverEnable(bool state)
-{
-	deviceInfo->driver_enable = state;
-}
-
 void ContentPane::setDeviceAvailable(bool state)
 {
 	deviceInfo->device_available = state;
@@ -95,21 +90,17 @@ void ContentPane::setDeviceAvailable(bool state)
 
 void ContentPane::updateWidgetStatus()
 {
-	bool state = false;
-	if (deviceInfo->driver_enable && deviceInfo->device_available) {
+	if (deviceInfo->device_available) {
 		ui->labelStatus->setText(tr("Enabled"));
-		state = true;
-	} else if (deviceInfo->driver_enable) {
-		ui->labelStatus->setText(tr("Device is not connected"));
 	} else {
 		ui->labelStatus->setText(tr("Disabled"));
 	}
-	ui->btnEnroll->setEnabled(state);
-	ui->btnDelete->setEnabled(state);
-	ui->btnVerify->setEnabled(state);
-	ui->btnSearch->setEnabled(state);
-	ui->btnDrop->setEnabled(state);
-	ui->treeView->setEnabled(state);
+	ui->btnEnroll->setEnabled(deviceInfo->device_available);
+	ui->btnDelete->setEnabled(deviceInfo->device_available);
+	ui->btnVerify->setEnabled(deviceInfo->device_available);
+	ui->btnSearch->setEnabled(deviceInfo->device_available);
+	ui->btnDrop->setEnabled(deviceInfo->device_available);
+	ui->treeView->setEnabled(deviceInfo->device_available);
 }
 
 /**

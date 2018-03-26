@@ -327,8 +327,8 @@ void MainWindow::initDashboardDeviceSection()
 		else if (deviceInfo->biotype == BIOTYPE_IRIS)
 			tw = ui->tableWidgetIris;
 
-		bool driverEnable = deviceInfoMap.value(deviceName)->driver_enable;
-		toggleSwitch = new ToggleSwitch(driverEnable, DEVICE_TS_W, DEVICE_TS_H);
+		bool deviceAvailable = deviceInfoMap.value(deviceName)->device_available;
+		toggleSwitch = new ToggleSwitch(deviceAvailable, DEVICE_TS_W, DEVICE_TS_H);
 		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDeviceStatus);
 
 		/* 0 - column */
@@ -389,23 +389,41 @@ void MainWindow::manageDeviceStatus(bool toState)
 				+ " && systemctl restart biometric-authentication.service");
 		process.waitForFinished();
 	}
-	if (process.exitCode() != 0)
+	if (process.exitCode() != 0) {
+		QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+							tr("Fatal Error"),
+							tr("Fail to change device status"),
+							QMessageBox::Ok);
+		messageBox->exec();
 		return;
-	toggleSwitch->acceptStateChange();
+	}
 	/*
 	 * There is a condition that the driver is enabled while the device is
 	 * not connected. So, if user enables the driver, we need to update the
 	 * deviceinfo array to make sure the device is indeed available. If user
 	 * disabled the driver, the device must can't be used and therefor we
-	 * don't need to update the deviceinfo array.
+	 * don't need to query device info from DBus.
 	 */
 	ContentPane *contentPane = contentPaneMap.value(deviceName);
-	contentPane->setDriverEnable(toState);
 	if (toState) {
 		getDeviceInfo();
-		contentPane->setDeviceAvailable(deviceInfoMap.value(deviceName)->device_available);
+		bool deviceAvailable = deviceInfoMap.value(deviceName)->device_available;
+		contentPane->setDeviceAvailable(deviceAvailable);
+		if (deviceAvailable) {
+			toggleSwitch->acceptStateChange();
+		} else {
+			QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+							tr("Fatal Error"),
+							tr("Device is not connected"),
+							QMessageBox::Ok);
+			messageBox->exec();
+		}
+
 	} else {
+		deviceInfoMap.value(deviceName)->driver_enable = false;
+		deviceInfoMap.value(deviceName)->device_available = false;
 		contentPane->setDeviceAvailable(false);
+		toggleSwitch->acceptStateChange();
 	}
 }
 
