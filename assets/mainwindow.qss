@@ -104,3 +104,7 @@ QComboBox QAbstractItemView::item {
 QComboBox::drop-down{
 	border-width: 0px;
 }
+
+#labelTableFingerprint, #labelTableFingervein, #labelTableIris {
+	font-size: 16px;
+}
