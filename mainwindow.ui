@@ -108,9 +108,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBoxDriver">
+         <widget class="QGroupBox" name="groupBoxDevice">
           <property name="title">
-           <string>Driver Management</string>
+           <string>Device Management</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
@@ -126,8 +126,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidgetFingerprint">
-              </widget>
+              <widget class="QTableWidget" name="tableWidgetFingerprint"/>
              </item>
             </layout>
            </item>
@@ -144,8 +143,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidgetFingervein">
-              </widget>
+              <widget class="QTableWidget" name="tableWidgetFingervein"/>
              </item>
             </layout>
            </item>
@@ -162,8 +160,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidgetIris">
-              </widget>
+              <widget class="QTableWidget" name="tableWidgetIris"/>
              </item>
             </layout>
            </item>

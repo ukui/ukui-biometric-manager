@@ -24,7 +24,7 @@ public:
 private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
 	void restartService();
-	void manageDriverStatus(bool toState);
+	void manageDeviceStatus(bool toState);
 	void manageBioAuthStatus(bool toState);
 
 /* Normal functions */
@@ -32,12 +32,12 @@ private:
 	void checkAPICompatibility();
 	void prettify();
 	void getDeviceInfo();
-	void addContentPane(QString driverName);
+	void addContentPane(QString deviceName);
 	void initialize();
 	void enableBiometricTabs();
 	void disableBiometricTabs();
 	void initBiometricPage();
-	void initDashboardDriverSection();
+	void initDashboardDeviceSection();
 	void initDashboardBioAuthSection();
 	QIcon *getUserAvatar(QString username);
 	void showUserList();
@@ -52,7 +52,7 @@ private:
 	Ui::MainWindow *ui;
 	/* 用于和远端 DBus 对象交互的代理接口 */
 	cn::kylinos::Biometric *biometricInterface;
-	int driverCount;
+	int deviceCount;
 	QMap<QString, DeviceInfo *> deviceInfoMap;
 	QMap<QString, ContentPane *> contentPaneMap;
 	/* 通过命令行参数传入的用户名 */

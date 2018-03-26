@@ -11,8 +11,8 @@
 #include <QMessageBox>
 
 #define ICON_SIZE 32
-#define DRIVER_TS_W 45 /* The width of ToggleSwitch in driver list */
-#define DRIVER_TS_H 26
+#define DEVICE_TS_W 45 /* The width of ToggleSwitch in device list */
+#define DEVICE_TS_H 26
 
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QMainWindow(parent),
@@ -191,7 +191,7 @@ void MainWindow::initialize()
 
 	/* Other initializations */
 	initDashboardBioAuthSection();
-	initDashboardDriverSection();
+	initDashboardDeviceSection();
 	initBiometricPage();
 
 	/* 获取并显示用户列表 */
@@ -229,19 +229,19 @@ void MainWindow::getDeviceInfo()
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
-		driverCount = 0;
+		deviceCount = 0;
 		return;
 	}
 
 	/* 解析 DBus 返回值，reply 有两个返回值，都是 QVariant 类型 */
 	variant = reply.argumentAt(0); /* 得到第一个返回值 */
-	driverCount = variant.value<int>(); /* 解封装得到设备个数 */
+	deviceCount = variant.value<int>(); /* 解封装得到设备个数 */
 	variant = reply.argumentAt(1); /* 得到第二个返回值 */
 	argument = variant.value<QDBusArgument>(); /* 解封装，获取QDBusArgument对象 */
 	argument >> qlist; /* 使用运算符重载提取 argument 对象里面存储的列表对象 */
 
 	deviceInfoMap.clear();
-	for (int i = 0; i < driverCount; i++) {
+	for (int i = 0; i < deviceCount; i++) {
 		item = qlist[i]; /* 取出一个元素 */
 		variant = item.variant(); /* 转为普通QVariant对象 */
 		/* 解封装得到 QDBusArgument 对象 */
@@ -252,11 +252,11 @@ void MainWindow::getDeviceInfo()
 	}
 }
 
-void MainWindow::addContentPane(QString driverName)
+void MainWindow::addContentPane(QString deviceName)
 {
 	QListWidget *lw;
 	QStackedWidget *sw;
-	DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+	DeviceInfo *deviceInfo = deviceInfoMap.value(deviceName);
 	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
 		lw = ui->listWidgetFingerprint;
 		sw = ui->stackedWidgetFingerprint;
@@ -267,12 +267,12 @@ void MainWindow::addContentPane(QString driverName)
 		lw = ui->listWidgetIris;
 		sw = ui->stackedWidgetIris;
 	}
-	QListWidgetItem *item = new QListWidgetItem(driverName);
+	QListWidgetItem *item = new QListWidgetItem(deviceName);
 	item->setTextAlignment(Qt::AlignCenter);
 	lw->insertItem(lw->count(), item);
 	ContentPane *contentPane = new ContentPane(deviceInfo);
 	sw->addWidget(contentPane);
-	contentPaneMap.insert(driverName, contentPane);
+	contentPaneMap.insert(deviceName, contentPane);
 	connect(this, &MainWindow::selectedUserChanged,
 			contentPane, &ContentPane::setSelectedUser);
 	connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
@@ -293,8 +293,8 @@ void MainWindow::addContentPane(QString driverName)
 
 void MainWindow::initBiometricPage()
 {
-	for (QString driverName: deviceInfoMap.keys())
-		addContentPane(driverName);
+	for (QString deviceName: deviceInfoMap.keys())
+		addContentPane(deviceName);
 	checkBiometricPage(Fingerprint);
 	checkBiometricPage(Fingervein);
 	checkBiometricPage(Iris);
@@ -310,15 +310,15 @@ void MainWindow::initBiometricPage()
 					QHeaderView::ResizeToContents);	\
 	tw->setSelectionMode(QAbstractItemView::NoSelection);		\
 } while (0);
-void MainWindow::initDashboardDriverSection()
+void MainWindow::initDashboardDeviceSection()
 {
 	ToggleSwitch *toggleSwitch;
 
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingerprint);
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingervein);
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetIris);
-	for (QString driverName: deviceInfoMap.keys()) {
-		DeviceInfo *deviceInfo = deviceInfoMap.value(driverName);
+	for (QString deviceName: deviceInfoMap.keys()) {
+		DeviceInfo *deviceInfo = deviceInfoMap.value(deviceName);
 		QTableWidget *tw = NULL;
 		if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
 			tw = ui->tableWidgetFingerprint;
@@ -327,14 +327,14 @@ void MainWindow::initDashboardDriverSection()
 		else if (deviceInfo->biotype == BIOTYPE_IRIS)
 			tw = ui->tableWidgetIris;
 
-		bool driverEnable = deviceInfoMap.value(driverName)->driver_enable;
-		toggleSwitch = new ToggleSwitch(driverEnable, DRIVER_TS_W, DRIVER_TS_H);
-		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDriverStatus);
+		bool driverEnable = deviceInfoMap.value(deviceName)->driver_enable;
+		toggleSwitch = new ToggleSwitch(driverEnable, DEVICE_TS_W, DEVICE_TS_H);
+		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDeviceStatus);
 
 		/* 0 - column */
 		int new_index = tw->rowCount();
 		tw->insertRow(new_index);
-		QTableWidgetItem *item = new QTableWidgetItem(driverName);
+		QTableWidgetItem *item = new QTableWidgetItem(deviceName);
 		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
 		tw->setItem(new_index, 0, item);
 
@@ -371,28 +371,28 @@ void MainWindow::restartService()
 	process.waitForFinished();
 }
 
-void MainWindow::manageDriverStatus(bool toState)
+void MainWindow::manageDeviceStatus(bool toState)
 {
 	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
 	QWidget *cellAlignWidget = toggleSwitch->parentWidget();
 	QTableWidget *tableWidget = (QTableWidget *)(cellAlignWidget->parentWidget()->parentWidget());
-	QTableWidgetItem *driverNameItem;
+	QTableWidgetItem *deviceNameItem;
 	for (int i = 0; i < tableWidget->rowCount(); i++) {
 		if (tableWidget->cellWidget(i, 1) == cellAlignWidget) {
-			driverNameItem = tableWidget->item(i, 0);
+			deviceNameItem = tableWidget->item(i, 0);
 			break;
 		}
 	}
-	QString driverName = driverNameItem->text();
+	QString deviceName = deviceNameItem->text();
 	QProcess process;
 	if (toState) {
 		process.start("pkexec sh -c \"biometric-config-tool enable-driver "
-				+ driverName
+				+ deviceName
 				+ " && systemctl restart biometric-authentication.service");
 		process.waitForFinished();
 	} else {
 		process.start("pkexec sh -c \"biometric-config-tool disable-driver "
-				+ driverName
+				+ deviceName
 				+ " && systemctl restart biometric-authentication.service");
 		process.waitForFinished();
 	}
@@ -406,11 +406,11 @@ void MainWindow::manageDriverStatus(bool toState)
 	 * disabled the driver, the device must can't be used and therefor we
 	 * don't need to update the deviceinfo array.
 	 */
-	ContentPane *contentPane = contentPaneMap.value(driverName);
+	ContentPane *contentPane = contentPaneMap.value(deviceName);
 	contentPane->setDriverEnable(toState);
 	if (toState) {
 		getDeviceInfo();
-		contentPane->setDeviceAvailable(deviceInfoMap.value(driverName)->device_available);
+		contentPane->setDeviceAvailable(deviceInfoMap.value(deviceName)->device_available);
 	} else {
 		contentPane->setDeviceAvailable(false);
 	}
