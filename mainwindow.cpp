@@ -364,13 +364,6 @@ void MainWindow::initDashboardBioAuthSection()
 	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageBioAuthStatus);
 }
 
-void MainWindow::restartService()
-{
-	QProcess process;
-	process.start("systemctl restart biometric-authentication.service");
-	process.waitForFinished();
-}
-
 void MainWindow::manageDeviceStatus(bool toState)
 {
 	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();

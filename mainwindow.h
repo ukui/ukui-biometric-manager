@@ -23,7 +23,6 @@ public:
 /* Qt slots */
 private slots:
 	void on_comboBoxUsername_currentIndexChanged(int index);
-	void restartService();
 	void manageDeviceStatus(bool toState);
 	void manageBioAuthStatus(bool toState);
 
