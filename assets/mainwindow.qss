@@ -52,19 +52,12 @@ QTabWidget::Pane {
 	border-style:none;
 }
 
-#lblServiceStatus, #lblBioAuthStatus {
+#lblBioAuthStatus {
 	font-size: 16px;
 }
 
 #lblAuthNote {
 	font: bold italic 15px;
-}
-
-#btnAddDriver, #btnRemoveDriver {
-	min-width: 36px;
-	min-height: 36px;
-	outline: none;
-	border-style:none;
 }
 
 QListWidget {
