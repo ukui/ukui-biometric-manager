@@ -36,9 +36,9 @@ private:
 	void initialize();
 	void enableBiometricTabs();
 	void disableBiometricTabs();
-	void biometricPageInit();
-	void dashboardDriverSection();
-	void dashboardBioAuthSection();
+	void initBiometricPage();
+	void initDashboardDriverSection();
+	void initDashboardBioAuthSection();
 	QIcon *getUserAvatar(QString username);
 	void showUserList();
 	void setDefaultUser();

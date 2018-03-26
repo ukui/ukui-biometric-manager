@@ -28,16 +28,10 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QString output = process.readAllStandardOutput();
 	bool systemdActive = output.startsWith("active");
 
-	dashboardBioAuthSection();
-
 	if (systemdActive)
 		initialize();
 	else
 		disableBiometricTabs();
-
-	/* 获取并显示用户列表 */
-	showUserList();
-	setDefaultUser();
 }
 
 MainWindow::~MainWindow()
@@ -196,8 +190,13 @@ void MainWindow::initialize()
 	getDeviceInfo();
 
 	/* Other initializations */
-	dashboardDriverSection();
-	biometricPageInit();
+	initDashboardBioAuthSection();
+	initDashboardDriverSection();
+	initBiometricPage();
+
+	/* 获取并显示用户列表 */
+	showUserList();
+	setDefaultUser();
 }
 
 void MainWindow::enableBiometricTabs()
@@ -292,7 +291,7 @@ void MainWindow::addContentPane(QString driverName)
 	}								\
 } while(0)
 
-void MainWindow::biometricPageInit()
+void MainWindow::initBiometricPage()
 {
 	for (QString driverName: deviceInfoMap.keys())
 		addContentPane(driverName);
@@ -311,7 +310,7 @@ void MainWindow::biometricPageInit()
 					QHeaderView::ResizeToContents);	\
 	tw->setSelectionMode(QAbstractItemView::NoSelection);		\
 } while (0);
-void MainWindow::dashboardDriverSection()
+void MainWindow::initDashboardDriverSection()
 {
 	ToggleSwitch *toggleSwitch;
 
@@ -349,7 +348,7 @@ void MainWindow::dashboardDriverSection()
 	}
 }
 
-void MainWindow::dashboardBioAuthSection()
+void MainWindow::initDashboardBioAuthSection()
 {
 	ToggleSwitch *toggleSwitch;
 	QProcess process;
