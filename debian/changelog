@@ -1,3 +1,9 @@
+biometric-manager (1.3) juniper; urgency=medium
+
+  * Bump to version 1.3
+
+ -- lihao <lihao@kylinos.cn>  Tue, 03 Apr 2018 15:42:05 +0800
+
 biometric-manager (1.3~rc3) juniper; urgency=medium
 
   * [Fixed] 开关服务失败时 if 语句范围错误
