@@ -16,14 +16,14 @@ endif
 
 
 # Target
-all: biometric-manager i18n
+all: manager i18n
 
 #
 # Compilation
 #
 
 # Compile Biometric Manager
-biometric-manager:
+manager:
 	cp -f $(XML) ./
 	qmake $(QMAKE_OPTIONS) -o QtMakefile
 	make -f QtMakefile
