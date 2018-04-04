@@ -183,7 +183,7 @@
         <item>
          <widget class="QLabel" name="lblNoDeviceFingerprint">
           <property name="text">
-           <string>No Any Device</string>
+           <string>Driver Not Found</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -209,7 +209,7 @@
         <item>
          <widget class="QLabel" name="lblNoDeviceFingervein">
           <property name="text">
-           <string>No Any Device</string>
+           <string>Driver Not Found</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -235,7 +235,7 @@
         <item>
          <widget class="QLabel" name="lblNoDeviceIris">
           <property name="text">
-           <string>No Any Device</string>
+           <string>Driver Not Found</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

@@ -91,9 +91,9 @@ void ContentPane::setDeviceAvailable(bool state)
 void ContentPane::updateWidgetStatus()
 {
 	if (deviceInfo->device_available) {
-		ui->labelStatus->setText(tr("Enabled"));
+		ui->labelStatus->setText(tr("Device is available"));
 	} else {
-		ui->labelStatus->setText(tr("Disabled"));
+		ui->labelStatus->setText(tr("Device is not connected"));
 	}
 	ui->btnEnroll->setEnabled(deviceInfo->device_available);
 	ui->btnDelete->setEnabled(deviceInfo->device_available);
