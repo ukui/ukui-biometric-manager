@@ -353,7 +353,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 	case DBUS_RESULT_ERROR: /* 录入未成功，具体原因还需要进一步读取底层设备的操作状态 */
 		{
 		usedIndexList->removeOne(freeIndex);
-		QDBusPendingReply<int, int, int, int, int> reply =
+		QDBusPendingReply<int, int, int, int, int, int> reply =
 				biometricInterface->UpdateStatus(deviceInfo->device_id);
 		reply.waitForFinished();
 		if (reply.isError()) {
@@ -361,7 +361,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 			promptDialog->setLabelText(tr("D-Bus calling error"));
 			return;
 		}
-		int opsStatus = reply.argumentAt(3).value<int>();
+		int opsStatus = reply.argumentAt(4).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
 			promptDialog->setLabelText(tr("Failed to enroll"));
@@ -430,7 +430,7 @@ void ContentPane::setPreEnrollMsg(int deviceID, int statusType)
 {
 	if (!(deviceID == deviceInfo->device_id && statusType == STATUS_NOTIFY))
 		return;
-	QDBusPendingReply<int, int, int, int, int> reply =
+	QDBusPendingReply<int, int, int, int, int, int> reply =
 			biometricInterface->UpdateStatus(deviceInfo->device_id);
 	reply.waitForFinished();
 	if (reply.isError()) {
@@ -438,12 +438,12 @@ void ContentPane::setPreEnrollMsg(int deviceID, int statusType)
 		return;
 	}
 
-	int devStatus = reply.argumentAt(2).value<int>();
+	int devStatus = reply.argumentAt(3).value<int>();
 	/*
 	 * 如果此时设备正在进行搜索操作(Polkit等待授权)则将弹窗上的搜索提示覆盖，防止用户迷惑
-	 * devStatus=101/601/901 分别对应打开设备、正在搜索、关闭设备三种动作
+	 * devStatus=101/601/1001 分别对应打开设备、正在搜索、关闭设备三种动作
 	 */
-	if (devStatus ==101 || devStatus == 601 || devStatus == 901)
+	if (devStatus ==101 || devStatus == 601 || devStatus == 1001) /* biometric_common.h */
 		promptDialog->setLabelText(tr("Permission is required. Please "
 					      "authenticate yourself to continue"));
 }
@@ -561,7 +561,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 		break;
 	case DBUS_RESULT_ERROR:
 		{
-		QDBusPendingReply<int, int, int, int, int> reply =
+		QDBusPendingReply<int, int, int, int, int, int> reply =
 				biometricInterface->UpdateStatus(deviceInfo->device_id);
 		reply.waitForFinished();
 		if (reply.isError()) {
@@ -569,7 +569,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 			promptDialog->setLabelText(tr("D-Bus calling error"));
 			return;
 		}
-		int opsStatus = reply.argumentAt(3).value<int>();
+		int opsStatus = reply.argumentAt(4).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
 			promptDialog->setLabelText(tr("Failed to match"));
@@ -644,7 +644,7 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
 		break;
 	case DBUS_RESULT_ERROR:
 		{
-		QDBusPendingReply<int, int, int, int, int> reply =
+		QDBusPendingReply<int, int, int, int, int, int> reply =
 				biometricInterface->UpdateStatus(deviceInfo->device_id);
 		reply.waitForFinished();
 		if (reply.isError()) {
@@ -652,7 +652,7 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
 			promptDialog->setLabelText(tr("D-Bus calling error"));
 			return;
 		}
-		int opsStatus = reply.argumentAt(3).value<int>();
+		int opsStatus = reply.argumentAt(4).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
 			promptDialog->setLabelText(tr("Not Found"));
