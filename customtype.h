@@ -22,6 +22,7 @@ enum DBusResult {
 };
 
 /* 设备操作结果 ops_status，由 UpdateStatus 函数获得 */
+#define OPS_STATUS_INDEX 4 /* Index of OpsStatus in UpdateStatus result */
 enum OpsStatus {
 	OPS_SUCCESS,
 	OPS_FAILED,

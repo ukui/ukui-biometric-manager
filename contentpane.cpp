@@ -361,7 +361,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 			promptDialog->setLabelText(tr("D-Bus calling error"));
 			return;
 		}
-		int opsStatus = reply.argumentAt(4).value<int>();
+		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
 			promptDialog->setLabelText(tr("Failed to enroll"));
@@ -569,7 +569,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 			promptDialog->setLabelText(tr("D-Bus calling error"));
 			return;
 		}
-		int opsStatus = reply.argumentAt(4).value<int>();
+		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
 			promptDialog->setLabelText(tr("Failed to match"));
@@ -652,7 +652,7 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
 			promptDialog->setLabelText(tr("D-Bus calling error"));
 			return;
 		}
-		int opsStatus = reply.argumentAt(4).value<int>();
+		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
 			promptDialog->setLabelText(tr("Not Found"));
