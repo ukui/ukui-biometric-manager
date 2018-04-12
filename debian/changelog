@@ -1,3 +1,12 @@
+biometric-manager (1.4~rc2) juniper; urgency=medium
+
+  * [Improved] 修改设备未连接和驱动不存在的提示
+  * [Package] 修改 Makefile 目标名
+  * [Changed] UpdateStatus 接口变更
+  * [Improved] 使用宏定义表示 OpsStatus 在 UpdateStatus 返回值中的索引
+
+ -- lihao <lihao@kylinos.cn>  Thu, 12 Apr 2018 14:53:10 +0800
+
 biometric-manager (1.4~rc1) juniper; urgency=medium
 
   * [Changed] 彻底删除与驱动增删有关的代码
