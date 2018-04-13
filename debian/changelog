@@ -1,3 +1,9 @@
+biometric-manager (1.4~rc4) juniper; urgency=medium
+
+  * [Fixed] 解决 device_available DBus 返回 -1 的问题
+
+ -- lihao <lihao@kylinos.cn>  Fri, 13 Apr 2018 17:14:51 +0800
+
 biometric-manager (1.4~rc3) juniper; urgency=medium
 
   * [Minor] 更新翻译文件
