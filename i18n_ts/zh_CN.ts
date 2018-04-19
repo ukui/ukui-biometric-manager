@@ -377,8 +377,8 @@
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="53"/>
-        <location filename="../mainwindow.cpp" line="394"/>
-        <location filename="../mainwindow.cpp" line="416"/>
+        <location filename="../mainwindow.cpp" line="398"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>Fatal Error</source>
         <translation>错误</translation>
     </message>
@@ -388,12 +388,22 @@
         <translation>API 版本不兼容</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="395"/>
+        <location filename="../mainwindow.cpp" line="319"/>
+        <source>Device Name</source>
+        <translation>设备名称</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="320"/>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="399"/>
         <source>Fail to change device status</source>
         <translation>更该设备状态失败</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="417"/>
+        <location filename="../mainwindow.cpp" line="421"/>
         <source>Device is not connected</source>
         <translation>设备未连接</translation>
     </message>

@@ -316,6 +316,8 @@ void MainWindow::initDashboardDeviceSection()
 {
 	ToggleSwitch *toggleSwitch;
 
+	QString(tr("Device Name")); /* For SET_TABLE_ATTRIBUTE translation */
+	QString(tr("Status"));
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingerprint);
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingervein);
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetIris);
