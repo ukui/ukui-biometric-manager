@@ -1,3 +1,11 @@
+biometric-manager (1.4~rc5) juniper; urgency=medium
+
+  * 回退上一次修改
+  * [Fixed] 兼容 device_available 为 -1 的情况
+  * [Minor] 更新翻译
+
+ -- lihao <lihao@kylinos.cn>  Thu, 19 Apr 2018 19:11:27 +0800
+
 biometric-manager (1.4~rc4) juniper; urgency=medium
 
   * [Fixed] 解决 device_available DBus 返回 -1 的问题
