@@ -90,7 +90,7 @@ void ContentPane::setDeviceAvailable(bool state)
 
 void ContentPane::updateWidgetStatus()
 {
-	if (deviceInfo->device_available == 1) {
+	if (deviceInfo->device_available) {
 		ui->labelStatus->setText(tr("Device is available"));
 	} else {
 		ui->labelStatus->setText(tr("Device is not connected"));
