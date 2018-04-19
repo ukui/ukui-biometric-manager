@@ -248,6 +248,8 @@ void MainWindow::getDeviceInfo()
 		argument = variant.value<QDBusArgument>();
 		deviceInfo = new DeviceInfo();
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
+		if (deviceInfo->device_available != 1)
+			deviceInfo->device_available = 0;
 		deviceInfoMap.insert(deviceInfo->device_shortname, deviceInfo);
 	}
 }
