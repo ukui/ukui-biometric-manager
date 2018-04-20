@@ -103,6 +103,15 @@ void ContentPane::updateWidgetStatus()
 	ui->treeView->setEnabled(deviceInfo->device_available);
 }
 
+void ContentPane::updateButtonUsefulness()
+{
+	bool enable = !!dataModel->rowCount();
+	ui->btnDelete->setEnabled(enable);
+	ui->btnVerify->setEnabled(enable);
+	ui->btnSearch->setEnabled(enable);
+	ui->btnDrop->setEnabled(enable);
+}
+
 /**
  * @brief 检测某种生物识别设备是否存在
  * @param biotype
@@ -286,6 +295,7 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 		dataModel->appendRow(row);
 	}
 	QApplication::restoreOverrideCursor();
+	updateButtonUsefulness();
 }
 
 /**
@@ -348,6 +358,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 		row.append(new QStandardItem(indexName));
 		row.append(new QStandardItem(QString::number(freeIndex)));
 		dataModel->appendRow(row);
+		updateButtonUsefulness();
 		promptDialog->setLabelText(tr("Enroll successfully"));
 		break;
 	case DBUS_RESULT_ERROR: /* 录入未成功，具体原因还需要进一步读取底层设备的操作状态 */
@@ -497,6 +508,7 @@ void ContentPane::on_btnDelete_clicked()
 		return;
 	usedIndexList->removeOne(deleteIndex);
 	dataModel->removeRow(clickedModelIndex.row(), clickedModelIndex.parent());
+	updateButtonUsefulness();
 }
 
 /**
@@ -516,6 +528,7 @@ void ContentPane::on_btnDrop_clicked()
 		return;
 	usedIndexList->clear();
 	dataModel->setRowCount(0);
+	updateButtonUsefulness();
 }
 
 /**

@@ -40,6 +40,7 @@ private:
 	void trackUsedBiometricIndex();
 	int findFreeBiometricIndex();
 	void updateWidgetStatus();
+	void updateButtonUsefulness();
 public:
 	void setDeviceAvailable(bool state);
 
