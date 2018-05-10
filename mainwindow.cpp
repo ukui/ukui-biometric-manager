@@ -433,6 +433,20 @@ void MainWindow::manageDeviceStatus(bool toState)
 
 void MainWindow::manageBioAuthStatus(bool toState)
 {
+    if(toState){
+        int featuresCount = 0;
+        for(auto contentPane :contentPaneMap){
+            featuresCount += contentPane->featuresCount();
+        }
+        if(featuresCount <= 0){
+            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning,
+                            tr("Warnning"),
+                            tr("There is no available device or no features enrolled"),
+                            QMessageBox::Ok);
+            messageBox->exec();
+            return;
+        }
+    }
 	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
 	QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
 	QProcess process;

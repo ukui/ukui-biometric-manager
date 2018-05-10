@@ -7,7 +7,8 @@
 
 ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::ContentPane)
+    ui(new Ui::ContentPane),
+    dataModel(nullptr)
 {
 	ui->setupUi(this);
 	this->deviceInfo = deviceInfo;
@@ -86,6 +87,12 @@ void ContentPane::setDeviceAvailable(bool state)
 {
 	deviceInfo->device_available = state;
 	updateWidgetStatus();
+}
+
+int ContentPane::featuresCount()
+{
+    if(dataModel)
+        return dataModel->rowCount();
 }
 
 void ContentPane::updateWidgetStatus()

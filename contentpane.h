@@ -43,6 +43,7 @@ private:
 	void updateButtonUsefulness();
 public:
 	void setDeviceAvailable(bool state);
+    int featuresCount();
 
 /* DBus */
 private slots:
