@@ -293,15 +293,16 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 	int listsize;
 	QList<QVariant> variantList = callbackReply.arguments();
 	listsize = variantList[0].value<int>();
-    qDebug() << deviceInfo->biotype << " found " << listsize << " features";
 	variantList[1].value<QDBusArgument>() >> qlist;
 	for (int i = 0; i < listsize; i++) {
 		biometricInfo = new BiometricInfo();
 		qlist[i].variant().value<QDBusArgument>() >> *biometricInfo;
-		QList<QStandardItem *> row;
-		row.append(new QStandardItem(biometricInfo->index_name));
-		row.append(new QStandardItem(QString::number(biometricInfo->index)));
-		dataModel->appendRow(row);
+        if(biometricInfo->uid == selectedUid) {
+            QList<QStandardItem *> row;
+            row.append(new QStandardItem(biometricInfo->index_name));
+            row.append(new QStandardItem(QString::number(biometricInfo->index)));
+            dataModel->appendRow(row);
+        }
 	}
 	QApplication::restoreOverrideCursor();
 	updateButtonUsefulness();
@@ -654,8 +655,6 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
             QDBusArgument arg =variantList.at(i).value<QDBusArgument>();
             SearchResult ret;
             arg >> ret;
-            qDebug() << ret.indexName;
-
             msg += QString(ret.indexName + "、");
         }
         promptDialog->setLabelText(msg.remove(msg.length()-1, 1));
