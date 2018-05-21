@@ -93,6 +93,7 @@ int ContentPane::featuresCount()
 {
     if(dataModel)
         return dataModel->rowCount();
+    return 0;
 }
 
 void ContentPane::updateWidgetStatus()
@@ -292,6 +293,7 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 	int listsize;
 	QList<QVariant> variantList = callbackReply.arguments();
 	listsize = variantList[0].value<int>();
+    qDebug() << deviceInfo->biotype << " found " << listsize << " features";
 	variantList[1].value<QDBusArgument>() >> qlist;
 	for (int i = 0; i < listsize; i++) {
 		biometricInfo = new BiometricInfo();
@@ -640,59 +642,60 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
 {
 	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 
-	QList<QVariant> variantList = callbackReply.arguments();
-	int result, hitUid, hitIndex;
-	QString hitUsername, msg, hitIndexName;
-	result = variantList[0].value<int>();
-	hitUid = variantList[1].value<int>();
-	hitIndex = variantList[2].value<int>();
-	hitIndexName = variantList[3].value<QString>();
-	UNUSED(hitUid);
-	UNUSED(hitIndex);
+    int count = callbackReply.arguments().at(0).toInt();
+    qDebug() << "found " << count << " features";
 
-	QList<QStandardItem *> row;
-	switch(result) {
-	case DBUS_RESULT_SUCCESS: {
-		QProcess process;
-		process.start("id -nu " + QString::number(hitUid));
-		process.waitForFinished();
-		QString output = process.readAllStandardOutput();
-		hitUsername = output.remove(QRegularExpression("[\n]"));
-		msg = QString(tr("Found! Username: %1, Feature name: %2")).arg(hitUsername).arg(hitIndexName);
-		promptDialog->setLabelText(msg);
-		}
-		break;
-	case DBUS_RESULT_ERROR:
-		{
-		QDBusPendingReply<int, int, int, int, int, int> reply =
-				biometricInterface->UpdateStatus(deviceInfo->device_id);
-		reply.waitForFinished();
-		if (reply.isError()) {
-			qDebug() << "GUI:" << reply.error();
-			promptDialog->setLabelText(tr("D-Bus calling error"));
-			return;
-		}
-		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
-		opsStatus = opsStatus % 100;
-		if (opsStatus == OPS_FAILED)
-			promptDialog->setLabelText(tr("Not Found"));
-		else if (opsStatus == OPS_ERROR)
-			promptDialog->setLabelText(tr("Device encounters an error"));
-		else if (opsStatus == OPS_CANCEL)
-			return;
-		else if (opsStatus == OPS_TIMEOUT)
-			promptDialog->setLabelText(tr("Operation timeout"));
-		break;
-		}
-	case DBUS_RESULT_DEVICEBUSY:
-		promptDialog->setLabelText(tr("Device is busy"));
-		break;
-	case DBUS_RESULT_NOSUCHDEVICE:
-		promptDialog->setLabelText(tr("No such device"));
-		break;
-	case DBUS_RESULT_PERMISSIONDENIED:
-		promptDialog->setLabelText(tr("Permission denied"));
-		break;
-	}
+    if(count > 0) {
+        QDBusArgument argument = callbackReply.arguments().at(1).value<QDBusArgument>();
+        QList<QVariant> variantList;
+        argument >> variantList;
+        QString msg = tr("Found the matching features name: ");
+        for(int i = 0; i < count; i++) {
+            QDBusArgument arg =variantList.at(i).value<QDBusArgument>();
+            SearchResult ret;
+            arg >> ret;
+            qDebug() << ret.indexName;
+
+            msg += QString(ret.indexName + "、");
+        }
+        promptDialog->setLabelText(msg.remove(msg.length()-1, 1));
+    } else if(count == 0) {
+        promptDialog->setLabelText(tr("No matching features Found"));
+    } else {
+        int result = -count;
+        switch(result) {
+        case DBUS_RESULT_ERROR:
+            {
+            QDBusPendingReply<int, int, int, int, int, int> reply =
+                    biometricInterface->UpdateStatus(deviceInfo->device_id);
+            reply.waitForFinished();
+            if (reply.isError()) {
+                qDebug() << "GUI:" << reply.error();
+                promptDialog->setLabelText(tr("D-Bus calling error"));
+                return;
+            }
+            int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
+            opsStatus = opsStatus % 100;
+            if (opsStatus == OPS_FAILED)
+                promptDialog->setLabelText(tr("Not Found"));
+            else if (opsStatus == OPS_ERROR)
+                promptDialog->setLabelText(tr("Device encounters an error"));
+            else if (opsStatus == OPS_CANCEL)
+                return;
+            else if (opsStatus == OPS_TIMEOUT)
+                promptDialog->setLabelText(tr("Operation timeout"));
+            break;
+            }
+        case DBUS_RESULT_DEVICEBUSY:
+            promptDialog->setLabelText(tr("Device is busy"));
+            break;
+        case DBUS_RESULT_NOSUCHDEVICE:
+            promptDialog->setLabelText(tr("No such device"));
+            break;
+        case DBUS_RESULT_PERMISSIONDENIED:
+            promptDialog->setLabelText(tr("Permission denied"));
+            break;
+        }
+    }
 	promptDialog->onlyShowOK();
 }

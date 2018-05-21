@@ -6,6 +6,7 @@ void registerCustomTypes()
 	qDBusRegisterMetaType<DeviceInfo>();
 	qDBusRegisterMetaType<BiometricInfo>();
 	qDBusRegisterMetaType<QList<QDBusVariant> >();
+    qDBusRegisterMetaType<SearchResult>();
 }
 
 /* For the type DeviceInfo */
@@ -57,3 +58,21 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, BiometricInfo &bi
     argument.endStructure();
     return argument;
 }
+
+/* For the type SearchResult */
+QDBusArgument &operator<<(QDBusArgument &argument, const SearchResult &ret)
+{
+    argument.beginStructure();
+    argument << ret.uid << ret.index << ret.indexName;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, SearchResult &ret)
+{
+    argument.beginStructure();
+    argument >> ret.uid >> ret.index >> ret.indexName;
+    argument.endStructure();
+    return argument;
+}
+

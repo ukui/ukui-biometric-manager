@@ -99,4 +99,14 @@ enum IdentifyType {
 	IDENTIFY_OTHER
 };
 
+struct SearchResult {
+    int uid;
+    int index;
+    QString indexName;
+};
+
+Q_DECLARE_METATYPE(SearchResult)
+QDBusArgument &operator<<(QDBusArgument &argument, const SearchResult &ret);
+const QDBusArgument &operator>>(const QDBusArgument &argument, SearchResult &ret);
+
 #endif // CUSTOMTYPE_H
