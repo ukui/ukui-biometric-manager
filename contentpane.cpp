@@ -513,12 +513,13 @@ void ContentPane::on_btnDelete_clicked()
 		qDebug() << "GUI:" << reply.error();
 		return;
 	}
-	int result = reply.argumentAt(0).value<int>();
-	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
-		return;
-	usedIndexList->removeOne(deleteIndex);
-	dataModel->removeRow(clickedModelIndex.row(), clickedModelIndex.parent());
-	updateButtonUsefulness();
+//	int result = reply.argumentAt(0).value<int>();
+//	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
+//		return;
+//	usedIndexList->removeOne(deleteIndex);
+//	dataModel->removeRow(clickedModelIndex.row(), clickedModelIndex.parent());
+//	updateButtonUsefulness();
+    showBiometrics();
 }
 
 /**
@@ -533,12 +534,13 @@ void ContentPane::on_btnDrop_clicked()
 		qDebug() << "GUI:" << reply.error();
 		return;
 	}
-	int result = reply.argumentAt(0).value<int>();
-	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
-		return;
-	usedIndexList->clear();
-	dataModel->setRowCount(0);
-	updateButtonUsefulness();
+//	int result = reply.argumentAt(0).value<int>();
+//	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
+//		return;
+//	usedIndexList->clear();
+//	dataModel->setRowCount(0);
+//	updateButtonUsefulness();
+    showBiometrics();
 }
 
 /**
