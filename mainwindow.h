@@ -28,6 +28,7 @@ private slots:
 
 /* Normal functions */
 private:
+    void checkServiceExist();
 	void checkAPICompatibility();
 	void prettify();
 	void getDeviceInfo();

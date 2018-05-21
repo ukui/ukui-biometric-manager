@@ -22,21 +22,30 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	ui->setupUi(this);
 	prettify();
 
-	QProcess process;
-	process.start("systemctl is-active biometric-authentication.service");
-	process.waitForFinished();
-	QString output = process.readAllStandardOutput();
-	bool systemdActive = output.startsWith("active");
+    checkServiceExist();
 
-	if (systemdActive)
-		initialize();
-	else
-		disableBiometricTabs();
+    initialize();
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::checkServiceExist()
+{
+    QDBusInterface iface("org.freedesktop.DBus", "/", "org.freedesktop.DBus",
+                         QDBusConnection::systemBus());
+    QDBusReply<QStringList> reply = iface.call("ListNames");
+    bool serviceExist = reply.value().contains("cn.kylinos.Biometric");
+    if(!serviceExist) {
+        QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+                            tr("Fatal Error"),
+                            tr("the biometric-authentication service was not started"),
+                            QMessageBox::Ok);
+        messageBox->exec();
+        QTimer::singleShot(0, qApp, &QCoreApplication::quit);
+    }
 }
 
 void MainWindow::checkAPICompatibility()
