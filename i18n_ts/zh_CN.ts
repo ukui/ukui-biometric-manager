@@ -92,7 +92,7 @@
     </message>
     <message>
         <location filename="../contentpane.cpp" line="76"/>
-        <location filename="../contentpane.cpp" line="319"/>
+        <location filename="../contentpane.cpp" line="322"/>
         <source>Feature name</source>
         <translation>特征名称</translation>
     </message>
@@ -102,200 +102,209 @@
         <translation>索引</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="103"/>
+        <location filename="../contentpane.cpp" line="104"/>
         <source>Device is not connected</source>
         <translation>设备未连接</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="101"/>
+        <location filename="../contentpane.cpp" line="102"/>
         <source>Device is available</source>
         <translation>设备可用</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="140"/>
+        <location filename="../contentpane.cpp" line="141"/>
         <source>Fingerprint</source>
         <translation>指纹</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="142"/>
+        <location filename="../contentpane.cpp" line="143"/>
         <source>Fingervein</source>
         <translation>指静脉</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="144"/>
+        <location filename="../contentpane.cpp" line="145"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="148"/>
+        <location filename="../contentpane.cpp" line="149"/>
         <source>Hardware Verification</source>
         <translation>硬件验证</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="150"/>
+        <location filename="../contentpane.cpp" line="151"/>
         <source>Software Verification</source>
         <translation>软件验证</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="152"/>
+        <location filename="../contentpane.cpp" line="153"/>
         <source>Mix Verification</source>
         <translation>混合验证</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="154"/>
+        <location filename="../contentpane.cpp" line="155"/>
         <source>Other Verification</source>
         <translation>其他验证</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="158"/>
+        <location filename="../contentpane.cpp" line="159"/>
         <source>Serial</source>
         <translation>串口</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="160"/>
+        <location filename="../contentpane.cpp" line="161"/>
         <source>USB</source>
         <translation>USB</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="162"/>
+        <location filename="../contentpane.cpp" line="163"/>
         <source>PCIE</source>
         <translation>PCIE</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="166"/>
+        <location filename="../contentpane.cpp" line="167"/>
         <source>Device Storage</source>
         <translation>设备存储</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="168"/>
+        <location filename="../contentpane.cpp" line="169"/>
         <source>OS Storage</source>
         <translation>系统存储</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="170"/>
+        <location filename="../contentpane.cpp" line="171"/>
         <source>Mix Storage</source>
         <translation>混合存储</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="174"/>
+        <location filename="../contentpane.cpp" line="175"/>
         <source>Hardware Identification</source>
         <translation>硬件识别</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="176"/>
+        <location filename="../contentpane.cpp" line="177"/>
         <source>Software Identification</source>
         <translation>软件识别</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="178"/>
+        <location filename="../contentpane.cpp" line="179"/>
         <source>Mix Identification</source>
         <translation>混合识别</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="180"/>
+        <location filename="../contentpane.cpp" line="181"/>
         <source>Other Identification</source>
         <translation>其他识别</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="316"/>
+        <location filename="../contentpane.cpp" line="319"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="317"/>
+        <location filename="../contentpane.cpp" line="320"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="318"/>
+        <location filename="../contentpane.cpp" line="321"/>
         <source>Please input a feature name</source>
         <translation>请输入特征名称</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="336"/>
-        <location filename="../contentpane.cpp" line="465"/>
+        <location filename="../contentpane.cpp" line="339"/>
+        <location filename="../contentpane.cpp" line="468"/>
         <source>Permission is required. Please authenticate yourself to continue</source>
         <translation>需要授权！请先进行认证以继续操作</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="369"/>
+        <location filename="../contentpane.cpp" line="372"/>
         <source>Enroll successfully</source>
         <translation>录入成功</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="379"/>
-        <location filename="../contentpane.cpp" line="589"/>
-        <location filename="../contentpane.cpp" line="672"/>
+        <location filename="../contentpane.cpp" line="382"/>
+        <location filename="../contentpane.cpp" line="594"/>
+        <location filename="../contentpane.cpp" line="675"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus 调用错误</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="385"/>
+        <location filename="../contentpane.cpp" line="388"/>
         <source>Failed to enroll</source>
         <translation>录入失败</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="387"/>
-        <location filename="../contentpane.cpp" line="597"/>
-        <location filename="../contentpane.cpp" line="680"/>
+        <location filename="../contentpane.cpp" line="390"/>
+        <location filename="../contentpane.cpp" line="602"/>
+        <location filename="../contentpane.cpp" line="683"/>
         <source>Device encounters an error</source>
         <translation>设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="391"/>
-        <location filename="../contentpane.cpp" line="601"/>
-        <location filename="../contentpane.cpp" line="684"/>
+        <location filename="../contentpane.cpp" line="394"/>
+        <location filename="../contentpane.cpp" line="606"/>
+        <location filename="../contentpane.cpp" line="687"/>
         <source>Operation timeout</source>
         <translation>操作超时</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="396"/>
-        <location filename="../contentpane.cpp" line="605"/>
-        <location filename="../contentpane.cpp" line="688"/>
+        <location filename="../contentpane.cpp" line="399"/>
+        <location filename="../contentpane.cpp" line="610"/>
+        <location filename="../contentpane.cpp" line="691"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="400"/>
-        <location filename="../contentpane.cpp" line="608"/>
-        <location filename="../contentpane.cpp" line="691"/>
+        <location filename="../contentpane.cpp" line="403"/>
+        <location filename="../contentpane.cpp" line="613"/>
+        <location filename="../contentpane.cpp" line="694"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="404"/>
-        <location filename="../contentpane.cpp" line="611"/>
-        <location filename="../contentpane.cpp" line="694"/>
+        <location filename="../contentpane.cpp" line="407"/>
+        <location filename="../contentpane.cpp" line="616"/>
+        <location filename="../contentpane.cpp" line="697"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="433"/>
+        <location filename="../contentpane.cpp" line="436"/>
         <source>Failed to get notify message</source>
         <translation>读取操作信息失败</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="479"/>
+        <location filename="../contentpane.cpp" line="482"/>
         <source>In progress, please wait...</source>
         <translation>操作中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="580"/>
+        <location filename="../contentpane.cpp" line="585"/>
         <source>Match successfully</source>
         <translation>匹配成功</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="595"/>
+        <location filename="../contentpane.cpp" line="600"/>
         <source>Failed to match</source>
         <translation>匹配失败</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="661"/>
-        <source>Found! Username: %1, Feature name: %2</source>
-        <translation>搜索成功！用户名：%1，特征名称：%2</translation>
+        <location filename="../contentpane.cpp" line="655"/>
+        <source>Found the matching features name: </source>
+        <translation>搜索到匹配的特征名称：</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="678"/>
+        <location filename="../contentpane.cpp" line="664"/>
+        <source>No matching features Found</source>
+        <translation>未搜索到匹配的特征</translation>
+    </message>
+    <message>
+        <source>Found! Username: %1, Feature name: %2</source>
+        <translation type="vanished">搜索成功！用户名：%1，特征名称：%2</translation>
+    </message>
+    <message>
+        <location filename="../contentpane.cpp" line="681"/>
         <source>Not Found</source>
         <translation>未搜索到</translation>
     </message>
