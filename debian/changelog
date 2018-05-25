@@ -1,3 +1,10 @@
+biometric-manager (1.4~rc7) juniper; urgency=medium
+
+  * [Minor] 未录入特征时不能开启生物识别
+  * [Fixed] 更新API接口
+
+ -- yanghao <yanghao@kylinos.cn>  Fri, 25 May 2018 16:54:49 +0800
+
 biometric-manager (1.4~rc6) juniper; urgency=medium
 
   * [Improved] 特征列表为空时禁用部分按钮
