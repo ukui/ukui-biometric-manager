@@ -343,44 +343,49 @@
         <translation>生物识别可接管系统认证过程，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="113"/>
+        <location filename="../mainwindow.ui" line="110"/>
+        <source>Biometric authentication is enabled only when the biometric identification is opened, existing available devices are turned on and the user has enrolled the feature.</source>
+        <translation>只用当开启了生物识别、存在可用设备而且该用户已经录入了特征才会启用生物识别认证</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="123"/>
         <source>Device Management</source>
         <translation>设备管理</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="121"/>
+        <location filename="../mainwindow.ui" line="131"/>
         <source>Fingerprint Devices</source>
         <translation>指纹设备</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="138"/>
+        <location filename="../mainwindow.ui" line="148"/>
         <source>Fingervein Devices</source>
         <translation>指静脉设备</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="155"/>
+        <location filename="../mainwindow.ui" line="165"/>
         <source>Iris Devices</source>
         <translation>虹膜设备</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="174"/>
+        <location filename="../mainwindow.ui" line="184"/>
         <source>Fingerprint</source>
         <translation>指纹</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="186"/>
-        <location filename="../mainwindow.ui" line="212"/>
-        <location filename="../mainwindow.ui" line="238"/>
+        <location filename="../mainwindow.ui" line="196"/>
+        <location filename="../mainwindow.ui" line="222"/>
+        <location filename="../mainwindow.ui" line="248"/>
         <source>Driver Not Found</source>
         <translation>驱动未找到</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="200"/>
+        <location filename="../mainwindow.ui" line="210"/>
         <source>Fingervein</source>
         <translation>指静脉</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="226"/>
+        <location filename="../mainwindow.ui" line="236"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>

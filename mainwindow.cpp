@@ -50,7 +50,7 @@ void MainWindow::checkServiceExist()
 
 void MainWindow::checkAPICompatibility()
 {
-	QDBusPendingReply<int> reply = biometricInterface->CheckAppApiVersion(1, 3, 9);
+    QDBusPendingReply<int> reply = biometricInterface->CheckAppApiVersion(0, 10, 0);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();

@@ -579,10 +579,12 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 
 	int result;
 	result = callbackReply.arguments()[0].value<int>();
-	QList<QStandardItem *> row;
+    if(result >= 0)
+        promptDialog->setLabelText(tr("Match successfully"));
+    else {
 	switch(result) {
-	case DBUS_RESULT_SUCCESS:
-		promptDialog->setLabelText(tr("Match successfully"));
+    case DBUS_RESULT_NOTMATCH:
+        promptDialog->setLabelText(tr("Not Match"));
 		break;
 	case DBUS_RESULT_ERROR:
 		{
@@ -616,6 +618,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 		promptDialog->setLabelText(tr("Permission denied"));
 		break;
 	}
+    }
 	promptDialog->onlyShowOK();
 }
 
@@ -660,11 +663,12 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
             msg += QString(ret.indexName + "、");
         }
         promptDialog->setLabelText(msg.remove(msg.length()-1, 1));
-    } else if(count == 0) {
-        promptDialog->setLabelText(tr("No matching features Found"));
     } else {
-        int result = -count;
-        switch(result) {
+        switch(count) {
+        case DBUS_RESULT_SUCCESS:
+        case DBUS_RESULT_NOTMATCH:
+            promptDialog->setLabelText(tr("No matching features Found"));
+            break;
         case DBUS_RESULT_ERROR:
             {
             QDBusPendingReply<int, int, int, int, int, int> reply =

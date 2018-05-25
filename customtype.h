@@ -13,12 +13,38 @@ enum BioType {
 };
 
 /* 录入/删除/搜索等 D-Bus 调用的最终结果，即返回值里的 result */
+/*
+verify接口：
+>= 0，操作成功，并且验证通过；
+< 0，-RetCode；
+
+identify接口：
+>= 0，操作成功，并且识别到；
+< 0，-RetCode；
+
+search接口：
+>= 0，操作成功，搜索到特征，特征列表长度；
+< 0，-RetCode；
+
+get_feature_list接口：
+>= 0，操作成功，获取的特征列表长度；
+< 0，-RetCode；
+
+enroll接口：
+= 0，操作成功；
+< 0，-RetCode；
+
+capture接口：
+= 0，操作成功；
+< 0，-RetCode；
+*/
 enum DBusResult {
 	DBUS_RESULT_SUCCESS = 0,
-	DBUS_RESULT_ERROR,
-	DBUS_RESULT_DEVICEBUSY,
-	DBUS_RESULT_NOSUCHDEVICE,
-	DBUS_RESULT_PERMISSIONDENIED
+    DBUS_RESULT_NOTMATCH = -1,
+    DBUS_RESULT_ERROR = -2,
+    DBUS_RESULT_DEVICEBUSY = -3,
+    DBUS_RESULT_NOSUCHDEVICE = -4,
+    DBUS_RESULT_PERMISSIONDENIED = -5
 };
 
 /* 设备操作结果 ops_status，由 UpdateStatus 函数获得 */

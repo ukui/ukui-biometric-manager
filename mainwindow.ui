@@ -104,6 +104,16 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="lblAuthNote2">
+             <property name="text">
+              <string>Biometric authentication is enabled only when the biometric identification is opened, existing available devices are turned on and the user has enrolled the feature.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
