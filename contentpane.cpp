@@ -5,6 +5,11 @@
 
 #define ICON_SIZE 32
 
+#define SET_PROMPT(str) do { \
+    if(promptDialog)    \
+        promptDialog->setLabelText(str); \
+} while(0)
+
 ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
 	QWidget(parent),
     ui(new Ui::ContentPane),
@@ -369,7 +374,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 		row.append(new QStandardItem(QString::number(freeIndex)));
 		dataModel->appendRow(row);
 		updateButtonUsefulness();
-		promptDialog->setLabelText(tr("Enroll successfully"));
+        SET_PROMPT(tr("Enroll successfully"));
 		break;
 	case DBUS_RESULT_ERROR: /* 录入未成功，具体原因还需要进一步读取底层设备的操作状态 */
 		{
@@ -379,33 +384,32 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 		reply.waitForFinished();
 		if (reply.isError()) {
 			qDebug() << "GUI:" << reply.error();
-			promptDialog->setLabelText(tr("D-Bus calling error"));
+            SET_PROMPT(tr("D-Bus calling error"));
 			return;
 		}
 		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
-			promptDialog->setLabelText(tr("Failed to enroll"));
+            SET_PROMPT(tr("Failed to enroll"));
 		else if (opsStatus == OPS_ERROR)/* 设备底层发生了错误 */
-			promptDialog->setLabelText(tr("Device encounters an error"));
+            SET_PROMPT(tr("Device encounters an error"));
 		else if (opsStatus == OPS_CANCEL) /* 用户取消 */
 			return; /* 对于取消操作，弹窗会迅速关闭所以不需要设置信息或改变按钮 */
 		else if (opsStatus == OPS_TIMEOUT) /* 超时未操作 */
-			promptDialog->setLabelText(tr("Operation timeout"));
+            SET_PROMPT(tr("Operation timeout"));
 		break;
 		}
 	case DBUS_RESULT_DEVICEBUSY: /* 设备忙 */
 		usedIndexList->removeOne(freeIndex);
-		promptDialog->setLabelText(tr("Device is busy"));
+        SET_PROMPT(tr("Device is busy"));
 		break;
 	case DBUS_RESULT_NOSUCHDEVICE: /* 设备不存在 */
 		usedIndexList->removeOne(freeIndex);
-		promptDialog->setLabelText(tr("No such device"));
+        SET_PROMPT(tr("No such device"));
 		break;
 	case DBUS_RESULT_PERMISSIONDENIED: /* 没有权限 */
 		usedIndexList->removeOne(freeIndex);
-        if(promptDialog)
-            promptDialog->setLabelText(tr("Permission denied"));
+        SET_PROMPT(tr("Permission denied"));
 		break;
 	}
     if(promptDialog)
@@ -435,13 +439,13 @@ void ContentPane::setOperationMsg(int deviceID, int statusType)
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
-		promptDialog->setLabelText(tr("Failed to get notify message"));
+        SET_PROMPT(tr("Failed to get notify message"));
 		return;
 	}
 
 	QString msg;
 	msg = reply.argumentAt(0).value<QString>();
-	promptDialog->setLabelText(msg);
+    SET_PROMPT(msg);
 }
 
 /**
@@ -467,7 +471,7 @@ void ContentPane::setPreEnrollMsg(int deviceID, int statusType)
 	 * devStatus=101/601/1001 分别对应打开设备、正在搜索、关闭设备三种动作
 	 */
 	if (devStatus ==101 || devStatus == 601 || devStatus == 1001) /* biometric_common.h */
-		promptDialog->setLabelText(tr("Permission is required. Please "
+        SET_PROMPT(tr("Permission is required. Please "
 					      "authenticate yourself to continue"));
 }
 
@@ -481,7 +485,7 @@ void ContentPane::cancelOperation()
 	biometricInterface->callWithCallback("StopOps", args, this,
 						SLOT(cancelCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
-	promptDialog->setLabelText(tr("In progress, please wait..."));
+    SET_PROMPT(tr("In progress, please wait..."));
 }
 
 /**
@@ -494,7 +498,6 @@ void ContentPane::cancelCallback(QDBusMessage callbackReply)
 	promptDialog->closeDialog();
     delete promptDialog;
     promptDialog = nullptr;
-    qDebug() << "canceled";
 }
 
 /**
@@ -585,11 +588,11 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 	int result;
 	result = callbackReply.arguments()[0].value<int>();
     if(result >= 0)
-        promptDialog->setLabelText(tr("Match successfully"));
+        SET_PROMPT(tr("Match successfully"));
     else {
 	switch(result) {
     case DBUS_RESULT_NOTMATCH:
-        promptDialog->setLabelText(tr("Not Match"));
+        SET_PROMPT(tr("Not Match"));
 		break;
 	case DBUS_RESULT_ERROR:
 		{
@@ -598,29 +601,29 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
 		reply.waitForFinished();
 		if (reply.isError()) {
 			qDebug() << "GUI:" << reply.error();
-			promptDialog->setLabelText(tr("D-Bus calling error"));
+            SET_PROMPT(tr("D-Bus calling error"));
 			return;
 		}
 		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
 		opsStatus = opsStatus % 100;
 		if (opsStatus == OPS_FAILED)
-			promptDialog->setLabelText(tr("Failed to match"));
+            SET_PROMPT(tr("Failed to match"));
 		else if (opsStatus == OPS_ERROR)
-			promptDialog->setLabelText(tr("Device encounters an error"));
+            SET_PROMPT(tr("Device encounters an error"));
 		else if (opsStatus == OPS_CANCEL)
 			return;
 		else if (opsStatus == OPS_TIMEOUT)
-			promptDialog->setLabelText(tr("Operation timeout"));
+            SET_PROMPT(tr("Operation timeout"));
 		break;
 		}
 	case DBUS_RESULT_DEVICEBUSY:
-		promptDialog->setLabelText(tr("Device is busy"));
+        SET_PROMPT(tr("Device is busy"));
 		break;
 	case DBUS_RESULT_NOSUCHDEVICE:
-		promptDialog->setLabelText(tr("No such device"));
+        SET_PROMPT(tr("No such device"));
 		break;
 	case DBUS_RESULT_PERMISSIONDENIED:
-		promptDialog->setLabelText(tr("Permission denied"));
+        SET_PROMPT(tr("Permission denied"));
 		break;
 	}
     }
@@ -667,12 +670,12 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
             arg >> ret;
             msg += (QString::number(ret.index) + ":      " + ret.indexName + "\n");
         }
-        promptDialog->setLabelText(msg.remove(msg.length()-1, 1));
+        SET_PROMPT(msg.remove(msg.length()-1, 1));
     } else {
         switch(count) {
         case DBUS_RESULT_SUCCESS:
         case DBUS_RESULT_NOTMATCH:
-            promptDialog->setLabelText(tr("No matching features Found"));
+            SET_PROMPT(tr("No matching features Found"));
             break;
         case DBUS_RESULT_ERROR:
             {
@@ -681,29 +684,29 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
             reply.waitForFinished();
             if (reply.isError()) {
                 qDebug() << "GUI:" << reply.error();
-                promptDialog->setLabelText(tr("D-Bus calling error"));
+                SET_PROMPT(tr("D-Bus calling error"));
                 return;
             }
             int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
             opsStatus = opsStatus % 100;
             if (opsStatus == OPS_FAILED)
-                promptDialog->setLabelText(tr("Not Found"));
+                SET_PROMPT(tr("Not Found"));
             else if (opsStatus == OPS_ERROR)
-                promptDialog->setLabelText(tr("Device encounters an error"));
+                SET_PROMPT(tr("Device encounters an error"));
             else if (opsStatus == OPS_CANCEL)
                 return;
             else if (opsStatus == OPS_TIMEOUT)
-                promptDialog->setLabelText(tr("Operation timeout"));
+                SET_PROMPT(tr("Operation timeout"));
             break;
             }
         case DBUS_RESULT_DEVICEBUSY:
-            promptDialog->setLabelText(tr("Device is busy"));
+            SET_PROMPT(tr("Device is busy"));
             break;
         case DBUS_RESULT_NOSUCHDEVICE:
-            promptDialog->setLabelText(tr("No such device"));
+            SET_PROMPT(tr("No such device"));
             break;
         case DBUS_RESULT_PERMISSIONDENIED:
-            promptDialog->setLabelText(tr("Permission denied"));
+            SET_PROMPT(tr("Permission denied"));
             break;
         }
     }
