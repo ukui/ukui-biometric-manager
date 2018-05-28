@@ -404,10 +404,12 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
 		break;
 	case DBUS_RESULT_PERMISSIONDENIED: /* 没有权限 */
 		usedIndexList->removeOne(freeIndex);
-		promptDialog->setLabelText(tr("Permission denied"));
+        if(promptDialog)
+            promptDialog->setLabelText(tr("Permission denied"));
 		break;
 	}
-	promptDialog->onlyShowOK();
+    if(promptDialog)
+        promptDialog->onlyShowOK();
 }
 
 /**
@@ -490,6 +492,9 @@ void ContentPane::cancelCallback(QDBusMessage callbackReply)
 {
 	UNUSED(callbackReply);
 	promptDialog->closeDialog();
+    delete promptDialog;
+    promptDialog = nullptr;
+    qDebug() << "canceled";
 }
 
 /**
