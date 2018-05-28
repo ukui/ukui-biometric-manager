@@ -213,7 +213,7 @@
     </message>
     <message>
         <location filename="../contentpane.cpp" line="339"/>
-        <location filename="../contentpane.cpp" line="468"/>
+        <location filename="../contentpane.cpp" line="470"/>
         <source>Permission is required. Please authenticate yourself to continue</source>
         <translation>需要授权！请先进行认证以继续操作</translation>
     </message>
@@ -224,8 +224,8 @@
     </message>
     <message>
         <location filename="../contentpane.cpp" line="382"/>
-        <location filename="../contentpane.cpp" line="594"/>
-        <location filename="../contentpane.cpp" line="675"/>
+        <location filename="../contentpane.cpp" line="601"/>
+        <location filename="../contentpane.cpp" line="684"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus 调用错误</translation>
     </message>
@@ -236,66 +236,85 @@
     </message>
     <message>
         <location filename="../contentpane.cpp" line="390"/>
-        <location filename="../contentpane.cpp" line="602"/>
-        <location filename="../contentpane.cpp" line="683"/>
+        <location filename="../contentpane.cpp" line="609"/>
+        <location filename="../contentpane.cpp" line="692"/>
         <source>Device encounters an error</source>
         <translation>设备遇到错误</translation>
     </message>
     <message>
         <location filename="../contentpane.cpp" line="394"/>
-        <location filename="../contentpane.cpp" line="606"/>
-        <location filename="../contentpane.cpp" line="687"/>
+        <location filename="../contentpane.cpp" line="613"/>
+        <location filename="../contentpane.cpp" line="696"/>
         <source>Operation timeout</source>
         <translation>操作超时</translation>
     </message>
     <message>
         <location filename="../contentpane.cpp" line="399"/>
-        <location filename="../contentpane.cpp" line="610"/>
-        <location filename="../contentpane.cpp" line="691"/>
+        <location filename="../contentpane.cpp" line="617"/>
+        <location filename="../contentpane.cpp" line="700"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
         <location filename="../contentpane.cpp" line="403"/>
-        <location filename="../contentpane.cpp" line="613"/>
-        <location filename="../contentpane.cpp" line="694"/>
+        <location filename="../contentpane.cpp" line="620"/>
+        <location filename="../contentpane.cpp" line="703"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="407"/>
-        <location filename="../contentpane.cpp" line="616"/>
-        <location filename="../contentpane.cpp" line="697"/>
+        <location filename="../contentpane.cpp" line="408"/>
+        <location filename="../contentpane.cpp" line="623"/>
+        <location filename="../contentpane.cpp" line="706"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="436"/>
+        <location filename="../contentpane.cpp" line="438"/>
         <source>Failed to get notify message</source>
         <translation>读取操作信息失败</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="482"/>
+        <location filename="../contentpane.cpp" line="484"/>
         <source>In progress, please wait...</source>
         <translation>操作中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="585"/>
+        <location filename="../contentpane.cpp" line="588"/>
         <source>Match successfully</source>
         <translation>匹配成功</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="600"/>
+        <location filename="../contentpane.cpp" line="592"/>
+        <source>Not Match</source>
+        <translation>不匹配</translation>
+    </message>
+    <message>
+        <location filename="../contentpane.cpp" line="607"/>
         <source>Failed to match</source>
         <translation>匹配失败</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="655"/>
-        <source>Found the matching features name: </source>
-        <translation>搜索到匹配的特征名称：</translation>
+        <location filename="../contentpane.cpp" line="663"/>
+        <source>Found the matching features:</source>
+        <translation type="unfinished">搜索到匹配的特征:</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="664"/>
+        <source>Found the matching features:
+</source>
+        <translation type="obsolete">搜索到匹配的特征:</translation>
+    </message>
+    <message>
+        <source>Found the matching features: 
+</source>
+        <translation type="vanished">查找到匹配的特征:</translation>
+    </message>
+    <message>
+        <source>Found the matching features name: </source>
+        <translation type="vanished">搜索到匹配的特征名称：</translation>
+    </message>
+    <message>
+        <location filename="../contentpane.cpp" line="675"/>
         <source>No matching features Found</source>
         <translation>未搜索到匹配的特征</translation>
     </message>
@@ -304,7 +323,7 @@
         <translation type="vanished">搜索成功！用户名：%1，特征名称：%2</translation>
     </message>
     <message>
-        <location filename="../contentpane.cpp" line="681"/>
+        <location filename="../contentpane.cpp" line="690"/>
         <source>Not Found</source>
         <translation>未搜索到</translation>
     </message>
@@ -447,17 +466,17 @@
     </message>
     <message>
         <location filename="../promptdialog.ui" line="20"/>
-        <location filename="../promptdialog.ui" line="30"/>
+        <location filename="../promptdialog.ui" line="35"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../promptdialog.ui" line="45"/>
+        <location filename="../promptdialog.ui" line="50"/>
         <source>Ok</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../promptdialog.ui" line="52"/>
+        <location filename="../promptdialog.ui" line="57"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

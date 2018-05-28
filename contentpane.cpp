@@ -660,12 +660,12 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
         QDBusArgument argument = callbackReply.arguments().at(1).value<QDBusArgument>();
         QList<QVariant> variantList;
         argument >> variantList;
-        QString msg = tr("Found the matching features name: ");
+        QString msg = tr("Found the matching features:") + "\n";
         for(int i = 0; i < count; i++) {
             QDBusArgument arg =variantList.at(i).value<QDBusArgument>();
             SearchResult ret;
             arg >> ret;
-            msg += QString(ret.indexName + "、");
+            msg += (QString::number(ret.index) + ":      " + ret.indexName + "\n");
         }
         promptDialog->setLabelText(msg.remove(msg.length()-1, 1));
     } else {

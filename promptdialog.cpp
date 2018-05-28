@@ -37,6 +37,7 @@ PromptDialog::~PromptDialog()
 void PromptDialog::setLabelText(QString text)
 {
 	ui->labelText->setText(text);
+    ui->labelText->adjustSize();
 }
 
 /**
