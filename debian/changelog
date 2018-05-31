@@ -1,3 +1,10 @@
+biometric-manager (1.4~rc8) UNRELEASED; urgency=medium
+
+  * 修复录入、搜索等操作过程中关闭窗口，导致程序崩溃的问题
+  * 修改默认把可用的设备显示在前面
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 31 May 2018 17:34:08 +0800
+
 biometric-manager (1.4~rc7) juniper; urgency=medium
 
   * [Minor] 未录入特征时不能开启生物识别
