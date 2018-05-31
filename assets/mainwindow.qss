@@ -60,25 +60,48 @@ QTabWidget::Pane {
 	font: bold italic 15px;
 }
 
-QListWidget {
-	border-style: none;
-	max-width: 100px;
-	font: normal normal 16px;
+QListWidget
+{
+    color:black;        /*前景色：文字颜色*/
+    max-width: 120px;
+    font: normal normal 16px;
 }
 
-QListWidget::item {
-	/*color: white;*/
-	font: normal normal 10px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #bbbbbb;
-	border-top-left-radius: 12px;
-	border-bottom-left-radius: 12px;
-	min-height: 30px;
+
+QListWidget::item
+{
+    background:white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bbbbbb;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    min-height: 30px;
+    margin:0px,5px,0px,0px;
 }
 
-QListWidget::item:selected {
-	border-right-style: none;
+
+QListWidget::item:hover
+{
+    show-decoration-selected:5;
+    background:lightgray;
+}
+
+QListWidget::item:selected
+{
+    /*background:lightgray;
+    padding:0px;
+    margin:0px;*/
+    color:red;
+    show-decoration-selected:5;
+    background:skyblue;
+}
+
+/*上次选择后保留的状态，鼠标离开后显示*/
+QListWidget::item:selected:!active
+{
+    border-width:0px;
+    background:lightgreen;
 }
 
 #stackedWidgetFingerprint, #stackedWidgetFingervein, #stackedWidgetIris {
@@ -107,4 +130,11 @@ QComboBox::drop-down{
 
 #labelTableFingerprint, #labelTableFingervein, #labelTableIris {
 	font-size: 16px;
+}
+
+QTableWidget{
+    selection-background-color:lightblue;
+}
+QTreeView {
+    selection-background-color:lightblue;
 }

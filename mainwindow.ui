@@ -120,7 +120,7 @@
         <item>
          <widget class="QGroupBox" name="groupBoxDevice">
           <property name="title">
-           <string>Device Management</string>
+           <string>Device Driver Management</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
@@ -128,7 +128,7 @@
              <item>
               <widget class="QLabel" name="labelTableFingerprint">
                <property name="text">
-                <string>Fingerprint Devices</string>
+                <string>Fingerprint Devices Driver</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -145,7 +145,7 @@
              <item>
               <widget class="QLabel" name="labelTableFingervein">
                <property name="text">
-                <string>Fingervein Devices</string>
+                <string>Fingervein Devices Driver</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -162,7 +162,7 @@
              <item>
               <widget class="QLabel" name="labelTableIris">
                <property name="text">
-                <string>Iris Devices</string>
+                <string>Iris Devices Driver</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -188,7 +188,11 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QListWidget" name="listWidgetFingerprint"/>
+         <widget class="QListWidget" name="listWidgetFingerprint">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="lblNoDeviceFingerprint">
@@ -214,7 +218,11 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QListWidget" name="listWidgetFingervein"/>
+         <widget class="QListWidget" name="listWidgetFingervein">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="lblNoDeviceFingervein">
@@ -240,7 +248,11 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QListWidget" name="listWidgetIris"/>
+         <widget class="QListWidget" name="listWidgetIris">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="lblNoDeviceIris">

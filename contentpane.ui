@@ -139,6 +139,11 @@
    </item>
    <item>
     <widget class="QTreeView" name="treeView">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="indentation">
       <number>0</number>
      </property>

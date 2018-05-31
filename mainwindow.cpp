@@ -249,7 +249,7 @@ void MainWindow::getDeviceInfo()
 	argument = variant.value<QDBusArgument>(); /* 解封装，获取QDBusArgument对象 */
 	argument >> qlist; /* 使用运算符重载提取 argument 对象里面存储的列表对象 */
 
-	deviceInfoMap.clear();
+    deviceInfoList.clear();
 	for (int i = 0; i < deviceCount; i++) {
 		item = qlist[i]; /* 取出一个元素 */
 		variant = item.variant(); /* 转为普通QVariant对象 */
@@ -259,15 +259,20 @@ void MainWindow::getDeviceInfo()
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
 		if (deviceInfo->device_available != 1)
 			deviceInfo->device_available = 0;
-		deviceInfoMap.insert(deviceInfo->device_shortname, deviceInfo);
+        deviceInfoList.push_back(deviceInfo);
 	}
+    //将deviceInfo列表按设备是否可用分成两部分
+    std::stable_partition(deviceInfoList.begin(), deviceInfoList.end(),
+                          [&](const DeviceInfo *deviceInfo){
+       return deviceInfo->device_available > 0;
+    });
 }
 
-void MainWindow::addContentPane(QString deviceName)
+void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 {
 	QListWidget *lw;
 	QStackedWidget *sw;
-	DeviceInfo *deviceInfo = deviceInfoMap.value(deviceName);
+
 	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
 		lw = ui->listWidgetFingerprint;
 		sw = ui->stackedWidgetFingerprint;
@@ -278,12 +283,16 @@ void MainWindow::addContentPane(QString deviceName)
 		lw = ui->listWidgetIris;
 		sw = ui->stackedWidgetIris;
 	}
-	QListWidgetItem *item = new QListWidgetItem(deviceName);
+    QListWidgetItem *item = new QListWidgetItem(deviceInfo->device_shortname);
 	item->setTextAlignment(Qt::AlignCenter);
 	lw->insertItem(lw->count(), item);
+    //如果设备不可用，将这一项置灰
+    if(deviceInfo->device_available <= 0) {
+        item->setTextColor(Qt::gray);
+    }
 	ContentPane *contentPane = new ContentPane(deviceInfo);
 	sw->addWidget(contentPane);
-	contentPaneMap.insert(deviceName, contentPane);
+    contentPaneMap.insert(deviceInfo->device_shortname, contentPane);
 	connect(this, &MainWindow::selectedUserChanged,
 			contentPane, &ContentPane::setSelectedUser);
 	connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
@@ -304,8 +313,8 @@ void MainWindow::addContentPane(QString deviceName)
 
 void MainWindow::initBiometricPage()
 {
-	for (QString deviceName: deviceInfoMap.keys())
-		addContentPane(deviceName);
+    for(auto deviceInfo : deviceInfoList)
+        addContentPane(deviceInfo);
 	checkBiometricPage(Fingerprint);
 	checkBiometricPage(Fingervein);
 	checkBiometricPage(Iris);
@@ -319,7 +328,8 @@ void MainWindow::initBiometricPage()
 	tw->verticalHeader()->setVisible(false);			\
 	tw->horizontalHeader()->setSectionResizeMode(1,			\
 					QHeaderView::ResizeToContents);	\
-	tw->setSelectionMode(QAbstractItemView::NoSelection);		\
+    tw->setSelectionMode(QAbstractItemView::SingleSelection);		\
+    tw->setSelectionBehavior(QAbstractItemView::SelectRows); \
 } while (0);
 void MainWindow::initDashboardDeviceSection()
 {
@@ -330,35 +340,35 @@ void MainWindow::initDashboardDeviceSection()
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingerprint);
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingervein);
 	SET_TABLE_ATTRIBUTE(ui->tableWidgetIris);
-	for (QString deviceName: deviceInfoMap.keys()) {
-		DeviceInfo *deviceInfo = deviceInfoMap.value(deviceName);
-		QTableWidget *tw = NULL;
-		if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
-			tw = ui->tableWidgetFingerprint;
-		else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
-			tw = ui->tableWidgetFingervein;
-		else if (deviceInfo->biotype == BIOTYPE_IRIS)
-			tw = ui->tableWidgetIris;
+    for(DeviceInfo *deviceInfo : deviceInfoList){
+        QTableWidget *tw = NULL;
+        if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
+            tw = ui->tableWidgetFingerprint;
+        else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
+            tw = ui->tableWidgetFingervein;
+        else if (deviceInfo->biotype == BIOTYPE_IRIS)
+            tw = ui->tableWidgetIris;
 
-		bool deviceAvailable = deviceInfoMap.value(deviceName)->device_available;
-		toggleSwitch = new ToggleSwitch(deviceAvailable, DEVICE_TS_W, DEVICE_TS_H);
-		connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDeviceStatus);
+        int new_index = tw->rowCount();
+        tw->insertRow(new_index);
 
-		/* 0 - column */
-		int new_index = tw->rowCount();
-		tw->insertRow(new_index);
-		QTableWidgetItem *item = new QTableWidgetItem(deviceName);
-		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-		tw->setItem(new_index, 0, item);
+        toggleSwitch = new ToggleSwitch(deviceInfo->device_available, DEVICE_TS_W, DEVICE_TS_H);
+        connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDeviceStatus);
 
-		/* 1 - column */
-		QWidget *cellAlignWidget = new QWidget();
-		QVBoxLayout *vbox = new QVBoxLayout();
-		vbox->addWidget(toggleSwitch);
-		vbox->setContentsMargins(3, 2, 0, 0); /* center in vertical and horizontal */
-		cellAlignWidget->setLayout(vbox);
-		tw->setCellWidget(new_index, 1, cellAlignWidget);
-	}
+        /* 0 - column */
+
+        QTableWidgetItem *item = new QTableWidgetItem(deviceInfo->device_shortname);
+        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+        tw->setItem(new_index, 0, item);
+
+        /* 1 - column */
+        QWidget *cellAlignWidget = new QWidget();
+        QVBoxLayout *vbox = new QVBoxLayout();
+        vbox->addWidget(toggleSwitch);
+        vbox->setContentsMargins(3, 2, 0, 0); /* center in vertical and horizontal */
+        cellAlignWidget->setLayout(vbox);
+        tw->setCellWidget(new_index, 1, cellAlignWidget);
+    }
 }
 
 void MainWindow::initDashboardBioAuthSection()
@@ -417,27 +427,32 @@ void MainWindow::manageDeviceStatus(bool toState)
 	 * disabled the driver, the device must can't be used and therefor we
 	 * don't need to query device info from DBus.
 	 */
-	ContentPane *contentPane = contentPaneMap.value(deviceName);
-	if (toState) {
-		getDeviceInfo();
-		bool deviceAvailable = deviceInfoMap.value(deviceName)->device_available;
-		contentPane->setDeviceAvailable(deviceAvailable);
-		if (deviceAvailable) {
-			toggleSwitch->acceptStateChange();
-		} else {
-			QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
-							tr("Fatal Error"),
-							tr("Device is not connected"),
-							QMessageBox::Ok);
-			messageBox->exec();
-		}
+    auto it = std::find_if(deviceInfoList.begin(), deviceInfoList.end(),
+                           [&](const DeviceInfo *deviceInfo){
+        return deviceInfo->device_shortname == deviceName;
+    });
+    DeviceInfo *deviceInfo = *it;
+    ContentPane *contentPane = contentPaneMap.value(deviceName);
+    if (toState) {
+        getDeviceInfo();
+        bool deviceAvailable = deviceInfo->device_available;
+        contentPane->setDeviceAvailable(deviceAvailable);
+        if (deviceAvailable) {
+            toggleSwitch->acceptStateChange();
+        } else {
+            QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+                            tr("Fatal Error"),
+                            tr("Device is not connected"),
+                            QMessageBox::Ok);
+            messageBox->exec();
+        }
 
-	} else {
-		deviceInfoMap.value(deviceName)->driver_enable = false;
-		deviceInfoMap.value(deviceName)->device_available = false;
-		contentPane->setDeviceAvailable(false);
-		toggleSwitch->acceptStateChange();
-	}
+    } else {
+        deviceInfo->driver_enable = false;
+        deviceInfo->device_available = false;
+        contentPane->setDeviceAvailable(false);
+        toggleSwitch->acceptStateChange();
+    }
 }
 
 void MainWindow::manageBioAuthStatus(bool toState)

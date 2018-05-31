@@ -32,7 +32,7 @@ private:
 	void checkAPICompatibility();
 	void prettify();
 	void getDeviceInfo();
-	void addContentPane(QString deviceName);
+    void addContentPane(DeviceInfo *deviceInfo);
 	void initialize();
 	void enableBiometricTabs();
 	void disableBiometricTabs();
@@ -53,7 +53,7 @@ private:
 	/* 用于和远端 DBus 对象交互的代理接口 */
 	cn::kylinos::Biometric *biometricInterface;
 	int deviceCount;
-	QMap<QString, DeviceInfo *> deviceInfoMap;
+    QList<DeviceInfo*> deviceInfoList;
 	QMap<QString, ContentPane *> contentPaneMap;
 	/* 通过命令行参数传入的用户名 */
 	QString usernameFromCmd;
