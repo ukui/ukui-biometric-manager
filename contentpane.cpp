@@ -296,6 +296,9 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
 	QList<QDBusVariant> qlist;
 	BiometricInfo *biometricInfo;
 	int listsize;
+
+    dataModel->setRowCount(0);
+
 	QList<QVariant> variantList = callbackReply.arguments();
 	listsize = variantList[0].value<int>();
 	variantList[1].value<QDBusArgument>() >> qlist;

@@ -1,4 +1,10 @@
-biometric-manager (1.4~rc8) UNRELEASED; urgency=medium
+biometric-manager (1.4~rc9) juniper; urgency=medium
+
+  * 修复同一条特征显示两次的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Mon, 25 Jun 2018 17:21:21 +0800
+
+biometric-manager (1.4~rc8) juniper; urgency=medium
 
   * 修复录入、搜索等操作过程中关闭窗口，导致程序崩溃的问题
   * 修改默认把可用的设备显示在前面
