@@ -2,7 +2,7 @@
 #include <QApplication>
 #include <QTranslator>
 
-#define WORKING_DIRECTORY "/usr/local/biometric-manager"
+#define WORKING_DIRECTORY "/usr/share/biometric-manager"
 
 void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 {

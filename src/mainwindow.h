@@ -6,7 +6,7 @@
 #include "customtype.h"
 #include "toggleswitch.h"
 #include <QTableWidgetItem>
-#include <contentpane.h>
+#include "contentpane.h"
 
 namespace Ui {
 class MainWindow;
