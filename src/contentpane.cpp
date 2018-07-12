@@ -396,7 +396,8 @@ void ContentPane::on_btnDelete_clicked()
     for(auto index : selectedIndexList) {
         int idxStart, idxEnd;
         int uid = index.data(TreeModel::UidRole).toInt();
-        bool recursive = !ui->treeView->isExpanded(index) && (index.parent() == QModelIndex());
+        bool recursive = !ui->treeView->isExpanded(index) &&
+                (index.child(0, 0) != QModelIndex());
         if(recursive) {
             //如果没有展开则删除该用户的所有特征
             idxStart = 0;
