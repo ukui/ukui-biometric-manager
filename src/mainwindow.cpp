@@ -5,24 +5,26 @@
 #include <QFile>
 #include <QProcessEnvironment>
 #include "contentpane.h"
-#include "toggleswitch.h"
 #include <unistd.h>
 #include <QScrollBar>
 #include <QMessageBox>
+#include <QMouseEvent>
+#include <QPainter>
+#include <pwd.h>
 
 #define ICON_SIZE 32
-#define DEVICE_TS_W 45 /* The width of ToggleSwitch in device list */
-#define DEVICE_TS_H 26
 
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow),
-	usernameFromCmd(usernameFromCmd)
+    username(usernameFromCmd),
+    verificationStatus(false),
+    dragWindow(false)
 {
+    checkServiceExist();
+
 	ui->setupUi(this);
 	prettify();
-
-    checkServiceExist();
 
     initialize();
 }
@@ -32,6 +34,30 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton) {
+        dragPos = event->globalPos() - pos();
+        dragWindow = true;
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if(dragWindow) {
+        move(event->globalPos() - dragPos);
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
+{
+    dragWindow = false;
+}
+
+/*!
+ * \brief MainWindow::checkServiceExist
+ * 检查生物识别后台服务是否已启动
+ */
 void MainWindow::checkServiceExist()
 {
     QDBusInterface iface("org.freedesktop.DBus", "/", "org.freedesktop.DBus",
@@ -50,7 +76,7 @@ void MainWindow::checkServiceExist()
 
 void MainWindow::checkAPICompatibility()
 {
-    QDBusPendingReply<int> reply = biometricInterface->CheckAppApiVersion(0, 10, 0);
+    QDBusPendingReply<int> reply = serviceInterface->call("CheckAppApiVersion", 0, 10, 0);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -70,8 +96,9 @@ void MainWindow::checkAPICompatibility()
 
 void MainWindow::prettify()
 {
+    setWindowFlags(Qt::FramelessWindowHint);
 	/* 设置窗口图标 */
-	QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
+    QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
 	/* 设置 CSS */
 	QFile qssFile(":/css/assets/mainwindow.qss");
 	qssFile.open(QFile::ReadOnly);
@@ -80,16 +107,17 @@ void MainWindow::prettify()
 	qssFile.close();
 
 	/* Set Icon for each tab on tabwidget */
-	ui->tabWidgetMain->setTabIcon(0, QIcon(":/images/assets/tab-dashboard.png"));
-	ui->tabWidgetMain->setTabIcon(1, QIcon(":/images/assets/tab-fingerprint.png"));
-	ui->tabWidgetMain->setTabIcon(2, QIcon(":/images/assets/tab-fingervein.png"));
-	ui->tabWidgetMain->setTabIcon(3, QIcon(":/images/assets/tab-iris.png"));
-	ui->tabWidgetMain->setIconSize(QSize(32, 32));
-	/* Set icon on lblIcon */
-	ui->lblIcon->setPixmap(QPixmap(":/images/assets/icon.png").scaled(QSize(64, 64)));
+    ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_default.png"));
+    ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
+    ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
+    ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
+    /* Set logo on lblLogo */
+    ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
+    ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
+    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
 }
 
-QIcon *MainWindow::getUserAvatar(QString username)
+QPixmap *MainWindow::getUserAvatar(QString username)
 {
 	QString iconPath;
 	QDBusInterface userIface( "org.freedesktop.Accounts", "/org/freedesktop/Accounts",
@@ -113,73 +141,17 @@ QIcon *MainWindow::getUserAvatar(QString username)
 	iconPath = iconReply.value().variant().toString();
 	if (access(qPrintable(iconPath), R_OK) != 0) /* No Access Permission */
 		iconPath = "/usr/share/kylin-greeter/default_face.png";
-	return new QIcon(iconPath);
+    return new QPixmap(iconPath);
 }
 
-/**
- * @brief 获取并显示用户列表
- */
-void MainWindow::showUserList()
+void MainWindow::setCurrentUser()
 {
-	/* The style sheet won't be applied to the combobox item view without this line. */
-	ui->comboBoxUsername->setView(new QListView());
-	/* Set the size of QIcon which is in item */
-	ui->comboBoxUsername->setIconSize(QSize(45, 45));
-	/* Set the font of combobox */
-	ui->comboBoxUsername->setFont(QFont("Monospace", 16, QFont::Bold));
-	/* Set font size of item */
-	ui->comboBoxUsername->view()->setFont(QFont("Monospace", 16, QFont::Bold));
+    struct passwd *pwd;
+    pwd = getpwuid(getuid());
+    username = QString(pwd->pw_name);
+    ui->lblUserName->setText(username);
 
-	QFile file("/etc/passwd");
-	QString line;
-	QStringList fields;
-	QString username;
-	int uid;
-
-	if(!file.open(QIODevice::ReadOnly)) {
-		qDebug() << "GUI:" << "/etc/passwd can not be opened";
-	}
-
-	QTextStream in(&file);
-
-	/* 阻止 addItem 触发 currentIndexChanged 信号 */
-	ui->comboBoxUsername->blockSignals(true);
-	while(!in.atEnd()) {
-		line = in.readLine();
-		fields = line.split(":");
-		username = fields[0];
-		uid = fields[2].toInt();
-		if (uid == 65534) /* nobody 用户 */
-			continue;
-		if (uid >=1000 || uid == 0)
-			ui->comboBoxUsername->addItem(*getUserAvatar(username),
-							username, QVariant(uid));
-	}
-	file.close();
-	ui->comboBoxUsername->blockSignals(false);
-}
-
-void MainWindow::setDefaultUser()
-{
-	/* 设置下拉列表的当前项，触发 currentIndexChanged 信号 */
-	if (usernameFromCmd == "") {
-		/* 获取当前执行程序的用户名 */
-		QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-		ui->comboBoxUsername->setCurrentText(environment.value("USER"));
-	} else {
-		ui->comboBoxUsername->setCurrentText(usernameFromCmd);
-	}
-}
-
-/**
- * @brief 切换 ComboBox 的 Slot
- * @param index
- */
-void MainWindow::on_comboBoxUsername_currentIndexChanged(int index)
-{
-	qDebug() << "GUI:" << "Username ComboBox Changed";
-	int uid = ui->comboBoxUsername->itemData(index).toInt();
-	emit selectedUserChanged(uid);
+    ui->lblAvatar->setPixmap(QPixmap(":/images/assets/avatar.png"));
 }
 
 void MainWindow::initialize()
@@ -187,40 +159,93 @@ void MainWindow::initialize()
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
 	/* 连接 DBus Daemon */
-	biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
-							"/cn/kylinos/Biometric",
-							QDBusConnection::systemBus(),
-							this);
-	biometricInterface->setTimeout(2147483647); /* 微秒 */
+    serviceInterface = new QDBusInterface("cn.kylinos.Biometric", "/cn/kylinos/Biometric",
+                                          "cn.kylinos.Biometric", QDBusConnection::systemBus());
+    serviceInterface->setTimeout(2147483647); /* 微秒 */
 
 	checkAPICompatibility();
+
+    /* 获取并显示用户 */
+    setCurrentUser();
 
 	/* 获取设备列表 */
 	getDeviceInfo();
 
 	/* Other initializations */
 	initDashboardBioAuthSection();
-	initDashboardDeviceSection();
 	initBiometricPage();
+    initDeviceTypeList();
 
-	/* 获取并显示用户列表 */
-	showUserList();
-	setDefaultUser();
+    connect(ui->btnMin, &QPushButton::clicked, this, &MainWindow::showMinimized);
+    connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
+
+    ui->btnDashBoard->click();
 }
 
-void MainWindow::enableBiometricTabs()
+void MainWindow::changeBtnColor(QPushButton *btn)
 {
-	ui->tabWidgetMain->setTabEnabled(1, true);
-	ui->tabWidgetMain->setTabEnabled(2, true);
-	ui->tabWidgetMain->setTabEnabled(3, true);
+    if(btn == ui->btnDashBoard) {
+        ui->btnDashBoard->setStyleSheet("background-color: #0066b8;");
+        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_click.png"));
+    }
+    else {
+        ui->btnDashBoard->setStyleSheet("background-color: #0078d7;");
+        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_default.png"));
+    }
+    if(btn == ui->btnFingerPrint) {
+        ui->btnFingerPrint->setStyleSheet("background-color: #0066b8;");
+        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_click.png"));
+    }
+    else {
+        ui->btnFingerPrint->setStyleSheet("background-color: #0078d7;");
+        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
+    }
+    if(btn == ui->btnFingerVein) {
+        ui->btnFingerVein->setStyleSheet("background-color: #0066b8;");
+        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_click.png"));
+    }
+    else {
+        ui->btnFingerVein->setStyleSheet("background-color: #0078d7;");
+        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
+    }
+    if(btn == ui->btnIris) {
+        ui->btnIris->setStyleSheet("background-color: #0066b8;");
+        ui->btnIris->setIcon(QIcon(":/images/assets/iris_click.png"));
+    }
+    else {
+        ui->btnIris->setStyleSheet("background-color: #0078d7;");
+        ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
+    }
 }
 
-void MainWindow::disableBiometricTabs()
+void MainWindow::on_btnDashBoard_clicked()
 {
-	ui->tabWidgetMain->setTabEnabled(1, false);
-	ui->tabWidgetMain->setTabEnabled(2, false);
-	ui->tabWidgetMain->setTabEnabled(3, false);
+    ui->stackedWidgetMain->setCurrentWidget(ui->pageDashBoard);
+
+    changeBtnColor(ui->btnDashBoard);
 }
+
+void MainWindow::on_btnFingerPrint_clicked()
+{
+    ui->stackedWidgetMain->setCurrentWidget(ui->pageFingerPrint);
+
+    changeBtnColor(ui->btnFingerPrint);
+}
+
+void MainWindow::on_btnFingerVein_clicked()
+{
+    ui->stackedWidgetMain->setCurrentWidget(ui->pageFingerVein);
+
+    changeBtnColor(ui->btnFingerVein);
+}
+
+void MainWindow::on_btnIris_clicked()
+{
+    ui->stackedWidgetMain->setCurrentWidget(ui->pageIris);
+
+    changeBtnColor(ui->btnIris);
+}
+
 
 /**
  * @brief 获取设备列表并存储起来备用
@@ -234,7 +259,7 @@ void MainWindow::getDeviceInfo()
 	DeviceInfo *deviceInfo;
 
 	/* 返回值为 i -- int 和 av -- array of variant */
-	QDBusPendingReply<int, QList<QDBusVariant> > reply = biometricInterface->GetDrvList();
+    QDBusPendingReply<int, QList<QDBusVariant> > reply = serviceInterface->call("GetDrvList");
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
@@ -249,7 +274,9 @@ void MainWindow::getDeviceInfo()
 	argument = variant.value<QDBusArgument>(); /* 解封装，获取QDBusArgument对象 */
 	argument >> qlist; /* 使用运算符重载提取 argument 对象里面存储的列表对象 */
 
-    deviceInfoList.clear();
+    for(int i = 0; i < __MAX_NR_BIOTYPES; i++)
+        deviceInfosMap[i].clear();;
+
 	for (int i = 0; i < deviceCount; i++) {
 		item = qlist[i]; /* 取出一个元素 */
 		variant = item.variant(); /* 转为普通QVariant对象 */
@@ -257,15 +284,19 @@ void MainWindow::getDeviceInfo()
 		argument = variant.value<QDBusArgument>();
 		deviceInfo = new DeviceInfo();
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
-		if (deviceInfo->device_available != 1)
-			deviceInfo->device_available = 0;
-        deviceInfoList.push_back(deviceInfo);
+        deviceInfosMap[deviceInfo->biotype].append(deviceInfo);
 	}
-    //将deviceInfo列表按设备是否可用分成两部分
-    std::stable_partition(deviceInfoList.begin(), deviceInfoList.end(),
-                          [&](const DeviceInfo *deviceInfo){
-       return deviceInfo->device_available > 0;
-    });
+    //只有在第一次初始化时将开启的设备放在前面，后面不会再改变顺序
+    static bool isFirst = true;
+    if(isFirst) {
+        for(int i = 0; i< __MAX_NR_BIOTYPES; i++) {
+            std::stable_partition(deviceInfosMap[i].begin(), deviceInfosMap[i].end(),
+                                  [&](const DeviceInfo *deviceInfo){
+                return deviceInfo->device_available > 0;
+            });
+        }
+        isFirst = false;
+    }
 }
 
 void MainWindow::addContentPane(DeviceInfo *deviceInfo)
@@ -274,11 +305,11 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 	QStackedWidget *sw;
 
 	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
-		lw = ui->listWidgetFingerprint;
-		sw = ui->stackedWidgetFingerprint;
+        lw = ui->listWidgetFingerPrint;
+        sw = ui->stackedWidgetFingerPrint;
 	} else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN) {
-		lw = ui->listWidgetFingervein;
-		sw = ui->stackedWidgetFingervein;
+        lw = ui->listWidgetFingerVein;
+        sw = ui->stackedWidgetFingerVein;
 	} else {
 		lw = ui->listWidgetIris;
 		sw = ui->stackedWidgetIris;
@@ -286,16 +317,15 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
     QListWidgetItem *item = new QListWidgetItem(deviceInfo->device_shortname);
 	item->setTextAlignment(Qt::AlignCenter);
 	lw->insertItem(lw->count(), item);
-    //如果设备不可用，将这一项置灰
-    if(deviceInfo->device_available <= 0) {
+    if(deviceInfo->device_available <= 0)
         item->setTextColor(Qt::gray);
-    }
-	ContentPane *contentPane = new ContentPane(deviceInfo);
+
+    ContentPane *contentPane = new ContentPane(getuid(), deviceInfo);
 	sw->addWidget(contentPane);
     contentPaneMap.insert(deviceInfo->device_shortname, contentPane);
-	connect(this, &MainWindow::selectedUserChanged,
-			contentPane, &ContentPane::setSelectedUser);
-	connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
+
+    connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
+    connect(contentPane, &ContentPane::changeDeviceStatus, this, &MainWindow::changeDeviceStatus);
 }
 
 #define checkBiometricPage(biometric) do {				\
@@ -313,10 +343,11 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 
 void MainWindow::initBiometricPage()
 {
-    for(auto deviceInfo : deviceInfoList)
-        addContentPane(deviceInfo);
-	checkBiometricPage(Fingerprint);
-	checkBiometricPage(Fingervein);
+    for(int i = 0; i < __MAX_NR_BIOTYPES; i++)
+        for (auto deviceInfo : deviceInfosMap[i])
+            addContentPane(deviceInfo);
+    checkBiometricPage(FingerPrint);
+    checkBiometricPage(FingerVein);
 	checkBiometricPage(Iris);
 }
 
@@ -328,161 +359,233 @@ void MainWindow::initBiometricPage()
 	tw->verticalHeader()->setVisible(false);			\
 	tw->horizontalHeader()->setSectionResizeMode(1,			\
 					QHeaderView::ResizeToContents);	\
-    tw->setSelectionMode(QAbstractItemView::SingleSelection);		\
-    tw->setSelectionBehavior(QAbstractItemView::SelectRows); \
+	tw->setSelectionMode(QAbstractItemView::NoSelection);		\
 } while (0);
-void MainWindow::initDashboardDeviceSection()
-{
-	ToggleSwitch *toggleSwitch;
 
-	QString(tr("Device Name")); /* For SET_TABLE_ATTRIBUTE translation */
-	QString(tr("Status"));
-	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingerprint);
-	SET_TABLE_ATTRIBUTE(ui->tableWidgetFingervein);
-	SET_TABLE_ATTRIBUTE(ui->tableWidgetIris);
-    for(DeviceInfo *deviceInfo : deviceInfoList){
-        QTableWidget *tw = NULL;
-        if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
-            tw = ui->tableWidgetFingerprint;
-        else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
-            tw = ui->tableWidgetFingervein;
-        else if (deviceInfo->biotype == BIOTYPE_IRIS)
-            tw = ui->tableWidgetIris;
 
-        int new_index = tw->rowCount();
-        tw->insertRow(new_index);
-
-        toggleSwitch = new ToggleSwitch(deviceInfo->device_available, DEVICE_TS_W, DEVICE_TS_H);
-        connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageDeviceStatus);
-
-        /* 0 - column */
-
-        QTableWidgetItem *item = new QTableWidgetItem(deviceInfo->device_shortname);
-        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-        tw->setItem(new_index, 0, item);
-
-        /* 1 - column */
-        QWidget *cellAlignWidget = new QWidget();
-        QVBoxLayout *vbox = new QVBoxLayout();
-        vbox->addWidget(toggleSwitch);
-        vbox->setContentsMargins(3, 2, 0, 0); /* center in vertical and horizontal */
-        cellAlignWidget->setLayout(vbox);
-        tw->setCellWidget(new_index, 1, cellAlignWidget);
-    }
-}
 
 void MainWindow::initDashboardBioAuthSection()
 {
-	ToggleSwitch *toggleSwitch;
 	QProcess process;
 	process.start("bioctl status");
 	process.waitForFinished();
 	QString output = process.readAllStandardOutput();
-	if (output.contains("enable", Qt::CaseInsensitive))
-		toggleSwitch = new ToggleSwitch(true);
-	else
-		toggleSwitch = new ToggleSwitch(false);
-	ui->horizontalLayoutBioAuth->addWidget(toggleSwitch);
-	ui->horizontalLayoutBioAuth->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
-	connect(toggleSwitch, &ToggleSwitch::toggled, this, &MainWindow::manageBioAuthStatus);
+    qDebug() << "bioctl status ---" << output;
+    if (output.contains("enable", Qt::CaseInsensitive)) {
+        setVerificationStatus(true);
+    }
+    else {
+        setVerificationStatus(false);
+    }
 }
 
-void MainWindow::manageDeviceStatus(bool toState)
+void MainWindow::initDeviceTypeList()
 {
-	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
-	QWidget *cellAlignWidget = toggleSwitch->parentWidget();
-	QTableWidget *tableWidget = (QTableWidget *)(cellAlignWidget->parentWidget()->parentWidget());
-	QTableWidgetItem *deviceNameItem;
-	for (int i = 0; i < tableWidget->rowCount(); i++) {
-		if (tableWidget->cellWidget(i, 1) == cellAlignWidget) {
-			deviceNameItem = tableWidget->item(i, 0);
-			break;
-		}
-	}
-	QString deviceName = deviceNameItem->text();
-	QProcess process;
-	if (toState) {
-		process.start("pkexec sh -c \"biometric-config-tool enable-driver "
-				+ deviceName
-				+ " && systemctl restart biometric-authentication.service");
-		process.waitForFinished();
-	} else {
-		process.start("pkexec sh -c \"biometric-config-tool disable-driver "
-				+ deviceName
-				+ " && systemctl restart biometric-authentication.service");
-		process.waitForFinished();
-	}
-	if (process.exitCode() != 0) {
-		QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
-							tr("Fatal Error"),
-							tr("Fail to change device status"),
-							QMessageBox::Ok);
-		messageBox->exec();
-		return;
-	}
-	/*
-	 * There is a condition that the driver is enabled while the device is
-	 * not connected. So, if user enables the driver, we need to update the
-	 * deviceinfo array to make sure the device is indeed available. If user
-	 * disabled the driver, the device must can't be used and therefor we
-	 * don't need to query device info from DBus.
-	 */
-    auto it = std::find_if(deviceInfoList.begin(), deviceInfoList.end(),
-                           [&](const DeviceInfo *deviceInfo){
-        return deviceInfo->device_shortname == deviceName;
-    });
-    DeviceInfo *deviceInfo = *it;
-    ContentPane *contentPane = contentPaneMap.value(deviceName);
-    if (toState) {
-        getDeviceInfo();
-        bool deviceAvailable = deviceInfo->device_available;
-        contentPane->setDeviceAvailable(deviceAvailable);
-        if (deviceAvailable) {
-            toggleSwitch->acceptStateChange();
-        } else {
+    QStringList devicesTypeText = {tr("FingerPrint"), tr("FingerVein"), tr("Iris")};
+    for(int i = 0; i < devicesTypeText.size(); i++)
+        ui->listWidgetDevicesType->insertItem(ui->listWidgetDevicesType->count(),
+                                              "    " + devicesTypeText[i]);
+
+    ui->listWidgetDevicesType->setCurrentRow(0);
+}
+
+void MainWindow::setVerificationStatus(bool status)
+{
+    QString noteText, statusText, statusStyle;
+
+    verificationStatus = status;
+
+    if (status) {
+        statusText = tr("Opened");
+        noteText = tr("Biometric Authentication can take over system authentication processes "
+                      "which include Login, LockScreen, sudo/su and Polkit");
+        statusStyle = "background:url(:/images/assets/switch_open_large.png)";
+    }
+    else {
+        statusText = tr("Closed");
+        noteText = tr("There is no any available biometric device or no features enrolled currently.");
+        statusStyle = "background:url(:/images/assets/switch_close_large.png)";
+    }
+    ui->lblNote->setText(noteText);
+    ui->lblStatus->setText(statusText);
+    ui->btnStatus->setStyleSheet(statusStyle);
+}
+
+void MainWindow::on_btnStatus_clicked()
+{
+    QProcess process;
+    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    if (verificationStatus) {
+        process.start("pkexec bioctl disable -u " + environment.value("USER"));
+        process.waitForFinished();
+        if (process.exitCode() == 0)
+            setVerificationStatus(false);
+    } else {
+        process.start("pkexec bioctl enable -u " + environment.value("USER"));
+        process.waitForFinished();
+        if (process.exitCode() == 0)
+            setVerificationStatus(true);
+    }
+}
+
+void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
+{
+    BioType deviceType = BioType(currentRow);
+    QStringList headerData;
+    headerData << "    " + tr("Device Name") << tr("Status") << "    " + tr("Device Name") << tr("Status");
+    ui->tableWidgetDevices->clear();
+    ui->tableWidgetDevices->setRowCount(0);
+    ui->tableWidgetDevices->setColumnCount(4);
+    ui->tableWidgetDevices->setHorizontalHeaderLabels(headerData);
+    ui->tableWidgetDevices->setFocusPolicy(Qt::NoFocus);
+    for(int i = 0; i < headerData.size(); i++)
+        ui->tableWidgetDevices->horizontalHeaderItem(i)->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    int column = 0;
+    for(auto deviceInfo : deviceInfosMap[deviceType]) {
+        if(deviceInfo->biotype == deviceType) {
+            int row_index = ui->tableWidgetDevices->rowCount();
+            if(column == 0)
+                ui->tableWidgetDevices->insertRow(row_index);
+            else
+                row_index--;
+
+            QTableWidgetItem *item_name = new QTableWidgetItem("   " + deviceInfo->device_shortname);
+            item_name->setFlags(item_name->flags() ^ Qt::ItemIsEditable);
+            ui->tableWidgetDevices->setItem(row_index, column, item_name);
+
+            QWidget *layoutWidget = new QWidget();
+            if(column+1 == 1) {
+                layoutWidget->setObjectName("layoutWidget");
+                layoutWidget->setStyleSheet("QWidget#layoutWidget{border-right: 1px solid lightgray;}");
+            }
+            QPushButton *item_status = new QPushButton(this);
+            item_status->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
+            item_status->setFixedSize(40, 20);
+            if(deviceInfo->device_available > 0)
+                item_status->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
+            else
+                item_status->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
+            connect(item_status, &QPushButton::clicked, this, &MainWindow::onDeviceStatusClicked);
+
+            QVBoxLayout *layout = new QVBoxLayout(layoutWidget);
+            layout->addWidget(item_status, 0, Qt::AlignVCenter);
+            layout->setMargin(0);
+            layoutWidget->setLayout(layout);
+            ui->tableWidgetDevices->setCellWidget(row_index, column+1, layoutWidget);
+
+            column = (column+2) % 4;
+        }
+    }
+}
+
+void MainWindow::onDeviceStatusClicked()
+{
+    QString objNameStr = sender()->objectName();
+    qDebug() << objNameStr;
+    int spliter = objNameStr.indexOf('_');
+    QString deviceName = objNameStr.left(spliter);
+    int deviceType = objNameStr.right(objNameStr.length() - spliter - 1).toInt();
+
+    if(deviceType != ui->listWidgetDevicesType->currentRow())
+        return;
+    DeviceInfo *deviceInfo;
+    for(auto info : deviceInfosMap[deviceType]) {
+        if(info->device_shortname == deviceName) {
+            deviceInfo = info;
+            break;
+        }
+    }
+
+    changeDeviceStatus(deviceInfo);
+}
+
+bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
+{
+    bool toEnable = deviceInfo->device_available <= 0 ? true : false;
+    QProcess process;
+    if (toEnable) {
+        qDebug() << "enable" << deviceInfo->device_shortname;
+        process.start("pkexec sh -c \"biometric-config-tool enable-driver "
+                + deviceInfo->device_shortname
+                + " && systemctl restart biometric-authentication.service\"");
+        process.waitForFinished();
+    } else {
+        qDebug() << "disable" << deviceInfo->device_shortname;
+        process.start("pkexec sh -c \"biometric-config-tool disable-driver "
+                + deviceInfo->device_shortname
+                + " && systemctl restart biometric-authentication.service\"");
+        process.waitForFinished();
+    }
+    if (process.exitCode() != 0) {
+        QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+                            tr("Fatal Error"),
+                            tr("Fail to change device status"),
+                            QMessageBox::Ok);
+        messageBox->exec();
+        return false;
+    }
+
+    /*
+     * There is a condition that the driver is enabled while the device is
+     * not connected. So, if user enables the driver, we need to update the
+     * deviceinfo array to make sure the device is indeed available. If user
+     * disabled the driver, the device must can't be used and therefor we
+     * don't need to query device info from DBus.
+     */
+    if(toEnable) {
+        QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+        int result = reply.arguments().at(0).toInt();
+        deviceInfo->device_available = reply.arguments().at(2).toInt();
+
+        if (result == 0 && deviceInfo->device_available > 0) {
+            return true;
+        } else if(result == DBUS_RESULT_NOSUCHDEVICE){
             QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
                             tr("Fatal Error"),
                             tr("Device is not connected"),
                             QMessageBox::Ok);
             messageBox->exec();
+            return false;
         }
-
     } else {
-        deviceInfo->driver_enable = false;
-        deviceInfo->device_available = false;
-        contentPane->setDeviceAvailable(false);
-        toggleSwitch->acceptStateChange();
+        deviceInfo->device_available = 0;
     }
+
+    contentPaneMap[deviceInfo->device_shortname]->setDeviceAvailable(deviceInfo->device_available);
+    QString deviceStatusObjName(deviceInfo->device_shortname + "_" + QString::number(deviceInfo->biotype));
+    QPushButton *deviceStatus = findChild<QPushButton*>(deviceStatusObjName);
+    if(deviceInfo->device_available > 0)
+        deviceStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
+    else
+        deviceStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
+
+    return true;
 }
 
-void MainWindow::manageBioAuthStatus(bool toState)
+void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
 {
-    if(toState){
-        int featuresCount = 0;
-        for(auto contentPane :contentPaneMap){
-            featuresCount += contentPane->featuresCount();
+    if(column %2 == 1)
+        return;
+    int index = row * 2 + column / 2;
+
+    if(index < deviceInfosMap[ui->listWidgetDevicesType->currentRow()].size()) {
+        int deviceType = ui->listWidgetDevicesType->currentRow();
+        DeviceInfo *deviceInfo =  deviceInfosMap[deviceType][index];
+        QListWidget *lw;
+        switch(deviceInfo->biotype) {
+        case BIOTYPE_FINGERPRINT:
+            lw = ui->listWidgetFingerPrint;
+            ui->btnFingerPrint->click();
+            break;
+        case BIOTYPE_FINGERVEIN:
+            lw = ui->listWidgetFingerVein;
+            ui->btnFingerVein->click();
+            break;
+        case BIOTYPE_IRIS:
+            lw = ui->listWidgetIris;
+            ui->btnIris->click();
+            break;
         }
-        if(featuresCount <= 0){
-            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning,
-                            tr("Warnning"),
-                            tr("There is no available device or no features enrolled"),
-                            QMessageBox::Ok);
-            messageBox->exec();
-            return;
-        }
+        lw->setCurrentRow(index);
     }
-	ToggleSwitch *toggleSwitch = (ToggleSwitch *)sender();
-	QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-	QProcess process;
-	if (toState) {
-		process.start("pkexec bioctl enable -u " + environment.value("USER"));
-		process.waitForFinished();
-		if (process.exitCode() == 0)
-			toggleSwitch->acceptStateChange();
-	} else {
-		process.start("pkexec bioctl disable -u " + environment.value("USER"));
-		process.waitForFinished();
-		if (process.exitCode() == 0)
-			toggleSwitch->acceptStateChange();
-	}
 }

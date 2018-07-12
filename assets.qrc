@@ -1,20 +1,29 @@
 <RCC>
     <qresource prefix="/images">
-        <file>assets/icon.png</file>
+        <file>assets/avatar.png</file>
+        <file>assets/dashboard_click.png</file>
+        <file>assets/dashboard_default.png</file>
+        <file>assets/fingerprint_click.png</file>
+        <file>assets/fingerprint_default.png</file>
+        <file>assets/fingervein_click.png</file>
+        <file>assets/fingervein_default.png</file>
+        <file>assets/iris_click.png</file>
+        <file>assets/iris_default.png</file>
+        <file>assets/switch_close_large.png</file>
+        <file>assets/switch_close_small.png</file>
+        <file>assets/switch_open_large.png</file>
+        <file>assets/switch_open_small.png</file>
+        <file>assets/min.png</file>
+        <file>assets/close.png</file>
+        <file>assets/logo.png</file>
         <file>assets/fingerprint.gif</file>
+        <file>assets/fingerprint.png</file>
         <file>assets/fingervein.gif</file>
+        <file>assets/fingervein.png</file>
         <file>assets/iris.gif</file>
-        <file>assets/tab-dashboard.png</file>
-        <file>assets/tab-fingerprint.png</file>
-        <file>assets/tab-fingervein.png</file>
-        <file>assets/tab-iris.png</file>
-        <file>assets/add.png</file>
-        <file>assets/remove.png</file>
-        <file>assets/drop.png</file>
-        <file>assets/search.png</file>
-        <file>assets/verify.png</file>
-        <file>assets/delete.png</file>
-        <file>assets/enroll.png</file>
+        <file>assets/iris.png</file>
+        <file>assets/collapse.png</file>
+        <file>assets/expand.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>

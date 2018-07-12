@@ -1,7 +1,8 @@
-#include <QInputDialog>
-#include "promptdialog.h"
 #include "contentpane.h"
 #include "ui_contentpane.h"
+#include <QInputDialog>
+#include "promptdialog.h"
+
 
 #define ICON_SIZE 32
 
@@ -10,29 +11,30 @@
         promptDialog->setLabelText(str); \
 } while(0)
 
-ContentPane::ContentPane(DeviceInfo *deviceInfo, QWidget *parent) :
+
+ContentPane::ContentPane(int uid, DeviceInfo *deviceInfo, QWidget *parent) :
 	QWidget(parent),
     ui(new Ui::ContentPane),
-    dataModel(nullptr)
+    deviceInfo(deviceInfo),
+    selectedUid(uid),
+    dataModel(nullptr),
+    isEnrolling(false)
 {
-	ui->setupUi(this);
-	this->deviceInfo = deviceInfo;
-	this->selectedUid = -1;
+    bioTypeText = QStringList({tr("FingerPrint"), tr("FingerVein"), tr("Iris")});
+
+    ui->setupUi(this);
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
 	/* 连接 DBus Daemon */
-	biometricInterface = new cn::kylinos::Biometric("cn.kylinos.Biometric",
-				"/cn/kylinos/Biometric",
-				QDBusConnection::systemBus(), this);
-	biometricInterface->setTimeout(2147483647); /* 微秒 */
+    serviceInterface = new QDBusInterface("cn.kylinos.Biometric", "/cn/kylinos/Biometric",
+                                          "cn.kylinos.Biometric", QDBusConnection::systemBus());
+    serviceInterface->setTimeout(2147483647); /* 微秒 */
 	setPromptDialogGIF();
-	setButtonIcons();
 	updateWidgetStatus();
 	/* 设置数据模型 */
 	setModel();
-	trackUsedBiometricIndex();
 	showDeviceInfo();
-	showBiometrics();
+    showFeatures();
 }
 
 ContentPane::~ContentPane()
@@ -40,31 +42,18 @@ ContentPane::~ContentPane()
 	delete ui;
 }
 
-void ContentPane::setButtonIcons()
-{
-	ui->btnEnroll->setIcon(QIcon(":/images/assets/enroll.png"));
-	ui->btnEnroll->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	ui->btnDelete->setIcon(QIcon(":/images/assets/delete.png"));
-	ui->btnDelete->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	ui->btnVerify->setIcon(QIcon(":/images/assets/verify.png"));
-	ui->btnVerify->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	ui->btnSearch->setIcon(QIcon(":/images/assets/search.png"));
-	ui->btnSearch->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-	ui->btnDrop->setIcon(QIcon(":/images/assets/drop.png"));
-	ui->btnDrop->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
-}
 
 void ContentPane::setPromptDialogGIF()
 {
 	switch (deviceInfo->biotype) {
 	case BIOTYPE_FINGERPRINT:
-		promptDialogGIF = ":/images/assets/fingerprint.gif";
+        promptDialogGIF = ":/images/assets/fingerprint.gif";
 		break;
 	case BIOTYPE_FINGERVEIN:
-		promptDialogGIF = ":/images/assets/fingervein.gif";
+        promptDialogGIF = ":/images/assets/fingervein.gif";
 		break;
 	case BIOTYPE_IRIS:
-		promptDialogGIF = ":/images/assets/iris.gif";
+        promptDialogGIF = ":/images/assets/iris.gif";
 		break;
 	}
 }
@@ -75,22 +64,15 @@ void ContentPane::setPromptDialogGIF()
 void ContentPane::setModel()
 {
 	/* 设置 TreeView 的 Model */
-	dataModel = new QStandardItemModel();
-	ui->treeView->setModel(dataModel);
-	dataModel->setHorizontalHeaderLabels(
-			QStringList() << QString(tr("Feature name")) << QString(tr("index")));
+    dataModel = new TreeModel(selectedUid, BioType(deviceInfo->biotype), this);
+    ui->treeView->setModel(dataModel);
 	ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->treeView->setFocusPolicy(Qt::NoFocus);
 }
 
-void ContentPane::setSelectedUser(int uid)
+void ContentPane::setDeviceAvailable(int deviceAvailable)
 {
-	selectedUid = uid;
-	showBiometrics();
-}
-
-void ContentPane::setDeviceAvailable(bool state)
-{
-	deviceInfo->device_available = state;
+    deviceInfo->device_available = deviceAvailable;
 	updateWidgetStatus();
 }
 
@@ -103,16 +85,18 @@ int ContentPane::featuresCount()
 
 void ContentPane::updateWidgetStatus()
 {
-	if (deviceInfo->device_available) {
-		ui->labelStatus->setText(tr("Device is available"));
+    if (deviceInfo->device_available > 0) {
+        ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_open_small.png);}");
+        ui->labelStatusText->setText(tr("Opened"));
 	} else {
-		ui->labelStatus->setText(tr("Device is not connected"));
+        ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
+        ui->labelStatusText->setText(tr("Closed"));
 	}
 	ui->btnEnroll->setEnabled(deviceInfo->device_available);
 	ui->btnDelete->setEnabled(deviceInfo->device_available);
 	ui->btnVerify->setEnabled(deviceInfo->device_available);
 	ui->btnSearch->setEnabled(deviceInfo->device_available);
-	ui->btnDrop->setEnabled(deviceInfo->device_available);
+    ui->btnClean->setEnabled(deviceInfo->device_available);
 	ui->treeView->setEnabled(deviceInfo->device_available);
 }
 
@@ -122,7 +106,7 @@ void ContentPane::updateButtonUsefulness()
 	ui->btnDelete->setEnabled(enable);
 	ui->btnVerify->setEnabled(enable);
 	ui->btnSearch->setEnabled(enable);
-	ui->btnDrop->setEnabled(enable);
+    ui->btnClean->setEnabled(enable);
 }
 
 /**
@@ -138,138 +122,42 @@ bool ContentPane::deviceIsAvailable()
 
 void ContentPane::showDeviceInfo()
 {
+    QStringList deviceTypesList{tr("Fingerprint"), tr("Fingervein"), tr("Iris")};
+    QStringList verifyTypesList{tr("Hardware Verification"), tr("Software Verification"),
+                               tr("Mix Verification"), tr("Other Verification")};
+    QStringList busTypesList{tr("Serial"), tr("USB"), tr("PCIE")};
+    QStringList storageTypesList{tr("Device Storage"), tr("OS Storage"), tr("Mix Storage")};
+    QStringList identifyTypesList{tr("Hardware Identification"), tr("Software Identification"),
+                                 tr("Mix Identification"), tr("Other Identification")};
+
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
+    ui->labelListName->setText(deviceTypesList[deviceInfo->biotype] + tr(" list"));
+    ui->labelVerifyType->setText(verifyTypesList[deviceInfo->vertype]);
+    ui->labelBusType->setText(busTypesList[deviceInfo->bustype]);
+    ui->labelStorageType->setText(storageTypesList[deviceInfo->stotype]);
+    ui->labelIdentificationType->setText(identifyTypesList[deviceInfo->idtype]);
 
-	QString text;
-	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT)
-		text = QString(tr("Fingerprint"));
-	else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN)
-		text = QString(tr("Fingervein"));
-	else if (deviceInfo->biotype == BIOTYPE_IRIS)
-		text = QString(tr("Iris"));
-	ui->labelBiometricType->setText(text);
-
-	if (deviceInfo->vertype == VERIFY_HARDWARE)
-		text = QString(tr("Hardware Verification"));
-	else if (deviceInfo->vertype == VERIFY_SOFTWARE)
-		text = QString(tr("Software Verification"));
-	else if (deviceInfo->vertype == VERIFY_MIX)
-		text = QString(tr("Mix Verification"));
-	else if (deviceInfo->vertype == VERIFY_OTHER)
-		text = QString(tr("Other Verification"));
-	ui->labelVerifyType->setText(text);
-
-	if (deviceInfo->bustype == BUS_SERIAL)
-		text = QString(tr("Serial"));
-	else if (deviceInfo->bustype == BUS_USB)
-		text = QString(tr("USB"));
-	else if (deviceInfo->bustype == BUS_PCIE)
-		text = QString(tr("PCIE"));
-	ui->labelBusType->setText(text);
-
-	if (deviceInfo->stotype == STORAGE_DEVICE)
-		text = QString(tr("Device Storage"));
-	else if (deviceInfo->stotype == STORAGE_OS)
-		text = QString(tr("OS Storage"));
-	else if (deviceInfo->stotype == STORAGE_MIX)
-		text = QString(tr("Mix Storage"));
-	ui->labelStorageType->setText(text);
-
-	if (deviceInfo->idtype == IDENTIFY_HARDWARE)
-		text = QString(tr("Hardware Identification"));
-	else if (deviceInfo->idtype == IDENTIFY_SOFTWARE)
-		text = QString(tr("Software Identification"));
-	else if (deviceInfo->idtype == IDENTIFY_MIX)
-		text = QString(tr("Mix Identification"));
-	else if (deviceInfo->idtype == IDENTIFY_OTHER)
-		text = QString(tr("Other Identification"));
-	ui->labelIdentificationType->setText(text);
+    ui->labelDefault->hide();
+    ui->btnDefault->hide();
+//    ui->btnDefault->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
 }
 
-/**
- * @brief 获取所有设备已经被使用的生物特征 index 列表
- */
-void ContentPane::trackUsedBiometricIndex()
+void ContentPane::on_btnStatus_clicked()
 {
-	if (!deviceIsAvailable())
-		return;
-
-	QList<QDBusVariant> qlist;
-	BiometricInfo *biometricInfo;
-	int listsize;
-
-	QDBusPendingReply<int, QList<QDBusVariant> > reply =
-		biometricInterface->GetFeatureList(deviceInfo->device_id, -1, 0, -1);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-		return;
-	}
-
-	listsize = reply.argumentAt(0).value<int>();
-	reply.argumentAt(1).value<QDBusArgument>() >> qlist;
-
-	usedIndexList = new QList<int>;
-	for (int j = 0; j < listsize; j++) {
-		biometricInfo = new BiometricInfo();
-		qlist[j].variant().value<QDBusArgument>() >> *biometricInfo;
-		usedIndexList->append(biometricInfo->index);
-	}
-	qSort(*usedIndexList);
+    Q_EMIT changeDeviceStatus(deviceInfo);
 }
 
-/**
- * @brief binary_search 二分查找
- * @param indexList
- * @param left
- * @param right
- * @return -1 表示本段连续，否则就是空隙的左边界下标
- */
-int binary_search(QList<int> &indexList, int left, int right)
+void ContentPane::on_btnDefault_clicked()
 {
-	int mid;
-	int boundaryPos;
-	/* 本段连续 */
-	if ((indexList[right] - indexList[left]) == right - left)
-		return -1;
-	/* 空闲位置搜索完成 */
-	if ((right - left) == 1)
-		return left;
-
-	mid = (left + right)/2;
-	boundaryPos = binary_search(indexList, left, mid);
-	if (boundaryPos != -1)
-		return boundaryPos;
-	return binary_search(indexList, mid, right);
 }
-/**
- * @brief 查找一个空闲的特征 index
- * @return 特征 index 从 1 开始使用
- */
-int ContentPane::findFreeBiometricIndex()
-{
-	int freeIndex, boundaryPos;
-	/* 插入占位index,值为0,简化处理逻辑的同时也保证index从1开始利用，不会在前面出现断层 */
-	usedIndexList->prepend(0);
-	/* boundaryPos 是空隙的左边界下标 */
-	boundaryPos = binary_search(*usedIndexList, 0, usedIndexList->length()-1);
-	if (boundaryPos == -1) /* 整个列表都是连续的 */
-		boundaryPos = usedIndexList->length() -1;
-	freeIndex = usedIndexList->at(boundaryPos) + 1;
-	/* 将空闲index插入追踪列表 */
-	usedIndexList->insert(boundaryPos + 1, freeIndex);
-	/* 删除插入的占位元素 */
-	usedIndexList->removeFirst();
 
-	return freeIndex;
-}
 
 /**
  * @brief 显示生物识别数据列表
  * @param biotype
  */
-void ContentPane::showBiometrics()
+void ContentPane::showFeatures()
 {
 	if (!deviceIsAvailable())
 		return;
@@ -277,13 +165,10 @@ void ContentPane::showBiometrics()
 	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 	QList<QVariant> args;
 
-	/* 不能用clear()，它会将表头也清掉 */
-	dataModel->setRowCount(0);
-
 	args << QVariant(deviceInfo->device_id)
-		<< QVariant(selectedUid) << QVariant(0) << QVariant(-1);
-	biometricInterface->callWithCallback("GetFeatureList", args, this,
-						SLOT(showBiometricsCallback(QDBusMessage)),
+        << QVariant((selectedUid == ADMIN_UID ? -1 : selectedUid)) << QVariant(0) << QVariant(-1);
+    serviceInterface->callWithCallback("GetFeatureList", args, this,
+                        SLOT(showFeaturesCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 }
 
@@ -291,29 +176,30 @@ void ContentPane::showBiometrics()
  * @brief 特征列表返回后回调函数进行显示
  * @param callbackReply
  */
-void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
+void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
 {
+    QList<FeatureInfo*> featureInfoList;
+
 	QList<QDBusVariant> qlist;
-	BiometricInfo *biometricInfo;
+    FeatureInfo *featureInfo;
 	int listsize;
-
-    dataModel->setRowCount(0);
-
 	QList<QVariant> variantList = callbackReply.arguments();
 	listsize = variantList[0].value<int>();
 	variantList[1].value<QDBusArgument>() >> qlist;
 	for (int i = 0; i < listsize; i++) {
-		biometricInfo = new BiometricInfo();
-		qlist[i].variant().value<QDBusArgument>() >> *biometricInfo;
-        if(biometricInfo->uid == selectedUid) {
-            QList<QStandardItem *> row;
-            row.append(new QStandardItem(biometricInfo->index_name));
-            row.append(new QStandardItem(QString::number(biometricInfo->index)));
-            dataModel->appendRow(row);
-        }
+        featureInfo = new FeatureInfo;
+        qlist[i].variant().value<QDBusArgument>() >> *featureInfo;
+        featureInfoList.append(featureInfo);
 	}
-	QApplication::restoreOverrideCursor();
+    dataModel->setModelData(featureInfoList);
+
+    QApplication::restoreOverrideCursor();
 	updateButtonUsefulness();
+
+    //清空列表
+    for(auto info : featureInfoList)
+        delete info;
+    featureInfoList.clear();
 }
 
 /**
@@ -321,41 +207,40 @@ void ContentPane::showBiometricsCallback(QDBusMessage callbackReply)
  */
 void ContentPane::on_btnEnroll_clicked()
 {
-	QList<QVariant> args;
-	bool ok;
-	QInputDialog *inputDialog = new QInputDialog();
-	inputDialog->setOkButtonText(tr("OK"));
-	inputDialog->setCancelButtonText(tr("Cancel"));
-	QString text = inputDialog->getText(this, tr("Please input a feature name"),
-					tr("Feature name"), QLineEdit::Normal,
-					"", &ok);
-	if (!ok || text.isEmpty())
-		return;
-	indexName = text;
-	/* 查找空闲 index */
-	freeIndex = findFreeBiometricIndex();
-	/*
-	 * 异步回调参考资料：
-	 * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
-	 */
-	args << QVariant(deviceInfo->device_id)
-		<< QVariant(selectedUid) << QVariant(freeIndex) << QVariant(indexName);
-	biometricInterface->callWithCallback("Enroll", args, this,
-						SLOT(enrollCallback(QDBusMessage)),
-						SLOT(errorCallback(QDBusError)));
-	promptDialog = new PromptDialog(promptDialogGIF, this,
-					tr("Permission is required. Please "
-					"authenticate yourself to continue"));
-	promptDialog->onlyShowCancel();
-	/*
-	connect(promptDialog, &PromptDialog::rejected, [this]{
-						this->canceledByUser=true;
-						});*/
-	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
-	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
-	/* 绑定第二个 SLOT，判别录入过程等待 Polkit 授权的阶段，输出特殊提示覆盖 Polkit 搜索操作造成的搜索提示 */
-	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
-	promptDialog->exec();
+    QList<QVariant> args;
+    bool ok;
+    QInputDialog *inputDialog = new QInputDialog();
+    inputDialog->setOkButtonText(tr("OK"));
+    inputDialog->setCancelButtonText(tr("Cancel"));
+    QString text = inputDialog->getText(this, tr("Feature name"),
+                    tr("Please input a feature name"), QLineEdit::Normal,
+                    "", &ok);
+    if (!ok || text.isEmpty())
+        return;
+    indexName = text;
+    /* 录入的特征索引 */
+    freeIndex = dataModel->freeIndex();
+    qDebug() << "Enroll: uid--" << selectedUid << " index--" << freeIndex
+             << " indexName--" << indexName;
+    /*
+     * 异步回调参考资料：
+     * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
+     */
+    args << QVariant(deviceInfo->device_id)
+        << QVariant(selectedUid) << QVariant(freeIndex) << QVariant(indexName);
+    serviceInterface->callWithCallback("Enroll", args, this,
+                        SLOT(enrollCallback(QDBusMessage)),
+                        SLOT(errorCallback(QDBusError)));
+    promptDialog = new PromptDialog(promptDialogGIF, nullptr,
+                    tr("Permission is required. Please "
+                    "authenticate yourself to continue"));
+    promptDialog->setTitle(bioTypeText[deviceInfo->biotype] + tr("Enroll"));
+
+    connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
+    connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+
+    isEnrolling = true;
+    promptDialog->exec();
 }
 
 /**
@@ -364,59 +249,64 @@ void ContentPane::on_btnEnroll_clicked()
  */
 void ContentPane::enrollCallback(QDBusMessage callbackReply)
 {
-	/* 最终结果信息由本函数输出，断开操作信息的信号触发 */
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setPreEnrollMsg(int,int)));
+    /* 最终结果信息由本函数输出，断开操作信息的信号触发 */
+    disconnect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 
-	int result;
-	result = callbackReply.arguments()[0].value<int>();
-	QList<QStandardItem *> row;
-	switch(result) {
-	case DBUS_RESULT_SUCCESS: /* 录入成功 */
-		row.append(new QStandardItem(indexName));
-		row.append(new QStandardItem(QString::number(freeIndex)));
-		dataModel->appendRow(row);
-		updateButtonUsefulness();
+    int result;
+    result = callbackReply.arguments()[0].value<int>();
+    qDebug() << "Enroll result: " << result;
+
+    switch(result) {
+    case DBUS_RESULT_SUCCESS: { /* 录入成功 */
+        FeatureInfo *featureInfo = createNewFeatureInfo();
+        dataModel->appendData(featureInfo);
+        updateButtonUsefulness();
         SET_PROMPT(tr("Enroll successfully"));
-		break;
-	case DBUS_RESULT_ERROR: /* 录入未成功，具体原因还需要进一步读取底层设备的操作状态 */
-		{
-		usedIndexList->removeOne(freeIndex);
-		QDBusPendingReply<int, int, int, int, int, int> reply =
-				biometricInterface->UpdateStatus(deviceInfo->device_id);
-		reply.waitForFinished();
-		if (reply.isError()) {
-			qDebug() << "GUI:" << reply.error();
+        break;
+    }
+    case DBUS_RESULT_ERROR: { /* 录入未成功，具体原因还需要进一步读取底层设备的操作状态 */
+        QDBusPendingReply<int, int, int, int, int, int> reply =
+                serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+        reply.waitForFinished();
+        if (reply.isError()) {
+            qDebug() << "GUI:" << reply.error();
             SET_PROMPT(tr("D-Bus calling error"));
-			return;
-		}
-		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
-		opsStatus = opsStatus % 100;
-		if (opsStatus == OPS_FAILED)
+            return;
+        }
+        int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
+        opsStatus = opsStatus % 100;
+        if (opsStatus == OPS_FAILED)
             SET_PROMPT(tr("Failed to enroll"));
-		else if (opsStatus == OPS_ERROR)/* 设备底层发生了错误 */
+        else if (opsStatus == OPS_ERROR)/* 设备底层发生了错误 */
             SET_PROMPT(tr("Device encounters an error"));
-		else if (opsStatus == OPS_CANCEL) /* 用户取消 */
-			return; /* 对于取消操作，弹窗会迅速关闭所以不需要设置信息或改变按钮 */
-		else if (opsStatus == OPS_TIMEOUT) /* 超时未操作 */
+        else if (opsStatus == OPS_CANCEL) /* 用户取消 */
+            return; /* 对于取消操作，弹窗会迅速关闭所以不需要设置信息或改变按钮 */
+        else if (opsStatus == OPS_TIMEOUT) /* 超时未操作 */
             SET_PROMPT(tr("Operation timeout"));
-		break;
-		}
-	case DBUS_RESULT_DEVICEBUSY: /* 设备忙 */
-		usedIndexList->removeOne(freeIndex);
+        break;
+    }
+    case DBUS_RESULT_DEVICEBUSY: /* 设备忙 */
         SET_PROMPT(tr("Device is busy"));
-		break;
-	case DBUS_RESULT_NOSUCHDEVICE: /* 设备不存在 */
-		usedIndexList->removeOne(freeIndex);
+        break;
+    case DBUS_RESULT_NOSUCHDEVICE: /* 设备不存在 */
         SET_PROMPT(tr("No such device"));
-		break;
-	case DBUS_RESULT_PERMISSIONDENIED: /* 没有权限 */
-		usedIndexList->removeOne(freeIndex);
+        break;
+    case DBUS_RESULT_PERMISSIONDENIED: /* 没有权限 */
         SET_PROMPT(tr("Permission denied"));
-		break;
-	}
-    if(promptDialog)
-        promptDialog->onlyShowOK();
+        break;
+    }
+    isEnrolling = false;
+}
+
+FeatureInfo *ContentPane::createNewFeatureInfo()
+{
+    FeatureInfo *featureInfo = new FeatureInfo;
+    featureInfo->uid = selectedUid;
+    featureInfo->biotype = deviceInfo->biotype;
+    featureInfo->device_shortname = deviceInfo->device_shortname;
+    featureInfo->index = freeIndex;
+    featureInfo->index_name = indexName;
+    return featureInfo;
 }
 
 /**
@@ -437,46 +327,29 @@ void ContentPane::setOperationMsg(int deviceID, int statusType)
 {
 	if (!(deviceID == deviceInfo->device_id && statusType == STATUS_NOTIFY))
 		return;
-	QDBusPendingReply<QString> reply =
-			biometricInterface->GetNotifyMesg(deviceInfo->device_id);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-        SET_PROMPT(tr("Failed to get notify message"));
-		return;
-	}
+    QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+    if(reply.type() == QDBusMessage::ErrorMessage) {
+        qDebug() << "GUI: " << reply.errorMessage();
+        return;
+    }
+    int devStatus = reply.arguments().at(3).toInt();
 
-	QString msg;
-	msg = reply.argumentAt(0).value<QString>();
-    SET_PROMPT(msg);
+    //过滤掉当录入时使用生物识别授权接收到的认证的提示信息
+    if(isEnrolling)
+        if(!(devStatus >= 201 && devStatus < 203))
+            return;
+
+    QDBusMessage notifyReply = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
+    if(notifyReply.type() == QDBusMessage::ErrorMessage) {
+        qDebug() << "GUI: " << notifyReply.errorMessage();
+        return;
+    }
+    QString prompt = notifyReply.arguments().at(0).toString();
+    qDebug() << prompt;
+
+    SET_PROMPT(prompt);
 }
 
-/**
- * @brief 针对录入操作，在等待Polkit授权的阶段输出特殊的提示
- * @param deviceID
- * @param statusType
- */
-void ContentPane::setPreEnrollMsg(int deviceID, int statusType)
-{
-	if (!(deviceID == deviceInfo->device_id && statusType == STATUS_NOTIFY))
-		return;
-	QDBusPendingReply<int, int, int, int, int, int> reply =
-			biometricInterface->UpdateStatus(deviceInfo->device_id);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-		return;
-	}
-
-	int devStatus = reply.argumentAt(3).value<int>();
-	/*
-	 * 如果此时设备正在进行搜索操作(Polkit等待授权)则将弹窗上的搜索提示覆盖，防止用户迷惑
-	 * devStatus=101/601/1001 分别对应打开设备、正在搜索、关闭设备三种动作
-	 */
-	if (devStatus ==101 || devStatus == 601 || devStatus == 1001) /* biometric_common.h */
-        SET_PROMPT(tr("Permission is required. Please "
-					      "authenticate yourself to continue"));
-}
 
 /**
  * @brief 点击取消按钮时被间接触发
@@ -485,7 +358,7 @@ void ContentPane::cancelOperation()
 {
 	QList<QVariant> args;
 	args << QVariant(deviceInfo->device_id) << QVariant(5);
-	biometricInterface->callWithCallback("StopOps", args, this,
+    serviceInterface->callWithCallback("StopOps", args, this,
 						SLOT(cancelCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
     SET_PROMPT(tr("In progress, please wait..."));
@@ -497,8 +370,8 @@ void ContentPane::cancelOperation()
  */
 void ContentPane::cancelCallback(QDBusMessage callbackReply)
 {
-	UNUSED(callbackReply);
-	promptDialog->closeDialog();
+    UNUSED(callbackReply);
+    promptDialog->closeDialog();
     delete promptDialog;
     promptDialog = nullptr;
 }
@@ -508,50 +381,64 @@ void ContentPane::cancelCallback(QDBusMessage callbackReply)
  */
 void ContentPane::on_btnDelete_clicked()
 {
-	/* 用户光标点击的 QModelIndex */
-	QModelIndex clickedModelIndex = ui->treeView->currentIndex();
-	if (clickedModelIndex.row() == -1)
-		return;
-	/* 获取特征 index 所在的 QModelIndex */
-	QModelIndex indexModelIndex = dataModel->index(clickedModelIndex.row(),
-						1, clickedModelIndex.parent());
-	int deleteIndex = indexModelIndex.data().value<QString>().toInt();
+    QModelIndexList selectedIndexList = ui->treeView->selectionModel()->selectedRows(0);
 
-	QDBusPendingReply<int> reply = biometricInterface->Clean(
-			deviceInfo->device_id, selectedUid, deleteIndex, deleteIndex);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-		return;
-	}
-//	int result = reply.argumentAt(0).value<int>();
-//	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
-//		return;
-//	usedIndexList->removeOne(deleteIndex);
-//	dataModel->removeRow(clickedModelIndex.row(), clickedModelIndex.parent());
-//	updateButtonUsefulness();
-    showBiometrics();
+    auto bound = std::stable_partition(selectedIndexList.begin(), selectedIndexList.end(),
+                          [&](const QModelIndex &index){return index.parent() != QModelIndex();});
+    auto cmp = [&](const QModelIndex &ia, const QModelIndex &ib){ return ia.row() > ib.row();};
+    std::sort(selectedIndexList.begin(), bound, cmp);
+    std::sort(bound, selectedIndexList.end(), cmp);
+
+    for(auto index : selectedIndexList) {
+        int idxStart, idxEnd;
+        int uid = index.data(TreeModel::UidRole).toInt();
+        bool recursive = !ui->treeView->isExpanded(index) && (index.parent() == QModelIndex());
+        if(recursive) {
+            //如果没有展开则删除该用户的所有特征
+            idxStart = 0;
+            idxEnd = -1;
+        } else {
+            idxStart = idxEnd = index.data(Qt::UserRole).toInt();
+        }
+        qDebug() << "Delete: uid--" << uid << " index--" << idxStart << idxEnd;
+
+        QDBusPendingReply<int> reply = serviceInterface->call("Clean",
+                deviceInfo->device_id, uid, idxStart, idxEnd);
+        reply.waitForFinished();
+        if (reply.isError()) {
+            qDebug() << "DBUS:" << reply.error();
+            return;
+        }
+        int result = reply.argumentAt(0).value<int>();
+        qDebug() << "delete result: " << result;
+
+        if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
+            continue;
+
+        dataModel->removeRow(index.row(), index.parent(), recursive);
+    }
+
+    updateButtonUsefulness();
 }
 
 /**
  * @brief 清空当前设备的所有特征值存储
  */
-void ContentPane::on_btnDrop_clicked()
+void ContentPane::on_btnClean_clicked()
 {
-	QDBusPendingReply<int> reply = biometricInterface->Clean(
-					deviceInfo->device_id, selectedUid, 0, -1);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-		return;
-	}
-//	int result = reply.argumentAt(0).value<int>();
-//	if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
-//		return;
-//	usedIndexList->clear();
-//	dataModel->setRowCount(0);
-//	updateButtonUsefulness();
-    showBiometrics();
+    QDBusPendingReply<int> reply = serviceInterface->call("Clean",
+                    deviceInfo->device_id, selectedUid, 0, -1);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << "GUI:" << reply.error();
+        return;
+    }
+    int result = reply.argumentAt(0).value<int>();
+    if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
+        return;
+
+    dataModel->removeAll();
+    updateButtonUsefulness();
 }
 
 /**
@@ -560,23 +447,24 @@ void ContentPane::on_btnDrop_clicked()
 void ContentPane::on_btnVerify_clicked()
 {
 	QList<QVariant> args;
-	QModelIndex clickedModelIndex, indexModelIndex;
-	int verifyIndex;
-	clickedModelIndex = ui->treeView->currentIndex();
-	if (clickedModelIndex.row() == -1)
-		return;
-	indexModelIndex = dataModel->index(clickedModelIndex.row(), 1,
-						clickedModelIndex.parent());
-	verifyIndex = indexModelIndex.data().value<QString>().toInt();
-	args << QVariant(deviceInfo->device_id) << QVariant(selectedUid)
-						<< QVariant(verifyIndex);
-	biometricInterface->callWithCallback("Verify", args, this,
+    QModelIndex currentModelIndex;
+    int verifyIndex, uid;
+
+    currentModelIndex = ui->treeView->selectionModel()->currentIndex();
+    verifyIndex = currentModelIndex.data(Qt::UserRole).toInt();
+    uid = currentModelIndex.data(TreeModel::UidRole).toInt();
+
+    qDebug() << "verify--- uid: " << uid << " index: " << verifyIndex;
+
+    args << QVariant(deviceInfo->device_id) << QVariant(uid)
+                        << QVariant(verifyIndex);
+    serviceInterface->callWithCallback("Verify", args, this,
 						SLOT(verifyCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(promptDialogGIF, this);
-	promptDialog->onlyShowCancel();
+    promptDialog->setTitle(bioTypeText[deviceInfo->biotype] + tr("Verify"));
 	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
-	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+    connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
 }
 
@@ -586,51 +474,52 @@ void ContentPane::on_btnVerify_clicked()
  */
 void ContentPane::verifyCallback(QDBusMessage callbackReply)
 {
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+    disconnect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 
 	int result;
 	result = callbackReply.arguments()[0].value<int>();
+    qDebug() << "Verify result: " << result;
+
     if(result >= 0)
         SET_PROMPT(tr("Match successfully"));
     else {
-	switch(result) {
-    case DBUS_RESULT_NOTMATCH:
-        SET_PROMPT(tr("Not Match"));
-		break;
-	case DBUS_RESULT_ERROR:
-		{
-		QDBusPendingReply<int, int, int, int, int, int> reply =
-				biometricInterface->UpdateStatus(deviceInfo->device_id);
-		reply.waitForFinished();
-		if (reply.isError()) {
-			qDebug() << "GUI:" << reply.error();
-            SET_PROMPT(tr("D-Bus calling error"));
-			return;
-		}
-		int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
-		opsStatus = opsStatus % 100;
-		if (opsStatus == OPS_FAILED)
-            SET_PROMPT(tr("Failed to match"));
-		else if (opsStatus == OPS_ERROR)
-            SET_PROMPT(tr("Device encounters an error"));
-		else if (opsStatus == OPS_CANCEL)
-			return;
-		else if (opsStatus == OPS_TIMEOUT)
-            SET_PROMPT(tr("Operation timeout"));
-		break;
-		}
-	case DBUS_RESULT_DEVICEBUSY:
-        SET_PROMPT(tr("Device is busy"));
-		break;
-	case DBUS_RESULT_NOSUCHDEVICE:
-        SET_PROMPT(tr("No such device"));
-		break;
-	case DBUS_RESULT_PERMISSIONDENIED:
-        SET_PROMPT(tr("Permission denied"));
-		break;
-	}
+        switch(result) {
+        case DBUS_RESULT_NOTMATCH:
+            SET_PROMPT(tr("Not Match"));
+            break;
+        case DBUS_RESULT_ERROR:
+            {
+            QDBusPendingReply<int, int, int, int, int, int> reply =
+                    serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+            reply.waitForFinished();
+            if (reply.isError()) {
+                qDebug() << "GUI:" << reply.error();
+                SET_PROMPT(tr("D-Bus calling error"));
+                return;
+            }
+            int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
+            opsStatus = opsStatus % 100;
+            if (opsStatus == OPS_FAILED)
+                SET_PROMPT(tr("Failed to match"));
+            else if (opsStatus == OPS_ERROR)
+                SET_PROMPT(tr("Device encounters an error"));
+            else if (opsStatus == OPS_CANCEL)
+                return;
+            else if (opsStatus == OPS_TIMEOUT)
+                SET_PROMPT(tr("Operation timeout"));
+            break;
+            }
+        case DBUS_RESULT_DEVICEBUSY:
+            SET_PROMPT(tr("Device is busy"));
+            break;
+        case DBUS_RESULT_NOSUCHDEVICE:
+            SET_PROMPT(tr("No such device"));
+            break;
+        case DBUS_RESULT_PERMISSIONDENIED:
+            SET_PROMPT(tr("Permission denied"));
+            break;
+        }
     }
-	promptDialog->onlyShowOK();
 }
 
 /**
@@ -641,13 +530,13 @@ void ContentPane::on_btnSearch_clicked()
 	QList<QVariant> args;
 	args << QVariant(deviceInfo->device_id) << QVariant(selectedUid)
 						<< QVariant(0) << QVariant(-1);
-	biometricInterface->callWithCallback("Search", args, this,
+    serviceInterface->callWithCallback("Search", args, this,
 						SLOT(searchCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(promptDialogGIF, this);
-	promptDialog->onlyShowCancel();
+    promptDialog->setTitle(bioTypeText[deviceInfo->biotype] + tr("Search"));
 	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
-	connect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+    connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
 }
 
@@ -657,23 +546,24 @@ void ContentPane::on_btnSearch_clicked()
  */
 void ContentPane::searchCallback(QDBusMessage callbackReply)
 {
-	disconnect(biometricInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
+    disconnect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 
     int count = callbackReply.arguments().at(0).toInt();
-    qDebug() << "found " << count << " features";
+    qDebug() << "search result: " << count;
 
     if(count > 0) {
+        SET_PROMPT(tr("Search Result"));
         QDBusArgument argument = callbackReply.arguments().at(1).value<QDBusArgument>();
         QList<QVariant> variantList;
         argument >> variantList;
-        QString msg = tr("Found the matching features:") + "\n";
+        QList<SearchResult> results;
         for(int i = 0; i < count; i++) {
             QDBusArgument arg =variantList.at(i).value<QDBusArgument>();
             SearchResult ret;
             arg >> ret;
-            msg += (QString::number(ret.index) + ":      " + ret.indexName + "\n");
+            results.append(ret);
         }
-        SET_PROMPT(msg.remove(msg.length()-1, 1));
+        promptDialog->setSearchResult(selectedUid == ADMIN_UID, results);
     } else {
         switch(count) {
         case DBUS_RESULT_SUCCESS:
@@ -683,7 +573,7 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
         case DBUS_RESULT_ERROR:
             {
             QDBusPendingReply<int, int, int, int, int, int> reply =
-                    biometricInterface->UpdateStatus(deviceInfo->device_id);
+                    serviceInterface->call("UpdateStatus", deviceInfo->device_id);
             reply.waitForFinished();
             if (reply.isError()) {
                 qDebug() << "GUI:" << reply.error();
@@ -713,5 +603,4 @@ void ContentPane::searchCallback(QDBusMessage callbackReply)
             break;
         }
     }
-	promptDialog->onlyShowOK();
 }

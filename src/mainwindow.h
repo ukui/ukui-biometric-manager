@@ -2,16 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidgetItem>
 #include "biometric_interface.h"
 #include "customtype.h"
-#include "toggleswitch.h"
-#include <QTableWidgetItem>
 #include "contentpane.h"
 
 namespace Ui {
 class MainWindow;
 }
-
+class QLabel;
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -20,11 +19,23 @@ public:
 	explicit MainWindow(QString usernameFromCmd, QWidget *parent = 0);
 	~MainWindow();
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
 /* Qt slots */
 private slots:
-	void on_comboBoxUsername_currentIndexChanged(int index);
-	void manageDeviceStatus(bool toState);
-	void manageBioAuthStatus(bool toState);
+    void on_btnDashBoard_clicked();
+    void on_btnFingerPrint_clicked();
+    void on_btnFingerVein_clicked();
+    void on_btnIris_clicked();
+    void on_btnStatus_clicked();
+    void on_listWidgetDevicesType_currentRowChanged(int);
+    void on_tableWidgetDevices_cellDoubleClicked(int row, int column);
+
+    void onDeviceStatusClicked();
+    bool changeDeviceStatus(DeviceInfo *deviceInfo);
 
 /* Normal functions */
 private:
@@ -34,29 +45,32 @@ private:
 	void getDeviceInfo();
     void addContentPane(DeviceInfo *deviceInfo);
 	void initialize();
-	void enableBiometricTabs();
-	void disableBiometricTabs();
+    void initDeviceTypeList();
 	void initBiometricPage();
-	void initDashboardDeviceSection();
 	void initDashboardBioAuthSection();
-	QIcon *getUserAvatar(QString username);
-	void showUserList();
-	void setDefaultUser();
+    QPixmap *getUserAvatar(QString username);
+    void setCurrentUser();
+    void changeBtnColor(QPushButton *btn);
+    void setVerificationStatus(bool status);
 
-/* Signals */
-signals:
-	void selectedUserChanged(int uid);
+
 
 /* Members */
 private:
 	Ui::MainWindow *ui;
+    QLabel  *lblStatus;
 	/* 用于和远端 DBus 对象交互的代理接口 */
-	cn::kylinos::Biometric *biometricInterface;
+    QDBusInterface *serviceInterface;
 	int deviceCount;
-    QList<DeviceInfo*> deviceInfoList;
+    QMap<int, QList<DeviceInfo *>> deviceInfosMap;
 	QMap<QString, ContentPane *> contentPaneMap;
 	/* 通过命令行参数传入的用户名 */
-	QString usernameFromCmd;
+    QString username;
+    bool verificationStatus;    //生物识别开关状态
+
+    //for window move
+    QPoint dragPos;
+    bool dragWindow;
 };
 
 #endif // MAINWINDOW_H

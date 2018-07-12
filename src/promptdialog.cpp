@@ -4,17 +4,23 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QCloseEvent>
+#include <QStandardItemModel>
+#include <pwd.h>
 
-PromptDialog::PromptDialog(QString gif, QWidget *parent, QString msg) :
-	QDialog(parent),
-	ui(new Ui::PromptDialog)
+PromptDialog::PromptDialog(QString gif, QWidget *parent, QString msg)
+    : QDialog(parent),
+      ui(new Ui::PromptDialog)
 {
 	ui->setupUi(this);
-	setAttribute(Qt::WA_DeleteOnClose); /* 关闭时自动销毁 */
+    setAttribute(Qt::WA_DeleteOnClose); /* 关闭时自动销毁 */
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+
+    ui->btnClose->setFlat(true);
+    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+
 	QMovie *movie = new QMovie(gif);
-	ui->labelImage->setMovie(movie);
-	movie->start();
-	onlyShowCancel();
+    ui->lblImage->setMovie(movie);
+    movie->start();
 	setLabelText(msg);
 
 	/* 设置 CSS */
@@ -23,11 +29,17 @@ PromptDialog::PromptDialog(QString gif, QWidget *parent, QString msg) :
 	QString styleSheet = QLatin1String(qssFile.readAll());
 	this->setStyleSheet(styleSheet);
 	qssFile.close();
+    ui->treeViewResult->hide();
 }
 
 PromptDialog::~PromptDialog()
 {
 	delete ui;
+}
+
+void PromptDialog::setTitle(const QString &title)
+{
+    ui->lblTitle->setText(title);
 }
 
 /**
@@ -36,43 +48,14 @@ PromptDialog::~PromptDialog()
  */
 void PromptDialog::setLabelText(QString text)
 {
-	ui->labelText->setText(text);
-    ui->labelText->adjustSize();
+    ui->lblPrompt->setText(text);
+    ui->lblPrompt->setWordWrap(true);
+    ui->lblPrompt->adjustSize();
 }
 
-/**
- * @brief 只显示取消按钮
- */
-void PromptDialog::onlyShowCancel()
+void PromptDialog::on_btnClose_clicked()
 {
-	ui->btnCancel->show();
-	ui->btnOK->hide();
-}
-
-/**
- * @brief 只显示确定按钮
- */
-void PromptDialog::onlyShowOK()
-{
-	ui->btnOK->show();
-	ui->btnCancel->hide();
-}
-
-/**
- * @brief 点击确定
- */
-void PromptDialog::on_btnOK_clicked()
-{
-	accept(); /* 用户确定，关闭窗口 */
-}
-
-/**
- * @brief 点击取消
- */
-void PromptDialog::on_btnCancel_clicked()
-{
-	/* 使用自定义信号触发主窗口内的函数进行 DBus 相关操作 */
-	emit canceled();
+    close();
 }
 
 /**
@@ -91,5 +74,30 @@ void PromptDialog::closeEvent(QCloseEvent *event)
 {
 	qDebug() << "GUI:" << "Click CLOSE";
 	emit canceled(); /* 自定义信号 */
-	event->ignore(); /* 不再后续处理，否则弹窗会被立刻关闭 */
+    event->ignore(); /* 不再后续处理，否则弹窗会被立刻关闭 */
+}
+
+void PromptDialog::setSearchResult(bool isAdmin, const QList<SearchResult> &searchResultList)
+{
+    QStandardItemModel *model = new QStandardItemModel(ui->treeViewResult);
+    if(isAdmin)
+        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Index"), tr("UserName"), tr("FeatureName")});
+    else
+        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Index"), tr("FeatureName")});
+
+    for(int i = 0; i < searchResultList.size(); i++) {
+        SearchResult ret = searchResultList[i];
+        QList<QStandardItem*> row;
+        row.append(new QStandardItem(QString::number(i+1)));
+        if(isAdmin) {
+            struct passwd *pwd = getpwuid(ret.uid);
+            row.append(new QStandardItem(QString(pwd->pw_name)));
+        }
+        row.append(new QStandardItem(ret.indexName));
+        model->appendRow(row);
+    }
+
+    ui->treeViewResult->setModel(model);
+    ui->treeViewResult->show();
+    this->setFixedHeight(height() + 100);
 }

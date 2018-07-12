@@ -1,10 +1,10 @@
 [Desktop Entry]
 Name=Biometric Manager
-Name[zh_CN]=生物特征管理工具
+Name[zh_CN]=生物识别管理工具
 Comment=Biometric Manager
-Comment[zh_CN]=生物特征管理工具
-Icon=/usr/local/biometric-manager/icon.png
-Exec=biometric-manager
+Comment[zh_CN]=生物识别管理工具
+Icon=biometric-manager
+Exec=/usr/bin/biometric-manager
 Terminal=false
 Type=Application
-Categories=GTK;System;Utility;Core;
+Categories=Qt;System;Utility;Core;

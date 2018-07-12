@@ -12,6 +12,7 @@ enum BioType {
 	__MAX_NR_BIOTYPES
 };
 
+
 /* 录入/删除/搜索等 D-Bus 调用的最终结果，即返回值里的 result */
 /*
 verify接口：
@@ -74,7 +75,7 @@ struct DeviceInfo {
 	int ops_status;
 };
 
-struct BiometricInfo {
+struct FeatureInfo {
 	int uid;
 	int biotype;
 	QString device_shortname;
@@ -84,20 +85,20 @@ struct BiometricInfo {
 
 /* StatusChanged D-Bus 信号触发时的状态变化类型 */
 enum StatusType {
-	STATUS_DEVICE,
+    STATUS_DEVICE = 0,
 	STATUS_OPERATION,
 	STATUS_NOTIFY
 };
 
 Q_DECLARE_METATYPE(DeviceInfo)
-Q_DECLARE_METATYPE(BiometricInfo)
+Q_DECLARE_METATYPE(FeatureInfo)
 Q_DECLARE_METATYPE(QList<QDBusVariant>)
 
 void registerCustomTypes();
 QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &deviceInfo);
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &deviceInfo);
-QDBusArgument &operator<<(QDBusArgument &argument, const BiometricInfo &biometricInfo);
-const QDBusArgument &operator>>(const QDBusArgument &argument, BiometricInfo &biometricInfo);
+QDBusArgument &operator<<(QDBusArgument &argument, const FeatureInfo &featureInfo);
+const QDBusArgument &operator>>(const QDBusArgument &argument, FeatureInfo &featureInfo);
 
 enum VerifyType {
 	VERIFY_HARDWARE,

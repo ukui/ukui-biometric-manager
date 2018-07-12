@@ -21,17 +21,19 @@ SOURCES += src/main.cpp\
     src/customtype.cpp \
     src/promptdialog.cpp \
     src/contentpane.cpp \
-    src/toggleswitch.cpp
+    src/treeitem.cpp \
+    src/treemodel.cpp
 
 HEADERS  += src/mainwindow.h \
     src/customtype.h \
     src/promptdialog.h \
     src/contentpane.h \
-    src/toggleswitch.h
+    src/treeitem.h \
+    src/treemodel.h
 
 FORMS    += src/mainwindow.ui \
     src/promptdialog.ui \
-    src/contentpane.ui \
+    src/contentpane.ui
 
 RESOURCES += \
     assets.qrc
@@ -45,4 +47,10 @@ qm_file.path = $${PREFIX}/i18n_qm/
 
 target.path = /usr/bin/
 
-INSTALLS += target qm_file
+ICON.files = assets/biometric-manager.png
+ICON.path = /usr/share/pixmaps/
+
+desktop.files = data/biometric-manager.desktop
+desktop.path = /usr/share/applications/
+
+INSTALLS += target qm_file ICON desktop

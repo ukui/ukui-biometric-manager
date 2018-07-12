@@ -1,4 +1,38 @@
-#labelText {
-	font-size: 20px;
+#PromptDialog {
+    background-color: white;
+    border: 1px solid #0066b8;
+}
+
+#lblPrompt {
+    font-size: 18px;
 	min-height: 50px; max-height: 50px;
 }
+
+#lblTitle {
+    color: white;
+}
+
+QPushButton{
+    text-align:center;
+    border: none;
+    outline: none;
+}
+QPushButton:flat{
+    border: none;
+}
+
+#btnClose{
+    background-color:#0078d7;
+    icon-size:27px, 27px;
+}
+#btnClose::hover {
+    background-color: #f82600;
+}
+#btnClose::pressed {
+    background-color: #c82102;
+}
+
+#widgetTitle {
+    background-color: #0078d7;
+}
+

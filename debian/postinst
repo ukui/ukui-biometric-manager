@@ -1,4 +1,2 @@
 #!/bin/sh
 set -e
-
-ln -s -f /usr/local/biometric-manager/biometric-manager /usr/bin/biometric-manager

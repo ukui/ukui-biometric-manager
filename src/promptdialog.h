@@ -1,6 +1,8 @@
 #ifndef PROMPTDIALOG_H
 #define PROMPTDIALOG_H
 
+#include "customtype.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -12,9 +14,9 @@ class PromptDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit PromptDialog(QString gif,
-		QWidget *parent = 0,
-		QString msg = tr("Operations are in progress. Please wait..."));
+    explicit PromptDialog(QString gif,
+        QWidget *parent = 0,
+        QString msg = tr("Operations are in progress. Please wait..."));
 	~PromptDialog();
 
 signals:
@@ -22,14 +24,12 @@ signals:
 
 public:
 	void setLabelText(QString text);
-	void onlyShowCancel();
-	void onlyShowOK();
 	void closeDialog();
+    void setTitle(const QString &title);
+    void setSearchResult(bool isAdmin, const QList<SearchResult> &searchResultList);
 
 private slots:
-	void on_btnOK_clicked();
-
-	void on_btnCancel_clicked();
+    void on_btnClose_clicked();
 
 private:
 	Ui::PromptDialog *ui;

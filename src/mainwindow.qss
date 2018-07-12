@@ -1,0 +1,119 @@
+/* Base color: #0A77B5 */
+
+/*QGroupBox {
+	font-size: 18px;
+	font-weight: bold;
+	border: 6px solid #dddddd;
+	border-radius: 6px;
+	margin-top: 0.5em;
+}
+
+QGroupBox::title {
+	subcontrol-origin: margin;
+	left: 10px;
+	padding: 0 3px 0 3px;
+}*/
+
+/*#lblWindow {
+	font-size:30px;
+	margin-bottom: 10px;
+}*/
+
+
+QTabBar::tab {
+/*        min-height: 60px;*/
+/*        min-width: 100px;*/
+        height:60px;
+        width:100px;
+        padding-left: 50px;
+        padding-right: 50px;
+        background-color: #0078d7;
+/*	border: 1px solid #bbbbbb;*/
+	border-bottom-width: 0px;
+	margin-right: -1px;
+        top: 6px;
+        color:white;
+}
+
+QTabBar::tab:selected {
+/*	border-bottom-width: 0px;*/
+/*	padding-top: 3px;*/
+/*	top: 0px;*/
+/*	border-top: 2px solid #aaaaaa;*/
+        background:#0066b8;
+}
+
+QTabBar::tab:last {
+	margin-right: 0px;
+}
+
+QTabWidget::Pane {
+	margin-top: 5px;
+        border:none;
+}
+
+#btnRestartService {
+	min-width: 36px;
+	min-height: 36px;
+	outline: none;
+	border-style:none;
+}
+
+#lblBioAuthStatus {
+	font-size: 16px;
+}
+
+#lblAuthNote {
+	font: bold italic 15px;
+}
+
+QListWidget {
+        border:none;
+        border-right: 1px solid  lightgray;
+        max-width: 150px;
+	font: normal normal 16px;
+}
+
+QListWidget::item {
+	font: normal normal 10px;
+/*	border-style: solid;
+	border-width: 1px;
+	border-color: #bbbbbb;
+	border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;*/
+	min-height: 30px;
+}
+
+QListWidget::item:selected {
+	border-right-style: none;
+        background-color:#0078d6;
+        color:white;
+}
+
+#stackedWidgetFingerprint, #stackedWidgetFingervein, #stackedWidgetIris {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bbbbbb;
+}
+
+#labelFeatureList {
+	margin-top: 10px;
+	font: bold normal 15px;
+}
+
+QComboBox {
+	min-height: 45px;
+	padding: 2px;
+}
+
+QComboBox QAbstractItemView::item {
+	min-height: 45px;
+}
+
+QComboBox::drop-down{
+	border-width: 0px;
+}
+
+#labelTableFingerprint, #labelTableFingervein, #labelTableIris {
+	font-size: 16px;
+}
