@@ -9,36 +9,34 @@
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="34"/>
-        <location filename="../src/contentpane.ui" line="79"/>
-        <location filename="../src/contentpane.ui" line="112"/>
-        <location filename="../src/contentpane.ui" line="132"/>
-        <location filename="../src/contentpane.ui" line="153"/>
-        <location filename="../src/contentpane.ui" line="166"/>
-        <location filename="../src/contentpane.ui" line="180"/>
-        <location filename="../src/contentpane.ui" line="201"/>
-        <location filename="../src/contentpane.ui" line="208"/>
-        <location filename="../src/contentpane.ui" line="258"/>
+        <location filename="../src/contentpane.ui" line="48"/>
+        <location filename="../src/contentpane.ui" line="68"/>
+        <location filename="../src/contentpane.ui" line="116"/>
+        <location filename="../src/contentpane.ui" line="134"/>
+        <location filename="../src/contentpane.ui" line="164"/>
+        <location filename="../src/contentpane.ui" line="188"/>
+        <location filename="../src/contentpane.ui" line="266"/>
+        <location filename="../src/contentpane.ui" line="357"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="119"/>
+        <location filename="../src/contentpane.ui" line="212"/>
         <source>Device Status:</source>
         <translation>设备状态：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="139"/>
+        <location filename="../src/contentpane.ui" line="146"/>
         <source>Default Device:</source>
         <translation>默认设备：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="146"/>
+        <location filename="../src/contentpane.ui" line="200"/>
         <source>Verify Type:</source>
         <translation>验证类型：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="305"/>
+        <location filename="../src/contentpane.ui" line="416"/>
         <source>Clean</source>
         <translation>清空</translation>
     </message>
@@ -47,27 +45,27 @@
         <translation type="vanished">生物识别类型：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="53"/>
+        <location filename="../src/contentpane.ui" line="92"/>
         <source>Device Short Name:</source>
         <translation>设备简称：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="99"/>
+        <location filename="../src/contentpane.ui" line="290"/>
         <source>Device Full Name:</source>
         <translation>设备全称：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="66"/>
+        <location filename="../src/contentpane.ui" line="230"/>
         <source>Bus Type:</source>
         <translation>总线类型：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="92"/>
+        <location filename="../src/contentpane.ui" line="248"/>
         <source>Identification Type:</source>
         <translation>识别类型：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="173"/>
+        <location filename="../src/contentpane.ui" line="176"/>
         <source>Storage Type:</source>
         <translation>存储类型：</translation>
     </message>
@@ -80,25 +78,25 @@
         <translation type="vanished">特征列表</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="277"/>
-        <location filename="../src/contentpane.cpp" line="227"/>
+        <location filename="../src/contentpane.ui" line="388"/>
+        <location filename="../src/contentpane.cpp" line="233"/>
         <source>Enroll</source>
         <translation>录入</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="298"/>
+        <location filename="../src/contentpane.ui" line="409"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="284"/>
-        <location filename="../src/contentpane.cpp" line="445"/>
+        <location filename="../src/contentpane.ui" line="395"/>
+        <location filename="../src/contentpane.cpp" line="462"/>
         <source>Verify</source>
         <translation>验证</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="291"/>
-        <location filename="../src/contentpane.cpp" line="515"/>
+        <location filename="../src/contentpane.ui" line="402"/>
+        <location filename="../src/contentpane.cpp" line="536"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
@@ -107,7 +105,7 @@
         <translation type="vanished">清空所有</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="206"/>
+        <location filename="../src/contentpane.cpp" line="211"/>
         <source>Feature name</source>
         <translation>特征名称</translation>
     </message>
@@ -124,190 +122,174 @@
         <translation type="vanished">设备可用</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="89"/>
+        <location filename="../src/contentpane.cpp" line="88"/>
         <source>Opened</source>
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="93"/>
+        <location filename="../src/contentpane.cpp" line="91"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="125"/>
         <source>Fingerprint</source>
-        <translation>指纹</translation>
+        <translation type="vanished">指纹</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="125"/>
         <source>Fingervein</source>
-        <translation>指静脉</translation>
+        <translation type="vanished">指静脉</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="22"/>
-        <location filename="../src/contentpane.cpp" line="125"/>
         <source>Iris</source>
-        <translation>虹膜</translation>
+        <translation type="vanished">虹膜</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="22"/>
         <source>FingerPrint</source>
-        <translation>指纹</translation>
+        <translation type="vanished">指纹</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="22"/>
         <source>FingerVein</source>
-        <translation>指静脉</translation>
+        <translation type="vanished">指静脉</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="126"/>
         <source>Hardware Verification</source>
-        <translation>硬件验证</translation>
+        <translation type="vanished">硬件验证</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="126"/>
         <source>Software Verification</source>
-        <translation>软件验证</translation>
+        <translation type="vanished">软件验证</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="127"/>
         <source>Mix Verification</source>
-        <translation>混合验证</translation>
+        <translation type="vanished">混合验证</translation>
+    </message>
+    <message>
+        <source>Other Verification</source>
+        <translation type="vanished">其他验证</translation>
+    </message>
+    <message>
+        <source>Serial</source>
+        <translation type="vanished">串口</translation>
+    </message>
+    <message>
+        <source>USB</source>
+        <translation type="vanished">USB</translation>
+    </message>
+    <message>
+        <source>PCIE</source>
+        <translation type="vanished">PCIE</translation>
+    </message>
+    <message>
+        <source>Device Storage</source>
+        <translation type="vanished">设备存储</translation>
+    </message>
+    <message>
+        <source>OS Storage</source>
+        <translation type="vanished">系统存储</translation>
+    </message>
+    <message>
+        <source>Mix Storage</source>
+        <translation type="vanished">混合存储</translation>
+    </message>
+    <message>
+        <source>Hardware Identification</source>
+        <translation type="vanished">硬件识别</translation>
+    </message>
+    <message>
+        <source>Software Identification</source>
+        <translation type="vanished">软件识别</translation>
+    </message>
+    <message>
+        <source>Mix Identification</source>
+        <translation type="vanished">混合识别</translation>
+    </message>
+    <message>
+        <source>Other Identification</source>
+        <translation type="vanished">其他识别</translation>
+    </message>
+    <message>
+        <source> list</source>
+        <translation type="vanished">列表</translation>
     </message>
     <message>
         <location filename="../src/contentpane.cpp" line="127"/>
-        <source>Other Verification</source>
-        <translation>其他验证</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="128"/>
-        <source>Serial</source>
-        <translation>串口</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="128"/>
-        <source>USB</source>
-        <translation>USB</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="128"/>
-        <source>PCIE</source>
-        <translation>PCIE</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="129"/>
-        <source>Device Storage</source>
-        <translation>设备存储</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="129"/>
-        <source>OS Storage</source>
-        <translation>系统存储</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="129"/>
-        <source>Mix Storage</source>
-        <translation>混合存储</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="130"/>
-        <source>Hardware Identification</source>
-        <translation>硬件识别</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="130"/>
-        <source>Software Identification</source>
-        <translation>软件识别</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="131"/>
-        <source>Mix Identification</source>
-        <translation>混合识别</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="131"/>
-        <source>Other Identification</source>
-        <translation>其他识别</translation>
-    </message>
-    <message>
-        <location filename="../src/contentpane.cpp" line="135"/>
-        <source> list</source>
+        <source>List</source>
         <translation>列表</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="204"/>
+        <location filename="../src/contentpane.cpp" line="209"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="205"/>
+        <location filename="../src/contentpane.cpp" line="210"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="207"/>
+        <location filename="../src/contentpane.cpp" line="212"/>
         <source>Please input a feature name</source>
         <translation>请输入特征名称</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="225"/>
+        <location filename="../src/contentpane.cpp" line="231"/>
         <source>Permission is required. Please authenticate yourself to continue</source>
         <translation>需要授权！请先进行认证以继续操作</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="253"/>
+        <location filename="../src/contentpane.cpp" line="261"/>
         <source>Enroll successfully</source>
         <translation>录入成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="262"/>
-        <location filename="../src/contentpane.cpp" line="475"/>
-        <location filename="../src/contentpane.cpp" line="558"/>
+        <location filename="../src/contentpane.cpp" line="270"/>
+        <location filename="../src/contentpane.cpp" line="496"/>
+        <location filename="../src/contentpane.cpp" line="581"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus 调用错误</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="268"/>
+        <location filename="../src/contentpane.cpp" line="276"/>
         <source>Failed to enroll</source>
         <translation>录入失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="270"/>
-        <location filename="../src/contentpane.cpp" line="483"/>
-        <location filename="../src/contentpane.cpp" line="566"/>
+        <location filename="../src/contentpane.cpp" line="278"/>
+        <location filename="../src/contentpane.cpp" line="504"/>
+        <location filename="../src/contentpane.cpp" line="589"/>
         <source>Device encounters an error</source>
         <translation>设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="274"/>
-        <location filename="../src/contentpane.cpp" line="487"/>
-        <location filename="../src/contentpane.cpp" line="570"/>
+        <location filename="../src/contentpane.cpp" line="282"/>
+        <location filename="../src/contentpane.cpp" line="508"/>
+        <location filename="../src/contentpane.cpp" line="593"/>
         <source>Operation timeout</source>
         <translation>操作超时</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="278"/>
-        <location filename="../src/contentpane.cpp" line="491"/>
-        <location filename="../src/contentpane.cpp" line="574"/>
+        <location filename="../src/contentpane.cpp" line="286"/>
+        <location filename="../src/contentpane.cpp" line="512"/>
+        <location filename="../src/contentpane.cpp" line="597"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="281"/>
-        <location filename="../src/contentpane.cpp" line="494"/>
-        <location filename="../src/contentpane.cpp" line="577"/>
+        <location filename="../src/contentpane.cpp" line="289"/>
+        <location filename="../src/contentpane.cpp" line="515"/>
+        <location filename="../src/contentpane.cpp" line="600"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="284"/>
-        <location filename="../src/contentpane.cpp" line="497"/>
-        <location filename="../src/contentpane.cpp" line="580"/>
+        <location filename="../src/contentpane.cpp" line="292"/>
+        <location filename="../src/contentpane.cpp" line="518"/>
+        <location filename="../src/contentpane.cpp" line="603"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="533"/>
+        <location filename="../src/contentpane.cpp" line="556"/>
         <source>Search Result</source>
         <translation>搜索结果</translation>
     </message>
@@ -316,22 +298,22 @@
         <translation type="vanished">读取操作信息失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="357"/>
+        <location filename="../src/contentpane.cpp" line="361"/>
         <source>In progress, please wait...</source>
         <translation>操作中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="462"/>
+        <location filename="../src/contentpane.cpp" line="483"/>
         <source>Match successfully</source>
         <translation>匹配成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="466"/>
+        <location filename="../src/contentpane.cpp" line="487"/>
         <source>Not Match</source>
         <translation>不匹配</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="481"/>
+        <location filename="../src/contentpane.cpp" line="502"/>
         <source>Failed to match</source>
         <translation>匹配失败</translation>
     </message>
@@ -354,7 +336,7 @@
         <translation type="vanished">搜索到匹配的特征名称：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="549"/>
+        <location filename="../src/contentpane.cpp" line="572"/>
         <source>No matching features Found</source>
         <translation>未搜索到匹配的特征</translation>
     </message>
@@ -363,9 +345,113 @@
         <translation type="vanished">搜索成功！用户名：%1，特征名称：%2</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="564"/>
+        <location filename="../src/contentpane.cpp" line="587"/>
         <source>Not Found</source>
         <translation>未搜索到</translation>
+    </message>
+</context>
+<context>
+    <name>EnumToString</name>
+    <message>
+        <location filename="../src/customtype.cpp" line="84"/>
+        <location filename="../src/customtype.cpp" line="86"/>
+        <source>FingerPrint</source>
+        <translation>指纹</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="88"/>
+        <source>Iris</source>
+        <translation>虹膜</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="90"/>
+        <source>Face</source>
+        <translation>人脸</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="92"/>
+        <source>VoicePrint</source>
+        <translation>声纹</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="100"/>
+        <source>Hardware Verification</source>
+        <translation>硬件验证</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="102"/>
+        <source>Software Verification</source>
+        <translation>软件验证</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="104"/>
+        <source>Mix Verification</source>
+        <translation>混合验证</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="106"/>
+        <source>Other Verification</source>
+        <translation>其他验证</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="114"/>
+        <source>Device Storage</source>
+        <translation>设备存储</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="116"/>
+        <source>OS Storage</source>
+        <translation>系统存储</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="118"/>
+        <source>Mix Storage</source>
+        <translation>混合存储</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="126"/>
+        <source>Serial</source>
+        <translation>串口</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="128"/>
+        <source>USB</source>
+        <translation>USB</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="130"/>
+        <source>PCIE</source>
+        <translation>PCIE</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="132"/>
+        <source>Any</source>
+        <translation>任意类型</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="134"/>
+        <source>Other</source>
+        <translation>其他</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="142"/>
+        <source>Hardware Identification</source>
+        <translation>硬件识别</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="144"/>
+        <source>Software Identification</source>
+        <translation>软件识别</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="146"/>
+        <source>Mix Identification</source>
+        <translation>混合识别</translation>
+    </message>
+    <message>
+        <location filename="../src/customtype.cpp" line="148"/>
+        <source>Other Identification</source>
+        <translation>其他识别</translation>
     </message>
 </context>
 <context>
@@ -456,41 +542,48 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="200"/>
-        <location filename="../src/mainwindow.cpp" line="411"/>
+        <location filename="../src/mainwindow.cpp" line="429"/>
         <source>FingerPrint</source>
         <translation>指纹</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="219"/>
-        <location filename="../src/mainwindow.cpp" line="411"/>
+        <location filename="../src/mainwindow.cpp" line="429"/>
         <source>FingerVein</source>
         <translation>指静脉</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="356"/>
+        <location filename="../src/mainwindow.ui" line="257"/>
+        <location filename="../src/mainwindow.cpp" line="430"/>
+        <source>VoicePrint</source>
+        <translation>声纹</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="375"/>
         <source>Biometric Verification Status:</source>
         <translation>生物识别状态：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="401"/>
-        <location filename="../src/mainwindow.cpp" line="432"/>
+        <location filename="../src/mainwindow.ui" line="420"/>
+        <location filename="../src/mainwindow.cpp" line="451"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="448"/>
+        <location filename="../src/mainwindow.ui" line="467"/>
         <source>Note</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="512"/>
+        <location filename="../src/mainwindow.ui" line="531"/>
         <source>     All Devices</source>
         <translation>所有设备</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="638"/>
-        <location filename="../src/mainwindow.ui" line="677"/>
-        <location filename="../src/mainwindow.ui" line="728"/>
+        <location filename="../src/mainwindow.ui" line="657"/>
+        <location filename="../src/mainwindow.ui" line="696"/>
+        <location filename="../src/mainwindow.ui" line="747"/>
+        <location filename="../src/mainwindow.ui" line="786"/>
         <source>Driver Not Found</source>
         <translation>驱动未找到</translation>
     </message>
@@ -500,60 +593,60 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="238"/>
-        <location filename="../src/mainwindow.cpp" line="411"/>
+        <location filename="../src/mainwindow.cpp" line="430"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="72"/>
-        <location filename="../src/mainwindow.cpp" line="91"/>
-        <location filename="../src/mainwindow.cpp" line="558"/>
-        <location filename="../src/mainwindow.cpp" line="583"/>
+        <location filename="../src/mainwindow.cpp" line="69"/>
+        <location filename="../src/mainwindow.cpp" line="88"/>
+        <location filename="../src/mainwindow.cpp" line="569"/>
+        <location filename="../src/mainwindow.cpp" line="592"/>
         <source>Fatal Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="73"/>
+        <location filename="../src/mainwindow.cpp" line="70"/>
         <source>the biometric-authentication service was not started</source>
         <translation>&apos;biometric-authentication&apos;服务没有启动</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="92"/>
+        <location filename="../src/mainwindow.cpp" line="89"/>
         <source>API version is not compatible</source>
         <translation>API 版本不兼容</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="445"/>
         <source>Opened</source>
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="427"/>
+        <location filename="../src/mainwindow.cpp" line="446"/>
         <source>Biometric Authentication can take over system authentication processes which include Login, LockScreen, sudo/su and Polkit</source>
         <translation>生物识别可进行系统认证，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="433"/>
+        <location filename="../src/mainwindow.cpp" line="452"/>
         <source>There is no any available biometric device or no features enrolled currently.</source>
         <translation>当前没有可用的生物识别设备，或者当前用户没有录入任何特征。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="462"/>
+        <location filename="../src/mainwindow.cpp" line="481"/>
         <source>Device Name</source>
         <translation>设备名称</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="462"/>
+        <location filename="../src/mainwindow.cpp" line="481"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="559"/>
+        <location filename="../src/mainwindow.cpp" line="570"/>
         <source>Fail to change device status</source>
         <translation>更该设备状态失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="593"/>
         <source>Device is not connected</source>
         <translation>设备未连接</translation>
     </message>
@@ -580,7 +673,7 @@
     </message>
     <message>
         <location filename="../src/promptdialog.ui" line="138"/>
-        <location filename="../src/promptdialog.ui" line="176"/>
+        <location filename="../src/promptdialog.ui" line="194"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
@@ -654,17 +747,27 @@
     </message>
     <message>
         <location filename="../src/treemodel.cpp" line="12"/>
+        <source>Face</source>
+        <translation>人脸特征</translation>
+    </message>
+    <message>
+        <location filename="../src/treemodel.cpp" line="12"/>
+        <source>VoicePrint</source>
+        <translation>声纹</translation>
+    </message>
+    <message>
+        <location filename="../src/treemodel.cpp" line="13"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../src/treemodel.cpp" line="14"/>
-        <location filename="../src/treemodel.cpp" line="16"/>
+        <location filename="../src/treemodel.cpp" line="15"/>
+        <location filename="../src/treemodel.cpp" line="17"/>
         <source>index</source>
         <translation>序列号</translation>
     </message>
     <message>
-        <location filename="../src/treemodel.cpp" line="14"/>
+        <location filename="../src/treemodel.cpp" line="15"/>
         <source>username</source>
         <translation>用户名</translation>
     </message>

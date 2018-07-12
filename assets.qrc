@@ -24,6 +24,10 @@
         <file>assets/iris.png</file>
         <file>assets/collapse.png</file>
         <file>assets/expand.png</file>
+        <file>assets/voiceprint_default.png</file>
+        <file>assets/voiceprint_click.png</file>
+        <file>assets/voiceprint.gif</file>
+        <file>assets/voiceprint.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>

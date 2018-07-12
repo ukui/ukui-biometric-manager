@@ -71,7 +71,6 @@ private:
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
 	QString promptDialogGIF;
-    QStringList bioTypeText;
     bool isEnrolling;
 };
 

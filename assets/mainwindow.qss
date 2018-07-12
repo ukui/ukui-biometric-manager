@@ -45,17 +45,19 @@ QPushButton:flat{
     background-color: #c82102;
 }
 
-#btnDashBoard, #btnFingerPrint, #btnFingerVein, #btnIris {
+#btnDashBoard, #btnFingerPrint, #btnFingerVein, #btnIris, #btnVoicePrint {
     color: white;
     icon-size: 32px, 32px
 }
 
-#btnDashBoard::hover, #btnFingerPrint::hover, #btnFingerVein::hover, #btnIris::hover{
+#btnDashBoard::hover, #btnFingerPrint::hover, #btnFingerVein::hover,
+#btnIris::hover, #btnVoicePrint::hover {
     background-color: #0078d7;
     border: 1px solid #87c7f9;
 }
 
-#btnDashBoard::pressed, #btnFingerPrint::pressed, #btnFingerVein::pressed, #btnIris::pressed{
+#btnDashBoard::pressed, #btnFingerPrint::pressed, #btnFingerVein::pressed,
+#btnIris::pressed,  #btnVoicePrint::hover {
     background-color: #0066b8;
 }
 

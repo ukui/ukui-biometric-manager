@@ -8,8 +8,7 @@ TreeModel::TreeModel(int uid, BioType type, QObject *parent)
       uid_(uid),
       type_(type)
 {
-    QStringList featureTypesList{tr("FingerPrint"), tr("FingerVein"), tr("Iris")};
-    QString typeText = featureTypesList[type_] + tr("Name");
+    QString typeText = EnumToString::transferBioType(type_) + tr("Name");
     if(uid == ADMIN_UID)
         rootItem = new TreeItem({"    " + tr("index"), tr("username"), typeText});
     else
@@ -48,7 +47,7 @@ int TreeModel::rowCount(const QModelIndex &parent) const
 
 QHash<int, QByteArray> TreeModel::roleNames() const
 {
-    QHash<int, QByteArray> roles = roleNames();
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[IndexRole] = "index";
     roles[UidRole] = "uid";
 

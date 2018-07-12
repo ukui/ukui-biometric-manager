@@ -111,6 +111,7 @@ void MainWindow::prettify()
     ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
     ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
     ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
+    ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_default.png"));
     /* Set logo on lblLogo */
     ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
     ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
@@ -216,6 +217,14 @@ void MainWindow::changeBtnColor(QPushButton *btn)
         ui->btnIris->setStyleSheet("background-color: #0078d7;");
         ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
     }
+    if(btn == ui->btnVoicePrint) {
+        ui->btnVoicePrint->setStyleSheet("background-color: #0066b8;");
+        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_click.png"));
+    }
+    else {
+        ui->btnVoicePrint->setStyleSheet("background-color: #0078d7;");
+        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_default.png"));
+    }
 }
 
 void MainWindow::on_btnDashBoard_clicked()
@@ -246,6 +255,30 @@ void MainWindow::on_btnIris_clicked()
     changeBtnColor(ui->btnIris);
 }
 
+void MainWindow::on_btnVoicePrint_clicked()
+{
+    ui->stackedWidgetMain->setCurrentWidget(ui->pageVoicePrint);
+
+    changeBtnColor(ui->btnVoicePrint);
+}
+
+/**
+ * @brief 设备类型到索引的映射
+ */
+int MainWindow::bioTypeToIndex(int type)
+{
+    switch(type) {
+    case BIOTYPE_FINGERPRINT:
+        return 0;
+    case BIOTYPE_FINGERVEIN:
+        return 1;
+    case BIOTYPE_IRIS:
+        return 2;
+    case BIOTYPE_VOICEPRINT:
+        return 3;
+    }
+    return -1;
+}
 
 /**
  * @brief 获取设备列表并存储起来备用
@@ -284,7 +317,9 @@ void MainWindow::getDeviceInfo()
 		argument = variant.value<QDBusArgument>();
 		deviceInfo = new DeviceInfo();
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
-        deviceInfosMap[deviceInfo->biotype].append(deviceInfo);
+        deviceInfosMap[bioTypeToIndex(deviceInfo->biotype)].append(deviceInfo);
+
+        qDebug() << deviceInfo->biotype << deviceInfo->device_shortname;
 	}
     //只有在第一次初始化时将开启的设备放在前面，后面不会再改变顺序
     static bool isFirst = true;
@@ -304,16 +339,25 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 	QListWidget *lw;
 	QStackedWidget *sw;
 
-	if (deviceInfo->biotype == BIOTYPE_FINGERPRINT) {
+    switch(deviceInfo->biotype) {
+    case BIOTYPE_FINGERPRINT:
         lw = ui->listWidgetFingerPrint;
         sw = ui->stackedWidgetFingerPrint;
-	} else if (deviceInfo->biotype == BIOTYPE_FINGERVEIN) {
+        break;
+    case BIOTYPE_FINGERVEIN:
         lw = ui->listWidgetFingerVein;
         sw = ui->stackedWidgetFingerVein;
-	} else {
-		lw = ui->listWidgetIris;
-		sw = ui->stackedWidgetIris;
-	}
+        break;
+    case BIOTYPE_IRIS:
+        lw = ui->listWidgetIris;
+        sw = ui->stackedWidgetIris;
+        break;
+    case BIOTYPE_VOICEPRINT:
+        lw = ui->listWidgetVoicePrint;
+        sw = ui->stackedWidgetVoicePrint;
+        break;
+    }
+
     QListWidgetItem *item = new QListWidgetItem(deviceInfo->device_shortname);
 	item->setTextAlignment(Qt::AlignCenter);
 	lw->insertItem(lw->count(), item);
@@ -349,6 +393,7 @@ void MainWindow::initBiometricPage()
     checkBiometricPage(FingerPrint);
     checkBiometricPage(FingerVein);
 	checkBiometricPage(Iris);
+    checkBiometricPage(VoicePrint);
 }
 
 #define SET_TABLE_ATTRIBUTE(tw) do {					\
@@ -381,7 +426,8 @@ void MainWindow::initDashboardBioAuthSection()
 
 void MainWindow::initDeviceTypeList()
 {
-    QStringList devicesTypeText = {tr("FingerPrint"), tr("FingerVein"), tr("Iris")};
+    QStringList devicesTypeText = {tr("FingerPrint"), tr("FingerVein"),
+                                   tr("Iris"), tr("VoicePrint")};
     for(int i = 0; i < devicesTypeText.size(); i++)
         ui->listWidgetDevicesType->insertItem(ui->listWidgetDevicesType->count(),
                                               "    " + devicesTypeText[i]);
@@ -430,7 +476,7 @@ void MainWindow::on_btnStatus_clicked()
 
 void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
 {
-    BioType deviceType = BioType(currentRow);
+    int deviceType = currentRow;
     QStringList headerData;
     headerData << "    " + tr("Device Name") << tr("Status") << "    " + tr("Device Name") << tr("Status");
     ui->tableWidgetDevices->clear();
@@ -442,17 +488,19 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
         ui->tableWidgetDevices->horizontalHeaderItem(i)->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     int column = 0;
     for(auto deviceInfo : deviceInfosMap[deviceType]) {
-        if(deviceInfo->biotype == deviceType) {
+        if(bioTypeToIndex(deviceInfo->biotype) == deviceType) {
             int row_index = ui->tableWidgetDevices->rowCount();
             if(column == 0)
                 ui->tableWidgetDevices->insertRow(row_index);
             else
                 row_index--;
 
+            //第一、三列
             QTableWidgetItem *item_name = new QTableWidgetItem("   " + deviceInfo->device_shortname);
             item_name->setFlags(item_name->flags() ^ Qt::ItemIsEditable);
             ui->tableWidgetDevices->setItem(row_index, column, item_name);
 
+            //第二、四列
             QWidget *layoutWidget = new QWidget();
             if(column+1 == 1) {
                 layoutWidget->setObjectName("layoutWidget");
@@ -584,6 +632,10 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
         case BIOTYPE_IRIS:
             lw = ui->listWidgetIris;
             ui->btnIris->click();
+            break;
+        case BIOTYPE_VOICEPRINT:
+            lw = ui->listWidgetVoicePrint;
+            ui->btnVoicePrint->click();
             break;
         }
         lw->setCurrentRow(index);

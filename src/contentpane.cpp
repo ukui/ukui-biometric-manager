@@ -20,8 +20,6 @@ ContentPane::ContentPane(int uid, DeviceInfo *deviceInfo, QWidget *parent) :
     dataModel(nullptr),
     isEnrolling(false)
 {
-    bioTypeText = QStringList({tr("FingerPrint"), tr("FingerVein"), tr("Iris")});
-
     ui->setupUi(this);
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
@@ -55,6 +53,9 @@ void ContentPane::setPromptDialogGIF()
 	case BIOTYPE_IRIS:
         promptDialogGIF = ":/images/assets/iris.gif";
 		break;
+    case BIOTYPE_VOICEPRINT:
+        promptDialogGIF = ":/images/assets/voiceprint.gif";
+        break;
 	}
 }
 
@@ -122,21 +123,19 @@ bool ContentPane::deviceIsAvailable()
 
 void ContentPane::showDeviceInfo()
 {
-    QStringList deviceTypesList{tr("Fingerprint"), tr("Fingervein"), tr("Iris")};
-    QStringList verifyTypesList{tr("Hardware Verification"), tr("Software Verification"),
-                               tr("Mix Verification"), tr("Other Verification")};
-    QStringList busTypesList{tr("Serial"), tr("USB"), tr("PCIE")};
-    QStringList storageTypesList{tr("Device Storage"), tr("OS Storage"), tr("Mix Storage")};
-    QStringList identifyTypesList{tr("Hardware Identification"), tr("Software Identification"),
-                                 tr("Mix Identification"), tr("Other Identification")};
+    QString verifyType = EnumToString::transferVerifyType(deviceInfo->vertype);
+    QString busType = EnumToString::transferBusType(deviceInfo->bustype);
+    QString storageType = EnumToString::transferStorageType(deviceInfo->stotype);
+    QString identifyType = EnumToString::transferIdentifyType(deviceInfo->idtype);
+    QString listName = EnumToString::transferBioType(deviceInfo->biotype) + tr("List");
 
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
-    ui->labelListName->setText(deviceTypesList[deviceInfo->biotype] + tr(" list"));
-    ui->labelVerifyType->setText(verifyTypesList[deviceInfo->vertype]);
-    ui->labelBusType->setText(busTypesList[deviceInfo->bustype]);
-    ui->labelStorageType->setText(storageTypesList[deviceInfo->stotype]);
-    ui->labelIdentificationType->setText(identifyTypesList[deviceInfo->idtype]);
+    ui->labelVerifyType->setText(verifyType);
+    ui->labelBusType->setText(busType);
+    ui->labelStorageType->setText(storageType);
+    ui->labelIdentificationType->setText(identifyType);
+    ui->labelListName->setText(listName);
 
     ui->labelDefault->hide();
     ui->btnDefault->hide();
@@ -234,7 +233,9 @@ void ContentPane::on_btnEnroll_clicked()
     promptDialog = new PromptDialog(promptDialogGIF, nullptr,
                     tr("Permission is required. Please "
                     "authenticate yourself to continue"));
-    promptDialog->setTitle(bioTypeText[deviceInfo->biotype] + tr("Enroll"));
+    qDebug() << "Enroll Device: " << deviceInfo->device_id << deviceInfo->device_shortname;
+    QString title = EnumToString::transferBioType(deviceInfo->biotype) + tr("Enroll");
+    promptDialog->setTitle(title);
 
     connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
@@ -462,7 +463,9 @@ void ContentPane::on_btnVerify_clicked()
 						SLOT(verifyCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(promptDialogGIF, this);
-    promptDialog->setTitle(bioTypeText[deviceInfo->biotype] + tr("Verify"));
+    QString title = EnumToString::transferBioType(deviceInfo->biotype) + tr("Verify");
+    promptDialog->setTitle(title);
+
 	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();
@@ -534,7 +537,9 @@ void ContentPane::on_btnSearch_clicked()
 						SLOT(searchCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
 	promptDialog = new PromptDialog(promptDialogGIF, this);
-    promptDialog->setTitle(bioTypeText[deviceInfo->biotype] + tr("Search"));
+    QString title = EnumToString::transferBioType(deviceInfo->biotype) + tr("Search");
+    promptDialog->setTitle(title);
+
 	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
 	promptDialog->exec();

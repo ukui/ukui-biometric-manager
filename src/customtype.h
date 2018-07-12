@@ -9,6 +9,8 @@ enum BioType {
 	BIOTYPE_FINGERPRINT,
 	BIOTYPE_FINGERVEIN,
 	BIOTYPE_IRIS,
+    BIOTYPE_FACE,
+    BIOTYPE_VOICEPRINT,
 	__MAX_NR_BIOTYPES
 };
 
@@ -116,7 +118,9 @@ enum StorageType {
 enum BusType {
 	BUS_SERIAL,
 	BUS_USB,
-	BUS_PCIE
+    BUS_PCIE,
+    BUS_ANY = 100,
+    BUS_OTHER
 };
 
 enum IdentifyType {
@@ -135,5 +139,16 @@ struct SearchResult {
 Q_DECLARE_METATYPE(SearchResult)
 QDBusArgument &operator<<(QDBusArgument &argument, const SearchResult &ret);
 const QDBusArgument &operator>>(const QDBusArgument &argument, SearchResult &ret);
+
+class EnumToString : public QObject
+{
+    Q_OBJECT
+public:
+    static QString transferBioType(int type);
+    static QString transferVerifyType(int type);
+    static QString transferStorageType(int type);
+    static QString transferBusType(int type);
+    static QString transferIdentifyType(int type);
+};
 
 #endif // CUSTOMTYPE_H
