@@ -12,6 +12,7 @@ QPushButton{
     text-align:center;
     border: none;
     outline: none;
+    background-repeat:no-repeat;
 }
 QPushButton:flat{
     border: none;

@@ -270,7 +270,7 @@ void ContentPane::enrollCallback(QDBusMessage callbackReply)
                 serviceInterface->call("UpdateStatus", deviceInfo->device_id);
         reply.waitForFinished();
         if (reply.isError()) {
-            qDebug() << "GUI:" << reply.error();
+            qDebug() << "DBUS:" << reply.error();
             SET_PROMPT(tr("D-Bus calling error"));
             return;
         }
@@ -316,7 +316,7 @@ FeatureInfo *ContentPane::createNewFeatureInfo()
  */
 void ContentPane::errorCallback(QDBusError error)
 {
-	qDebug() << "GUI:" << error.message();
+    qDebug() << "DBUS:" << error.message();
 }
 
 /**
@@ -328,21 +328,24 @@ void ContentPane::setOperationMsg(int deviceID, int statusType)
 {
 	if (!(deviceID == deviceInfo->device_id && statusType == STATUS_NOTIFY))
 		return;
-    QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
-    if(reply.type() == QDBusMessage::ErrorMessage) {
-        qDebug() << "GUI: " << reply.errorMessage();
-        return;
-    }
-    int devStatus = reply.arguments().at(3).toInt();
 
     //过滤掉当录入时使用生物识别授权接收到的认证的提示信息
-    if(isEnrolling)
+    if(isEnrolling) {
+        qDebug() << "Enrolling";
+        QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+        if(reply.type() == QDBusMessage::ErrorMessage) {
+            qDebug() << "DBUS: " << reply.errorMessage();
+            return;
+        }
+        int devStatus = reply.arguments().at(3).toInt();
+
         if(!(devStatus >= 201 && devStatus < 203))
             return;
+    }
 
     QDBusMessage notifyReply = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
     if(notifyReply.type() == QDBusMessage::ErrorMessage) {
-        qDebug() << "GUI: " << notifyReply.errorMessage();
+        qDebug() << "DBUS: " << notifyReply.errorMessage();
         return;
     }
     QString prompt = notifyReply.arguments().at(0).toString();
@@ -431,7 +434,7 @@ void ContentPane::on_btnClean_clicked()
                     deviceInfo->device_id, selectedUid, 0, -1);
     reply.waitForFinished();
     if (reply.isError()) {
-        qDebug() << "GUI:" << reply.error();
+        qDebug() << "DBUS:" << reply.error();
         return;
     }
     int result = reply.argumentAt(0).value<int>();
@@ -455,20 +458,22 @@ void ContentPane::on_btnVerify_clicked()
     verifyIndex = currentModelIndex.data(Qt::UserRole).toInt();
     uid = currentModelIndex.data(TreeModel::UidRole).toInt();
 
+    promptDialog = new PromptDialog(promptDialogGIF, this);
+    QString title = EnumToString::transferBioType(deviceInfo->biotype) + tr("Verify");
+    promptDialog->setTitle(title);
+    connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
+
     qDebug() << "verify--- uid: " << uid << " index: " << verifyIndex;
 
     args << QVariant(deviceInfo->device_id) << QVariant(uid)
                         << QVariant(verifyIndex);
     serviceInterface->callWithCallback("Verify", args, this,
-						SLOT(verifyCallback(QDBusMessage)),
-						SLOT(errorCallback(QDBusError)));
-	promptDialog = new PromptDialog(promptDialogGIF, this);
-    QString title = EnumToString::transferBioType(deviceInfo->biotype) + tr("Verify");
-    promptDialog->setTitle(title);
+                        SLOT(verifyCallback(QDBusMessage)),
+                        SLOT(errorCallback(QDBusError)));
 
-	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
-	promptDialog->exec();
+    promptDialog->exec();
+    qDebug() << "---";
 }
 
 /**
@@ -496,7 +501,7 @@ void ContentPane::verifyCallback(QDBusMessage callbackReply)
                     serviceInterface->call("UpdateStatus", deviceInfo->device_id);
             reply.waitForFinished();
             if (reply.isError()) {
-                qDebug() << "GUI:" << reply.error();
+                qDebug() << "DBUS:" << reply.error();
                 SET_PROMPT(tr("D-Bus calling error"));
                 return;
             }
@@ -542,7 +547,7 @@ void ContentPane::on_btnSearch_clicked()
 
 	connect(promptDialog, &PromptDialog::canceled, this, &ContentPane::cancelOperation);
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)), this, SLOT(setOperationMsg(int,int)));
-	promptDialog->exec();
+    promptDialog->exec();
 }
 
 /**
