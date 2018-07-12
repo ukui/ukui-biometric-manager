@@ -3,10 +3,6 @@
     border: 1px solid #0066b8;
 }
 
-#lblPrompt {
-    font-size: 18px;
-	min-height: 50px; max-height: 50px;
-}
 
 #lblTitle {
     color: white;

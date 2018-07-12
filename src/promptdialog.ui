@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>344</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>350</width>
-    <height>0</height>
+    <height>320</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -190,6 +190,11 @@
      </item>
      <item>
       <widget class="QLabel" name="lblPrompt">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
