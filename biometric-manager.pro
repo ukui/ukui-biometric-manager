@@ -9,6 +9,10 @@ QT       += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+DEFINES += APP_API_MAJOR=0  \
+            APP_API_MINOR=11    \
+            APP_API_FUNC=0
+
 PREFIX = /usr/share/biometric-manager
 
 TARGET = biometric-manager

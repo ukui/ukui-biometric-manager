@@ -76,7 +76,8 @@ void MainWindow::checkServiceExist()
 
 void MainWindow::checkAPICompatibility()
 {
-    QDBusPendingReply<int> reply = serviceInterface->call("CheckAppApiVersion", 0, 10, 0);
+    QDBusPendingReply<int> reply = serviceInterface->call("CheckAppApiVersion",
+                                                          APP_API_MAJOR, APP_API_MINOR, APP_API_FUNC);
 	reply.waitForFinished();
 	if (reply.isError()) {
 		qDebug() << "GUI:" << reply.error();
