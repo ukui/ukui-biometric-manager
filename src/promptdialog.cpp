@@ -7,21 +7,22 @@
 #include <QStandardItemModel>
 #include <pwd.h>
 
-PromptDialog::PromptDialog(QString gif, QWidget *parent, QString msg)
+PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
+                           int deviceId, int uid, QWidget *parent)
     : QDialog(parent),
-      ui(new Ui::PromptDialog)
+      ui(new Ui::PromptDialog),
+      serviceInterface(service),
+      type(bioType),
+      deviceId(deviceId),
+      uid(uid),
+      ops(IDLE),
+      opsResult(UNDEFINED)
 {
 	ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose); /* 关闭时自动销毁 */
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     ui->btnClose->setFlat(true);
     ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
-
-	QMovie *movie = new QMovie(gif);
-    ui->lblImage->setMovie(movie);
-    movie->start();
-	setLabelText(msg);
 
 	/* 设置 CSS */
 	QFile qssFile(":/css/assets/promptdialog.qss");
@@ -30,6 +31,12 @@ PromptDialog::PromptDialog(QString gif, QWidget *parent, QString msg)
 	this->setStyleSheet(styleSheet);
 	qssFile.close();
     ui->treeViewResult->hide();
+
+    movie = new QMovie(getGif(type));
+    ui->lblImage->setMovie(movie);
+
+    connect(serviceInterface, SIGNAL(StatusChanged(int,int)),
+            this, SLOT(onStatusChanged(int,int)));
 }
 
 PromptDialog::~PromptDialog()
@@ -37,8 +44,21 @@ PromptDialog::~PromptDialog()
 	delete ui;
 }
 
-void PromptDialog::setTitle(const QString &title)
+void PromptDialog::setTitle(int opsType)
 {
+    QString title = EnumToString::transferBioType(type);
+    switch(opsType) {
+    case ENROLL:
+        title += tr("Enroll");
+        break;
+    case VERIFY:
+        title += tr("Verify");
+        break;
+    case SEARCH:
+        title += tr("Search");
+        break;
+    }
+
     ui->lblTitle->setText(title);
 }
 
@@ -46,7 +66,7 @@ void PromptDialog::setTitle(const QString &title)
  * @brief 设置要显示的信息
  * @param text
  */
-void PromptDialog::setLabelText(QString text)
+void PromptDialog::setPrompt(const QString &text)
 {
     ui->lblPrompt->setText(text);
     ui->lblPrompt->setWordWrap(true);
@@ -55,26 +75,17 @@ void PromptDialog::setLabelText(QString text)
 
 void PromptDialog::on_btnClose_clicked()
 {
-    close();
+    QList<QVariant> args;
+    args << QVariant(deviceId) << QVariant(5);
+    serviceInterface->callWithCallback("StopOps", args, this,
+                        SLOT(StopOpsCallBack(const QDBusMessage &)),
+                        SLOT(errorCallBack(const QDBusError &)));
+    setPrompt(tr("In progress, please wait..."));
 }
 
-/**
- * @brief 调用以主动关闭弹窗
- */
-void PromptDialog::closeDialog()
+PromptDialog::Result PromptDialog::getResult()
 {
-	accept(); /* 关闭窗口，也可以用 reject()函数 */
-}
-
-/**
- * @brief 重写 X 按钮事件，与取消按钮逻辑相同
- * @param event
- */
-void PromptDialog::closeEvent(QCloseEvent *event)
-{
-	qDebug() << "GUI:" << "Click CLOSE";
-	emit canceled(); /* 自定义信号 */
-    event->ignore(); /* 不再后续处理，否则弹窗会被立刻关闭 */
+    return opsResult;
 }
 
 void PromptDialog::setSearchResult(bool isAdmin, const QList<SearchResult> &searchResultList)
@@ -100,4 +111,250 @@ void PromptDialog::setSearchResult(bool isAdmin, const QList<SearchResult> &sear
     ui->treeViewResult->setModel(model);
     ui->treeViewResult->show();
     this->setFixedHeight(height() + 100);
+}
+
+QString PromptDialog::getGif(int type)
+{
+    switch(type) {
+    case BIOTYPE_FINGERPRINT:
+        return ":/images/assets/fingerprint.gif";
+    case BIOTYPE_FINGERVEIN:
+        return ":/images/assets/fingervein.gif";
+    case BIOTYPE_IRIS:
+        return ":/images/assets/iris.gif";
+    case BIOTYPE_VOICEPRINT:
+        return ":/images/assets/voiceprint.gif";
+    }
+    return QString();
+}
+
+
+int PromptDialog::enroll(int drvId, int uid, int idx, const QString &idxName)
+{
+    QList<QVariant> args;
+    args << drvId << uid << idx << idxName;
+
+    this->setTitle(ENROLL);
+    this->setPrompt(tr("Permission is required.\n"
+                       "Please authenticate yourself to continue"));
+
+    /*
+     * 异步回调参考资料：
+     * https://github.com/RalfVB/SQEW-OS/blob/master/src/module/windowmanager/compton.cpp
+     */
+    serviceInterface->callWithCallback("Enroll", args, this,
+                        SLOT(enrollCallBack(const QDBusMessage &)),
+                        SLOT(errorCallBack(const QDBusError &)));
+    ops = ENROLL;
+
+    movie->start();
+    return exec();
+}
+
+void PromptDialog::enrollCallBack(const QDBusMessage &reply)
+{
+    int result;
+    result = reply.arguments()[0].value<int>();
+    qDebug() << "Enroll result: " << result;
+
+    switch(result) {
+    case DBUS_RESULT_SUCCESS: { /* 录入成功 */
+        opsResult = SUCESS;
+        setPrompt(tr("Enroll successfully"));
+        break;
+    }
+    default:
+        opsResult = ERROR;
+        handleErrorResult(result);
+        break;
+    }
+    ops = IDLE;
+}
+
+int PromptDialog::verify(int drvId, int uid, int idx)
+{
+    QList<QVariant> args;
+    args << drvId << uid << idx;
+
+    this->setTitle(VERIFY);
+
+    serviceInterface->callWithCallback("Verify", args, this,
+                        SLOT(verifyCallBack(const QDBusMessage &)),
+                        SLOT(errorCallBack(const QDBusError &)));
+    ops = VERIFY;
+
+    movie->start();
+    return exec();
+}
+
+void PromptDialog::verifyCallBack(const QDBusMessage &reply)
+{
+    int result;
+    result = reply.arguments()[0].value<int>();
+    qDebug() << "Verify result: " << result;
+
+    if(result >= 0) {
+        opsResult = SUCESS;
+        setPrompt(tr("Enroll successfully"));
+    } else if(result == DBUS_RESULT_NOTMATCH) {
+        setPrompt(tr("Not Match"));
+    } else {
+        handleErrorResult(result);
+    }
+
+    ops = IDLE;
+}
+
+int PromptDialog::search(int drvId, int uid, int idxStart, int idxEnd)
+{
+    QList<QVariant> args;
+    args << drvId << uid << idxStart << idxEnd;
+
+    this->setTitle(SEARCH);
+
+    serviceInterface->callWithCallback("Search", args, this,
+                        SLOT(searchCallBack(const QDBusMessage &)),
+                        SLOT(errorCallBack(const QDBusError &)));
+
+    ops = SEARCH;
+
+    movie->start();
+    return exec();
+}
+
+void PromptDialog::searchCallBack(const QDBusMessage &reply)
+{
+    int result;
+    result = reply.arguments()[0].value<int>();
+    qDebug() << "Verify result: " << result;
+
+    if(result > 0) {
+        setPrompt(tr("Search Result"));
+        int count  = result;
+        QDBusArgument argument = reply.arguments().at(1).value<QDBusArgument>();
+        QList<QVariant> variantList;
+        argument >> variantList;
+        QList<SearchResult> results;
+        for(int i = 0; i < count; i++) {
+            QDBusArgument arg =variantList.at(i).value<QDBusArgument>();
+            SearchResult ret;
+            arg >> ret;
+            results.append(ret);
+        }
+        this->setSearchResult(uid == ADMIN_UID, results);
+        opsResult = SUCESS;
+    }
+    else if(result >= DBUS_RESULT_NOTMATCH)
+        setPrompt(tr("No matching features Found"));
+    else
+        handleErrorResult(result);
+}
+
+void PromptDialog::StopOpsCallBack(const QDBusMessage &reply)
+{
+    int ret = reply.arguments().at(0).toInt();
+    if(ret == 0) {
+        qDebug() << "Stop Successfully";
+        accept();
+    }
+}
+
+void PromptDialog::errorCallBack(const QDBusError &error)
+{
+    qDebug() << "DBus Error: " << error.message();
+}
+
+void PromptDialog::onStatusChanged(int drvId, int statusType)
+{
+    if (!(drvId == deviceId && statusType == STATUS_NOTIFY))
+        return;
+
+    //过滤掉当录入时使用生物识别授权接收到的认证的提示信息
+    if(ops == ENROLL) {
+        QDBusMessage reply = serviceInterface->call("UpdateStatus", drvId);
+        if(reply.type() == QDBusMessage::ErrorMessage) {
+            qDebug() << "DBUS: " << reply.errorMessage();
+            return;
+        }
+        int devStatus = reply.arguments().at(3).toInt();
+
+        if(!(devStatus >= 201 && devStatus < 203))
+            return;
+    }
+
+    QDBusMessage notifyReply = serviceInterface->call("GetNotifyMesg", drvId);
+    if(notifyReply.type() == QDBusMessage::ErrorMessage) {
+        qDebug() << "DBUS: " << notifyReply.errorMessage();
+        return;
+    }
+    QString prompt = notifyReply.arguments().at(0).toString();
+    qDebug() << prompt;
+
+    setPrompt(prompt);
+}
+
+void PromptDialog::handleErrorResult(int error)
+{
+    switch(error) {
+    case DBUS_RESULT_ERROR: {
+        //操作失败，需要进一步获取失败原因
+        QDBusPendingReply<int, int, int, int, int, int> reply =
+                serviceInterface->call("UpdateStatus", deviceId);
+        reply.waitForFinished();
+        if (reply.isError()) {
+            qDebug() << "DBUS:" << reply.error();
+            setPrompt(tr("D-Bus calling error"));
+            return;
+        }
+        int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
+        opsStatus = opsStatus % 100;
+        qDebug() << "Ops Error: " << opsStatus;
+        switch(opsStatus) {
+        case OPS_FAILED:
+            setFailed();
+            break;
+        case OPS_ERROR:
+            //设备底层发生了错误
+            setPrompt(tr("Device encounters an error"));
+            break;
+        case OPS_CANCEL:
+            //用户取消了操作，直接返回
+            return;
+        case OPS_TIMEOUT:
+            //超时
+            setPrompt(tr("Operation timeout"));
+            break;;
+        }
+        break;
+    }
+    case DBUS_RESULT_DEVICEBUSY:
+        //设备忙
+        setPrompt(tr("Device is busy"));
+        break;
+    case DBUS_RESULT_NOSUCHDEVICE:
+        //设备不存在
+        setPrompt(tr("No such device"));
+        break;
+    case DBUS_RESULT_PERMISSIONDENIED:
+        //没有权限
+        setPrompt(tr("Permission denied"));
+        break;
+    }
+}
+
+void PromptDialog::setFailed()
+{
+    switch(ops) {
+    case ENROLL:
+        setPrompt(tr("Failed to enroll"));
+        break;
+    case VERIFY:
+        setPrompt(tr("Failed to match"));
+        break;
+    case SEARCH:
+        setPrompt(tr("Not Found"));
+        break;
+    default:
+        break;
+    }
 }

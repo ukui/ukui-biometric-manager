@@ -5,8 +5,6 @@
 #include "treeitem.h"
 #include "customtype.h"
 
-#define ADMIN_UID 0
-
 class TreeModel : public QAbstractItemModel
 {
     Q_OBJECT

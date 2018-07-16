@@ -14,28 +14,48 @@ class PromptDialog : public QDialog
 	Q_OBJECT
 
 public:
-    explicit PromptDialog(QString gif,
-        QWidget *parent = 0,
-        QString msg = tr("Operations are in progress. Please wait..."));
+    explicit PromptDialog(QDBusInterface *service, int bioType,
+                          int deviceId, int uid, QWidget *parent = 0);
 	~PromptDialog();
-
-signals:
-	void canceled(); /* 自定义信号，用于触发主窗口内的 slot */
+    enum Result {SUCESS, ERROR, UNDEFINED};
 
 public:
-	void setLabelText(QString text);
-	void closeDialog();
-    void setTitle(const QString &title);
+    void setTitle(int opsType);
+    void setPrompt(const QString &text);
+
+    int enroll(int drvId, int uid, int idx, const QString &idxName);
+    int verify(int drvId, int uid, int idx);
+    int search(int drvId, int uid, int idxStart, int idxEnd);
+    Result getResult();
+
+private:
+    void setFailed();
+    QString getGif(int type);
+    void handleErrorResult(int error);
     void setSearchResult(bool isAdmin, const QList<SearchResult> &searchResultList);
+
+signals:
+    void canceled(); /* 自定义信号，用于触发主窗口内的 slot */
 
 private slots:
     void on_btnClose_clicked();
+    void onStatusChanged(int, int);
+    void enrollCallBack(const QDBusMessage &);
+    void verifyCallBack(const QDBusMessage &);
+    void searchCallBack(const QDBusMessage &);
+    void StopOpsCallBack(const QDBusMessage &);
+    void errorCallBack(const QDBusError &);
 
 private:
 	Ui::PromptDialog *ui;
-
-protected:
-	void closeEvent(QCloseEvent *event);
+    QDBusInterface *serviceInterface;
+    QMovie *movie;
+    int type;
+    int deviceId;
+    int uid;
+    bool isEnrolling;
+    enum OPS{IDLE, ENROLL, VERIFY, SEARCH} ops;
+    Result opsResult;
 };
 
 #endif // PROMPTDIALOG_H

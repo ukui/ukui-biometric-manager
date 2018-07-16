@@ -37,7 +37,6 @@ private slots:
 private:
 	void showDeviceInfo();
     void showFeatures();
-	void setPromptDialogGIF();
 	bool deviceIsAvailable();
 	void setModel();
 	void updateWidgetStatus();
@@ -50,13 +49,7 @@ public:
 /* DBus */
 private slots:
     void showFeaturesCallback(QDBusMessage callbackReply);
-	void enrollCallback(QDBusMessage callbackReply);
 	void errorCallback(QDBusError error);
-	void cancelOperation(); /* 普通 Qt SLOT，不是DBus回调，用于接收弹窗按钮事件 */
-	void cancelCallback(QDBusMessage callbackReply);
-	void verifyCallback(QDBusMessage callbackReply);
-	void searchCallback(QDBusMessage callbackReply);
-	void setOperationMsg(int deviceID, int statusType); /* 普通 Qt SLOT，被 D-Bus 信号 StatusChanged 触发 */
 
 /* Members */
 private:
@@ -71,7 +64,6 @@ private:
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
 	QString promptDialogGIF;
-    bool isEnrolling;
 };
 
 #endif // CONTENTPANE_H
