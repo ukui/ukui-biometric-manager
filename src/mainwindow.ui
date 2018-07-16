@@ -289,7 +289,7 @@
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="pageDashBoard">
     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -528,7 +528,7 @@
              </size>
             </property>
             <property name="text">
-             <string>     All Devices</string>
+             <string>     Devices Type</string>
             </property>
            </widget>
           </item>
