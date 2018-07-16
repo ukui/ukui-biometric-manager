@@ -278,9 +278,12 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
         }
         int devStatus = reply.arguments().at(3).toInt();
 
-        if(!(devStatus >= 201 && devStatus < 203))
+        if(!(devStatus >= 201 && devStatus < 203)) {
+            ui->btnClose->setEnabled(false);
             return;
+        }
     }
+    ui->btnClose->setEnabled(true);
 
     QDBusMessage notifyReply = serviceInterface->call("GetNotifyMesg", drvId);
     if(notifyReply.type() == QDBusMessage::ErrorMessage) {
