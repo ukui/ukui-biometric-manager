@@ -460,6 +460,21 @@ void MainWindow::setVerificationStatus(bool status)
 
 void MainWindow::on_btnStatus_clicked()
 {
+    if(!verificationStatus){
+        int featuresCount = 0;
+        for(auto contentPane :contentPaneMap){
+            featuresCount += contentPane->featuresCount();
+        }
+        qDebug() << "FeatureCount: " << featuresCount;
+        if(featuresCount <= 0){
+            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning,
+                            tr("Warnning"),
+                            tr("There is no available device or no features enrolled"),
+                            QMessageBox::Ok);
+            messageBox->exec();
+            return;
+        }
+    }
     QProcess process;
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
     if (verificationStatus) {
@@ -552,17 +567,22 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
 {
     bool toEnable = deviceInfo->device_available <= 0 ? true : false;
     QProcess process;
+    QString cmd;
     if (toEnable) {
         qDebug() << "enable" << deviceInfo->device_shortname;
-        process.start("pkexec sh -c \"biometric-config-tool enable-driver "
+        cmd = "pkexec sh -c \"biometric-config-tool enable-driver "
                 + deviceInfo->device_shortname
-                + " && systemctl restart biometric-authentication.service\"");
+                + " && systemctl restart biometric-authentication.service\"";
+        qDebug() << cmd;
+        process.start(cmd);
         process.waitForFinished();
     } else {
         qDebug() << "disable" << deviceInfo->device_shortname;
-        process.start("pkexec sh -c \"biometric-config-tool disable-driver "
+        cmd = "pkexec sh -c \"biometric-config-tool disable-driver "
                 + deviceInfo->device_shortname
-                + " && systemctl restart biometric-authentication.service\"");
+                + " && systemctl restart biometric-authentication.service\"";
+        qDebug() << cmd;
+        process.start(cmd);
         process.waitForFinished();
     }
     if (process.exitCode() != 0) {
@@ -586,9 +606,7 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
         int result = reply.arguments().at(0).toInt();
         deviceInfo->device_available = reply.arguments().at(2).toInt();
 
-        if (result == 0 && deviceInfo->device_available > 0) {
-            return true;
-        } else if(result == DBUS_RESULT_NOSUCHDEVICE){
+        if(result == DBUS_RESULT_NOSUCHDEVICE){
             QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
                             tr("Fatal Error"),
                             tr("Device is not connected"),
