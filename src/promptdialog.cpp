@@ -137,6 +137,7 @@ int PromptDialog::enroll(int drvId, int uid, int idx, const QString &idxName)
     this->setTitle(ENROLL);
     this->setPrompt(tr("Permission is required.\n"
                        "Please authenticate yourself to continue"));
+    ui->btnClose->setEnabled(false);
 
     /*
      * 异步回调参考资料：
@@ -269,6 +270,8 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
     if (!(drvId == deviceId && statusType == STATUS_NOTIFY))
         return;
 
+    ui->btnClose->setEnabled(true);
+
     //过滤掉当录入时使用生物识别授权接收到的认证的提示信息
     if(ops == ENROLL) {
         QDBusMessage reply = serviceInterface->call("UpdateStatus", drvId);
@@ -277,13 +280,12 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
             return;
         }
         int devStatus = reply.arguments().at(3).toInt();
+        qDebug() << devStatus;
 
         if(!(devStatus >= 201 && devStatus < 203)) {
-            ui->btnClose->setEnabled(false);
             return;
         }
     }
-    ui->btnClose->setEnabled(true);
 
     QDBusMessage notifyReply = serviceInterface->call("GetNotifyMesg", drvId);
     if(notifyReply.type() == QDBusMessage::ErrorMessage) {
