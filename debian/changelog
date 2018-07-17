@@ -1,3 +1,10 @@
+biometric-manager (1.5~rc2) juniper; urgency=medium
+
+  * [Improved] 无设备或无特征时无法开启生物识别
+  * [Fixed] 修复成功开启设备后状态未更新的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Tue, 17 Jul 2018 15:22:49 +0800
+
 biometric-manager (1.5~rc1) juniper; urgency=medium
 
   * 界面重新设计
