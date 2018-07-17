@@ -1,3 +1,9 @@
+biometric-manager (1.5~rc3) juniper; urgency=medium
+
+  * [Fixed] 修复录入完成之后无法点击关闭按钮的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Tue, 17 Jul 2018 17:05:33 +0800
+
 biometric-manager (1.5~rc2) juniper; urgency=medium
 
   * [Improved] 无设备或无特征时无法开启生物识别
