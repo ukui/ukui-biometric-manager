@@ -28,6 +28,9 @@ public:
     int search(int drvId, int uid, int idxStart, int idxEnd);
     Result getResult();
 
+protected:
+    void keyPressEvent(QKeyEvent *);
+
 private:
     void setFailed();
     QString getGif(int type);

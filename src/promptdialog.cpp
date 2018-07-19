@@ -3,7 +3,7 @@
 #include <QMovie>
 #include <QPushButton>
 #include <QDebug>
-#include <QCloseEvent>
+#include <QKeyEvent>
 #include <QStandardItemModel>
 #include <pwd.h>
 
@@ -71,6 +71,15 @@ void PromptDialog::setPrompt(const QString &text)
     ui->lblPrompt->setText(text);
     ui->lblPrompt->setWordWrap(true);
     ui->lblPrompt->adjustSize();
+}
+
+void PromptDialog::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Escape) {
+        if(ui->btnClose->isEnabled())
+            accept();
+        return;
+    }
 }
 
 void PromptDialog::on_btnClose_clicked()
@@ -158,6 +167,8 @@ void PromptDialog::enrollCallBack(const QDBusMessage &reply)
     result = reply.arguments()[0].value<int>();
     qDebug() << "Enroll result: " << result;
 
+    ui->btnClose->setEnabled(true);
+
     switch(result) {
     case DBUS_RESULT_SUCCESS: { /* 录入成功 */
         opsResult = SUCESS;
@@ -196,7 +207,7 @@ void PromptDialog::verifyCallBack(const QDBusMessage &reply)
 
     if(result >= 0) {
         opsResult = SUCESS;
-        setPrompt(tr("Enroll successfully"));
+        setPrompt(tr("Verify successfully"));
     } else if(result == DBUS_RESULT_NOTMATCH) {
         setPrompt(tr("Not Match"));
     } else {
