@@ -102,9 +102,8 @@
         <translation type="vanished">清空所有</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="181"/>
         <source>Feature name</source>
-        <translation>特征名称</translation>
+        <translation type="vanished">特征名称</translation>
     </message>
     <message>
         <source>index</source>
@@ -127,6 +126,31 @@
         <location filename="../src/contentpane.cpp" line="69"/>
         <source>Closed</source>
         <translation>关</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="175"/>
+        <source>New Feature</source>
+        <translation>新的特征</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="176"/>
+        <source>Please input a name for the feature:</source>
+        <translation>请输入特征名称：</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="178"/>
+        <source>Rename Feature</source>
+        <translation>特征重命名</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="183"/>
+        <source>Duplicate feature name</source>
+        <translation>特征名称重复</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="185"/>
+        <source>Empty feature name</source>
+        <translation>空的特征名称</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -214,27 +238,23 @@
         <translation>列表</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="179"/>
         <source>OK</source>
-        <translation>确认</translation>
+        <translation type="vanished">确认</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="180"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="182"/>
         <source>Please input a feature name</source>
-        <translation>请输入特征名称</translation>
+        <translation type="vanished">请输入特征名称</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="342"/>
         <source>Feature Rename</source>
-        <translation>特征重命名</translation>
+        <translation type="vanished">特征重命名</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="343"/>
+        <location filename="../src/contentpane.cpp" line="179"/>
         <source>Please input a new name for the feature:</source>
         <translation>请输入特征的新名称：</translation>
     </message>
@@ -441,12 +461,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/inputdialog.ui" line="59"/>
+        <location filename="../src/inputdialog.ui" line="65"/>
         <source>InputDialog</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/inputdialog.ui" line="191"/>
+        <location filename="../src/inputdialog.ui" line="200"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
@@ -574,7 +594,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
         <source>     Devices Type</source>
-        <translation type="unfinished">    设备类型</translation>
+        <translation>    设备类型</translation>
     </message>
     <message>
         <source>     All Devices</source>

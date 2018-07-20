@@ -34,6 +34,11 @@ void InputDialog::setPrompt(const QString &text)
     ui->lblPrompt->setText(text);
 }
 
+void InputDialog::setError(const QString &text)
+{
+    ui->lblError->setText(text);
+}
+
 void InputDialog::setText(const QString &text)
 {
     ui->lineEdit->setText(text);
@@ -51,10 +56,10 @@ void InputDialog::on_btnClose_clicked()
 
 void InputDialog::on_btnOK_clicked()
 {
-    accept();
+    Q_EMIT dataChanged(ui->lineEdit->text());
 }
 
 void InputDialog::on_lineEdit_returnPressed()
 {
-    accept();
+    Q_EMIT dataChanged(ui->lineEdit->text());
 }

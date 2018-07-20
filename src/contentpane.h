@@ -43,6 +43,8 @@ private:
 	void updateWidgetStatus();
 	void updateButtonUsefulness();
     FeatureInfo *createNewFeatureInfo();
+    QString inputFeatureName(bool isNew);
+
 public:
     void setDeviceAvailable(int deviceAvailable);
     int featuresCount();

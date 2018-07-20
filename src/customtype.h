@@ -5,7 +5,7 @@
 
 #define UNUSED(x) (void)x
 
-#define ADMIN_UID 1000
+#define ADMIN_UID 0
 
 enum BioType {
 	BIOTYPE_FINGERPRINT,
@@ -152,5 +152,7 @@ public:
     static QString transferBusType(int type);
     static QString transferIdentifyType(int type);
 };
+
+bool isAdmin(int uid);
 
 #endif // CUSTOMTYPE_H

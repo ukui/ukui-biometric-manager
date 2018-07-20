@@ -270,7 +270,7 @@ void PromptDialog::searchCallBack(const QDBusMessage &reply)
             arg >> ret;
             results.append(ret);
         }
-        this->setSearchResult(uid == ADMIN_UID, results);
+        this->setSearchResult(isAdmin(uid), results);
         opsResult = SUCESS;
     }
     else if(result >= DBUS_RESULT_NOTMATCH)

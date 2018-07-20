@@ -140,7 +140,7 @@ void ContentPane::showFeatures()
 	QList<QVariant> args;
 
 	args << QVariant(deviceInfo->device_id)
-        << QVariant((currentUid == ADMIN_UID ? -1 : currentUid)) << QVariant(0) << QVariant(-1);
+        << QVariant((isAdmin(currentUid) ? -1 : currentUid)) << QVariant(0) << QVariant(-1);
     serviceInterface->callWithCallback("GetFeatureList", args, this,
                         SLOT(showFeaturesCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
@@ -168,22 +168,43 @@ void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
 	updateButtonUsefulness();
 }
 
+QString ContentPane::inputFeatureName(bool isNew)
+{
+    InputDialog *inputDialog = new InputDialog(this);
+    if(isNew) {
+        inputDialog->setTitle(tr("New Feature"));
+        inputDialog->setPrompt(tr("Please input a name for the feature:"));
+    } else {
+        inputDialog->setTitle(tr("Rename Feature"));
+        inputDialog->setPrompt(tr("Please input a new name for the feature:"));
+    }
+    connect(inputDialog, &InputDialog::dataChanged, this, [&](const QString &text){
+        if(dataModel->hasFeature(currentUid, text)) {
+            inputDialog->setError(tr("Duplicate feature name"));
+        } else if(text.isEmpty()) {
+            inputDialog->setError(tr("Empty feature name"));
+        } else {
+            inputDialog->accept();
+        }
+    });
+    QString featureName = QString();
+    if(inputDialog->exec() != QDialog::Rejected)
+        featureName = inputDialog->getText();
+
+    delete inputDialog;
+
+    return featureName;
+}
+
 /**
  * @brief 录入
  */
 void ContentPane::on_btnEnroll_clicked()
 {
-    QList<QVariant> args;
-    bool ok;
-    QInputDialog *inputDialog = new QInputDialog();
-    inputDialog->setOkButtonText(tr("OK"));
-    inputDialog->setCancelButtonText(tr("Cancel"));
-    QString text = inputDialog->getText(this, tr("Feature name"),
-                    tr("Please input a feature name"), QLineEdit::Normal,
-                    "", &ok);
-    if (!ok || text.isEmpty())
+    indexName = inputFeatureName(true);
+    if(indexName.isEmpty())
         return;
-    indexName = text;
+
     /* 录入的特征索引 */
     freeIndex = dataModel->freeIndex();
     qDebug() << "Enroll: uid--" << currentUid << " index--" << freeIndex
@@ -326,7 +347,7 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
 {
     int column = index.column();
 
-    if(currentUid == ADMIN_UID) {
+    if(isAdmin(currentUid)) {
         if(column != 2)     //管理员模式双击第三列（特征名称列）重命名
             return;
     } else {
@@ -337,18 +358,12 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
     int idx = index.data(TreeModel::IndexRole).toInt();
     int uid = index.data(TreeModel::UidRole).toInt();
     QString idxName = index.data().toString();
-    qDebug() << idx << idxName;
-    InputDialog *inputDialog = new InputDialog(this);
-    inputDialog->setTitle(tr("Feature Rename"));
-    inputDialog->setPrompt(tr("Please input a new name for the feature:"));
-    inputDialog->setText(idxName);
-    if(inputDialog->exec() == QDialog::Rejected) {
-        qDebug() << "cancel Rename";
-        return;
-    }
 
-    QString newName = inputDialog->getText();
-    qDebug() << newName;
+    QString newName = inputFeatureName(false);
+    if(newName.isEmpty())
+        return;
+
+    qDebug() << "Rename " << idx <<idxName << " to " << newName;
 
     QDBusReply<int> result = serviceInterface->call("Rename", deviceInfo->device_id,
                                                     uid, idx, newName);
@@ -357,6 +372,4 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
         dataModel->setData(index, newName);
         break;
     }
-
-    delete inputDialog;
 }

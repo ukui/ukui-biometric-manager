@@ -150,3 +150,12 @@ QString EnumToString::transferIdentifyType(int type)
     return QString();
 }
 
+/**
+ * @brief 判断用户是否是管理员
+ * @param 用户id
+ * @return
+ */
+bool isAdmin(int uid)
+{
+    return uid == ADMIN_UID;
+}

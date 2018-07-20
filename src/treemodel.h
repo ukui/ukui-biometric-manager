@@ -24,6 +24,7 @@ public:
     void updateSerialNum();
     int freeIndex();
     void setupTestData();
+    bool hasFeature(int uid, const QString &featureName);
 
 public:
     int columnCount(const QModelIndex &parent) const;
@@ -39,7 +40,7 @@ public:
 private:
     TreeItem *rootItem;
     QMap<int, TreeItem*> parentItems;
-    int uid_;
+    int uid_;   //当前用户id
     BioType type_;
 };
 

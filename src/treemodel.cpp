@@ -9,7 +9,7 @@ TreeModel::TreeModel(int uid, BioType type, QObject *parent)
       type_(type)
 {
     QString typeText = EnumToString::transferBioType(type_) + tr("Name");
-    if(uid == ADMIN_UID)
+    if(isAdmin(uid))
         rootItem = new TreeItem({"    " + tr("index"), tr("username"), typeText});
     else
         rootItem = new TreeItem({"    " + tr("index"), typeText});
@@ -178,7 +178,7 @@ void TreeModel::setModelData(const QList<FeatureInfo *> &featureInfoList)
     rootItem->cleanChildren();
     //TreeItem存放的内容为四列：特征的索引， 显示的序列号， 用户名， 特征名称
 
-    if(uid_ == ADMIN_UID) {
+    if(isAdmin(uid_)) {
         parentItems.clear();
         for(int i = 0; i < featureInfoList.size(); i++) {
             FeatureInfo *featureInfo = featureInfoList[i];
@@ -218,11 +218,12 @@ void TreeModel::setModelData(const QList<FeatureInfo *> &featureInfoList)
 
 void TreeModel::appendData(const FeatureInfo *featureInfo)
 {
-    if(uid_ == ADMIN_UID) {
+    if(isAdmin(uid_)) {
         //先判断该用户是否已经存在录入的特征
-        QString userName = getUserName(ADMIN_UID);
+        int uid = featureInfo->uid;
+        QString userName = getUserName(uid);
 
-        if(parentItems.contains(ADMIN_UID)) {
+        if(parentItems.contains(uid)) {
             int row = -1;
             for(int i = 0; i < rowCount(); i++) {
                 if(index(i, 1).data().toString() == userName) {
@@ -236,10 +237,10 @@ void TreeModel::appendData(const FeatureInfo *featureInfo)
                 TreeItem *childItem = new TreeItem({"",
                                                     "",
                                                     featureInfo->index_name},
-                                                   parentItems[ADMIN_UID],
+                                                   parentItems[uid],
                                                    featureInfo->uid,
                                                    featureInfo->index);
-                parentItems[ADMIN_UID]->appendChild(childItem);
+                parentItems[uid]->appendChild(childItem);
                 endInsertRows();
             }
         } else {
@@ -251,10 +252,13 @@ void TreeModel::appendData(const FeatureInfo *featureInfo)
                                                 featureInfo->uid,
                                                 featureInfo->index);
             rootItem->appendChild(parentItem);
-            parentItems[ADMIN_UID] = parentItem;
+            parentItems[uid] = parentItem;
             endInsertRows();
         }
     } else {
+        if(parentItems.isEmpty())
+            parentItems[uid_] = rootItem;
+
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         TreeItem *childItem = new TreeItem({QString::number(rowCount()+1),
                                             featureInfo->index_name},
@@ -318,7 +322,7 @@ int TreeModel::freeIndex()
 {
     TreeItem *parentItem;
     QList<int> usedIndexList;
-    if(uid_ == ADMIN_UID) {
+    if(isAdmin(uid_)) {
         if(!parentItems.contains(uid_)) {
             return 1;
         }
@@ -342,4 +346,30 @@ int TreeModel::freeIndex()
     }
 
     return i+1;
+}
+
+/**
+ * @brief 判断用户是否有指定的特征名的特征
+ * @param 用户id
+ * @param 待查找的特征名
+ * @return
+ */
+bool TreeModel::hasFeature(int uid, const QString &featureName)
+{
+    if(!parentItems.contains(uid))
+        return false;
+
+    TreeItem *parent = parentItems[uid];
+    for(int i = 0; i < parent->childCount(); i++)
+    {
+        TreeItem *child = parent->child(i);
+        if(isAdmin(uid)) {
+            if(child->data(2).toString() == featureName)
+                return true;
+        } else {
+            if(child->data(1).toString() == featureName)
+                return true;
+        }
+    }
+    return false;
 }

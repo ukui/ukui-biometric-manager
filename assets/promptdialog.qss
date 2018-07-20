@@ -3,7 +3,6 @@
     border: 1px solid #0066b8;
 }
 
-
 #lblTitle {
     color: white;
 }
@@ -32,6 +31,11 @@ QPushButton:flat{
     background-color: #0078d7;
 }
 
+#InputDialog {
+    background-color: white;
+    border: 1px solid #0066b8;
+}
+
 #btnOK {
     background-color: #0078d7;
     font-size: 14px;
@@ -46,4 +50,8 @@ QPushButton:flat{
 QLineEdit {
     border: 1px solid #0078d7;
     font-size: 14px;
+}
+
+#lblError {
+    color: red;
 }

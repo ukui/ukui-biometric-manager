@@ -14,8 +14,10 @@ class InputDialog : public QDialog
 public:
     explicit InputDialog(QWidget *parent = 0);
     ~InputDialog();
+
     void setTitle(const QString &text);
     void setPrompt(const QString &text);
+    void setError(const QString &text);
     void setText(const QString &text);
     QString getText();
 
@@ -23,6 +25,9 @@ private slots:
     void on_btnClose_clicked();
     void on_btnOK_clicked();
     void on_lineEdit_returnPressed();
+
+signals:
+    void dataChanged(const QString &text);
 
 private:
     Ui::InputDialog *ui;
