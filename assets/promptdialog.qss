@@ -1,4 +1,4 @@
-#PromptDialog {
+#PromptDialog, #InputDialog, #MessageDialog {
     background-color: white;
     border: 1px solid #0066b8;
 }
@@ -16,6 +16,7 @@ QPushButton:flat{
     border: none;
 }
 
+/* 标题栏 关闭按钮 */
 #btnClose{
     background-color:#0078d7;
     icon-size:27px, 27px;
@@ -27,14 +28,11 @@ QPushButton:flat{
     background-color: #c82102;
 }
 
+/* 标题栏 背景色*/
 #widgetTitle {
     background-color: #0078d7;
 }
 
-#InputDialog {
-    background-color: white;
-    border: 1px solid #0066b8;
-}
 
 #btnOK {
     background-color: #0078d7;

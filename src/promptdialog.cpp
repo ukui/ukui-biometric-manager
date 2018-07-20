@@ -398,7 +398,8 @@ void PromptDialog::setFailed()
 void PromptDialog::showClosePrompt()
 {
     ui->lblImage->setPixmap(getImage(type));
-    QString prompt = QString("<font size = '4'>%1</font>").arg(ui->lblPrompt->text()) + "<br>" +
+    QString prompt = QString("<font size = '4'>%1</font>").arg(ui->lblPrompt->text())
+            + "<br><br>" +
             tr("<font size='2'>the window will be closed after two second</font>");
     setPrompt(prompt);
 

@@ -3,6 +3,7 @@
 #include <QInputDialog>
 #include "promptdialog.h"
 #include "inputdialog.h"
+#include "messagedialog.h"
 
 
 #define ICON_SIZE 32
@@ -255,6 +256,8 @@ void ContentPane::on_btnDelete_clicked()
     std::sort(selectedIndexList.begin(), bound, cmp);
     std::sort(bound, selectedIndexList.end(), cmp);
 
+    QString errMsg;
+
     for(auto index : selectedIndexList) {
         int idxStart, idxEnd;
         int uid = index.data(TreeModel::UidRole).toInt();
@@ -279,13 +282,28 @@ void ContentPane::on_btnDelete_clicked()
         int result = reply.argumentAt(0).value<int>();
         qDebug() << "delete result: " << result;
 
-        if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
+        if (result != DBUS_RESULT_SUCCESS) { /* 操作失败，可能是没有权限 */
+            errMsg = getErrorMessage(DELETE, result);
             continue;
+        }
 
         dataModel->removeRow(index.row(), index.parent(), recursive);
     }
-
     updateButtonUsefulness();
+
+    QString resultMessage;
+    int type;
+    if(errMsg.isEmpty()) {
+        //全部成功删除
+        resultMessage = tr("Delete all selected features successfully");
+        type = MessageDialog::Normal;
+    } else {
+        type = MessageDialog::Error;
+    }
+    MessageDialog msgDialog(type);
+    msgDialog.setTitle(tr("Delete Result"));
+    msgDialog.setMessage(resultMessage);
+    msgDialog.exec();
 }
 
 /**
@@ -301,11 +319,22 @@ void ContentPane::on_btnClean_clicked()
         return;
     }
     int result = reply.argumentAt(0).value<int>();
-    if (result != DBUS_RESULT_SUCCESS) /* 操作失败，可能是没有权限 */
-        return;
 
-    dataModel->removeAll();
-    updateButtonUsefulness();
+    QString resultMessage;
+    int type;
+    if(result == DBUS_RESULT_SUCCESS) {
+        dataModel->removeAll();
+        updateButtonUsefulness();
+        resultMessage = tr("Clean Successfully");
+        type = MessageDialog::Normal;
+    } else {
+        resultMessage = getErrorMessage(CLEAN, result);
+        type = MessageDialog::Error;
+    }
+    MessageDialog msgDialog(type);
+    msgDialog.setTitle(tr("Clean Result"));
+    msgDialog.setMessage(resultMessage);
+    msgDialog.exec();
 }
 
 /**
@@ -367,9 +396,82 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
 
     QDBusReply<int> result = serviceInterface->call("Rename", deviceInfo->device_id,
                                                     uid, idx, newName);
-    switch(result) {
-    case DBUS_RESULT_SUCCESS:
+
+    QString resultMessage;
+    int type;
+    if(result == DBUS_RESULT_SUCCESS) {
         dataModel->setData(index, newName);
+        resultMessage = tr("Rename Successfully");
+        type = MessageDialog::Normal;
+    } else {
+        resultMessage = getErrorMessage(RENAME, result);
+        type = MessageDialog::Error;
+    }
+    MessageDialog msgDialog(type);
+    msgDialog.setTitle(tr("Rename Result"));
+    msgDialog.setMessage(resultMessage);
+    msgDialog.exec();
+}
+
+QString ContentPane::getErrorMessage(int type, int result)
+{
+    QString errorMessage;
+
+    switch(result) {
+    case DBUS_RESULT_ERROR: {
+        //操作失败，需要进一步获取失败原因
+        QDBusPendingReply<int, int, int, int, int, int> reply =
+                serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+        reply.waitForFinished();
+        if (reply.isError()) {
+            qDebug() << "DBUS:" << reply.error();
+            errorMessage = (tr("D-Bus calling error"));
+            break;
+        }
+        int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
+        opsStatus = opsStatus % 100;
+        qDebug() << "Ops Error: " << opsStatus;
+        switch(opsStatus) {
+        case OPS_FAILED:
+            switch(type) {
+            case DELETE:
+                errorMessage = tr("Delete Failed");
+                break;
+            case CLEAN:
+                errorMessage = tr("Clean Failed");
+                break;
+            case RENAME:
+                errorMessage = tr("Rename Failed");
+                break;
+            }
+            break;
+        case OPS_ERROR:
+            //设备底层发生了错误
+            errorMessage = (tr("Device encounters an error"));
+            break;
+        case OPS_CANCEL:
+            //用户取消了操作，直接返回
+            break;
+        case OPS_TIMEOUT:
+            //超时
+            errorMessage = (tr("Operation timeout"));
+            break;;
+        }
         break;
     }
+    case DBUS_RESULT_DEVICEBUSY:
+        //设备忙
+        errorMessage = (tr("Device is busy"));
+        break;
+    case DBUS_RESULT_NOSUCHDEVICE:
+        //设备不存在
+        errorMessage = (tr("No such device"));
+        break;
+    case DBUS_RESULT_PERMISSIONDENIED:
+        //没有权限
+        errorMessage = (tr("Permission denied"));
+        break;
+    }
+    return errorMessage;
 }
+

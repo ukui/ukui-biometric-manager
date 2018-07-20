@@ -44,6 +44,9 @@ private:
 	void updateButtonUsefulness();
     FeatureInfo *createNewFeatureInfo();
     QString inputFeatureName(bool isNew);
+    QString getErrorMessage(int, int);
+
+    enum{DELETE, CLEAN, RENAME};
 
 public:
     void setDeviceAvailable(int deviceAvailable);
