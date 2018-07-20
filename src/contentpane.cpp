@@ -299,6 +299,7 @@ void ContentPane::on_btnDelete_clicked()
         type = MessageDialog::Normal;
     } else {
         type = MessageDialog::Error;
+        resultMessage = errMsg;
     }
     MessageDialog msgDialog(type);
     msgDialog.setTitle(tr("Delete Result"));
@@ -346,6 +347,9 @@ void ContentPane::on_btnVerify_clicked()
     int verifyIndex, uid;
 
     currentModelIndex = ui->treeView->selectionModel()->currentIndex();
+    if(!currentModelIndex.isValid())
+        return;
+
     verifyIndex = currentModelIndex.data(Qt::UserRole).toInt();
     uid = currentModelIndex.data(TreeModel::UidRole).toInt();
 
