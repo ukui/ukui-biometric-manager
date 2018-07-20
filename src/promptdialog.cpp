@@ -137,6 +137,21 @@ QString PromptDialog::getGif(int type)
     return QString();
 }
 
+QString PromptDialog::getImage(int type)
+{
+    switch(type) {
+    case BIOTYPE_FINGERPRINT:
+        return ":/images/assets/fingerprint.png";
+    case BIOTYPE_FINGERVEIN:
+        return ":/images/assets/fingervein.png";
+    case BIOTYPE_IRIS:
+        return ":/images/assets/iris.png";
+    case BIOTYPE_VOICEPRINT:
+        return ":/images/assets/voiceprint.png";
+    }
+    return QString();
+}
+
 
 int PromptDialog::enroll(int drvId, int uid, int idx, const QString &idxName)
 {
@@ -181,6 +196,7 @@ void PromptDialog::enrollCallBack(const QDBusMessage &reply)
         break;
     }
     ops = IDLE;
+    showClosePrompt();
 }
 
 int PromptDialog::verify(int drvId, int uid, int idx)
@@ -215,6 +231,7 @@ void PromptDialog::verifyCallBack(const QDBusMessage &reply)
     }
 
     ops = IDLE;
+    showClosePrompt();
 }
 
 int PromptDialog::search(int drvId, int uid, int idxStart, int idxEnd)
@@ -260,6 +277,8 @@ void PromptDialog::searchCallBack(const QDBusMessage &reply)
         setPrompt(tr("No matching features Found"));
     else
         handleErrorResult(result);
+
+    ui->lblImage->setPixmap(getImage(type));
 }
 
 void PromptDialog::StopOpsCallBack(const QDBusMessage &reply)
@@ -373,4 +392,15 @@ void PromptDialog::setFailed()
     default:
         break;
     }
+}
+
+
+void PromptDialog::showClosePrompt()
+{
+    ui->lblImage->setPixmap(getImage(type));
+    QString prompt = QString("<font size = '4'>%1</font>").arg(ui->lblPrompt->text()) + "<br>" +
+            tr("<font size='2'>the window will be closed after two second</font>");
+    setPrompt(prompt);
+
+    QTimer::singleShot(2000, this, [&]{accept();});
 }

@@ -573,8 +573,8 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="69"/>
         <location filename="../src/mainwindow.cpp" line="89"/>
-        <location filename="../src/mainwindow.cpp" line="570"/>
-        <location filename="../src/mainwindow.cpp" line="593"/>
+        <location filename="../src/mainwindow.cpp" line="590"/>
+        <location filename="../src/mainwindow.cpp" line="611"/>
         <source>Fatal Error</source>
         <translation>错误</translation>
     </message>
@@ -604,32 +604,34 @@
         <translation>当前没有可用的生物识别设备，或者当前用户没有录入任何特征。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="482"/>
+        <location filename="../src/mainwindow.cpp" line="497"/>
         <source>Device Name</source>
         <translation>设备名称</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="482"/>
+        <location filename="../src/mainwindow.cpp" line="497"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="571"/>
+        <location filename="../src/mainwindow.cpp" line="591"/>
         <source>Fail to change device status</source>
         <translation>更该设备状态失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="594"/>
+        <location filename="../src/mainwindow.cpp" line="612"/>
         <source>Device is not connected</source>
         <translation>设备未连接</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Warnning</source>
-        <translation type="vanished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="472"/>
         <source>There is no available device or no features enrolled</source>
-        <translation type="vanished">没有可用设备或者没有录入特征</translation>
+        <translation>没有可用设备或者没有录入特征</translation>
     </message>
 </context>
 <context>
@@ -665,111 +667,120 @@
     <message>
         <location filename="../src/promptdialog.cpp" line="52"/>
         <source>Enroll</source>
-        <translation type="unfinished">录入</translation>
+        <translation>录入</translation>
     </message>
     <message>
         <location filename="../src/promptdialog.cpp" line="55"/>
         <source>Verify</source>
-        <translation type="unfinished">验证</translation>
+        <translation>验证</translation>
     </message>
     <message>
         <location filename="../src/promptdialog.cpp" line="58"/>
         <source>Search</source>
-        <translation type="unfinished">搜索</translation>
+        <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="83"/>
+        <location filename="../src/promptdialog.cpp" line="92"/>
         <source>In progress, please wait...</source>
-        <translation type="unfinished">操作中，请稍后...</translation>
+        <translation>操作中，请稍后...</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="95"/>
-        <location filename="../src/promptdialog.cpp" line="97"/>
+        <location filename="../src/promptdialog.cpp" line="104"/>
+        <location filename="../src/promptdialog.cpp" line="106"/>
         <source>Index</source>
         <translation>序列号</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="95"/>
+        <location filename="../src/promptdialog.cpp" line="104"/>
         <source>UserName</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="95"/>
-        <location filename="../src/promptdialog.cpp" line="97"/>
+        <location filename="../src/promptdialog.cpp" line="104"/>
+        <location filename="../src/promptdialog.cpp" line="106"/>
         <source>FeatureName</source>
         <translation>特征名称</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="138"/>
+        <location filename="../src/promptdialog.cpp" line="162"/>
         <source>Permission is required.
 Please authenticate yourself to continue</source>
-        <translation type="unfinished"></translation>
+        <translation>需要授权！请先进行认证以继续操作</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="163"/>
-        <location filename="../src/promptdialog.cpp" line="198"/>
+        <location filename="../src/promptdialog.cpp" line="190"/>
         <source>Enroll successfully</source>
-        <translation type="unfinished">录入成功</translation>
+        <translation>录入成功</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="200"/>
+        <location filename="../src/promptdialog.cpp" line="226"/>
+        <source>Verify successfully</source>
+        <translation>验证成功</translation>
+    </message>
+    <message>
+        <location filename="../src/promptdialog.cpp" line="228"/>
         <source>Not Match</source>
-        <translation type="unfinished">不匹配</translation>
+        <translation>不匹配</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="232"/>
+        <location filename="../src/promptdialog.cpp" line="261"/>
         <source>Search Result</source>
-        <translation type="unfinished">搜索结果</translation>
+        <translation>搜索结果</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="248"/>
+        <location filename="../src/promptdialog.cpp" line="277"/>
         <source>No matching features Found</source>
-        <translation type="unfinished">未搜索到匹配的特征</translation>
+        <translation>未搜索到匹配的特征</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="309"/>
+        <location filename="../src/promptdialog.cpp" line="341"/>
         <source>D-Bus calling error</source>
-        <translation type="unfinished">D-Bus 调用错误</translation>
+        <translation>D-Bus 调用错误</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="321"/>
+        <location filename="../src/promptdialog.cpp" line="353"/>
         <source>Device encounters an error</source>
-        <translation type="unfinished">设备遇到错误</translation>
+        <translation>设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="328"/>
+        <location filename="../src/promptdialog.cpp" line="360"/>
         <source>Operation timeout</source>
-        <translation type="unfinished">操作超时</translation>
+        <translation>操作超时</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="335"/>
+        <location filename="../src/promptdialog.cpp" line="367"/>
         <source>Device is busy</source>
-        <translation type="unfinished">设备忙</translation>
+        <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="339"/>
+        <location filename="../src/promptdialog.cpp" line="371"/>
         <source>No such device</source>
-        <translation type="unfinished">设备不存在</translation>
+        <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="343"/>
+        <location filename="../src/promptdialog.cpp" line="375"/>
         <source>Permission denied</source>
-        <translation type="unfinished">没有权限</translation>
+        <translation>没有权限</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="352"/>
+        <location filename="../src/promptdialog.cpp" line="384"/>
         <source>Failed to enroll</source>
-        <translation type="unfinished">录入失败</translation>
+        <translation>录入失败</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="355"/>
+        <location filename="../src/promptdialog.cpp" line="387"/>
         <source>Failed to match</source>
-        <translation type="unfinished">匹配失败</translation>
+        <translation>匹配失败</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="358"/>
+        <location filename="../src/promptdialog.cpp" line="390"/>
         <source>Not Found</source>
-        <translation type="unfinished">未搜索到</translation>
+        <translation>未搜索到</translation>
+    </message>
+    <message>
+        <location filename="../src/promptdialog.cpp" line="402"/>
+        <source>&lt;font size=&apos;2&apos;&gt;the window will be closed after two second&lt;/font&gt;</source>
+        <translation>&lt;font size=&apos;2&apos;&gt;窗口将在两秒后关闭&lt;/font&gt;</translation>
     </message>
 </context>
 <context>

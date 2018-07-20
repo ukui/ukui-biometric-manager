@@ -34,7 +34,9 @@ protected:
 private:
     void setFailed();
     QString getGif(int type);
+    QString getImage(int type);
     void handleErrorResult(int error);
+    void showClosePrompt();
     void setSearchResult(bool isAdmin, const QList<SearchResult> &searchResultList);
 
 signals:
