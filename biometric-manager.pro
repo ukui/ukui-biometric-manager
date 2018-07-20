@@ -26,18 +26,21 @@ SOURCES += src/main.cpp\
     src/promptdialog.cpp \
     src/contentpane.cpp \
     src/treeitem.cpp \
-    src/treemodel.cpp
+    src/treemodel.cpp \
+    src/inputdialog.cpp
 
 HEADERS  += src/mainwindow.h \
     src/customtype.h \
     src/promptdialog.h \
     src/contentpane.h \
     src/treeitem.h \
-    src/treemodel.h
+    src/treemodel.h \
+    src/inputdialog.h
 
 FORMS    += src/mainwindow.ui \
     src/promptdialog.ui \
-    src/contentpane.ui
+    src/contentpane.ui \
+    src/inputdialog.ui
 
 RESOURCES += \
     assets.qrc

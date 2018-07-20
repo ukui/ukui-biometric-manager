@@ -32,6 +32,7 @@ private slots:
     void on_btnClean_clicked();
     void on_btnStatus_clicked();
     void on_btnDefault_clicked();
+    void on_treeView_doubleClicked(const QModelIndex &);
 
 /* Normal functions */
 private:
@@ -57,7 +58,7 @@ private:
 	/* 用于和远端 DBus 对象交互的代理接口 */
     QDBusInterface *serviceInterface;
 	DeviceInfo *deviceInfo;
-	int selectedUid;
+    int currentUid;
     TreeModel *dataModel;
     int freeIndex; /* 录入时所用的空闲的特征 index */
     QString indexName; /* 录入时用户输入的特征名称 */

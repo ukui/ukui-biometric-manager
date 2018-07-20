@@ -32,3 +32,18 @@ QPushButton:flat{
     background-color: #0078d7;
 }
 
+#btnOK {
+    background-color: #0078d7;
+    font-size: 14px;
+}
+#btnOK::hover {
+    background-color: #308cc6;
+}
+#btnOK::pressed{
+    background-color: #0066b8;
+}
+
+QLineEdit {
+    border: 1px solid #0078d7;
+    font-size: 14px;
+}

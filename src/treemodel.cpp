@@ -123,6 +123,21 @@ QVariant TreeModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
+bool TreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!index.isValid())
+        return false;
+
+    int column = index.column();
+
+    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+    item->setData(column, value);
+
+    Q_EMIT dataChanged(index, index);
+
+    return true;
+}
+
 
 void TreeModel::setupTestData()
 {

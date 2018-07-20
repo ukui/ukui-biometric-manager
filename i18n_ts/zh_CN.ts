@@ -102,7 +102,7 @@
         <translation type="vanished">清空所有</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="180"/>
+        <location filename="../src/contentpane.cpp" line="181"/>
         <source>Feature name</source>
         <translation>特征名称</translation>
     </message>
@@ -119,12 +119,12 @@
         <translation type="vanished">设备可用</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="65"/>
+        <location filename="../src/contentpane.cpp" line="66"/>
         <source>Opened</source>
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="68"/>
+        <location filename="../src/contentpane.cpp" line="69"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
@@ -209,24 +209,34 @@
         <translation type="vanished">列表</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="104"/>
+        <location filename="../src/contentpane.cpp" line="105"/>
         <source>List</source>
         <translation>列表</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="178"/>
+        <location filename="../src/contentpane.cpp" line="179"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="179"/>
+        <location filename="../src/contentpane.cpp" line="180"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="181"/>
+        <location filename="../src/contentpane.cpp" line="182"/>
         <source>Please input a feature name</source>
         <translation>请输入特征名称</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="342"/>
+        <source>Feature Rename</source>
+        <translation>特征重命名</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="343"/>
+        <source>Please input a new name for the feature:</source>
+        <translation>请输入特征的新名称：</translation>
     </message>
     <message>
         <source>Permission is required. Please authenticate yourself to continue</source>
@@ -421,6 +431,24 @@
         <location filename="../src/customtype.cpp" line="148"/>
         <source>Other Identification</source>
         <translation>其他识别</translation>
+    </message>
+</context>
+<context>
+    <name>InputDialog</name>
+    <message>
+        <location filename="../src/inputdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/inputdialog.ui" line="59"/>
+        <source>InputDialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/inputdialog.ui" line="191"/>
+        <source>OK</source>
+        <translation>确认</translation>
     </message>
 </context>
 <context>

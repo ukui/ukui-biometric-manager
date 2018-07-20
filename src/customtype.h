@@ -5,7 +5,7 @@
 
 #define UNUSED(x) (void)x
 
-#define ADMIN_UID 0
+#define ADMIN_UID 1000
 
 enum BioType {
 	BIOTYPE_FINGERPRINT,

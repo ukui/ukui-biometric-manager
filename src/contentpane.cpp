@@ -2,6 +2,7 @@
 #include "ui_contentpane.h"
 #include <QInputDialog>
 #include "promptdialog.h"
+#include "inputdialog.h"
 
 
 #define ICON_SIZE 32
@@ -11,7 +12,7 @@ ContentPane::ContentPane(int uid, DeviceInfo *deviceInfo, QWidget *parent) :
 	QWidget(parent),
     ui(new Ui::ContentPane),
     deviceInfo(deviceInfo),
-    selectedUid(uid),
+    currentUid(uid),
     dataModel(nullptr)
 {
     ui->setupUi(this);
@@ -39,7 +40,7 @@ ContentPane::~ContentPane()
 void ContentPane::setModel()
 {
 	/* 设置 TreeView 的 Model */
-    dataModel = new TreeModel(selectedUid, BioType(deviceInfo->biotype), this);
+    dataModel = new TreeModel(currentUid, BioType(deviceInfo->biotype), this);
     ui->treeView->setModel(dataModel);
 	ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->treeView->setFocusPolicy(Qt::NoFocus);
@@ -139,7 +140,7 @@ void ContentPane::showFeatures()
 	QList<QVariant> args;
 
 	args << QVariant(deviceInfo->device_id)
-        << QVariant((selectedUid == ADMIN_UID ? -1 : selectedUid)) << QVariant(0) << QVariant(-1);
+        << QVariant((currentUid == ADMIN_UID ? -1 : currentUid)) << QVariant(0) << QVariant(-1);
     serviceInterface->callWithCallback("GetFeatureList", args, this,
                         SLOT(showFeaturesCallback(QDBusMessage)),
 						SLOT(errorCallback(QDBusError)));
@@ -185,11 +186,11 @@ void ContentPane::on_btnEnroll_clicked()
     indexName = text;
     /* 录入的特征索引 */
     freeIndex = dataModel->freeIndex();
-    qDebug() << "Enroll: uid--" << selectedUid << " index--" << freeIndex
+    qDebug() << "Enroll: uid--" << currentUid << " index--" << freeIndex
              << " indexName--" << indexName;
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
-                                    deviceInfo->device_id, selectedUid, this);
-    promptDialog->enroll(deviceInfo->device_id, selectedUid, freeIndex, indexName);
+                                    deviceInfo->device_id, currentUid, this);
+    promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
     if(promptDialog->getResult() == PromptDialog::SUCESS) {
         FeatureInfo *featureInfo = createNewFeatureInfo();
@@ -202,7 +203,7 @@ void ContentPane::on_btnEnroll_clicked()
 FeatureInfo *ContentPane::createNewFeatureInfo()
 {
     FeatureInfo *featureInfo = new FeatureInfo;
-    featureInfo->uid = selectedUid;
+    featureInfo->uid = currentUid;
     featureInfo->biotype = deviceInfo->biotype;
     featureInfo->device_shortname = deviceInfo->device_shortname;
     featureInfo->index = freeIndex;
@@ -272,7 +273,7 @@ void ContentPane::on_btnDelete_clicked()
 void ContentPane::on_btnClean_clicked()
 {
     QDBusPendingReply<int> reply = serviceInterface->call("Clean",
-                    deviceInfo->device_id, selectedUid, 0, -1);
+                    deviceInfo->device_id, currentUid, 0, -1);
     reply.waitForFinished();
     if (reply.isError()) {
         qDebug() << "DBUS:" << reply.error();
@@ -291,7 +292,6 @@ void ContentPane::on_btnClean_clicked()
  */
 void ContentPane::on_btnVerify_clicked()
 {
-	QList<QVariant> args;
     QModelIndex currentModelIndex;
     int verifyIndex, uid;
 
@@ -300,7 +300,7 @@ void ContentPane::on_btnVerify_clicked()
     uid = currentModelIndex.data(TreeModel::UidRole).toInt();
 
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
-                                    deviceInfo->device_id, selectedUid, this);
+                                    deviceInfo->device_id, currentUid, this);
     promptDialog->verify(deviceInfo->device_id, uid, verifyIndex);
 
     delete promptDialog;
@@ -313,8 +313,50 @@ void ContentPane::on_btnVerify_clicked()
 void ContentPane::on_btnSearch_clicked()
 {
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
-                                    deviceInfo->device_id, selectedUid, this);
-    promptDialog->search(deviceInfo->device_id, selectedUid, 0, -1);
+                                    deviceInfo->device_id, currentUid, this);
+    promptDialog->search(deviceInfo->device_id, currentUid, 0, -1);
 
     delete promptDialog;
+}
+
+/**
+ * @brief 双击重命名
+ */
+void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
+{
+    int column = index.column();
+
+    if(currentUid == ADMIN_UID) {
+        if(column != 2)     //管理员模式双击第三列（特征名称列）重命名
+            return;
+    } else {
+        if(column != 1)     //非管理员模式双击第二列
+            return;
+    }
+
+    int idx = index.data(TreeModel::IndexRole).toInt();
+    int uid = index.data(TreeModel::UidRole).toInt();
+    QString idxName = index.data().toString();
+    qDebug() << idx << idxName;
+    InputDialog *inputDialog = new InputDialog(this);
+    inputDialog->setTitle(tr("Feature Rename"));
+    inputDialog->setPrompt(tr("Please input a new name for the feature:"));
+    inputDialog->setText(idxName);
+    if(inputDialog->exec() == QDialog::Rejected) {
+        qDebug() << "cancel Rename";
+        return;
+    }
+
+    QString newName = inputDialog->getText();
+    qDebug() << newName;
+
+    QDBusReply<int> result = serviceInterface->call("Rename", deviceInfo->device_id,
+                                                    uid, idx, newName);
+    switch(result) {
+    case DBUS_RESULT_SUCCESS:
+        dataModel->setData(index, newName);
+        break;
+    }
+
+    delete inputDialog;
 }
