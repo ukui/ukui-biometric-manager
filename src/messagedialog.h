@@ -16,7 +16,7 @@ public:
     ~MessageDialog();
     void setTitle(const QString &text);
     void setMessage(const QString &text);
-    enum{Normal, Error};
+    enum{Normal, Error, Question};
 
 private:
     Ui::MessageDialog *ui;

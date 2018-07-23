@@ -34,14 +34,15 @@ QPushButton:flat{
 }
 
 
-#btnOK {
-    background-color: #0078d7;
+#btnOK, #btnCancel {
     font-size: 14px;
+    background-color: #e1f1fe;
+    border: 1px solid #65b0eb;
 }
-#btnOK::hover {
+#btnOK::hover, #btnCancel::hover {
     background-color: #308cc6;
 }
-#btnOK::pressed{
+#btnOK::pressed, #btnCancel::pressed{
     background-color: #0066b8;
 }
 

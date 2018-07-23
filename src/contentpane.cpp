@@ -242,6 +242,23 @@ void ContentPane::errorCallback(QDBusError error)
     qDebug() << "DBUS:" << error.message();
 }
 
+bool ContentPane::confirmDelete(bool all)
+{
+    QString text, title;
+    if(all) {
+        text = tr("Confirm whether clean all the features?");
+        title = tr("Confirm Clean");
+    }
+    else {
+        text = tr("Confirm whether delete the features selected?");
+        title = tr("Confirm Delete");
+    }
+    MessageDialog dialog(MessageDialog::Question);
+    dialog.setTitle(title);
+    dialog.setMessage(text);
+    return dialog.exec() == QDialog::Accepted;
+}
+
 
 /**
  * @brief 删除生物特征
@@ -249,6 +266,10 @@ void ContentPane::errorCallback(QDBusError error)
 void ContentPane::on_btnDelete_clicked()
 {
     QModelIndexList selectedIndexList = ui->treeView->selectionModel()->selectedRows(0);
+    if(selectedIndexList.size() <= 0)
+        return;
+    if(!confirmDelete(false))
+        return;
 
     auto bound = std::stable_partition(selectedIndexList.begin(), selectedIndexList.end(),
                           [&](const QModelIndex &index){return index.parent() != QModelIndex();});
@@ -312,6 +333,9 @@ void ContentPane::on_btnDelete_clicked()
  */
 void ContentPane::on_btnClean_clicked()
 {
+    if(!confirmDelete(true))
+        return;
+
     QDBusPendingReply<int> reply = serviceInterface->call("Clean",
                     deviceInfo->device_id, currentUid, 0, -1);
     reply.waitForFinished();

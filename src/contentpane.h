@@ -45,6 +45,7 @@ private:
     FeatureInfo *createNewFeatureInfo();
     QString inputFeatureName(bool isNew);
     QString getErrorMessage(int, int);
+    bool confirmDelete(bool all);
 
     enum{DELETE, CLEAN, RENAME};
 

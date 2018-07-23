@@ -9,8 +9,15 @@ MessageDialog::MessageDialog(int type, QWidget *parent) :
     ui->setupUi(this);
     setWindowFlag(Qt::FramelessWindowHint);
 
+    ui->btnOK->hide();
+    ui->btnCancel->hide();
+
     if(type == Error)
         ui->lblMessage->setStyleSheet("color:red");
+    else if(type == Question){
+        ui->btnOK->show();
+        ui->btnCancel->show();
+    }
 
     QFile qssFile(":/css/assets/promptdialog.qss");
     qssFile.open(QFile::ReadOnly);
@@ -21,6 +28,8 @@ MessageDialog::MessageDialog(int type, QWidget *parent) :
     ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
 
     connect(ui->btnClose, &QPushButton::clicked, this, &MessageDialog::close);
+    connect(ui->btnOK, &QPushButton::clicked, this, &MessageDialog::accept);
+    connect(ui->btnCancel, &QPushButton::clicked, this, &MessageDialog::reject);
 }
 
 MessageDialog::~MessageDialog()

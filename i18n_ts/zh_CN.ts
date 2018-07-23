@@ -153,47 +153,67 @@
         <translation>空的特征名称</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="298"/>
+        <location filename="../src/contentpane.cpp" line="249"/>
+        <source>Confirm whether clean all the features?</source>
+        <translation>确认是否清除所有特征？</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="250"/>
+        <source>Confirm Clean</source>
+        <translation>确认清空</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="253"/>
+        <source>Confirm whether delete the features selected?</source>
+        <translation>确认是否删除选中的特征？</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="254"/>
+        <source>Confirm Delete</source>
+        <translation>确认删除</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="319"/>
         <source>Delete all selected features successfully</source>
         <translation>所有选择的特征删除成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="304"/>
+        <location filename="../src/contentpane.cpp" line="325"/>
         <source>Delete Result</source>
         <translation>删除结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="328"/>
+        <location filename="../src/contentpane.cpp" line="352"/>
         <source>Clean Successfully</source>
         <translation>清空成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="335"/>
+        <location filename="../src/contentpane.cpp" line="359"/>
         <source>Clean Result</source>
         <translation>清空结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="404"/>
+        <location filename="../src/contentpane.cpp" line="431"/>
         <source>Rename Successfully</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="411"/>
+        <location filename="../src/contentpane.cpp" line="438"/>
         <source>Rename Result</source>
         <translation>重命名结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="438"/>
+        <location filename="../src/contentpane.cpp" line="465"/>
         <source>Delete Failed</source>
         <translation>删除失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="441"/>
+        <location filename="../src/contentpane.cpp" line="468"/>
         <source>Clean Failed</source>
         <translation>清空失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="444"/>
+        <location filename="../src/contentpane.cpp" line="471"/>
         <source>Rename Failed</source>
         <translation>重命名失败</translation>
     </message>
@@ -312,7 +332,7 @@
         <translation type="vanished">录入成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="428"/>
+        <location filename="../src/contentpane.cpp" line="455"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus 调用错误</translation>
     </message>
@@ -321,27 +341,27 @@
         <translation type="vanished">录入失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="450"/>
+        <location filename="../src/contentpane.cpp" line="477"/>
         <source>Device encounters an error</source>
         <translation>设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="457"/>
+        <location filename="../src/contentpane.cpp" line="484"/>
         <source>Operation timeout</source>
         <translation>操作超时</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="464"/>
+        <location filename="../src/contentpane.cpp" line="491"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="468"/>
+        <location filename="../src/contentpane.cpp" line="495"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="472"/>
+        <location filename="../src/contentpane.cpp" line="499"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
@@ -744,6 +764,16 @@
         <location filename="../src/messagedialog.ui" line="62"/>
         <source>MessageDialog</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/messagedialog.ui" line="196"/>
+        <source>OK</source>
+        <translation type="unfinished">确认</translation>
+    </message>
+    <message>
+        <location filename="../src/messagedialog.ui" line="209"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
     </message>
 </context>
 <context>
