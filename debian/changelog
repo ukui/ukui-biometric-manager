@@ -1,3 +1,16 @@
+biometric-manager (1.5~rc4) juniper; urgency=medium
+
+  * [New] 增加特征重命名功能
+  * [Fixed] 修复验证成功的提示
+  * [Fixed] 修复无法点击提示窗口的关闭按钮时，能通过Esc关闭
+  * [Improved] 录入或验证结束后两秒自动关闭窗口
+  * [Improved] 增加限制，录入或者特征重命名时不允许特征名重复
+  * [Improved] 增加信息显示窗口，显示删除、清空、重命名的操作结果
+  * [Fixed] 对验证操作添加过滤，修复没有选中特征也会执行验证操作的问题
+  * [Improved] 对删除和清空操作增加二次确认
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 26 Jul 2018 14:03:49 +0800
+
 biometric-manager (1.5~rc3) juniper; urgency=medium
 
   * [Fixed] 修复录入完成之后无法点击关闭按钮的问题
