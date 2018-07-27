@@ -7,7 +7,7 @@ MessageDialog::MessageDialog(int type, QWidget *parent) :
     ui(new Ui::MessageDialog)
 {
     ui->setupUi(this);
-    setWindowFlag(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     ui->btnOK->hide();
     ui->btnCancel->hide();

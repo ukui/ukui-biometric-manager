@@ -7,7 +7,7 @@ InputDialog::InputDialog(QWidget *parent) :
     ui(new Ui::InputDialog)
 {
     ui->setupUi(this);
-    setWindowFlag(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     QFile qssFile(":/css/assets/promptdialog.qss");
     qssFile.open(QFile::ReadOnly);
