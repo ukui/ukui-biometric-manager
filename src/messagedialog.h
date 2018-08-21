@@ -12,7 +12,8 @@ class MessageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit MessageDialog(int type = Normal, QWidget *parent = 0);
+    explicit MessageDialog(int type = Normal, const QString &title = "",
+                           const QString &msg = "", QWidget *parent = 0);
     ~MessageDialog();
     void setTitle(const QString &text);
     void setMessage(const QString &text);

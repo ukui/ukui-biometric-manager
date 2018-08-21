@@ -2,22 +2,23 @@
 #include "ui_messagedialog.h"
 #include <QFile>
 
-MessageDialog::MessageDialog(int type, QWidget *parent) :
+MessageDialog::MessageDialog(int type, const QString &title, const QString &msg, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MessageDialog)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
-    ui->btnOK->hide();
     ui->btnCancel->hide();
 
     if(type == Error)
         ui->lblMessage->setStyleSheet("color:red");
-    else if(type == Question){
-        ui->btnOK->show();
+    else if(type == Question)
         ui->btnCancel->show();
-    }
+
+    setTitle(title);
+    setMessage(msg);
+
 
     QFile qssFile(":/css/assets/promptdialog.qss");
     qssFile.open(QFile::ReadOnly);

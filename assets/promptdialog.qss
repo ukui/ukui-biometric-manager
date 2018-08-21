@@ -35,9 +35,12 @@ QPushButton:flat{
 
 
 #btnOK, #btnCancel {
+
+    border: 1px solid #65b0eb;
+}
+#btnOK::focus, #btnCancel::focus {
     font-size: 14px;
     background-color: #e1f1fe;
-    border: 1px solid #65b0eb;
 }
 #btnOK::hover, #btnCancel::hover {
     background-color: #308cc6;

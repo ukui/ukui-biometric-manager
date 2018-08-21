@@ -66,11 +66,10 @@ void MainWindow::checkServiceExist()
     QDBusReply<QStringList> reply = iface.call("ListNames");
     bool serviceExist = reply.value().contains("cn.kylinos.Biometric");
     if(!serviceExist) {
-        QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+        MessageDialog msgDialog(MessageDialog::Error,
                             tr("Fatal Error"),
-                            tr("the biometric-authentication service was not started"),
-                            QMessageBox::Ok);
-        messageBox->exec();
+                            tr("the biometric-authentication service was not started"));
+        msgDialog.exec();
         QTimer::singleShot(0, qApp, &QCoreApplication::quit);
     }
 }
@@ -86,11 +85,10 @@ void MainWindow::checkAPICompatibility()
 	}
 	int result = reply.argumentAt(0).value<int>();
 	if (result != 0) {
-		QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+        MessageDialog msgDialog(MessageDialog::Error,
 							tr("Fatal Error"),
-							tr("API version is not compatible"),
-							QMessageBox::Ok);
-		messageBox->exec();
+                            tr("API version is not compatible"));
+        msgDialog.exec();
 		/* https://stackoverflow.com/a/31081379/4112667 */
 		QTimer::singleShot(0, qApp, &QCoreApplication::quit);
 	}
@@ -468,11 +466,10 @@ void MainWindow::on_btnStatus_clicked()
         }
         qDebug() << "FeatureCount: " << featuresCount;
         if(featuresCount <= 0){
-            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning,
+            MessageDialog msgDialog(MessageDialog::Error,
                             tr("Warnning"),
-                            tr("There is no available device or no features enrolled"),
-                            QMessageBox::Ok);
-            messageBox->exec();
+                            tr("There is no available device or no features enrolled"));
+            msgDialog.exec();
             return;
         }
     }
@@ -585,19 +582,18 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
         process.waitForFinished();
     }
     if (process.exitCode() != 0) {
-        QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
+        MessageDialog msgDialog(MessageDialog::Error,
                             tr("Fatal Error"),
-                            tr("Fail to change device status"),
-                            QMessageBox::Ok);
-        messageBox->exec();
+                            tr("Fail to change device status"));
+        msgDialog.exec();
         return false;
     }
-    MessageDialog msgDialog(MessageDialog::Question);
-    msgDialog.setTitle(tr("Restart Service"));
+    MessageDialog msgDialog(MessageDialog::Question,
+                            tr("Restart Service"),
+                            tr("The configuration has been modified. "
+                               "Restart the service immediately to make it effecitve?"));
     msgDialog.setOkText(tr("  Restart immediately  "));
     msgDialog.setCancelText(tr("  Restart later  "));
-    msgDialog.setMessage(tr("The configuration has been modified. "
-                            "Restart the service immediately to make it effecitve?"));
     int status = msgDialog.exec();
     if(status == MessageDialog::Rejected) {
         return false;
@@ -630,9 +626,9 @@ updateStatus:
         deviceInfo->device_available = reply.arguments().at(2).toInt();
 
         if(result == DBUS_RESULT_NOSUCHDEVICE){
-            MessageDialog msgDialog(MessageDialog::Error);
-            msgDialog.setTitle(tr("Error"));
-            msgDialog.setMessage(tr("Device is not connected"));
+            MessageDialog msgDialog(MessageDialog::Error,
+                                    tr("Error"),
+                                    tr("Device is not connected"));
             msgDialog.exec();
             return false;
         }
