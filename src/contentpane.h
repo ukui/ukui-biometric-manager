@@ -37,7 +37,6 @@ private slots:
 /* Normal functions */
 private:
 	void showDeviceInfo();
-    void showFeatures();
 	bool deviceIsAvailable();
 	void setModel();
 	void updateWidgetStatus();
@@ -52,6 +51,7 @@ private:
 public:
     void setDeviceAvailable(int deviceAvailable);
     int featuresCount();
+    void showFeatures();
 
 /* DBus */
 private slots:

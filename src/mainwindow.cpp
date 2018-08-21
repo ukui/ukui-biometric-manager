@@ -638,7 +638,10 @@ updateStatus:
         deviceInfo->device_available = 0;
     }
 
-    contentPaneMap[deviceInfo->device_shortname]->setDeviceAvailable(deviceInfo->device_available);
+    ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
+    contentPane->setDeviceAvailable(deviceInfo->device_available);
+    contentPane->showFeatures();
+
     QString deviceStatusObjName(deviceInfo->device_shortname + "_" +
                                 QString::number(bioTypeToIndex(deviceInfo->biotype)));
     QPushButton *deviceStatus = findChild<QPushButton*>(deviceStatusObjName);
