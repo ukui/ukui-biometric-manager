@@ -490,9 +490,10 @@ void MainWindow::on_btnStatus_clicked()
 
 void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
 {
-    int deviceType = currentRow;
+    int deviceType = (currentRow);
     QStringList headerData;
     headerData << "    " + tr("Device Name") << tr("Status") << "    " + tr("Device Name") << tr("Status");
+
     ui->tableWidgetDevices->clear();
     ui->tableWidgetDevices->setRowCount(0);
     ui->tableWidgetDevices->setColumnCount(4);
@@ -522,6 +523,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             }
             QPushButton *item_status = new QPushButton(this);
             item_status->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
+            qDebug() << item_status->objectName();
             item_status->setFixedSize(40, 20);
             if(deviceInfo->device_available > 0)
                 item_status->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
@@ -637,7 +639,8 @@ updateStatus:
     }
 
     contentPaneMap[deviceInfo->device_shortname]->setDeviceAvailable(deviceInfo->device_available);
-    QString deviceStatusObjName(deviceInfo->device_shortname + "_" + QString::number(deviceInfo->biotype));
+    QString deviceStatusObjName(deviceInfo->device_shortname + "_" +
+                                QString::number(bioTypeToIndex(deviceInfo->biotype)));
     QPushButton *deviceStatus = findChild<QPushButton*>(deviceStatusObjName);
     if(deviceInfo->device_available > 0)
         deviceStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
