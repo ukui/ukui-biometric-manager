@@ -16,6 +16,8 @@ public:
     ~MessageDialog();
     void setTitle(const QString &text);
     void setMessage(const QString &text);
+    void setOkText(const QString &text);
+    void setCancelText(const QString &text);
     enum{Normal, Error, Question};
 
 private:

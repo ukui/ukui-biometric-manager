@@ -11,6 +11,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <pwd.h>
+#include "messagedialog.h"
 
 #define ICON_SIZE 32
 
@@ -570,17 +571,15 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
     QString cmd;
     if (toEnable) {
         qDebug() << "enable" << deviceInfo->device_shortname;
-        cmd = "pkexec sh -c \"biometric-config-tool enable-driver "
-                + deviceInfo->device_shortname
-                + " && systemctl restart biometric-authentication.service\"";
+        cmd = "pkexec biometric-config-tool enable-driver "
+                + deviceInfo->device_shortname;
         qDebug() << cmd;
         process.start(cmd);
         process.waitForFinished();
     } else {
         qDebug() << "disable" << deviceInfo->device_shortname;
-        cmd = "pkexec sh -c \"biometric-config-tool disable-driver "
-                + deviceInfo->device_shortname
-                + " && systemctl restart biometric-authentication.service\"";
+        cmd = "pkexec biometric-config-tool disable-driver "
+                + deviceInfo->device_shortname;
         qDebug() << cmd;
         process.start(cmd);
         process.waitForFinished();
@@ -593,6 +592,20 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
         messageBox->exec();
         return false;
     }
+    MessageDialog msgDialog(MessageDialog::Question);
+    msgDialog.setTitle(tr("Restart Service"));
+    msgDialog.setOkText(tr("  Restart immediately  "));
+    msgDialog.setCancelText(tr("  Restart later  "));
+    msgDialog.setMessage(tr("The configuration has been modified. "
+                            "Restart the service immediately to make it effecitve?"));
+    int status = msgDialog.exec();
+    if(status == MessageDialog::Rejected) {
+        return false;
+    } else {
+        if(!restartService())
+            return false;
+    }
+
 
     /*
      * There is a condition that the driver is enabled while the device is
@@ -602,16 +615,25 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
      * don't need to query device info from DBus.
      */
     if(toEnable) {
+updateStatus:
         QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+        if(reply.type() == QDBusMessage::ErrorMessage)
+            qDebug() << "UpdateStatus error: " << reply.errorMessage();
+
+        //等待服务重启后DBus启动
+        if(reply.arguments().length() < 3) {
+            usleep(200000);
+            goto updateStatus;
+        }
+
         int result = reply.arguments().at(0).toInt();
         deviceInfo->device_available = reply.arguments().at(2).toInt();
 
         if(result == DBUS_RESULT_NOSUCHDEVICE){
-            QMessageBox *messageBox = new QMessageBox(QMessageBox::Critical,
-                            tr("Fatal Error"),
-                            tr("Device is not connected"),
-                            QMessageBox::Ok);
-            messageBox->exec();
+            MessageDialog msgDialog(MessageDialog::Error);
+            msgDialog.setTitle(tr("Error"));
+            msgDialog.setMessage(tr("Device is not connected"));
+            msgDialog.exec();
             return false;
         }
     } else {
@@ -626,6 +648,20 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
     else
         deviceStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
 
+    return true;
+}
+
+bool MainWindow::restartService()
+{
+    QDBusInterface interface("org.freedesktop.systemd1",
+                             "/org/freedesktop/systemd1",
+                             "org.freedesktop.systemd1.Manager",
+                             QDBusConnection::systemBus());
+    QDBusReply<QDBusObjectPath> msg = interface.call("RestartUnit", "biometric-authentication.service", "replace");
+    if(!msg.isValid()) {
+        qDebug() << "restart service: " << msg.error();
+        return false;
+    }
     return true;
 }
 

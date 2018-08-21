@@ -54,6 +54,7 @@ private:
     void changeBtnColor(QPushButton *btn);
     void setVerificationStatus(bool status);
     int bioTypeToIndex(int type);
+    bool restartService();
 
 
 

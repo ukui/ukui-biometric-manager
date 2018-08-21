@@ -45,4 +45,16 @@ void MessageDialog::setTitle(const QString &text)
 void MessageDialog::setMessage(const QString &text)
 {
     ui->lblMessage->setText(text);
+    ui->lblMessage->adjustSize();
+    ui->lblMessage->setWordWrap(true);
+}
+
+void MessageDialog::setOkText(const QString &text)
+{
+    ui->btnOK->setText(text);
+}
+
+void MessageDialog::setCancelText(const QString &text)
+{
+    ui->btnCancel->setText(text);
 }
