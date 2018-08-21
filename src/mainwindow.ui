@@ -514,23 +514,20 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="lblTypeListHeader">
-            <property name="minimumSize">
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>146</width>
-              <height>36</height>
+              <width>20</width>
+              <height>20</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>146</width>
-              <height>36</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>     Devices Type</string>
-            </property>
-           </widget>
+           </spacer>
           </item>
           <item>
            <widget class="QListWidget" name="listWidgetDevicesType">
