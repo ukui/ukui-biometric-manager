@@ -1,17 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDBusArgument>
-#include "customtype.h"
 #include <QFile>
 #include <QProcessEnvironment>
-#include "contentpane.h"
-#include <unistd.h>
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QMenu>
+#include <unistd.h>
 #include <pwd.h>
+#include "contentpane.h"
+#include "customtype.h"
 #include "messagedialog.h"
+
 
 #define ICON_SIZE 32
 
@@ -20,7 +22,8 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	ui(new Ui::MainWindow),
     username(usernameFromCmd),
     verificationStatus(false),
-    dragWindow(false)
+    dragWindow(false),
+    menu(nullptr)
 {
     checkServiceExist();
 
@@ -116,6 +119,7 @@ void MainWindow::prettify()
     ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
     ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
     ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
 }
 
 QPixmap *MainWindow::getUserAvatar(QString username)
@@ -319,19 +323,8 @@ void MainWindow::getDeviceInfo()
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
         deviceInfosMap[bioTypeToIndex(deviceInfo->biotype)].append(deviceInfo);
 
-        qDebug() << deviceInfo->biotype << deviceInfo->device_shortname;
+        qDebug() << deviceInfo->biotype << deviceInfo->device_shortname << deviceInfo->device_available;
 	}
-    //只有在第一次初始化时将开启的设备放在前面，后面不会再改变顺序
-    static bool isFirst = true;
-    if(isFirst) {
-        for(int i = 0; i< __MAX_NR_BIOTYPES; i++) {
-            std::stable_partition(deviceInfosMap[i].begin(), deviceInfosMap[i].end(),
-                                  [&](const DeviceInfo *deviceInfo){
-                return deviceInfo->device_available > 0;
-            });
-        }
-        isFirst = false;
-    }
 }
 
 void MainWindow::addContentPane(DeviceInfo *deviceInfo)
@@ -371,6 +364,8 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
     connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
     connect(contentPane, &ContentPane::changeDeviceStatus, this, &MainWindow::changeDeviceStatus);
 }
+
+
 
 #define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
@@ -523,7 +518,6 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             }
             QPushButton *item_status = new QPushButton(this);
             item_status->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
-            qDebug() << item_status->objectName();
             item_status->setFixedSize(40, 20);
             if(deviceInfo->device_available > 0)
                 item_status->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
@@ -604,6 +598,7 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
             return false;
     }
 
+    updateDevice();
 
     /*
      * There is a condition that the driver is enabled while the device is
@@ -638,18 +633,6 @@ updateStatus:
         deviceInfo->device_available = 0;
     }
 
-    ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
-    contentPane->setDeviceAvailable(deviceInfo->device_available);
-    contentPane->showFeatures();
-
-    QString deviceStatusObjName(deviceInfo->device_shortname + "_" +
-                                QString::number(bioTypeToIndex(deviceInfo->biotype)));
-    QPushButton *deviceStatus = findChild<QPushButton*>(deviceStatusObjName);
-    if(deviceInfo->device_available > 0)
-        deviceStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
-    else
-        deviceStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
-
     return true;
 }
 
@@ -665,6 +648,55 @@ bool MainWindow::restartService()
         return false;
     }
     return true;
+}
+
+void MainWindow::updateDeviceListWidget(int biotype)
+{
+    QListWidget *lw = nullptr;
+
+    switch(biotype) {
+    case BIOTYPE_FINGERPRINT:
+        lw = ui->listWidgetFingerPrint;
+        break;
+    case BIOTYPE_FINGERVEIN:
+        lw = ui->listWidgetFingerVein;
+        break;
+    case BIOTYPE_IRIS:
+        lw = ui->listWidgetIris;
+        break;
+    case BIOTYPE_VOICEPRINT:
+        lw = ui->listWidgetVoicePrint;
+        break;
+    }
+    if(!lw) return;
+
+    for(int row = 0; row < lw->count(); row++)
+    {
+        QListWidgetItem *item = lw->item(row);
+        QList<DeviceInfo *> list = deviceInfosMap[bioTypeToIndex(biotype)];
+        auto iter = std::find_if(list.begin(), list.end(),
+                              [&](DeviceInfo *deviceInfo){
+                return deviceInfo->device_shortname == item->text(); });
+
+        item->setTextColor((*iter)->device_available ? Qt::black : Qt::gray);
+    }
+}
+
+void MainWindow::updateDevice()
+{
+    setCursor(Qt::WaitCursor);
+    sleep(3);   //wait for service restart and dbus is ready
+    getDeviceInfo();
+    on_listWidgetDevicesType_currentRowChanged(0);
+    for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
+        for(auto deviceInfo : deviceInfosMap[i]){
+            ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
+            contentPane->setDeviceAvailable(deviceInfo->device_available);
+            contentPane->showFeatures();
+        }
+        updateDeviceListWidget(i);
+    }
+    setCursor(Qt::ArrowCursor);
 }
 
 void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
@@ -697,4 +729,22 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
         }
         lw->setCurrentRow(index);
     }
+}
+
+void MainWindow::on_btnMenu_clicked()
+{
+    if(!menu) {
+        menu = new QMenu(this);
+        QAction *serviceStatusAction = new QAction(QIcon(":/images/assets/restart_service.png"),
+                                                   tr("Restart Service"), this);
+        connect(serviceStatusAction, &QAction::triggered, this, [&]{
+            if(restartService())
+                updateDevice();
+        });
+
+        menu->addActions({serviceStatusAction});
+    }
+
+    QRect rect = ui->btnMenu->geometry();
+    menu->popup(QPoint(rect.left(), rect.bottom()+40));
 }

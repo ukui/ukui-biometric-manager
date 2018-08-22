@@ -37,8 +37,8 @@ private slots:
 
     void onDeviceStatusClicked();
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
+    void on_btnMenu_clicked();
 
-/* Normal functions */
 private:
     void checkServiceExist();
 	void checkAPICompatibility();
@@ -55,6 +55,8 @@ private:
     void setVerificationStatus(bool status);
     int bioTypeToIndex(int type);
     bool restartService();
+    void updateDevice();
+    void updateDeviceListWidget(int biotype);
 
 
 
@@ -74,6 +76,8 @@ private:
     //for window move
     QPoint dragPos;
     bool dragWindow;
+
+    QMenu *menu;
 };
 
 #endif // MAINWINDOW_H

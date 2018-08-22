@@ -29,14 +29,14 @@ QPushButton:flat{
 }
 
 
-#btnMin, #btnClose{
+#btnMin, #btnClose, #btnMenu{
     background-color:#0078d7;
     icon-size:27px, 27px;
 }
-#btnMin::hover {
+#btnMin::hover, #btnMenu::hover {
     background-color: #4da1e3;
 }
-#btnMin::pressed {
+#btnMin::pressed, #btnMenu::hover {
     background-color: #0066b8;
 }
 #btnClose::hover {

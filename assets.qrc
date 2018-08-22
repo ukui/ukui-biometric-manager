@@ -28,6 +28,8 @@
         <file>assets/voiceprint_click.png</file>
         <file>assets/voiceprint.gif</file>
         <file>assets/voiceprint.png</file>
+        <file>assets/menu.png</file>
+        <file>assets/restart_service.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>

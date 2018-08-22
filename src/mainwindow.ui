@@ -89,7 +89,7 @@
      </widget>
     </item>
     <item>
-     <spacer name="horizontalSpacer_2">
+     <spacer name="horizontalSpacer_9">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -98,11 +98,33 @@
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>80</width>
+        <width>50</width>
         <height>20</height>
        </size>
       </property>
      </spacer>
+    </item>
+    <item alignment="Qt::AlignTop">
+     <widget class="QPushButton" name="btnMenu">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </item>
     <item alignment="Qt::AlignHCenter|Qt::AlignTop">
      <widget class="QPushButton" name="btnMin">
@@ -281,8 +303,8 @@
     <rect>
      <x>1</x>
      <y>120</y>
-     <width>921</width>
-     <height>531</height>
+     <width>928</width>
+     <height>528</height>
     </rect>
    </property>
    <property name="styleSheet">

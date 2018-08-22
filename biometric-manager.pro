@@ -30,6 +30,7 @@ SOURCES += src/main.cpp\
     src/inputdialog.cpp \
     src/messagedialog.cpp
 
+
 HEADERS  += src/mainwindow.h \
     src/customtype.h \
     src/promptdialog.h \
@@ -39,11 +40,13 @@ HEADERS  += src/mainwindow.h \
     src/inputdialog.h \
     src/messagedialog.h
 
+
 FORMS    += src/mainwindow.ui \
     src/promptdialog.ui \
     src/contentpane.ui \
     src/inputdialog.ui \
     src/messagedialog.ui
+
 
 RESOURCES += \
     assets.qrc

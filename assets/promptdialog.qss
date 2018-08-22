@@ -1,4 +1,4 @@
-#PromptDialog, #InputDialog, #MessageDialog {
+#PromptDialog, #InputDialog, #MessageDialog, #ServiceDialog {
     background-color: white;
     border: 1px solid #0066b8;
 }
