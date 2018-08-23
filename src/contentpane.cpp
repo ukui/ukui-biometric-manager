@@ -217,12 +217,14 @@ void ContentPane::on_btnEnroll_clicked()
                                     deviceInfo->device_id, currentUid, this);
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
-    if(promptDialog->getResult() == PromptDialog::SUCESS) {
-        FeatureInfo *featureInfo = createNewFeatureInfo();
-        dataModel->appendData(featureInfo);
-        updateButtonUsefulness();
-    }
+//    if(promptDialog->getResult() == PromptDialog::SUCESS) {
+//        FeatureInfo *featureInfo = createNewFeatureInfo();
+//        dataModel->appendData(featureInfo);
+//    }
     delete promptDialog;
+
+    showFeatures();
+    updateButtonUsefulness();
 }
 
 FeatureInfo *ContentPane::createNewFeatureInfo()
@@ -280,7 +282,7 @@ void ContentPane::on_btnDelete_clicked()
     std::sort(selectedIndexList.begin(), bound, cmp);
     std::sort(bound, selectedIndexList.end(), cmp);
 
-    QString errMsg;
+    QStringList resultStrings;
 
     for(auto index : selectedIndexList) {
         int idxStart, idxEnd;
@@ -300,34 +302,27 @@ void ContentPane::on_btnDelete_clicked()
                 deviceInfo->device_id, uid, idxStart, idxEnd);
         reply.waitForFinished();
         if (reply.isError()) {
-            qDebug() << "DBUS:" << reply.error();
+            qWarning() << "DBUS:" << reply.error();
             return;
         }
-        int result = reply.argumentAt(0).value<int>();
-        qDebug() << "delete result: " << result;
 
-        if (result != DBUS_RESULT_SUCCESS) { /* 操作失败，可能是没有权限 */
-            errMsg = getErrorMessage(DELETE, result);
+        QDBusMessage msg = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
+        if(msg.type() == QDBusMessage::ErrorMessage){
+            qWarning() << QString("GetNotifyMesg(%1)").arg(deviceInfo->device_id) << msg.errorMessage();
             continue;
         }
-
-        dataModel->removeRow(index.row(), index.parent(), recursive);
+        QString featureName = index.data(TreeModel::NameRole).toString();
+        QString resultString = featureName + ":    " + msg.arguments().at(0).toString();
+        qDebug() << resultString;
+        resultStrings.append(resultString);
     }
+    showFeatures();
     updateButtonUsefulness();
 
-    QString resultMessage;
-    int type;
-    if(errMsg.isEmpty()) {
-        //全部成功删除
-        resultMessage = tr("Delete all selected features successfully");
-        type = MessageDialog::Normal;
-    } else {
-        type = MessageDialog::Error;
-        resultMessage = errMsg;
-    }
-    MessageDialog msgDialog(type);
-    msgDialog.setTitle(tr("Delete Result"));
-    msgDialog.setMessage(resultMessage);
+    MessageDialog msgDialog(MessageDialog::Normal);
+    msgDialog.setTitle(tr("Delete"));
+    msgDialog.setMessage(tr("The result of delete:"));
+    msgDialog.setMessageList(resultStrings);
     msgDialog.exec();
 }
 
@@ -343,25 +338,23 @@ void ContentPane::on_btnClean_clicked()
                     deviceInfo->device_id, currentUid, 0, -1);
     reply.waitForFinished();
     if (reply.isError()) {
-        qDebug() << "DBUS:" << reply.error();
+        qWarning() << "DBUS:" << reply.error();
         return;
     }
-    int result = reply.argumentAt(0).value<int>();
 
-    QString resultMessage;
-    int type;
-    if(result == DBUS_RESULT_SUCCESS) {
-        dataModel->removeAll();
-        updateButtonUsefulness();
-        resultMessage = tr("Clean Successfully");
-        type = MessageDialog::Normal;
-    } else {
-        resultMessage = getErrorMessage(CLEAN, result);
-        type = MessageDialog::Error;
+    showFeatures();
+    updateButtonUsefulness();
+
+    QDBusMessage msg = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
+    if(msg.type() == QDBusMessage::ErrorMessage){
+        qWarning() << QString("GetNotifyMesg(%1)").arg(deviceInfo->device_id) << msg.errorMessage();
+        return;
     }
-    MessageDialog msgDialog(type);
+    QString resultString = msg.arguments().at(0).toString();
+
+    MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Clean Result"));
-    msgDialog.setMessage(resultMessage);
+    msgDialog.setMessage(resultString);
     msgDialog.exec();
 }
 

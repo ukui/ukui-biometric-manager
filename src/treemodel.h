@@ -14,7 +14,8 @@ public:
 
     enum FeatureRoles{
         IndexRole = Qt::UserRole,
-        UidRole
+        UidRole,
+        NameRole
     };
 
     void setModelData(const QList<FeatureInfo*> &featureInfoList);

@@ -59,3 +59,14 @@ void MessageDialog::setCancelText(const QString &text)
 {
     ui->btnCancel->setText(text);
 }
+
+void MessageDialog::setMessageList(const QStringList &textList)
+{
+    ui->lblMessage->setAlignment(Qt::AlignLeft);
+
+    for(auto text : textList) {
+        QLabel *label = new QLabel(text, this);
+        label->setFont(QFont("Sans Serif", 10));
+        ui->messageLayout->addWidget(label);
+    }
+}

@@ -68,6 +68,11 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
         return item->getIndex();
     case UidRole:
         return item->getUid();
+    case NameRole:
+        if(isAdmin(uid_))
+            return item->data(2);
+        else
+            return item->data(1);
     }
 
     return QVariant();
