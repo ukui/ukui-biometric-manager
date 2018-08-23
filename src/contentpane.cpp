@@ -134,6 +134,8 @@ void ContentPane::on_btnDefault_clicked()
  */
 void ContentPane::showFeatures()
 {
+    dataModel->removeAll();
+
 	if (!deviceIsAvailable())
 		return;
 
@@ -156,6 +158,7 @@ void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
     QList<QDBusVariant> qlist;
     FeatureInfo *featureInfo;
 	int listsize;
+
 	QList<QVariant> variantList = callbackReply.arguments();
 	listsize = variantList[0].value<int>();
 	variantList[1].value<QDBusArgument>() >> qlist;
