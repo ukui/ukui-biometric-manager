@@ -28,7 +28,8 @@ SOURCES += src/main.cpp\
     src/treeitem.cpp \
     src/treemodel.cpp \
     src/inputdialog.cpp \
-    src/messagedialog.cpp
+    src/messagedialog.cpp \
+    src/aboutdialog.cpp
 
 
 HEADERS  += src/mainwindow.h \
@@ -38,14 +39,16 @@ HEADERS  += src/mainwindow.h \
     src/treeitem.h \
     src/treemodel.h \
     src/inputdialog.h \
-    src/messagedialog.h
+    src/messagedialog.h \
+    src/aboutdialog.h
 
 
 FORMS    += src/mainwindow.ui \
     src/promptdialog.ui \
     src/contentpane.ui \
     src/inputdialog.ui \
-    src/messagedialog.ui
+    src/messagedialog.ui \
+    src/aboutdialog.ui
 
 
 RESOURCES += \

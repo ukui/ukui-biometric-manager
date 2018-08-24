@@ -13,6 +13,7 @@
 #include "contentpane.h"
 #include "customtype.h"
 #include "messagedialog.h"
+#include "aboutdialog.h"
 
 
 #define ICON_SIZE 32
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
     username(usernameFromCmd),
     verificationStatus(false),
     dragWindow(false),
-    menu(nullptr)
+    aboutDlg(nullptr)
 {
     checkServiceExist();
 
@@ -170,6 +171,8 @@ void MainWindow::initialize()
 
 	checkAPICompatibility();
 
+    initSysMenu();
+
     /* 获取并显示用户 */
     setCurrentUser();
 
@@ -185,6 +188,34 @@ void MainWindow::initialize()
     connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
 
     ui->btnDashBoard->click();
+}
+
+void MainWindow::initSysMenu()
+{
+    menu = new QMenu(this);
+    QAction *serviceStatusAction = new QAction(QIcon(":/images/assets/restart_service.png"),
+                                               tr("Restart Service"), this);
+    connect(serviceStatusAction, &QAction::triggered, this, [&]{
+        if(restartService())
+            updateDevice();
+    });
+
+    QAction *aboutAction = new QAction(QIcon(":images/assets/about.png"),
+                                       tr("About"), this);
+    connect(aboutAction, &QAction::triggered, this, [&]{
+        if(aboutDlg == nullptr)
+            aboutDlg = new AboutDialog();
+
+        int x = this->geometry().topLeft().x() + (width() - aboutDlg->width()) / 2;
+        int y = this->geometry().topLeft().y() + (height() - aboutDlg->height()) / 2;
+
+        aboutDlg->move(x, y);
+        aboutDlg->show();
+        aboutDlg->raise();
+    });
+
+    menu->addActions({serviceStatusAction, aboutAction});
+    ui->btnMenu->setMenu(menu);
 }
 
 void MainWindow::changeBtnColor(QPushButton *btn)
@@ -729,22 +760,4 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
         }
         lw->setCurrentRow(index);
     }
-}
-
-void MainWindow::on_btnMenu_clicked()
-{
-    if(!menu) {
-        menu = new QMenu(this);
-        QAction *serviceStatusAction = new QAction(QIcon(":/images/assets/restart_service.png"),
-                                                   tr("Restart Service"), this);
-        connect(serviceStatusAction, &QAction::triggered, this, [&]{
-            if(restartService())
-                updateDevice();
-        });
-
-        menu->addActions({serviceStatusAction});
-    }
-
-    QRect rect = ui->btnMenu->geometry();
-    menu->popup(QPoint(rect.left(), rect.bottom()+40));
 }

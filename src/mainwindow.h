@@ -11,6 +11,8 @@ namespace Ui {
 class MainWindow;
 }
 class QLabel;
+class AboutDialog;
+
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -37,12 +39,12 @@ private slots:
 
     void onDeviceStatusClicked();
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
-    void on_btnMenu_clicked();
 
 private:
     void checkServiceExist();
 	void checkAPICompatibility();
 	void prettify();
+    void initSysMenu();
 	void getDeviceInfo();
     void addContentPane(DeviceInfo *deviceInfo);
 	void initialize();
@@ -78,6 +80,7 @@ private:
     bool dragWindow;
 
     QMenu *menu;
+    AboutDialog *aboutDlg;
 };
 
 #endif // MAINWINDOW_H

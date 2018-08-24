@@ -45,6 +45,9 @@ QPushButton:flat{
 #btnClose::pressed {
     background-color: #c82102;
 }
+#btnMenu::menu-indicator{
+    image:none;
+}
 
 #btnDashBoard, #btnFingerPrint, #btnFingerVein, #btnIris, #btnVoicePrint {
     color: white;

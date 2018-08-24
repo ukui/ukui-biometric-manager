@@ -1,6 +1,11 @@
-#PromptDialog, #InputDialog, #MessageDialog, #ServiceDialog {
+#PromptDialog, #InputDialog, #MessageDialog,
+#ServiceDialog, #AboutDialog {
     background-color: white;
     border: 1px solid #0066b8;
+}
+
+#widgetHeader{
+    background-color: #0078d7;
 }
 
 #lblTitle {
@@ -57,3 +62,27 @@ QLineEdit {
 #lblError {
     color: red;
 }
+
+
+/* AboutDialog */
+#lblIcon{
+    background: url(:/images/assets/logo.png);
+}
+
+#btnAbout, #btnContributor {
+    color: white;
+}
+
+#textAbout, #textContributor {
+    border: none;
+}
+
+#btnCloseDialog {
+    border: 1px solid gray;
+}
+
+#btnCloseDialog::hover {
+    border: 1px solid #0078d7;
+}
+
+

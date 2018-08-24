@@ -30,6 +30,8 @@
         <file>assets/voiceprint.png</file>
         <file>assets/menu.png</file>
         <file>assets/restart_service.png</file>
+        <file>assets/about.png</file>
+        <file>assets/underline.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>assets/promptdialog.qss</file>
