@@ -221,6 +221,41 @@ void TreeModel::setModelData(const QList<FeatureInfo *> &featureInfoList)
     }
 }
 
+TreeItem *TreeModel::createItem(int serialNum,
+                                const FeatureInfo *featureInfo,
+                                int type)
+{
+    TreeItem *item = nullptr;
+
+    int uid = featureInfo->uid;
+    switch(type){
+    case NORMAL:
+        item = new TreeItem({QString::number(serialNum),
+                             featureInfo->index_name},
+                            rootItem,
+                            uid,
+                            featureInfo->index);
+        break;
+    case ADMIN_PARENT:
+        item = new TreeItem({QString::number(serialNum),
+                             getUserName(uid),
+                             featureInfo->index_name},
+                            rootItem,
+                            uid,
+                            featureInfo->index);
+        break;;
+    case ADMIN_CHILD:
+        item =  new TreeItem({"",
+                              "",
+                              featureInfo->index_name},
+                             parentItems[uid],
+                             uid,
+                             featureInfo->index);
+        break;
+    }
+    return item;
+}
+
 void TreeModel::appendData(const FeatureInfo *featureInfo)
 {
     if(isAdmin(uid_)) {
@@ -229,35 +264,32 @@ void TreeModel::appendData(const FeatureInfo *featureInfo)
         QString userName = getUserName(uid);
 
         if(parentItems.contains(uid)) {
+
             int row = -1;
             for(int i = 0; i < rowCount(); i++) {
                 if(index(i, 1).data().toString() == userName) {
                     row = i;
                 }
             }
+
             if(row >= 0) {  //已经有录入的特征
                 QModelIndex parent = index(row, 0);
                 int childCount = rowCount(parent);
+
                 beginInsertRows(parent, childCount, childCount);
-                TreeItem *childItem = new TreeItem({"",
-                                                    "",
-                                                    featureInfo->index_name},
-                                                   parentItems[uid],
-                                                   featureInfo->uid,
-                                                   featureInfo->index);
+
+                TreeItem *childItem = createItem(row, featureInfo, ADMIN_CHILD);
                 parentItems[uid]->appendChild(childItem);
+
                 endInsertRows();
             }
         } else {
             beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            TreeItem *parentItem = new TreeItem({QString::number(rowCount() + 1),
-                                                 userName,
-                                                 featureInfo->index_name},
-                                                rootItem,
-                                                featureInfo->uid,
-                                                featureInfo->index);
+
+            TreeItem *parentItem = createItem(rowCount() + 1, featureInfo, ADMIN_PARENT);
             rootItem->appendChild(parentItem);
             parentItems[uid] = parentItem;
+
             endInsertRows();
         }
     } else {
@@ -265,14 +297,83 @@ void TreeModel::appendData(const FeatureInfo *featureInfo)
             parentItems[uid_] = rootItem;
 
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        TreeItem *childItem = new TreeItem({QString::number(rowCount()+1),
-                                            featureInfo->index_name},
-                                           rootItem,
-                                           featureInfo->uid,
-                                           featureInfo->index);
+
+        TreeItem *childItem = createItem(rowCount()+1,  featureInfo, NORMAL);
         rootItem->appendChild(childItem);
+
         endInsertRows();
     }
+}
+
+void TreeModel::insertData(const FeatureInfo *featureInfo)
+{
+    if(isAdmin(uid_)){
+
+        int uid = featureInfo->uid;
+        QString userName = getUserName(uid);
+
+        if(parentItems.contains(uid)) {
+
+            int row = -1;
+            for(int i = 0; i < rowCount(); i++) {
+                if(index(i, 1).data().toString() == userName) {
+                    row = i;
+                }
+            }
+            TreeItem *parentItem = parentItems[uid];
+            QModelIndex parent = index(row, 0);
+            if(parentItem->getIndex() > featureInfo->index) {   //成为父节点
+                TreeItem *childItem = new TreeItem({"", "", parentItem->data(2)},
+                                                   parentItem,
+                                                   parentItem->getUid(),
+                                                   parentItem->getIndex());
+                parentItem->setData(0, row + 1);
+                parentItem->setData(1, userName);
+                parentItem->setData(2, featureInfo->index_name);
+                parentItem->setIndex(featureInfo->index);
+                parentItem->setUid(featureInfo->uid);
+
+                beginInsertRows(parent, 0, 0);
+                parentItem->insertChild(0, childItem);
+                endInsertRows();
+
+            } else {    //成为子节点
+                int pos = findInsertPosition(featureInfo, parentItem);
+                TreeItem *item = createItem(pos, featureInfo, ADMIN_CHILD);
+
+
+                beginInsertRows(parent, pos, pos);
+                parentItem->insertChild(pos, item);
+                endInsertRows();
+            }
+        } else {
+            appendData(featureInfo);
+        }
+    } else {
+        int pos = findInsertPosition(featureInfo, rootItem);
+        TreeItem *childItem = createItem(pos+1, featureInfo, NORMAL);
+
+        beginInsertRows(QModelIndex(), pos, pos);
+
+        rootItem->insertChild(pos, childItem);
+
+        endInsertRows();
+    }
+    updateSerialNum();
+}
+
+int TreeModel::findInsertPosition(const FeatureInfo *featureInfo, TreeItem *parentItem)
+{
+    qDebug() << featureInfo->index_name;
+    for(int i = 0; i < parentItem->childCount(); i++) {
+        TreeItem *child = parentItem->child(i);
+        qDebug() << child->getIndex() << featureInfo->index;
+        if(child->getIndex() < featureInfo->index)
+            continue;
+        else
+            return i;
+    }
+    return parentItem->childCount() + 1;
 }
 
 

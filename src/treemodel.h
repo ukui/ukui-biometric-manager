@@ -19,13 +19,16 @@ public:
     };
 
     void setModelData(const QList<FeatureInfo*> &featureInfoList);
-    void appendData(const FeatureInfo* featureInfo); 
+    void appendData(const FeatureInfo* featureInfo);
+    void insertData(const FeatureInfo *featureInfo);
+    int findInsertPosition(const FeatureInfo* featureInfo, TreeItem *parentItem);
     bool removeRow(int row, const QModelIndex &parent=QModelIndex(), bool recursive=false);
     void removeAll();
     void updateSerialNum();
     int freeIndex();
     void setupTestData();
     bool hasFeature(int uid, const QString &featureName);
+    TreeItem *createItem(int serialNum, const FeatureInfo *featureInfo, int type);
 
 public:
     int columnCount(const QModelIndex &parent) const;
@@ -39,6 +42,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
 private:
+    enum ItemType{NORMAL, ADMIN_PARENT, ADMIN_CHILD};
     TreeItem *rootItem;
     QMap<int, TreeItem*> parentItems;
     int uid_;   //当前用户id

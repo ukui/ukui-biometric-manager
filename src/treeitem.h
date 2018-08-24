@@ -12,18 +12,22 @@ public:
     ~TreeItem();
 
     void appendChild(TreeItem *child);
+    void insertChild(int pos,TreeItem *child);
     TreeItem *child(int row);
     int childCount() const;
     int columnCount() const;
-    QVariant data(int column) const;
     int row() const;
     TreeItem *parent();
+    void setParent(TreeItem *parent);
+    QVariant data(int column) const;
     void setData(int column, const QVariant &data);
-    void setIndex(int index);
     int getIndex();
+    void setIndex(int index);
     bool removeChild(int row, bool recursive = false);
     bool removeChildren(int row, int count, bool recursive = false);
+    void removeChildrenNoDelete();
     void cleanChildren();
+    void setUid(int uid);
     int getUid();
 
 private:

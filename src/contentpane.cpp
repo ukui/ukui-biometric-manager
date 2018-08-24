@@ -217,13 +217,12 @@ void ContentPane::on_btnEnroll_clicked()
                                     deviceInfo->device_id, currentUid, this);
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
-//    if(promptDialog->getResult() == PromptDialog::SUCESS) {
-//        FeatureInfo *featureInfo = createNewFeatureInfo();
-//        dataModel->appendData(featureInfo);
-//    }
+    if(promptDialog->getResult() == PromptDialog::SUCESS) {
+        FeatureInfo *featureInfo = createNewFeatureInfo();
+        dataModel->insertData(featureInfo);
+    }
     delete promptDialog;
 
-    showFeatures();
     updateButtonUsefulness();
 }
 

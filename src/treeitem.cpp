@@ -18,6 +18,10 @@ void TreeItem::appendChild(TreeItem *child)
     childItems.append(child);
 }
 
+void TreeItem::insertChild(int pos, TreeItem *child)
+{
+    childItems.insert(pos, child);
+}
 
 TreeItem *TreeItem::child(int row)
 {
@@ -39,6 +43,11 @@ QVariant TreeItem::data(int column) const
     return itemData.value(column);
 }
 
+void TreeItem::setData(int column, const QVariant &data)
+{
+    itemData[column] = data;
+}
+
 int TreeItem::row() const
 {
     if(parentItem)
@@ -49,6 +58,11 @@ int TreeItem::row() const
 TreeItem *TreeItem::parent()
 {
     return parentItem;
+}
+
+void TreeItem::setParent(TreeItem *parent)
+{
+    this->parentItem = parent;
 }
 
 void TreeItem::setIndex(int index)
@@ -62,16 +76,15 @@ int TreeItem::getIndex()
 }
 
 
-void TreeItem::setData(int column, const QVariant &data)
-{
-    itemData[column] = data;
-}
-
 int TreeItem::getUid()
 {
     return uid;
 }
 
+void TreeItem::setUid(int uid)
+{
+    this->uid = uid;
+}
 
 /*!
  * \brief TreeItem::removeChild
@@ -132,5 +145,10 @@ void TreeItem::cleanChildren()
         item->cleanChildren();
         delete item;
     }
+    childItems.clear();
+}
+
+void TreeItem::removeChildrenNoDelete()
+{
     childItems.clear();
 }
