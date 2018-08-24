@@ -1,3 +1,16 @@
+biometric-manager (1.5~rc5) juniper; urgency=medium
+
+  * [Improved] 将改变驱动状态和重启服务拆分开
+  * [Fixed] 修复改变声纹设备状态时崩溃的问题
+  * [Fixed] 修复在开启设备后，该设备的特征列表不更新的问题
+  * [New] 增加“重启服务”和“关于”菜单，以及“关于”对话框
+  * [Improved] 在录入、删除、清空之后更新特征列表；
+  * [Improved] 通过GetNotifyMesg获取Clean操作的结果提示
+  * [Improved] 录入之后根据特征索引插入到列表相应的位置中，而不是追加
+  * [Fixe] 解决部分未汉化的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Fri, 24 Aug 2018 13:57:37 +0800
+
 biometric-manager (1.5~rc4) juniper; urgency=medium
 
   * [New] 增加特征重命名功能
