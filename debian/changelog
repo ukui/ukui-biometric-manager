@@ -1,4 +1,10 @@
-biometric-manager (1.5~rc5) juniper; urgency=medium
+biometric-manager (1.5~rc7) juniper; urgency=medium
+
+  * 如果删除或者清空失败则不更新特征列表 
+
+ -- yanghao <yanghao@kylinos.cn>  Mon, 27 Aug 2018 09:35:37 +0800
+
+biometric-manager (1.5~rc6) juniper; urgency=medium
 
   * [Improved] 将改变驱动状态和重启服务拆分开
   * [Fixed] 修复改变声纹设备状态时崩溃的问题
@@ -10,6 +16,12 @@ biometric-manager (1.5~rc5) juniper; urgency=medium
   * [Fixe] 解决部分未汉化的问题
 
  -- yanghao <yanghao@kylinos.cn>  Fri, 24 Aug 2018 13:57:37 +0800
+
+biometric-manager (1.5~rc5) juniper; urgency=medium
+
+  * replace setWindowFlag (introduced in Qt5.9) with setWindowFlags
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 26 Jul 2018 15:24:39 +0800
 
 biometric-manager (1.5~rc4) juniper; urgency=medium
 
