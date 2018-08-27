@@ -282,6 +282,7 @@ void ContentPane::on_btnDelete_clicked()
     std::sort(bound, selectedIndexList.end(), cmp);
 
     QStringList resultStrings;
+    bool hasDeleteSuccess = false;
 
     for(auto index : selectedIndexList) {
         int idxStart, idxEnd;
@@ -305,22 +306,26 @@ void ContentPane::on_btnDelete_clicked()
             return;
         }
 
-        QDBusMessage msg = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
-        if(msg.type() == QDBusMessage::ErrorMessage){
-            qWarning() << QString("GetNotifyMesg(%1)").arg(deviceInfo->device_id) << msg.errorMessage();
-            continue;
-        }
+        int result = reply.argumentAt(0).value<int>();
         QString featureName = index.data(TreeModel::NameRole).toString();
-        QString resultString = featureName + ":    " + msg.arguments().at(0).toString();
-        qDebug() << resultString;
-        resultStrings.append(resultString);
+        QString resultString;
+        if(result != DBUS_RESULT_SUCCESS)
+            resultString = featureName + ":    " + getErrorMessage(DELETE, result);
+        else {
+            resultString = featureName + ":    " + tr("Delete successfully");
+            hasDeleteSuccess = true;
+        }
+
+        resultStrings.append("                " + resultString);
     }
-    showFeatures();
-    updateButtonUsefulness();
+    if(hasDeleteSuccess) {
+        showFeatures();
+        updateButtonUsefulness();
+    }
 
     MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Delete"));
-    msgDialog.setMessage(tr("The result of delete:"));
+    msgDialog.setMessage("             " + tr("The result of delete:"));
     msgDialog.setMessageList(resultStrings);
     msgDialog.exec();
 }
@@ -341,20 +346,24 @@ void ContentPane::on_btnClean_clicked()
         return;
     }
 
-    showFeatures();
-    updateButtonUsefulness();
 
-    QDBusMessage msg = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
-    if(msg.type() == QDBusMessage::ErrorMessage){
-        qWarning() << QString("GetNotifyMesg(%1)").arg(deviceInfo->device_id) << msg.errorMessage();
-        return;
-    }
-    QString resultString = msg.arguments().at(0).toString();
+    int result = reply.argumentAt(0).value<int>();
+    QString resultString;
+    if(result != DBUS_RESULT_SUCCESS)
+        resultString = tr("Clean Failed: ") + getErrorMessage(DELETE, result);
+    else
+        resultString = tr("Clean successfully");
 
     MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Clean Result"));
     msgDialog.setMessage(resultString);
     msgDialog.exec();
+
+    //如果清除成功，则更新特征列表
+    if(result == DBUS_RESULT_SUCCESS) {
+        showFeatures();
+        updateButtonUsefulness();
+    }
 }
 
 /**
@@ -443,43 +452,13 @@ QString ContentPane::getErrorMessage(int type, int result)
     switch(result) {
     case DBUS_RESULT_ERROR: {
         //操作失败，需要进一步获取失败原因
-        QDBusPendingReply<int, int, int, int, int, int> reply =
-                serviceInterface->call("UpdateStatus", deviceInfo->device_id);
-        reply.waitForFinished();
-        if (reply.isError()) {
-            qDebug() << "DBUS:" << reply.error();
-            errorMessage = (tr("D-Bus calling error"));
-            break;
+        QDBusMessage msg = serviceInterface->call("GetNotifyMesg", deviceInfo->device_id);
+        if(msg.type() == QDBusMessage::ErrorMessage){
+            qWarning() << QString("GetNotifyMesg(%1)").arg(deviceInfo->device_id) << msg.errorMessage();
+            return tr("DBus calling error");
         }
-        int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
-        opsStatus = opsStatus % 100;
-        qDebug() << "Ops Error: " << opsStatus;
-        switch(opsStatus) {
-        case OPS_FAILED:
-            switch(type) {
-            case DELETE:
-                errorMessage = tr("Delete Failed");
-                break;
-            case CLEAN:
-                errorMessage = tr("Clean Failed");
-                break;
-            case RENAME:
-                errorMessage = tr("Rename Failed");
-                break;
-            }
-            break;
-        case OPS_ERROR:
-            //设备底层发生了错误
-            errorMessage = (tr("Device encounters an error"));
-            break;
-        case OPS_CANCEL:
-            //用户取消了操作，直接返回
-            break;
-        case OPS_TIMEOUT:
-            //超时
-            errorMessage = (tr("Operation timeout"));
-            break;;
-        }
+
+        errorMessage = msg.arguments().at(0).toString();
         break;
     }
     case DBUS_RESULT_DEVICEBUSY:

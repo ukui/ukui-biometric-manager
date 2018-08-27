@@ -4,27 +4,27 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../src/aboutdialog.ui" line="14"/>
+        <location filename="../src/aboutdialog.ui" line="26"/>
         <source>Dialog</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="81"/>
+        <location filename="../src/aboutdialog.ui" line="93"/>
         <source>Biometric Manager</source>
         <translation>生物特征管理工具</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="139"/>
+        <location filename="../src/aboutdialog.ui" line="151"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="184"/>
+        <location filename="../src/aboutdialog.ui" line="196"/>
         <source>Contributor</source>
         <translation>贡献者</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="266"/>
+        <location filename="../src/aboutdialog.ui" line="278"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -53,7 +53,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="282"/>
+        <location filename="../src/aboutdialog.ui" line="294"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -63,7 +63,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="326"/>
+        <location filename="../src/aboutdialog.ui" line="338"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -151,7 +151,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/contentpane.ui" line="409"/>
-        <location filename="../src/contentpane.cpp" line="322"/>
+        <location filename="../src/contentpane.cpp" line="327"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -241,9 +241,29 @@ p, li { white-space: pre-wrap; }
         <translation>确认删除</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="323"/>
+        <location filename="../src/contentpane.cpp" line="315"/>
+        <source>Delete successfully</source>
+        <translation>删除成功</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="328"/>
         <source>The result of delete:</source>
         <translation>删除结果：</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="353"/>
+        <source>Clean Failed: </source>
+        <translation type="unfinished">清空失败：</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="355"/>
+        <source>Clean successfully</source>
+        <translation>清空成功</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="458"/>
+        <source>DBus calling error</source>
+        <translation>DBus调用发生错误</translation>
     </message>
     <message>
         <source>Delete all selected features successfully</source>
@@ -258,34 +278,31 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">清空成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="355"/>
+        <location filename="../src/contentpane.cpp" line="358"/>
         <source>Clean Result</source>
         <translation>清空结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="427"/>
+        <location filename="../src/contentpane.cpp" line="436"/>
         <source>Rename Successfully</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="434"/>
+        <location filename="../src/contentpane.cpp" line="443"/>
         <source>Rename Result</source>
         <translation>重命名结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="461"/>
         <source>Delete Failed</source>
-        <translation>删除失败</translation>
+        <translation type="vanished">删除失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="464"/>
         <source>Clean Failed</source>
-        <translation>清空失败</translation>
+        <translation type="vanished">清空失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="467"/>
         <source>Rename Failed</source>
-        <translation>重命名失败</translation>
+        <translation type="vanished">重命名失败</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -402,36 +419,33 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">录入成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="451"/>
         <source>D-Bus calling error</source>
-        <translation>D-Bus 调用错误</translation>
+        <translation type="vanished">D-Bus 调用错误</translation>
     </message>
     <message>
         <source>Failed to enroll</source>
         <translation type="vanished">录入失败</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="473"/>
         <source>Device encounters an error</source>
-        <translation>设备遇到错误</translation>
+        <translation type="vanished">设备遇到错误</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="480"/>
         <source>Operation timeout</source>
-        <translation>操作超时</translation>
+        <translation type="vanished">操作超时</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="487"/>
+        <location filename="../src/contentpane.cpp" line="466"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="491"/>
+        <location filename="../src/contentpane.cpp" line="470"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="495"/>
+        <location filename="../src/contentpane.cpp" line="474"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
