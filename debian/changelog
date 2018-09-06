@@ -1,3 +1,9 @@
+ukui-biometric-manager (0.5.9~rc1) juniper; urgency=medium
+
+  * 修改cn.kylin.Biometric为org.ukui.Biometric
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 06 Sep 2018 10:13:20 +0800
+
 biometric-manager (1.5~rc8) juniper; urgency=medium
 
   * 修复无法重启服务的问题(#Close: 6518)
