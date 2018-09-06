@@ -1,0 +1,7 @@
+Name: Biometric Verification
+Default: yes
+Priority: 260
+Conflicts: fprint fprintd fprintd.i386 fprintd.amd64
+Auth-Type: Primary
+Auth:
+	[success=end default=ignore]	pam_biometric.so

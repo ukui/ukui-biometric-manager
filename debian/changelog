@@ -1,0 +1,7 @@
+ukui-biometric-auth-gui (0.6~rc11) juniper; urgency=medium
+
+  * Initial release
+    rename from biometric-verification
+    split one package to libpam-biometric and ukui-polkit
+
+ -- yanghao <yanghao@kylinos.cn>  Tue, 04 Sep 2018 15:37:52 +0800

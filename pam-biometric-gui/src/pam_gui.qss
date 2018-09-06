@@ -1,0 +1,44 @@
+QPushButton{
+    border:none;
+}
+
+/*QLabel{
+    color: white;
+} */
+
+#MainWindow{
+/*    background: rgba(250, 250, 250, 0.3);*/
+    background: white;
+}
+
+#btnPasswdAuth, #btnBioAuth,
+#btnMore, #btnRetry, #btnBack,
+#btnOK{
+    border-bottom: 1px solid #0078d7;
+    color: #0078d7;
+}
+
+#btnCancel, #btnAuth {
+    border: 1px solid gray;
+    min-height: 24px;
+    min-width: 80px;
+}
+
+#btnDetails {
+    icon-size: 16px;
+}
+
+#btnCancel::hover, #btnAuth::hover {
+    border: 1px solid #65b0eb;
+}
+
+/*#lblMessage{
+    background: gray;
+}*/
+
+#lwDevices {
+    border: 1px solid gray;
+}
+#lwDevices::item {
+    height: 30px;
+}

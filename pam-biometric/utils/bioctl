@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Usage: bioctl status|enable|disable
+
+CONFIG_DIR=/usr/share/ukui-biometric
+CONFIG_FILE=$CONFIG_DIR/biometric-auth.conf
+
+
+if [ ! -d $CONFIG_DIR ]; then
+	mkdir -p $CONFIG_DIR
+fi
+
+if [ ! -f $CONFIG_FILE ]; then
+	touch $CONFIG_FILE
+fi
+
+contain_key=`grep -c "EnableAuth=" $CONFIG_FILE`
+
+if [ "$1" = "enable" ]; then
+	pam-auth-update --package pam-biometric
+	if [ "$contain_key" = "1" ]; then
+		sed -i 's/EnableAuth=[a-zA-Z0-9]*/EnableAuth=true/g' $CONFIG_FILE
+	else
+		echo "EnableAuth=true" >> $CONFIG_FILE
+	fi
+elif [ "$1" = "disable" ]; then
+	if [ "$contain_key" = "1" ]; then
+		sed -i 's/EnableAuth=[a-zA-Z0-9]*/EnableAuth=false/g' $CONFIG_FILE
+	else
+		echo "EnableAuth=false" >> $CONFIG_FILE
+	fi
+elif [ "$1" = "status" ]; then
+	cur_status=`sed '/EnableAuth/!d;s/.*=//' $CONFIG_FILE`
+	if [ "$cur_status" = "true" ]; then
+		echo "enable"
+	elif [ "$cur_status" = "false" ]; then
+		echo "disable"
+	else
+		echo "unknown"
+	fi
+else
+	echo "Usage: bioctl status|enable|disable"
+fi
+
+exit 0
