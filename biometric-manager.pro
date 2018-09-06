@@ -17,7 +17,6 @@ PREFIX = /usr/share/biometric-manager
 
 TARGET = biometric-manager
 TEMPLATE = app
-DBUS_INTERFACES += data/cn.kylinos.Biometric.xml
 
 
 SOURCES += src/main.cpp\

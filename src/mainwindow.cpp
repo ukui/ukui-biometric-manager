@@ -68,7 +68,7 @@ void MainWindow::checkServiceExist()
     QDBusInterface iface("org.freedesktop.DBus", "/", "org.freedesktop.DBus",
                          QDBusConnection::systemBus());
     QDBusReply<QStringList> reply = iface.call("ListNames");
-    bool serviceExist = reply.value().contains("cn.kylinos.Biometric");
+    bool serviceExist = reply.value().contains(DBUS_SERVICE);
     if(!serviceExist) {
         MessageDialog msgDialog(MessageDialog::Error,
                             tr("Fatal Error"),
@@ -165,8 +165,9 @@ void MainWindow::initialize()
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
 	/* 连接 DBus Daemon */
-    serviceInterface = new QDBusInterface("cn.kylinos.Biometric", "/cn/kylinos/Biometric",
-                                          "cn.kylinos.Biometric", QDBusConnection::systemBus());
+    serviceInterface = new QDBusInterface(DBUS_SERVICE, DBUS_PATH,
+                                          DBUS_INTERFACE,
+                                          QDBusConnection::systemBus());
     serviceInterface->setTimeout(2147483647); /* 微秒 */
 
 	checkAPICompatibility();

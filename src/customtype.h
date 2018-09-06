@@ -8,6 +8,9 @@
 #define ADMIN_UID 0
 
 #define SERVICE "biometric-authentication.service"
+#define DBUS_SERVICE "org.ukui.Biometric"
+#define DBUS_PATH "/org/ukui/Biometric"
+#define DBUS_INTERFACE "org.ukui.Biometric"
 
 enum BioType {
 	BIOTYPE_FINGERPRINT,

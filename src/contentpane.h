@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QStandardItemModel>
 #include "customtype.h"
-#include "biometric_interface.h"
 #include "promptdialog.h"
 #include "treemodel.h"
 

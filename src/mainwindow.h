@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
-#include "biometric_interface.h"
 #include "customtype.h"
 #include "contentpane.h"
 

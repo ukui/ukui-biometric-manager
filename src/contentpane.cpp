@@ -20,8 +20,10 @@ ContentPane::ContentPane(int uid, DeviceInfo *deviceInfo, QWidget *parent) :
 	/* 向 QDBus 类型系统注册自定义数据类型 */
 	registerCustomTypes();
 	/* 连接 DBus Daemon */
-    serviceInterface = new QDBusInterface("cn.kylinos.Biometric", "/cn/kylinos/Biometric",
-                                          "cn.kylinos.Biometric", QDBusConnection::systemBus());
+    serviceInterface = new QDBusInterface(DBUS_SERVICE,
+                                          DBUS_PATH,
+                                          DBUS_INTERFACE
+                                          , QDBusConnection::systemBus());
     serviceInterface->setTimeout(2147483647); /* 微秒 */
 	updateWidgetStatus();
 	/* 设置数据模型 */
