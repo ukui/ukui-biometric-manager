@@ -10,6 +10,7 @@ DESTDIR_PAM=../debian/libpam-biometric
 DEB_PAM_PATH=debian/libpam-biometric/lib/security
 LIB_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)
 UKUI_BIOMETRIC_PATH=/usr/share/ukui-biometric
+MAN_DIR=/usr/share/man/man1
 
 %:
 	dh $@
@@ -21,6 +22,3 @@ override_dh_auto_build:
 override_dh_auto_install:
 	$(MAKE) install DESTDIR_POLKIT=$(DESTDIR_POLKIT) DESTDIR_PAM=$(DESTDIR_PAM) LIB_PATH=$(LIB_PATH) UKUI_BIOMETRIC=$(UKUI_BIOMETRIC_PATH)
 	mkdir debian/libpam-biometric${UKUI_BIOMETRIC_PATH}/images && install -D images/* debian/libpam-biometric${UKUI_BIOMETRIC_PATH}/images/
-	
-
-override_dh_usrlocal:
