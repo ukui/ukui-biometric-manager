@@ -669,15 +669,20 @@ updateStatus:
 
 bool MainWindow::restartService()
 {
-    QDBusInterface interface("org.freedesktop.systemd1",
-                             "/org/freedesktop/systemd1",
-                             "org.freedesktop.systemd1.Manager",
-                             QDBusConnection::systemBus());
-    QDBusReply<QDBusObjectPath> msg = interface.call("RestartUnit", "biometric-authentication.service", "replace");
-    if(!msg.isValid()) {
-        qDebug() << "restart service: " << msg.error();
-        return false;
-    }
+//    QDBusInterface interface("org.freedesktop.systemd1",
+//                             "/org/freedesktop/systemd1",
+//                             "org.freedesktop.systemd1.Manager",
+//                             QDBusConnection::systemBus());
+//    QDBusReply<QDBusObjectPath> msg = interface.call("RestartUnit", "biometric-authentication.service", "replace");
+//    if(!msg.isValid()) {
+//        qDebug() << "restart service: " << msg.error();
+//        return false;
+//    }
+    QProcess process;
+    QString cmd = QString("pkexec systemctl restart %1").arg(SERVICE);
+    process.start(cmd);
+    process.waitForFinished();
+    qDebug() << "restart service finished";
     return true;
 }
 

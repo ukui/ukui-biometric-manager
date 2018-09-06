@@ -7,6 +7,8 @@
 
 #define ADMIN_UID 0
 
+#define SERVICE "biometric-authentication.service"
+
 enum BioType {
 	BIOTYPE_FINGERPRINT,
 	BIOTYPE_FINGERVEIN,
