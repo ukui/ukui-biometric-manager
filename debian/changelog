@@ -1,3 +1,9 @@
+biometric-manager (1.5~rc8) juniper; urgency=medium
+
+  * 修复无法重启服务的问题(#Close: 6518)
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 06 Sep 2018 09:42:24 +0800
+
 biometric-manager (1.5~rc7) juniper; urgency=medium
 
   * 如果删除或者清空失败则不更新特征列表 
