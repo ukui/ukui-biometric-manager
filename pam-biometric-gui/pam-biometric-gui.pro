@@ -43,6 +43,6 @@ FORMS += \
 RESOURCES += \
     assets.qrc
 
-target.path = ${DESTDIR_PAM}${UKUI_BIOMETRIC}
+target.path = ${DESTDIR_PAM}/bin/
 
 INSTALLS += target
