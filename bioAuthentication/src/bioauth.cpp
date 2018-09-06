@@ -43,7 +43,7 @@ void BioAuth::stopAuth()
 
 
     if(!reply.isValid())
-        qWarning() << "StopOps eror: " << reply.error();
+        qWarning() << "StopOps error: " << reply.error();
 
     isInAuthentication = false;
 }

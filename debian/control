@@ -35,5 +35,5 @@ Depends: libqt5widgets5,
 Suggests: biometric-auth
 Description: UKUI authentication agent for PolicyKit-1
  The ukui-polkit package supports general authentication and
- biometric authentication that the serivce is provided by the
+ biometric authentication that the service is provided by the
  biometric-auth package.
