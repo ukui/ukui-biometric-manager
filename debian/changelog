@@ -1,0 +1,205 @@
+ukui-biometric-manager (0.5.9~rc1) juniper; urgency=medium
+
+  * 修改cn.kylin.Biometric为org.ukui.Biometric
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 06 Sep 2018 10:13:20 +0800
+
+biometric-manager (1.5~rc8) juniper; urgency=medium
+
+  * 修复无法重启服务的问题(#Close: 6518)
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 06 Sep 2018 09:42:24 +0800
+
+biometric-manager (1.5~rc7) juniper; urgency=medium
+
+  * 如果删除或者清空失败则不更新特征列表
+
+ -- yanghao <yanghao@kylinos.cn>  Mon, 27 Aug 2018 09:35:37 +0800
+
+biometric-manager (1.5~rc6) juniper; urgency=medium
+
+  * [Improved] 将改变驱动状态和重启服务拆分开
+  * [Fixed] 修复改变声纹设备状态时崩溃的问题
+  * [Fixed] 修复在开启设备后，该设备的特征列表不更新的问题
+  * [New] 增加“重启服务”和“关于”菜单，以及“关于”对话框
+  * [Improved] 在录入、删除、清空之后更新特征列表；
+  * [Improved] 通过GetNotifyMesg获取Clean操作的结果提示
+  * [Improved] 录入之后根据特征索引插入到列表相应的位置中，而不是追加
+  * [Fixe] 解决部分未汉化的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Fri, 24 Aug 2018 13:57:37 +0800
+
+biometric-manager (1.5~rc5) juniper; urgency=medium
+
+  * replace setWindowFlag (introduced in Qt5.9) with setWindowFlags
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 26 Jul 2018 15:24:39 +0800
+
+biometric-manager (1.5~rc4) juniper; urgency=medium
+
+  * [New] 增加特征重命名功能
+  * [Fixed] 修复验证成功的提示
+  * [Fixed] 修复无法点击提示窗口的关闭按钮时，能通过Esc关闭
+  * [Improved] 录入或验证结束后两秒自动关闭窗口
+  * [Improved] 增加限制，录入或者特征重命名时不允许特征名重复
+  * [Improved] 增加信息显示窗口，显示删除、清空、重命名的操作结果
+  * [Fixed] 对验证操作添加过滤，修复没有选中特征也会执行验证操作的问题
+  * [Improved] 对删除和清空操作增加二次确认
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 26 Jul 2018 14:03:49 +0800
+
+biometric-manager (1.5~rc3) juniper; urgency=medium
+
+  * [Fixed] 修复录入完成之后无法点击关闭按钮的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Tue, 17 Jul 2018 17:05:33 +0800
+
+biometric-manager (1.5~rc2) juniper; urgency=medium
+
+  * [Improved] 无设备或无特征时无法开启生物识别
+  * [Fixed] 修复成功开启设备后状态未更新的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Tue, 17 Jul 2018 15:22:49 +0800
+
+biometric-manager (1.5~rc1) juniper; urgency=medium
+
+  * 界面重新设计
+  * 增加声纹
+  * API更新到0.11.0
+
+ -- yanghao <yanghao@kylinos.cn>  Tue, 17 Jul 2018 09:50:55 +0800
+
+biometric-manager (1.4~rc9) juniper; urgency=medium
+
+  * 修复同一条特征显示两次的问题
+
+ -- yanghao <yanghao@kylinos.cn>  Mon, 25 Jun 2018 17:21:21 +0800
+
+biometric-manager (1.4~rc8) juniper; urgency=medium
+
+  * 修复录入、搜索等操作过程中关闭窗口，导致程序崩溃的问题
+  * 修改默认把可用的设备显示在前面
+
+ -- yanghao <yanghao@kylinos.cn>  Thu, 31 May 2018 17:34:08 +0800
+
+biometric-manager (1.4~rc7) juniper; urgency=medium
+
+  * [Minor] 未录入特征时不能开启生物识别
+  * [Fixed] 更新API接口
+
+ -- yanghao <yanghao@kylinos.cn>  Fri, 25 May 2018 16:54:49 +0800
+
+biometric-manager (1.4~rc6) juniper; urgency=medium
+
+  * [Improved] 特征列表为空时禁用部分按钮
+
+ -- lihao <lihao@kylinos.cn>  Fri, 20 Apr 2018 09:41:59 +0800
+
+biometric-manager (1.4~rc5) juniper; urgency=medium
+
+  * 回退上一次修改
+  * [Fixed] 兼容 device_available 为 -1 的情况
+  * [Minor] 更新翻译
+
+ -- lihao <lihao@kylinos.cn>  Thu, 19 Apr 2018 19:11:27 +0800
+
+biometric-manager (1.4~rc4) juniper; urgency=medium
+
+  * [Fixed] 解决 device_available DBus 返回 -1 的问题
+
+ -- lihao <lihao@kylinos.cn>  Fri, 13 Apr 2018 17:14:51 +0800
+
+biometric-manager (1.4~rc3) juniper; urgency=medium
+
+  * [Minor] 更新翻译文件
+
+ -- lihao <lihao@kylinos.cn>  Thu, 12 Apr 2018 15:06:35 +0800
+
+biometric-manager (1.4~rc2) juniper; urgency=medium
+
+  * [Improved] 修改设备未连接和驱动不存在的提示
+  * [Package] 修改 Makefile 目标名
+  * [Changed] UpdateStatus 接口变更
+  * [Improved] 使用宏定义表示 OpsStatus 在 UpdateStatus 返回值中的索引
+
+ -- lihao <lihao@kylinos.cn>  Thu, 12 Apr 2018 14:53:10 +0800
+
+biometric-manager (1.4~rc1) juniper; urgency=medium
+
+  * [Changed] 彻底删除与驱动增删有关的代码
+  * [Changed] 移除 Systemd 服务管理功能
+  * [Minor] 调整驱动列表box和认证管理box
+  * [Changed] 使用三个 TableWidget 代替原来的 GridLayout
+  * [Minor] MainWindow 和 initialize 函数结构调整
+  * [Minor] 移除 css 中冗余项
+  * [UI] 驱动列表标题样式
+  * [Minor] 将关键词 driver 替换为 device
+  * [Minor] 移除 restartService 函数
+  * [Changed] 设备开启操作需要检测设备是否连接
+
+ -- lihao <lihao@kylinos.cn>  Tue, 03 Apr 2018 15:43:50 +0800
+
+biometric-manager (1.3) juniper; urgency=medium
+
+  * Bump to version 1.3
+
+ -- lihao <lihao@kylinos.cn>  Tue, 03 Apr 2018 15:42:05 +0800
+
+biometric-manager (1.3~rc3) juniper; urgency=medium
+
+  * [Fixed] 开关服务失败时 if 语句范围错误
+  * [Changed] lblNoDevice 直接加到 ui 文件里
+  * [Improved] checkBiometricPage 改由 biometricPageInit 直接调用
+  * [Package] 将 qt5-default 依赖替换为 qtbase5-dev
+
+ -- lihao <lihao@kylinos.cn>  Wed, 21 Mar 2018 17:21:55 +0800
+
+biometric-manager (1.3~rc2) juniper; urgency=medium
+
+  * 界面重新设计
+  * 增加 Dashboard 页面用于管理所有相关设置
+  * 自定义 ToggleSwitch 控件
+
+ -- lihao <lihao@kylinos.cn>  Fri, 16 Mar 2018 15:55:28 +0800
+
+biometric-manager (1.2) juniper; urgency=medium
+
+  * [Fixed] 虹膜录入中取消操作导致段错误
+  * [Minor] 对特征名称输入弹窗的按钮进行国际化
+  * [New] 增加命令行选项 -u/--username
+  * [Minor] 搜索/删除操作对 DBus 回调结果的判断统一使用定义的枚举类型
+  * [Fixed] 清空操作没有对结果进行判断
+  * [Fixed] 虹膜设备取消验证或取消搜索会导致崩溃
+  * [Improved] 在录入/验证/搜索回调函数内断开 setOperationMsg 信号函数
+
+ -- lihao <lihao@kylinos.cn>  Tue, 21 Nov 2017 17:09:14 +0800
+
+biometric-manager (1.1) juniper; urgency=medium
+
+  * 功能已经稳定
+
+ -- lihao <lihao@kylinos.cn>  Fri, 10 Nov 2017 16:13:23 +0800
+
+biometric-manager (1.0) juniper; urgency=medium
+
+  * 生物特征管理工具基本开发完成
+
+ -- lihao <lihao@kylinos.cn>  Sat, 28 Oct 2017 14:48:34 +0800
+
+biometric-manager (1.0~rc3) juniper; urgency=medium
+
+  * Release Candidate
+
+ -- lihao <lihao@kylinos.cn>  Mon, 28 Aug 2017 16:08:45 +0800
+
+biometric-manager (1.0~rc2) juniper; urgency=medium
+
+  * Release Candidate
+
+ -- lihao <lihao@kylinos.cn>  Fri, 25 Aug 2017 14:23:19 +0800
+
+biometric-manager (1.0~rc1) juniper; urgency=medium
+
+  * Release Candidate
+
+ -- lihao <lihao@kylinos.cn>  Wed, 16 Aug 2017 10:43:25 +0800
