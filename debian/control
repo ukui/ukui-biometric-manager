@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Ubuntu Kylin Team <ubuntukylin-member@list.launchpad.dev>
 Uploaders: lihao <lihao@kylinos.cn>
 	   yanghao <yanghao@kylinos.cn>
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper (>= 11),
 	       qtbase5-dev,
 	       qttools5-dev-tools
 Standards-Version: 3.9.5
