@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = polkit-ukui-authentication-agent-1
 TEMPLATE = app
 
-CONFIG += release
+CONFIG += debug
 
 
 PREFIX = ${UKUI_BIOMETRIC}/ukui-polkit-agent

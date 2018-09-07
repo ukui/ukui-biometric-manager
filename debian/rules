@@ -16,7 +16,7 @@ MAN_DIR=/usr/share/man/man1
 	dh $@
 
 override_dh_auto_build:
-	 make all UKUI_BIOMETRIC=$(UKUI_BIOMETRIC_PATH)
+	 make all UKUI_BIOMETRIC=$(UKUI_BIOMETRIC_PATH) mode=debug
 	 cd polkit-agent/data && sed -i 's/@LIB_PATH/\/usr\/lib\/$(DEB_HOST_MULTIARCH)/g' polkit-ukui-authentication-agent-1.desktop
 
 override_dh_auto_install:

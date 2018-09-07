@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ukui-pam-biometric-gui
 TEMPLATE = app
 
-CONFIG += release
+CONFIG += debug
 
 
 # The following define makes your compiler emit warnings if you use

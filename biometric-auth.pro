@@ -6,5 +6,4 @@ SUBDIRS += \
         pam-biometric-gui \
         polkit-agent
 
-CONFIG = release
-CONFIG += ordered
+CONFIG += ordered debug

@@ -19,10 +19,9 @@ Depends: libqt5widgets5,
 	${misc:Depends}
 Suggests: biometric-auth
 Description: Insertable authentication module for PAM
- This package contains a modules for PAM.
- It is the indispensable part for biometric authentication in
+ The indispensable part for biometric authentication in
  ukui desktop environment.
-
+ This package contains a modules for PAM.
 
 Package: ukui-polkit
 Architecture: any
