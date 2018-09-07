@@ -11,7 +11,7 @@ Standards-Version: 3.9.5
 
 Package: ukui-biometric-manager
 Architecture: amd64 arm64
-Depends: ${misc:Depends}, 
+Depends: ${misc:Depends},
 	 ${bio-app-api:Depends},
 	 biometric-auth,
 	 libpam-biometric

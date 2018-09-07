@@ -1,5 +1,0 @@
-.gdb_history
-*.autosave
-*.pro.user
-i18n_ts/*.qm
-build/

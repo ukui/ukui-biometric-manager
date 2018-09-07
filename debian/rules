@@ -9,7 +9,7 @@ APP_API_FUNC := 0
 APP_API_DEPEND := bio-app-api-$(APP_API_MAJOR).$(APP_API_MINOR)
 
 %:
-	dh $@ 
+	dh $@
 
 override_dh_auto_build:
 	make all mode=release
