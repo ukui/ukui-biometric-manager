@@ -9,11 +9,14 @@ Standards-Version: 3.9.5
 
 Package: ukui-biometric-manager
 Architecture: amd64 arm64
-Depends: ${misc:Depends},
+Depends: ${shlibs:Depends},
+	 ${misc:Depends},
 	 ${bio-app-api:Depends},
 	 biometric-auth,
 	 libpam-biometric
 Conflicts: kylin-fingerprint, kylin-fprint-login
-Description: UKUI Biometric Manager
+Description: Manager for biometric authentication
  This package is a tool to manage the drivers of biometric devices and
  users' features and manage whether biometric authentication is enabled.
+ The service is provided by biometric-authentication.service in
+ biometric-auth package.
