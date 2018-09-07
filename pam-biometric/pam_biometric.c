@@ -94,7 +94,7 @@ int call_conversation(pam_handle_t *pamh, int msg_style, char *msg, char *resp)
 /* GUI child process */
 void child(char *service, char *username, char *xdisp)
 {
-    char *gui = "/bin/ukui-pam-biometric-gui";
+    char *gui = "/bin/bash /bin/ukui-pam-biometric-dialog";
     logger("Child process will be replaced.\n");
     execl(gui, "ukui-pam-biometric-gui",
     	"--service", service,

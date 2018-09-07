@@ -7,7 +7,7 @@ QT  += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ukui-pam-biometric-gui
+TARGET = ukui-pam-biometric-dialog
 TEMPLATE = app
 
 CONFIG += debug

@@ -3,7 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
         bioAuthentication \
         pam-biometric \
-        pam-biometric-gui \
+        pam-biometric-dialog \
         polkit-agent
 
 CONFIG += ordered debug
