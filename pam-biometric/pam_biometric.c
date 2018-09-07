@@ -339,15 +339,24 @@ int enable_biometric_authentication()
 {
     char conf_file[] = GET_STR(CONFIG_FILE);
     FILE *file;
-    char isEnable;
+    char line[1024], is_enable[16];
+    int i;
+
 
     if((file = fopen(conf_file, "r")) == NULL){
         logger("open configure file failed: %s\n", strerror(errno));
         return 0;
     }
-    fread(&isEnable, sizeof(char), 1, file);
+    while(fgets(line, sizeof(line), file)) {
+        i = sscanf(line, "EnableAuth=%s\n",  is_enable);
+        if(i > 0) {
+            logger("EnableAuth=%s\n", is_enable);
+            break;
+        }
+    }
+    
     fclose(file);
-    if(isEnable == '1')
+    if(!strcmp(is_enable, "true"))
         return 1;
     return 0;
 }
