@@ -2,8 +2,6 @@ Source: ukui-biometric-manager
 Section: x11
 Priority: optional
 Maintainer: Ubuntu Kylin Team <ubuntukylin-member@list.launchpad.dev>
-Uploaders: lihao <lihao@kylinos.cn>
-	   yanghao <yanghao@kylinos.cn>
 Build-Depends: debhelper (>= 11),
 	       qtbase5-dev,
 	       qttools5-dev-tools
