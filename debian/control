@@ -1,4 +1,4 @@
-Source: ukui-biometric-auth-gui
+Source: ukui-biometric-auth
 Section: admin
 Priority: optional
 Maintainer: yanghao <yanghao@kylinos.cn>
