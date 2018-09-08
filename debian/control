@@ -1,0 +1,26 @@
+Source: ukui-biometric-manager
+Section: x11
+Priority: optional
+Maintainer: Kylin Team <team+kylin@tracker.debian.org>
+Uploaders: handsome_feng <jianfengli@ubuntukylin.com>
+Build-Depends: debhelper (>= 11),
+               qtbase5-dev,
+               qttools5-dev-tools
+Standards-Version: 4.2.1
+Homepage: https://github.com/ukui/ukui-biometric-manager
+Vcs-Git: https://github.com/ukui/ukui-biometric-manager.git
+Vcs-Browser: https://github.com/ukui/ukui-biometric-manager
+
+Package: ukui-biometric-manager
+Architecture: amd64 arm64
+Depends: ${shlibs:Depends},
+	 ${misc:Depends},
+	 ${bio-app-api:Depends},
+	 biometric-auth,
+	 libpam-biometric
+Conflicts: kylin-fingerprint, kylin-fprint-login
+Description: Manager for biometric authentication
+ This package is a tool to manage the drivers of biometric devices and
+ users' features and manage whether biometric authentication is enabled.
+ The service is provided by biometric-authentication.service in
+ biometric-auth package.

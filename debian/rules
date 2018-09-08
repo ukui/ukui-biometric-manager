@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+export QT_SELECT := qt5
+export NO_PKG_MANGLE=1
+
+APP_API_MAJOR := 0
+APP_API_MINOR := 11
+APP_API_FUNC := 0
+APP_API_DEPEND := bio-app-api-$(APP_API_MAJOR).$(APP_API_MINOR)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	make all mode=release
+
+override_dh_usrlocal:
+
+override_dh_gencontrol:
+	dh_gencontrol -- -V"bio-app-api:Depends=$(APP_API_DEPEND)"
