@@ -1,0 +1,6 @@
+This package is a tool to manage the drivers of biometric devices and
+users' features and manage whether biometric authentication is enabled.
+The service is provided by biometric-authentication.service in
+biometric-auth package.
+
+Homepage: https://github.com/ukui
