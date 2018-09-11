@@ -82,7 +82,7 @@ void BioAuthWidget::setMovie()
 void BioAuthWidget::setImage()
 {
     QString typeString = bioTypeStrings.at(device.biotype);
-    QString pixmapPath = QString("%1/images/%2.png").arg(GET_STR(UKI_BIOMETRIC)).arg(typeString);
+    QString pixmapPath = QString("%1/images/%2.png").arg(GET_STR(UKUI_BIOMETRIC)).arg(typeString);
     QPixmap pixmap(pixmapPath);
     pixmap = pixmap.scaled(ui->lblBioImage->width(), ui->lblBioImage->height(),
                            Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
