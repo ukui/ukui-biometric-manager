@@ -26,6 +26,8 @@ BioAuthWidget::BioAuthWidget(QWidget *parent) :
     bioAuth(nullptr)
 {
     ui->setupUi(this);
+    ui->btnRetry->setVisible(false);
+    ui->btnMore->setVisible(false);
 }
 
 BioAuthWidget::~BioAuthWidget()
@@ -76,6 +78,8 @@ void BioAuthWidget::setMovie()
     ui->lblBioImage->setMovie(movie);
     movie->start();
 
+    ui->btnRetry->setVisible(false);
+
     qDebug() << "set movie " << moviePath;
 }
 
@@ -87,6 +91,8 @@ void BioAuthWidget::setImage()
     pixmap = pixmap.scaled(ui->lblBioImage->width(), ui->lblBioImage->height(),
                            Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     ui->lblBioImage->setPixmap(pixmap);
+
+    ui->btnRetry->setVisible(true);
 
     qDebug() << "set pixmap " << typeString;
 }
