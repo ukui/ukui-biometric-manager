@@ -65,8 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug() << "biometric authentication complete: " << uid << ret;
         if(uid == getUid(userName) && ret)
             accept(BIOMETRIC_SUCESS);
-        else
-            accept(BIOMETRIC_FAILED);
+//        else
+//            accept(BIOMETRIC_FAILED);
     });
 
     connect(widgetBioAuth, &BioAuthWidget::selectDevice,
