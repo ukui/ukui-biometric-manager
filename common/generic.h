@@ -39,4 +39,16 @@
 #define AGENT_NAME "polkit-ukui-authentication-agent"
 #define POLKIT_LISTENER_ID "/org/ukui/PolicyKit1/AuthenticationAgent"
 
+
+#ifdef QT_CORE_LIB
+
+#include "qlogging.h"
+
+extern bool enableDebug;
+extern QString logPrefix;
+void outputMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+
+#endif
+
+
 #endif

@@ -18,6 +18,8 @@ DEFINES += INSTALL_PATH=$${PREFIX} \
 INCLUDEPATH +=  $$PWD/../common/ \
                 $$PWD/../bioAuthentication/include/
 
+VPATH += $$PWD/../common/
+
 LIBS +=  -lpolkit-qt5-core-1 \
         -L$$PWD/../bioAuthentication -lbioAuthentication
 
@@ -34,7 +36,8 @@ FORMS += \
 SOURCES += \
     src/PolkitAgent.cpp \
     src/mainwindow.cpp \
-    src/PolkitListener.cpp
+    src/PolkitListener.cpp \
+    generic.cpp
 
 RESOURCES += \
     assets.qrc

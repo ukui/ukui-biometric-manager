@@ -117,7 +117,7 @@ void child(char *service, char *username, char *xdisp)
           "--service", service,
           "--username", username,
           "--display", xdisp,
-          enable_debug ? "debug" : "",
+          enable_debug ? "--debug" : "",
           (char *)0);
     /*
      * execl almost always succeed as long as the GUI executable file exists.
