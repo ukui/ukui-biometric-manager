@@ -15,16 +15,43 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  * 
 **/
-#include <PolkitQt1/Subject>
-#include "PolkitListener.h"
-#include "generic.h"
+
 #include <QApplication>
 #include <QTranslator>
 #include <QDebug>
-#include "mainwindow.h"
+#include <QDBusInterface>
+#include <QDBusMessage>
+#include <QDBusObjectPath>
+#include <PolkitQt1/Subject>
+#include "PolkitListener.h"
+#include "generic.h"
 
 bool enableDebug;
 QString logPrefix;
+
+#define SM_DBUS_SERVICE "org.gnome.SessionManager"
+#define SM_DBUS_PATH "/org/gnome/SessionManager"
+#define SM_DBUS_INTERFACE "org.gnome.SessionManager"
+
+bool registerToGnomeSession()
+{
+    QDBusInterface interface(SM_DBUS_SERVICE,
+                             SM_DBUS_PATH,
+                             SM_DBUS_INTERFACE,
+                             QDBusConnection::sessionBus());
+    QString appId("polkit-ukui-authentication-agent-1.desktop");
+    QString clientStartupId(qgetenv("DESKTOP_AUTOSTART_ID"));
+
+    QDBusReply<QDBusObjectPath> reply = interface.call("RegisterClient",
+                                                       appId, clientStartupId);
+
+    if(!reply.isValid()) {
+        qWarning() << "Register Client to gnome session failed";
+        return false;
+    }
+    qDebug() << "Register Client to gnome session: " << reply.value().path();
+    return true;
+}
 
 int main(int argc, char *argv[])
 {
@@ -57,6 +84,8 @@ int main(int argc, char *argv[])
                     << POLKIT_LISTENER_ID << "Aborting";
         return EXIT_FAILURE;
     }
+
+    registerToGnomeSession();
 
 	agent.exec();
 	return EXIT_SUCCESS;
