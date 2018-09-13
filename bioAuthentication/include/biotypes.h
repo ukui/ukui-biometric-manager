@@ -25,10 +25,6 @@
 #define BIO_DBUS_PATH "/org/ukui/Biometric"
 #define BIO_DBUS_INTERFACE "org.ukui.Biometric"
 
-#define BIOMETRIC_PAM       "BIOMETRIC_PAM"
-#define BIOMETRIC_IGNORE    "BIOMETRIC_IGNORE"
-#define BIOMETRIC_SUCESS    "BIOMETRIC_SUCCESS"
-
 
 #ifdef LOG
 #undef LOG

@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 
-#include "Globals.h"
+#include "generic.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this, [&](uid_t uid, bool ret){
         qDebug() << "biometric authentication complete: " << uid << ret;
         if(uid == getUid(userName) && ret)
-            accept(BIOMETRIC_SUCESS);
+            accept(BIOMETRIC_SUCCESS);
 //        else
 //            accept(BIOMETRIC_FAILED);
     });

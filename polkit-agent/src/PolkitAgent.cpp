@@ -17,7 +17,7 @@
 **/
 #include <PolkitQt1/Subject>
 #include "PolkitListener.h"
-#include "Globals.h"
+#include "generic.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QDebug>

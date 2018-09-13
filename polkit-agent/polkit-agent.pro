@@ -25,9 +25,7 @@ LIBS +=  -lpolkit-qt5-core-1 \
 PKGCONFIG += polkit-qt5-agent-1
 
 HEADERS += \
-    src/Globals.h \
     src/mainwindow.h \
-    src/Globals.h \
     src/PolkitListener.h
 
 FORMS += \
