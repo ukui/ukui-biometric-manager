@@ -20,11 +20,13 @@
 #include <QDesktopWidget>
 #include "generic.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QWidget(parent),
+MainWindow::MainWindow(QDialog *parent) :
+    QDialog(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Biometric Authentication"));
+    setWindowIcon(QIcon::fromTheme("dialog-password"));
 
     widgetBioAuth = new BioAuthWidget(this);
     widgetBioAuth->setMaximumWidth(230);
