@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     QCommandLineOption serviceOption({"s", "service"}, QObject::tr("Sevice Name"));
     QCommandLineOption displayOption({"x", "display"}, QObject::tr("DISPLAY env"), "display", ":0");
-    QCommandLineOption usernameOption({"u", "username"}, QObject::tr("User Name"));
+    QCommandLineOption usernameOption({"u", "username"}, QObject::tr("User Name"), "username", "");
     QCommandLineOption debugOption({"d", "debug"}, QObject::tr("Display debug infomation"));
 
     parser.addOptions({serviceOption, displayOption, usernameOption, debugOption});
@@ -57,7 +57,12 @@ int main(int argc, char *argv[])
     translator.load(qmfile);
     a.installTranslator(&translator);
 
-    MainWindow w;
+    QString userName = parser.value(usernameOption);
+    if(userName.isEmpty())
+        exit(EXIT_FAILURE);
+    qDebug() << "authentication user: " << userName;
+
+    MainWindow w(userName);
     w.show();
 
     return a.exec();

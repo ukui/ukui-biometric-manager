@@ -18,12 +18,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDesktopWidget>
+
+#include <sys/types.h>
+#include <pwd.h>
+
 #include "generic.h"
 
-MainWindow::MainWindow(QDialog *parent) :
+MainWindow::MainWindow(const QString &userName, QDialog *parent) :
     QDialog(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    userName(userName)
 {
+    struct passwd *pwd = getpwnam(userName.toLocal8Bit().constData());
+    uid_t uid = pwd->pw_uid;
+
     ui->setupUi(this);
     setWindowTitle(tr("Biometric Authentication"));
     setWindowIcon(QIcon::fromTheme("dialog-password"));
@@ -56,9 +64,9 @@ MainWindow::MainWindow(QDialog *parent) :
     });
 
     connect(widgetBioAuth, &BioAuthWidget::authComplete,
-            this, [&](uid_t uid, bool ret){
-        qDebug() << "biometric authentication complete: " << uid << ret;
-        if(uid == 1000 && ret)
+            this, [&](uid_t _uid, bool ret){
+        qDebug() << "biometric authentication complete: " << _uid << ret;
+        if(uid == _uid && ret)
             exit(BIO_SUCCESS);
         else
             exit(BIO_FAILED);
@@ -83,7 +91,7 @@ MainWindow::MainWindow(QDialog *parent) :
         LOG() << "no available device";
         exit(BIO_IGNORE);
     }
-    widgetBioAuth->startAuth(1000, *defaultDevice);
+    widgetBioAuth->startAuth(uid, *defaultDevice);
     switchWidget(BIOMETRIC);
 
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);

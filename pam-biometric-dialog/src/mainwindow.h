@@ -30,7 +30,7 @@ class MainWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit MainWindow(QDialog *parent = 0);
+    explicit MainWindow(const QString &userName, QDialog *parent = 0);
     ~MainWindow();
 
 private:
@@ -42,6 +42,8 @@ private:
     BioAuthWidget *widgetBioAuth;
     BioDevicesWidget *widgetBioDevices;
     BioDevices bioDevices;
+
+    QString userName;
 };
 
 #endif // MAINWINDOW_H
