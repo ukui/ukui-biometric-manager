@@ -36,6 +36,9 @@ MainWindow::MainWindow(QDialog *parent) :
     ui->mainLayout->addWidget(widgetBioAuth);
     ui->mainLayout->addWidget(widgetBioDevices);
 
+//    if(bioDevices.count() > 1)
+//        widgetBioAuth->setMoreDevices(true);
+
     connect(widgetBioDevices, &BioDevicesWidget::deviceChanged,
             this, [&](const DeviceInfo &device){
         widgetBioAuth->startAuth(1000, device);
@@ -45,6 +48,11 @@ MainWindow::MainWindow(QDialog *parent) :
     connect(widgetBioDevices, &BioDevicesWidget::back,
             this, [&]{
         switchWidget(BIOMETRIC);
+    });
+
+    connect(widgetBioDevices, &BioDevicesWidget::deviceCountChanged,
+            this, [&](int count) {
+        widgetBioAuth->setMoreDevices(count > 1);
     });
 
     connect(widgetBioAuth, &BioAuthWidget::authComplete,
@@ -67,6 +75,8 @@ MainWindow::MainWindow(QDialog *parent) :
             this, [&] {
         exit(BIO_IGNORE);
     });
+
+    widgetBioDevices->init();
 
     DeviceInfo *defaultDevice = bioDevices.getDefaultDevice();
     if(!defaultDevice) {

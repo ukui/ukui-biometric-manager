@@ -26,8 +26,6 @@ BioDevicesWidget::BioDevicesWidget(QWidget *parent) :
 
     connect(&bioDevices, &BioDevices::deviceCountChanged,
             this, &BioDevicesWidget::onDeviceCountChanged);
-
-    init();
 }
 
 BioDevicesWidget::~BioDevicesWidget()
@@ -58,6 +56,7 @@ void BioDevicesWidget::init()
         ui->cmbDeviceTypes->setCurrentIndex(index);
         ui->lwDevices->setCurrentRow(row);
     }
+    Q_EMIT deviceCountChanged(bioDevices.count());
 }
 
 void BioDevicesWidget::on_btnBack_clicked()
@@ -93,4 +92,6 @@ void BioDevicesWidget::onDeviceCountChanged()
     init();
     int index = ui->cmbDeviceTypes->findData(type);
     ui->cmbDeviceTypes->setCurrentIndex(index >= 0 ? index : 0);
+
+    Q_EMIT deviceCountChanged(bioDevices.count());
 }

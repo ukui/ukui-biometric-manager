@@ -37,6 +37,7 @@ public:
 signals:
     void back();
     void deviceChanged(const DeviceInfo &device);
+    void deviceCountChanged(int count);
 
 private slots:
     void on_btnBack_clicked();
