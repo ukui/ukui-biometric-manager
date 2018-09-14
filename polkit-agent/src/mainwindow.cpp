@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(widgetBioAuth, &BioAuthWidget::selectDevice,
             this, [&]{
-        widgetBioDevices->init();
+        widgetBioDevices->init(getUid(userName));
         switchWidget(DEVICES);
     });
 
@@ -244,7 +244,7 @@ void MainWindow::clearEdit()
 
 void MainWindow::switchAuthMode(Mode mode)
 {
-    enableBioAuth  = bioDevices.getDevicesCount() > 0;
+    enableBioAuth  = bioDevices.count() > 0;
 
     switch(mode){
     case PASSWORD:
@@ -273,7 +273,7 @@ void MainWindow::switchAuthMode(Mode mode)
 
         if(enableBioAuth) {
             qDebug() << "enable biometric authenticaion";
-            DeviceInfo *device = bioDevices.getDefaultDevice();
+            DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
             widgetBioAuth->startAuth(getUid(userName), *device);
             widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
         } else {

@@ -73,7 +73,7 @@ MainWindow::MainWindow(const QString &userName, QDialog *parent) :
 
     connect(widgetBioAuth, &BioAuthWidget::selectDevice,
             this, [&]{
-        widgetBioDevices->init();
+        widgetBioDevices->init(uid);
         widgetBioAuth->hide();
         widgetBioDevices->show();
     });
@@ -83,9 +83,9 @@ MainWindow::MainWindow(const QString &userName, QDialog *parent) :
         exit(BIO_IGNORE);
     });
 
-    widgetBioDevices->init();
+    widgetBioDevices->init(uid);
 
-    DeviceInfo *defaultDevice = bioDevices.getDefaultDevice();
+    DeviceInfo *defaultDevice = bioDevices.getDefaultDevice(uid);
     if(!defaultDevice) {
         LOG() << "no available device";
         exit(BIO_IGNORE);

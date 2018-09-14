@@ -26,6 +26,9 @@
 #define BIO_DBUS_INTERFACE "org.ukui.Biometric"
 
 
+#define DEFAULT_DEVICE "DefaultDevice"
+
+
 #ifdef LOG
 #undef LOG
 #endif
