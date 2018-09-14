@@ -43,7 +43,7 @@ private:
     BioDevicesWidget *widgetBioDevices;
     BioDevices bioDevices;
 
-    QString userName;
+    uid_t uid;
 };
 
 #endif // MAINWINDOW_H

@@ -26,11 +26,10 @@
 
 MainWindow::MainWindow(const QString &userName, QDialog *parent) :
     QDialog(parent),
-    ui(new Ui::MainWindow),
-    userName(userName)
+    ui(new Ui::MainWindow)
 {
     struct passwd *pwd = getpwnam(userName.toLocal8Bit().constData());
-    uid_t uid = pwd->pw_uid;
+    uid = pwd->pw_uid;
 
     ui->setupUi(this);
     setWindowTitle(tr("Biometric Authentication"));
@@ -44,13 +43,12 @@ MainWindow::MainWindow(const QString &userName, QDialog *parent) :
     ui->mainLayout->addWidget(widgetBioAuth);
     ui->mainLayout->addWidget(widgetBioDevices);
 
-//    if(bioDevices.count() > 1)
-//        widgetBioAuth->setMoreDevices(true);
 
     connect(widgetBioDevices, &BioDevicesWidget::deviceChanged,
             this, [&](const DeviceInfo &device){
+        qDebug() << "device changed: " << device;
         widgetBioAuth->startAuth(1000, device);
-        switchWidget(DEVICES);
+        switchWidget(BIOMETRIC);
     });
 
     connect(widgetBioDevices, &BioDevicesWidget::back,
@@ -66,10 +64,11 @@ MainWindow::MainWindow(const QString &userName, QDialog *parent) :
     connect(widgetBioAuth, &BioAuthWidget::authComplete,
             this, [&](uid_t _uid, bool ret){
         qDebug() << "biometric authentication complete: " << _uid << ret;
-        if(uid == _uid && ret)
+        if(uid == _uid && ret) {
+            qDebug() << "authentication success";
             exit(BIO_SUCCESS);
-        else
-            exit(BIO_FAILED);
+
+        }
     });
 
     connect(widgetBioAuth, &BioAuthWidget::selectDevice,
