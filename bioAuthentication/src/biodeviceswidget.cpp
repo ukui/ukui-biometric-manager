@@ -40,8 +40,9 @@ void BioDevicesWidget::init(uid_t uid)
 
     ui->cmbDeviceTypes->clear();
 
-    for(auto i : devicesMap.keys())
-        ui->cmbDeviceTypes->addItem(bioTypeStrings[i], i);
+    for(auto i : devicesMap.keys()) {
+        ui->cmbDeviceTypes->addItem(BioDevices::bioTypeToString_tr(i), i);
+    }
 
     /* set the default device as current device */
     DeviceInfo *device = bioDevices.getDefaultDevice(uid);

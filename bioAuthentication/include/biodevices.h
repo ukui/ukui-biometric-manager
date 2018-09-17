@@ -42,6 +42,8 @@ public:
     DeviceInfo* getDefaultDevice(uid_t uid);
     DeviceInfo* findDevice(const QString &deviceName);
 
+    static QString bioTypeToString_tr(int type);
+
 private:
     void connectToService();
     void getDevicesList();

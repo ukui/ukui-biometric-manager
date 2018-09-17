@@ -68,6 +68,9 @@ int main(int argc, char *argv[])
     QTranslator translator_main, translator_bio;
     QString qmfile_main = QString("%1/i18n_qm/%2.qm").arg(GET_STR(INSTALL_PATH)).arg(locale);
     QString qmfile_bio = QString("%1/i18n_qm/%2.qm").arg(GET_STR(UKUI_BIOMETRIC)).arg(locale);
+    qDebug() << "load " << qmfile_main;
+    qDebug() << "load " << qmfile_bio;
+
     translator_main.load(qmfile_main);
     translator_bio.load(qmfile_bio);
     agent.installTranslator(&translator_main);

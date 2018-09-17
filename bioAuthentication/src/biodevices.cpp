@@ -152,3 +152,20 @@ DeviceInfo* BioDevices::findDevice(const QString &deviceName)
     qDebug() << deviceName << "doesn't exists";
     return nullptr;
 }
+
+QString BioDevices::bioTypeToString_tr(int type)
+{
+    switch(type) {
+    case BIOTYPE_FINGERPRINT:
+        return tr("FingerPrint");
+    case BIOTYPE_FINGERVEIN:
+        return tr("FingerVein");
+    case BIOTYPE_IRIS:
+        return tr("Iris");
+    case BIOTYPE_FACE:
+        return tr("Face");
+    case BIOTYPE_VOICEPRINT:
+        return tr("VoicePrint");
+    }
+    return QString();
+}

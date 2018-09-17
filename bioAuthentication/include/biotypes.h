@@ -34,8 +34,6 @@
 #endif
 #define LOG() qDebug() << "[BIOMETRIC]"
 
-extern QStringList bioTypeStrings;
-
 /* the type of device */
 enum BioType {
     BIOTYPE_FINGERPRINT,
@@ -93,6 +91,7 @@ Q_DECLARE_METATYPE(DeviceInfo)
 QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &deviceInfo);
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &deviceInfo);
 
+QString bioTypeToString(int type);
 
 
 #endif // BIOCUSTOMTYPE_H
