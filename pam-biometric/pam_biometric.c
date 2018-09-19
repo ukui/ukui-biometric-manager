@@ -113,6 +113,9 @@ void child(char *service, char *username, char *xdisp)
 {
     char *gui = "/bin/ukui-pam-biometric-dialog";
     logger("Child process will be replaced.\n");
+    int fd = open("/dev/null", O_WRONLY);
+    dup2(fd, 2);
+
     execl(gui, "ukui-pam-biometric-dialog",
           "--service", service,
           "--username", username,
