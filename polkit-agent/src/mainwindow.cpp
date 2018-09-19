@@ -213,7 +213,12 @@ void MainWindow::setDetails(const QString &subPid, const QString &callerPid, con
 
 void MainWindow::setPrompt(const QString &text, bool echo)
 {
-    ui->lblPrompt->setText(text);
+    QString prompt = text;
+
+    if(text == "Password: ")
+        prompt = tr("Password: ");
+
+    ui->lblPrompt->setText(prompt);
     ui->lePassword->setEchoMode(echo ? QLineEdit::Normal : QLineEdit::Password);
     switchWidget(PASSWORD);
 }
