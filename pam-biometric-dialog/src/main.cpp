@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     QCommandLineOption serviceOption({"s", "service"}, QObject::tr("Sevice Name"));
     QCommandLineOption displayOption({"x", "display"}, QObject::tr("DISPLAY env"), "display", ":0");
     QCommandLineOption usernameOption({"u", "username"}, QObject::tr("User Name"), "username", "");
-    QCommandLineOption debugOption({"d", "debug"}, QObject::tr("Display debug infomation"));
+    QCommandLineOption debugOption({"d", "debug"}, QObject::tr("Display debug information"));
 
     parser.addOptions({serviceOption, displayOption, usernameOption, debugOption});
     parser.process(a);
