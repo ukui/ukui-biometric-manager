@@ -111,14 +111,14 @@ int call_conversation(pam_handle_t *pamh, int msg_style, char *msg, char *resp)
 /* GUI child process */
 void child(char *service, char *username, char *xdisp)
 {
-    char *gui = "/bin/ukui-pam-biometric-dialog";
+    char *gui = "/bin/bioauth";
     logger("Child process will be replaced.\n");
     int fd = open("/dev/null", O_WRONLY);
     dup2(fd, 2);
 
-    execl(gui, "ukui-pam-biometric-dialog",
+    execl(gui, "bioauth",
           "--service", service,
-          "--username", username,
+          "--user", username,
           "--display", xdisp,
           enable_debug ? "--debug" : "",
           (char *)0);
@@ -390,7 +390,6 @@ int enable_biometric_authentication()
 int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
         const char **argv)
 {
-
     for(int i = 0; i < argc; i++) {
         if(strcmp(argv[i], "debug") == 0) {
             enable_debug = 1;
