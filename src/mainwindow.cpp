@@ -49,6 +49,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	prettify();
 
     initialize();
+    setWindowIcon(QIcon(":/images/assets/logo.png"));
 }
 
 MainWindow::~MainWindow()
