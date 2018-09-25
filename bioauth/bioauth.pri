@@ -11,3 +11,6 @@ SOURCES += \
     $$PWD/src/bioauth.cpp \
     $$PWD/src/biodevices.cpp \
     $$PWD/src/biotypes.cpp
+    
+DEFINES += UKUI_BIOMETRIC=${UKUI_BIOMETRIC} \
+            CONFIG_FILE=${UKUI_BIOMETRIC}/biometric-auth.conf
