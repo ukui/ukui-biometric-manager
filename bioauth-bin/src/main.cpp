@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
     QCommandLineOption serviceOption({"s", "service"}, QObject::tr("Sevice Name"));
     QCommandLineOption displayOption({"x", "display"}, QObject::tr("DISPLAY env"), "display", ":0");
     QCommandLineOption usernameOption({"u", "user"}, QObject::tr("User"), "user", "");
-    QCommandLineOption debugOption({"d", "debug"}, QObject::tr("Display debug infomation"));
+    QCommandLineOption debugOption({"d", "debug"}, QObject::tr("Display debug information"));
     QCommandLineOption deviceOption({"e", "device"}, QObject::tr("Device short name"), "");
 
     parser.addOptions({serviceOption, displayOption, usernameOption, debugOption, deviceOption});

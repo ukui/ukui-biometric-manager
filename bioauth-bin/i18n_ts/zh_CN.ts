@@ -65,7 +65,7 @@
     </message>
     <message>
         <location filename="../src/main.cpp" line="203"/>
-        <source>Display debug infomation</source>
+        <source>Display debug information</source>
         <translation></translation>
     </message>
     <message>
