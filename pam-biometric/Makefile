@@ -28,14 +28,19 @@ install:
 	install -m 644 -D data/biometric-auth.conf $(INSTALL_ROOT)$(UKUI_BIOMETRIC)/biometric-auth.conf
 	install -m 644 -D data/org.freedesktop.plicykit.pkexec.bioctl.policy \
 		$(INSTALL_ROOT)$(POLKIT_ACTION_DIR)/org.freedesktop.plicykit.pkexec.bioctl.policy
+	install -m 644 -D data/org.freedesktop.plicykit.pkexec.biodrvctl.policy \
+		$(INSTALL_ROOT)$(POLKIT_ACTION_DIR)/org.freedesktop.plicykit.pkexec.biodrvctl.policy
 	install -m 755 -D utils/bioctl $(INSTALL_ROOT)/bin/bioctl
+	install -m 755 -D utils/bioctl $(INSTALL_ROOT)/bin/biodrvctl
 
 uninstall:
 	rm -f $(INSTALL_ROOT)$(PAM_MODULE_DIR)/pam_biometric.so
 	rm -f $(INSTALL_ROOT)$(PAM_CONFIGS)/pam-biometric
 	rm -f $(INSTALL_ROOT)$(UKUI_BIOMETRIC)/biometric-auth.conf
 	rm -f $(INSTALL_ROOT)/bin/bioctl
+	rm -f $(INSTALL_ROOT)/bin/biodrvctl
 	rm -f $(INSTALL_ROOT)$(POLKIT_ACTION_DIR)/org.freedesktop.plicykit.pkexec.bioctl.policy
+	rm -f $(INSTALL_ROOT)$(POLKIT_ACTION_DIR)/org.freedesktop.plicykit.pkexec.biodrvctl.policy
 
 clean:
 	rm -f *.o
