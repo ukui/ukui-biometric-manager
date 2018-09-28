@@ -31,7 +31,7 @@ install:
 	install -m 644 -D data/org.freedesktop.plicykit.pkexec.biodrvctl.policy \
 		$(INSTALL_ROOT)$(POLKIT_ACTION_DIR)/org.freedesktop.plicykit.pkexec.biodrvctl.policy
 	install -m 755 -D utils/bioctl $(INSTALL_ROOT)/bin/bioctl
-	install -m 755 -D utils/bioctl $(INSTALL_ROOT)/bin/biodrvctl
+	install -m 755 -D utils/biodrvctl $(INSTALL_ROOT)/bin/biodrvctl
 
 uninstall:
 	rm -f $(INSTALL_ROOT)$(PAM_MODULE_DIR)/pam_biometric.so
