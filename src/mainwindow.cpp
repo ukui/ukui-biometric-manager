@@ -522,12 +522,12 @@ void MainWindow::on_btnStatus_clicked()
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
     if (verificationStatus) {
         process.start("pkexec bioctl disable -u " + environment.value("USER"));
-        process.waitForFinished();
+        process.waitForFinished(-1);
         if (process.exitCode() == 0)
             setVerificationStatus(false);
     } else {
         process.start("pkexec bioctl enable -u " + environment.value("USER"));
-        process.waitForFinished();
+        process.waitForFinished(-1);
         if (process.exitCode() == 0)
             setVerificationStatus(true);
     }
@@ -618,14 +618,14 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
                 + deviceInfo->device_shortname;
         qDebug() << cmd;
         process.start(cmd);
-        process.waitForFinished();
+        process.waitForFinished(-1);
     } else {
         qDebug() << "disable" << deviceInfo->device_shortname;
         cmd = "pkexec biometric-config-tool disable-driver "
                 + deviceInfo->device_shortname;
         qDebug() << cmd;
         process.start(cmd);
-        process.waitForFinished();
+        process.waitForFinished(-1);
     }
     if (process.exitCode() != 0) {
         MessageDialog msgDialog(MessageDialog::Error,
@@ -700,7 +700,7 @@ bool MainWindow::restartService()
     QProcess process;
     QString cmd = QString("pkexec systemctl restart %1").arg(SERVICE);
     process.start(cmd);
-    process.waitForFinished();
+    process.waitForFinished(-1);
     qDebug() << "restart service finished";
     return true;
 }
