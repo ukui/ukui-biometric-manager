@@ -19,7 +19,14 @@
 #include <QApplication>
 #include <QTranslator>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 #define WORKING_DIRECTORY "/usr/share/biometric-manager"
+#define WID_FILE "/tmp/bm.pid"
 
 void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 {
@@ -38,8 +45,38 @@ void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 	qDebug() << "GUI:" << "Get username from command line - " << username;
 }
 
+void checkIsRunning()
+{
+    int fd, len;
+    char buf[32];
+    struct flock lock;
+
+    if( (fd = open(WID_FILE, O_RDWR | O_CREAT, 0666)) == -1){
+        perror("open pid file failed");
+        exit(1);
+    }
+
+    memset(&lock, 0, sizeof(struct flock));
+    lock.l_type = F_WRLCK;
+    lock.l_whence = SEEK_SET;
+
+    if(fcntl(fd, F_SETLK, &lock) < 0) {
+//        perror("fcntl F_SETLK failed");
+        printf("There is already an instance running\n");
+        exit(1);
+    }
+
+    len = snprintf(buf, sizeof(buf), "%d", getpid());
+    ftruncate(fd, 0);
+    if(write(fd, buf, len) != len) {
+        perror("write pid to lock file failed");
+        exit(1);
+    }
+}
 int main(int argc, char *argv[])
 {
+    checkIsRunning();
+
 	QApplication a(argc, argv);
 
 	/* 对中文环境安装翻译 */
@@ -53,6 +90,7 @@ int main(int argc, char *argv[])
 	/* 解析命令行参数 */
 	QMap<QString, QString> argMap;
 	parseArguments(a, argMap);
+
     MainWindow w(argMap.value("username"));
     w.setObjectName("MainWindow");
     w.show();
