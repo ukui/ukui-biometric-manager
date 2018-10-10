@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>930</width>
+    <width>950</width>
     <height>650</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>930</width>
+    <width>950</width>
     <height>650</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>930</width>
+    <width>950</width>
     <height>650</height>
    </size>
   </property>
@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>930</width>
+     <width>950</width>
      <height>50</height>
     </rect>
    </property>
@@ -177,7 +177,7 @@
     <rect>
      <x>0</x>
      <y>50</y>
-     <width>930</width>
+     <width>950</width>
      <height>70</height>
     </rect>
    </property>
@@ -303,7 +303,7 @@
     <rect>
      <x>1</x>
      <y>120</y>
-     <width>928</width>
+     <width>948</width>
      <height>528</height>
     </rect>
    </property>
@@ -575,11 +575,11 @@
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>30</width>
             <height>20</height>
            </size>
           </property>
@@ -594,13 +594,13 @@
            <widget class="QTableWidget" name="tableWidgetDevices">
             <property name="minimumSize">
              <size>
-              <width>724</width>
+              <width>750</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>724</width>
+              <width>750</width>
               <height>16777215</height>
              </size>
             </property>

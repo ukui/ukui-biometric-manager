@@ -28,7 +28,8 @@ SOURCES += src/main.cpp\
     src/treemodel.cpp \
     src/inputdialog.cpp \
     src/messagedialog.cpp \
-    src/aboutdialog.cpp
+    src/aboutdialog.cpp \
+    src/configuration.cpp
 
 
 HEADERS  += src/mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS  += src/mainwindow.h \
     src/treemodel.h \
     src/inputdialog.h \
     src/messagedialog.h \
-    src/aboutdialog.h
+    src/aboutdialog.h \
+    src/configuration.h
 
 
 FORMS    += src/mainwindow.ui \

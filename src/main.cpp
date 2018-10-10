@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 	QTranslator translator;
 	if(locale == "zh_CN") {
 		translator.load(WORKING_DIRECTORY"/i18n_qm/zh_CN.qm");
-		a.installTranslator(&translator);
+        a.installTranslator(&translator);
 	}
 
 	/* 解析命令行参数 */

@@ -25,12 +25,15 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QMenu>
+#include <QCheckBox>
+#include <QSettings>
 #include <unistd.h>
 #include <pwd.h>
 #include "contentpane.h"
 #include "customtype.h"
 #include "messagedialog.h"
 #include "aboutdialog.h"
+#include "configuration.h"
 
 
 #define ICON_SIZE 32
@@ -373,7 +376,7 @@ void MainWindow::getDeviceInfo()
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
         deviceInfosMap[bioTypeToIndex(deviceInfo->biotype)].append(deviceInfo);
 
-        qDebug() << deviceInfo->biotype << deviceInfo->device_shortname << deviceInfo->device_available;
+//        qDebug() << deviceInfo->biotype << deviceInfo->device_shortname << deviceInfo->device_available;
 	}
 }
 
@@ -537,15 +540,28 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
 {
     int deviceType = (currentRow);
     QStringList headerData;
-    headerData << "    " + tr("Device Name") << tr("Status") << "    " + tr("Device Name") << tr("Status");
+    headerData << "    " + tr("Device Name") << tr("Device Status") << tr("Driver Status") << tr("Default")
+               << "    " + tr("Device Name") << tr("Device Status") << tr("Driver Status") << tr("Default");
 
     ui->tableWidgetDevices->clear();
     ui->tableWidgetDevices->setRowCount(0);
-    ui->tableWidgetDevices->setColumnCount(4);
+    ui->tableWidgetDevices->setColumnCount(8);
     ui->tableWidgetDevices->setHorizontalHeaderLabels(headerData);
     ui->tableWidgetDevices->setFocusPolicy(Qt::NoFocus);
-    for(int i = 0; i < headerData.size(); i++)
-        ui->tableWidgetDevices->horizontalHeaderItem(i)->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    for(int i = 0; i < headerData.size(); i++){
+        if(i % 4 == 0)
+            ui->tableWidgetDevices->horizontalHeaderItem(i)->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        else
+            ui->tableWidgetDevices->horizontalHeaderItem(i)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    }
+    ui->tableWidgetDevices->setColumnWidth(0, 100);
+    ui->tableWidgetDevices->setColumnWidth(1, 100);
+    ui->tableWidgetDevices->setColumnWidth(2, 100);
+    ui->tableWidgetDevices->setColumnWidth(3, 80);
+    ui->tableWidgetDevices->setColumnWidth(4, 100);
+    ui->tableWidgetDevices->setColumnWidth(5, 100);
+    ui->tableWidgetDevices->setColumnWidth(6, 100);
+    ui->tableWidgetDevices->setColumnWidth(7, 50);
     int column = 0;
     for(auto deviceInfo : deviceInfosMap[deviceType]) {
         if(bioTypeToIndex(deviceInfo->biotype) == deviceType) {
@@ -555,38 +571,79 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             else
                 row_index--;
 
-            //第一、三列
+            //第一、五列 设备名称
             QTableWidgetItem *item_name = new QTableWidgetItem("   " + deviceInfo->device_shortname);
             item_name->setFlags(item_name->flags() ^ Qt::ItemIsEditable);
             ui->tableWidgetDevices->setItem(row_index, column, item_name);
 
-            //第二、四列
-            QWidget *layoutWidget = new QWidget();
-            if(column+1 == 1) {
-                layoutWidget->setObjectName("layoutWidget");
-                layoutWidget->setStyleSheet("QWidget#layoutWidget{border-right: 1px solid lightgray;}");
+            //第二、六列 设备状态（是否连接）
+            QTableWidgetItem *item_devStatus = new QTableWidgetItem;
+            QString deviceStatus;
+            if(deviceInfo->device_available > 0) {
+                deviceStatus = tr("Connected");
+                item_devStatus->setTextColor(Qt::red);
             }
-            QPushButton *item_status = new QPushButton(this);
-            item_status->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
-            item_status->setFixedSize(40, 20);
-            if(deviceInfo->device_available > 0)
-                item_status->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
             else
-                item_status->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
-            connect(item_status, &QPushButton::clicked, this, &MainWindow::onDeviceStatusClicked);
+                deviceStatus = tr("Unconnected");
+            item_devStatus->setText(deviceStatus);
+            item_devStatus->setFlags(item_name->flags() ^ Qt::ItemIsEditable);
+            item_devStatus->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+            ui->tableWidgetDevices->setItem(row_index, column + 1, item_devStatus);
 
-            QVBoxLayout *layout = new QVBoxLayout(layoutWidget);
-            layout->addWidget(item_status, 0, Qt::AlignVCenter);
+            //第三、七列 驱动状态（是否使能）
+            QWidget *item_drvStatus = new QWidget();
+            QPushButton *btnDrvStatus = new QPushButton(this);
+            btnDrvStatus->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
+            btnDrvStatus->setFixedSize(40, 20);
+            if(deviceInfo->driver_enable > 0)
+                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
+            else
+                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
+            connect(btnDrvStatus, &QPushButton::clicked, this, &MainWindow::onDriverStatusClicked);
+
+            QVBoxLayout *layout = new QVBoxLayout(item_drvStatus);
+            layout->addWidget(btnDrvStatus, 0, Qt::AlignVCenter | Qt::AlignHCenter);
             layout->setMargin(0);
-            layoutWidget->setLayout(layout);
-            ui->tableWidgetDevices->setCellWidget(row_index, column+1, layoutWidget);
+            item_drvStatus->setLayout(layout);
+            ui->tableWidgetDevices->setCellWidget(row_index, column + 2, item_drvStatus);
 
-            column = (column+2) % 4;
+            //第四、八列 默认设备（是否设为默认设备）
+            QWidget *item_default = new QWidget(ui->tableWidgetDevices);
+            item_default->setObjectName("itemDefalut");
+            if(column == 0)
+                item_default->setStyleSheet("#itemDefalut{border-right: 1px solid lightgray; }");
+            QCheckBox *cbDefault = new QCheckBox(this);
+
+            if(Configuration::instance()->getDefaultDevice() == deviceInfo->device_shortname)
+                cbDefault->setChecked(true);
+            btnGroup.push_back(cbDefault);
+            cbDefault->setObjectName("cb_" + deviceInfo->device_shortname);
+            connect(cbDefault, &QCheckBox::clicked, this, &MainWindow::onDefaultDeviceChanged);
+            connect(Configuration::instance(), &Configuration::defaultDeviceChanged,
+                    this, [&](const QString &deviceName) {
+                QString objName = "cb_" + deviceName;
+                QCheckBox *check = findChild<QCheckBox*>(objName);
+                if(check) {
+                    check->setChecked(true);
+                }
+                else {
+                    for(auto btn : btnGroup)
+                        btn->setChecked(false);
+                }
+            });
+
+            QHBoxLayout *layout_default = new QHBoxLayout;
+            layout_default->addWidget(cbDefault);
+            layout_default->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+            item_default->setLayout(layout_default);
+            ui->tableWidgetDevices->setCellWidget(row_index, column + 3, item_default);
+
+            column = (column + 4) % 8;
         }
     }
 }
 
-void MainWindow::onDeviceStatusClicked()
+void MainWindow::onDriverStatusClicked()
 {
     QString objNameStr = sender()->objectName();
     qDebug() << objNameStr;
@@ -607,21 +664,37 @@ void MainWindow::onDeviceStatusClicked()
     changeDeviceStatus(deviceInfo);
 }
 
+void MainWindow::onDefaultDeviceChanged(bool checked)
+{
+    QString objName = sender()->objectName();
+    QString deviceName = objName.split("_").at(1);
+
+    for(auto cb : btnGroup)
+        if(cb != sender())
+            cb->setChecked(false);
+
+    if(checked)
+        Configuration::instance()->setDefaultDevice(deviceName);
+    else
+        Configuration::instance()->setDefaultDevice("");
+}
+
+
 bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
 {
-    bool toEnable = deviceInfo->device_available <= 0 ? true : false;
+    bool toEnable = deviceInfo->driver_enable <= 0 ? true : false;
     QProcess process;
     QString cmd;
     if (toEnable) {
         qDebug() << "enable" << deviceInfo->device_shortname;
-        cmd = "pkexec biometric-config-tool enable-driver "
+        cmd = "pkexec biodrvctl enable " //"pkexec biometric-config-tool enable-driver "
                 + deviceInfo->device_shortname;
         qDebug() << cmd;
         process.start(cmd);
         process.waitForFinished(-1);
     } else {
         qDebug() << "disable" << deviceInfo->device_shortname;
-        cmd = "pkexec biometric-config-tool disable-driver "
+        cmd = "pkexec biodrvctl disable " //"pkexec biometric-config-tool disable-driver "
                 + deviceInfo->device_shortname;
         qDebug() << cmd;
         process.start(cmd);
@@ -634,19 +707,19 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
         msgDialog.exec();
         return false;
     }
-    MessageDialog msgDialog(MessageDialog::Question,
-                            tr("Restart Service"),
-                            tr("The configuration has been modified. "
-                               "Restart the service immediately to make it effecitve?"));
-    msgDialog.setOkText(tr("  Restart immediately  "));
-    msgDialog.setCancelText(tr("  Restart later  "));
-    int status = msgDialog.exec();
-    if(status == MessageDialog::Rejected) {
-        return false;
-    } else {
-        if(!restartService())
-            return false;
-    }
+//    MessageDialog msgDialog(MessageDialog::Question,
+//                            tr("Restart Service"),
+//                            tr("The configuration has been modified. "
+//                               "Restart the service immediately to make it effecitve?"));
+//    msgDialog.setOkText(tr("  Restart immediately  "));
+//    msgDialog.setCancelText(tr("  Restart later  "));
+//    int status = msgDialog.exec();
+//    if(status == MessageDialog::Rejected) {
+//        return false;
+//    } else {
+//        if(!restartService())
+//            return false;
+//    }
 
     updateDevice();
 
@@ -657,31 +730,31 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
      * disabled the driver, the device must can't be used and therefor we
      * don't need to query device info from DBus.
      */
-    if(toEnable) {
-updateStatus:
-        QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
-        if(reply.type() == QDBusMessage::ErrorMessage)
-            qDebug() << "UpdateStatus error: " << reply.errorMessage();
+//    if(toEnable) {
+//updateStatus:
+//        QDBusMessage reply = serviceInterface->call("UpdateStatus", deviceInfo->device_id);
+//        if(reply.type() == QDBusMessage::ErrorMessage)
+//            qDebug() << "UpdateStatus error: " << reply.errorMessage();
 
-        //等待服务重启后DBus启动
-        if(reply.arguments().length() < 3) {
-            usleep(200000);
-            goto updateStatus;
-        }
+//        //等待服务重启后DBus启动
+//        if(reply.arguments().length() < 3) {
+//            usleep(200000);
+//            goto updateStatus;
+//        }
 
-        int result = reply.arguments().at(0).toInt();
-        deviceInfo->device_available = reply.arguments().at(2).toInt();
+//        int result = reply.arguments().at(0).toInt();
+//        deviceInfo->device_available = reply.arguments().at(2).toInt();
 
-        if(result == DBUS_RESULT_NOSUCHDEVICE){
-            MessageDialog msgDialog(MessageDialog::Error,
-                                    tr("Error"),
-                                    tr("Device is not connected"));
-            msgDialog.exec();
-            return false;
-        }
-    } else {
-        deviceInfo->device_available = 0;
-    }
+//        if(result == DBUS_RESULT_NOSUCHDEVICE){
+//            MessageDialog msgDialog(MessageDialog::Error,
+//                                    tr("Error"),
+//                                    tr("Device is not connected"));
+//            msgDialog.exec();
+//            return false;
+//        }
+//    } else {
+//        deviceInfo->device_available = 0;
+//    }
 
     return true;
 }

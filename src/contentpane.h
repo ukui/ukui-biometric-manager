@@ -47,7 +47,6 @@ private slots:
 	void on_btnSearch_clicked();
     void on_btnClean_clicked();
     void on_btnStatus_clicked();
-    void on_btnDefault_clicked();
     void on_treeView_doubleClicked(const QModelIndex &);
 
 /* Normal functions */
@@ -75,6 +74,8 @@ private slots:
 	void errorCallback(QDBusError error);
 
 /* Members */
+    void on_cbDefault_clicked(bool checked);
+
 private:
 	Ui::ContentPane *ui;
 	/* 用于和远端 DBus 对象交互的代理接口 */
