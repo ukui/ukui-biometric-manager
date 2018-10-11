@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 #include <QMovie>
 #include <QFile>
+#include <QDir>
 #include <QPainter>
 #include <QPixmap>
 #include <QFontMetrics>
@@ -164,6 +165,19 @@ void MainWindow::on_btnBioAuth_clicked()
 
 void MainWindow::setIcon(const QString &iconName)
 {
+    QIcon::setThemeName("ukui-icon-theme");
+    if(!QIcon::hasThemeIcon("dialog-password")) {
+        QDir iconsDir("/usr/share/icons");
+        auto themesList = iconsDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+        qDebug() << themesList;
+        for(auto theme : themesList) {
+            QIcon::setThemeName(theme);
+            if(QIcon::hasThemeIcon("dialog-password")) {
+                qDebug() << theme << "has dialog-password";
+                break;
+            }
+        }
+    }
     QPixmap icon = QIcon::fromTheme("dialog-password").pixmap(64, 64);
     QPixmap actionIcon = QIcon::fromTheme(iconName).pixmap(32, 32);
     QPainter painter;

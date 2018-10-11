@@ -24,6 +24,7 @@ install: install-pam install-bin install-images install-polkit
 install-pam:
 	# install pam-biometric
 	$(MAKE) -C pam-biometric install $(PATH_ARGS)
+	$(MAKE) -C bioauth install $(PATH_ARGS)
 
 install-bin:
 	# install bioauth-bin
@@ -43,6 +44,7 @@ uninstall: uninstall-pam uninstall-bin uninstall-images uninstall-polkit
 uninstall-pam:
 	# uninstall pam-biometric
 	$(MAKE) -c pam-biometric uninstall $(PATH_ARGS)
+	$(MAKE) -c bioauth uninstall $(PATH_ARGS)
 
 uninstall-bin:
 	# uninstall bioauth-bin

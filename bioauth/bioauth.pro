@@ -37,6 +37,6 @@ TRANSLATIONS += i18n_ts/zh_CN.ts
 system(lrelease i18n_ts/*.ts)
 
 qm_file.files = i18n_ts/*.qm
-qm_file.path = ${DESTDIR_PAM}${UKUI_BIOMETRIC}/i18n_qm/
+qm_file.path = /${UKUI_BIOMETRIC}/i18n_qm/
 
 INSTALLS += qm_file
