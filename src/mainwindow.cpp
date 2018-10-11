@@ -643,7 +643,7 @@ void MainWindow::onDriverStatusClicked()
 {
     QString objNameStr = sender()->objectName();
     qDebug() << objNameStr;
-    int spliter = objNameStr.indexOf('_');
+    int spliter = objNameStr.lastIndexOf('_');
     QString deviceName = objNameStr.left(spliter);
     int deviceType = objNameStr.right(objNameStr.length() - spliter - 1).toInt();
 
