@@ -210,6 +210,9 @@ void MainWindow::initialize()
     connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
 
     ui->btnDashBoard->click();
+
+    connect(serviceInterface, SIGNAL(USBDeviceHotPlug(int, int, int)),
+            this, SLOT(onUSBDeviceHotPlug(int,int,int)));
 }
 
 void MainWindow::initSysMenu()
@@ -578,14 +581,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
 
             //第二、六列 设备状态（是否连接）
             QTableWidgetItem *item_devStatus = new QTableWidgetItem;
-            QString deviceStatus;
-            if(deviceInfo->device_available > 0) {
-                deviceStatus = tr("Connected");
-                item_devStatus->setTextColor(Qt::red);
-            }
-            else
-                deviceStatus = tr("Unconnected");
-            item_devStatus->setText(deviceStatus);
+            setDeviceStatus(item_devStatus, deviceInfo->device_available > 0);
             item_devStatus->setFlags(item_name->flags() ^ Qt::ItemIsEditable);
             item_devStatus->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
             ui->tableWidgetDevices->setItem(row_index, column + 1, item_devStatus);
@@ -857,4 +853,43 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
         }
         lw->setCurrentRow(index);
     }
+}
+
+void MainWindow::onUSBDeviceHotPlug(int drvid, int action, int devNumNow)
+{
+    qDebug() << drvid << action << devNumNow;
+    for(int type : deviceInfosMap.keys()) {
+        auto &deviceInfoList = deviceInfosMap[type];
+        for(int i = 0; i < deviceInfoList.size(); i++) {
+            auto deviceInfo = deviceInfoList[i];
+            if(deviceInfo->device_id == drvid) {
+                qDebug() << deviceInfo->device_shortname;
+                int row = i / 2;
+                int column = i % 2 == 0 ? 1 : 5;
+                //更新表中的设备状态
+                QTableWidgetItem *item = ui->tableWidgetDevices->item(row, column);
+                setDeviceStatus(item, devNumNow > 0);
+                //更新标签页中的设备状态
+                ContentPane *pane = contentPaneMap[deviceInfo->device_shortname];
+                pane->setDeviceAvailable(devNumNow);
+                //更新结构体
+                deviceInfo->device_available = devNumNow;
+                return;
+            }
+        }
+    }
+}
+
+void MainWindow::setDeviceStatus(QTableWidgetItem *item, bool connected)
+{
+    QString deviceStatus;
+    if(connected) {
+        deviceStatus = tr("Connected");
+        item->setTextColor(Qt::red);
+    }
+    else {
+        deviceStatus = tr("Unconnected");
+        item->setTextColor(Qt::black);
+    }
+    item->setText(deviceStatus);
 }

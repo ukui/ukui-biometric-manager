@@ -69,6 +69,11 @@ void ContentPane::setModel()
 
 void ContentPane::setDeviceAvailable(int deviceAvailable)
 {
+    if(deviceAvailable) {
+        ui->lblDevStatus->setText(tr("Connected"));
+    } else {
+        ui->lblDevStatus->setText(tr("Unconnected"));
+    }
     deviceInfo->device_available = deviceAvailable;
 	updateWidgetStatus();
 }

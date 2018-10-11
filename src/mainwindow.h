@@ -57,6 +57,7 @@ private slots:
     void onDriverStatusClicked();
     void onDefaultDeviceChanged(bool checked);
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
+    void onUSBDeviceHotPlug(int, int, int);
 
 private:
     void checkServiceExist();
@@ -77,6 +78,7 @@ private:
     bool restartService();
     void updateDevice();
     void updateDeviceListWidget(int biotype);
+    void setDeviceStatus(QTableWidgetItem *item, bool connected);
 
 
 
