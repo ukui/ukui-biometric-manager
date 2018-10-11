@@ -811,11 +811,11 @@ void MainWindow::updateDevice()
     setCursor(Qt::WaitCursor);
     sleep(3);   //wait for service restart and dbus is ready
     getDeviceInfo();
-    on_listWidgetDevicesType_currentRowChanged(0);
+    on_listWidgetDevicesType_currentRowChanged(ui->listWidgetDevicesType->currentRow());
     for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
         for(auto deviceInfo : deviceInfosMap[i]){
             ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
-            contentPane->setDeviceAvailable(deviceInfo->device_available);
+            contentPane->setDeviceInfo(deviceInfo);
             contentPane->showFeatures();
         }
         updateDeviceListWidget(i);

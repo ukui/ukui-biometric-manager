@@ -65,6 +65,7 @@ private:
 
 public:
     void setDeviceAvailable(int deviceAvailable);
+    void setDeviceInfo(DeviceInfo *deviceInfo);
     int featuresCount();
     void showFeatures();
 

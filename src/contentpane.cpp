@@ -67,6 +67,12 @@ void ContentPane::setModel()
     ui->treeView->setFocusPolicy(Qt::NoFocus);
 }
 
+void ContentPane::setDeviceInfo(DeviceInfo *deviceInfo)
+{
+    this->deviceInfo = deviceInfo;
+    updateWidgetStatus();
+}
+
 void ContentPane::setDeviceAvailable(int deviceAvailable)
 {
     if(deviceAvailable) {
@@ -75,7 +81,6 @@ void ContentPane::setDeviceAvailable(int deviceAvailable)
         ui->lblDevStatus->setText(tr("Unconnected"));
     }
     deviceInfo->device_available = deviceAvailable;
-	updateWidgetStatus();
 }
 
 int ContentPane::featuresCount()
@@ -87,7 +92,7 @@ int ContentPane::featuresCount()
 
 void ContentPane::updateWidgetStatus()
 {
-    if (deviceInfo->device_available > 0) {
+    if (deviceInfo->driver_enable > 0) {
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_open_small.png);}");
         ui->labelStatusText->setText(tr("Opened"));
 	} else {
