@@ -82,10 +82,10 @@ int main(int argc, char *argv[])
 	/* 对中文环境安装翻译 */
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	if(locale == "zh_CN") {
-		translator.load(WORKING_DIRECTORY"/i18n_qm/zh_CN.qm");
-        a.installTranslator(&translator);
-	}
+    QString qmFile = QString(WORKING_DIRECTORY"/i18n_qm/%1.qm").arg(locale);
+    translator.load(qmFile);
+    a.installTranslator(&translator);
+    qDebug() << "load translation file " << qmFile;
 
 	/* 解析命令行参数 */
 	QMap<QString, QString> argMap;

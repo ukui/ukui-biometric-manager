@@ -55,9 +55,12 @@ FORMS    += src/mainwindow.ui \
 RESOURCES += \
     assets.qrc
 
-TRANSLATIONS += i18n_ts/zh_CN.ts
+TRANSLATIONS += i18n_ts/zh_CN.ts \
+                i18n_ts/fr.ts \
+                i18n_ts/pt.ts \
+                i18n_ts/ru.ts
 
-system("lrelease i18n_ts/zh_CN.ts i18n_ts/zh_CN.qm")
+system("lrelease i18n_ts/*.ts")
 
 qm_file.files = i18n_ts/*.qm
 qm_file.path = $${PREFIX}/i18n_qm/
