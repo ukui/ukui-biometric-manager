@@ -18,6 +18,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QTranslator>
+#include <QDir>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +27,8 @@
 #include <unistd.h>
 
 #define WORKING_DIRECTORY "/usr/share/biometric-manager"
-#define WID_FILE "/tmp/bm.pid"
+const QString PID_DIR = QDir::homePath() + "/.config/ukui-biometric";
+const QString PID_FILE = PID_DIR + "/bm.pid";
 
 void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 {
@@ -51,7 +53,15 @@ void checkIsRunning()
     char buf[32];
     struct flock lock;
 
-    if( (fd = open(WID_FILE, O_RDWR | O_CREAT, 0666)) == -1){
+    QDir dir(PID_DIR);
+    if(!dir.exists()) {
+        if(!dir.mkdir(PID_DIR.toLocal8Bit().data())) {
+            perror("create pid directory failed");
+            exit(1);
+        }
+    }
+    if( (fd = open(PID_FILE.toLocal8Bit().data(),
+                   O_RDWR | O_CREAT, 0666)) == -1){
         perror("open pid file failed");
         exit(1);
     }
