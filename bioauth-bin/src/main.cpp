@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
     QTranslator translator, translator_bin;
     QString qmfile = QString("%1/i18n_qm/%2.qm").arg(GET_STR(UKUI_BIOMETRIC)).arg(locale);
     QString qmfile_bin = QString("%1/bioauth-bin/i18n_qm/%2.qm").arg(GET_STR(UKUI_BIOMETRIC)).arg(locale);
-    //qDebug() << "load translation file " << qmfile << qmfile_bin;
+    qDebug() << "load translation file " << qmfile << qmfile_bin;
     translator.load(qmfile);
     translator_bin.load((qmfile_bin));
     a.installTranslator(&translator);

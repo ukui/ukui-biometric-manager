@@ -33,28 +33,27 @@
 <context>
     <name>BioDevices</name>
     <message>
-        <location filename="../src/biodevices.cpp" line="161"/>
-        <location filename="../src/biodevices.cpp" line="163"/>
+        <location filename="../src/biodevices.cpp" line="168"/>
         <source>FingerPrint</source>
         <translation>指纹</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="165"/>
+        <location filename="../src/biodevices.cpp" line="170"/>
         <source>FingerVein</source>
         <translation>指静脉</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="167"/>
+        <location filename="../src/biodevices.cpp" line="172"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="169"/>
+        <location filename="../src/biodevices.cpp" line="174"/>
         <source>Face</source>
         <translation>人脸</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="171"/>
+        <location filename="../src/biodevices.cpp" line="176"/>
         <source>VoicePrint</source>
         <translation>声纹</translation>
     </message>
@@ -82,9 +81,8 @@
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../src/biodeviceswidget.cpp" line="45"/>
         <source>FingerPrint</source>
-        <translation>指纹</translation>
+        <translation type="vanished">指纹</translation>
     </message>
 </context>
 <context>

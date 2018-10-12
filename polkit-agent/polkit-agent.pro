@@ -45,7 +45,10 @@ DISTFILES += \
     src/main.qss
 
 
-TRANSLATIONS += i18n_ts/zh_CN.ts
+TRANSLATIONS += i18n_ts/zh_CN.ts \
+                i18n_ts/fr.ts \
+                i18n_ts/pt.ts \
+                i18n_ts/ru.ts
 
 system(lrelease i18n_ts/*.ts)
 
