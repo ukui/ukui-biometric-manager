@@ -25,7 +25,8 @@ PKGCONFIG += polkit-qt5-agent-1
 
 HEADERS += \
     src/mainwindow.h \
-    src/PolkitListener.h
+    src/PolkitListener.h \
+    src/sessionmanager.h
 
 FORMS += \
     src/mainwindow.ui
@@ -34,7 +35,8 @@ SOURCES += \
     src/PolkitAgent.cpp \
     src/mainwindow.cpp \
     src/PolkitListener.cpp \
-    generic.cpp
+    src/sessionmanager.cpp \
+    generic.cpp \
 
 RESOURCES += \
     assets.qrc
