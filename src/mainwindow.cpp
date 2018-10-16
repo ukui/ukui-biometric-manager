@@ -825,9 +825,9 @@ void MainWindow::updateDevice()
 
 void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
 {
-    if(column %2 == 1)
+    if(column % 4 != 0)
         return;
-    int index = row * 2 + column / 2;
+    int index = row * 2 + column / 4;
 
     if(index < deviceInfosMap[ui->listWidgetDevicesType->currentRow()].size()) {
         int deviceType = ui->listWidgetDevicesType->currentRow();
