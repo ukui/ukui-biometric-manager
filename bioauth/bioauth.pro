@@ -35,7 +35,8 @@ FORMS += \
 TRANSLATIONS += i18n_ts/zh_CN.ts \
                 i18n_ts/fr.ts \
                 i18n_ts/pt.ts \
-                i18n_ts/ru.ts
+                i18n_ts/ru.ts \
+                i18n_ts/es.ts
 
 system(lrelease i18n_ts/*.ts)
 
