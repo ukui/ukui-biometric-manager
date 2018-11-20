@@ -4,7 +4,6 @@
 #
 #-------------------------------------------------
 
-TRANSLATIONS = i18n_ts/zh_CN.ts
 QT       += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -28,7 +27,8 @@ SOURCES += src/main.cpp\
     src/treemodel.cpp \
     src/inputdialog.cpp \
     src/messagedialog.cpp \
-    src/aboutdialog.cpp
+    src/aboutdialog.cpp \
+    src/configuration.cpp
 
 
 HEADERS  += src/mainwindow.h \
@@ -39,7 +39,8 @@ HEADERS  += src/mainwindow.h \
     src/treemodel.h \
     src/inputdialog.h \
     src/messagedialog.h \
-    src/aboutdialog.h
+    src/aboutdialog.h \
+    src/configuration.h
 
 
 FORMS    += src/mainwindow.ui \
@@ -53,9 +54,13 @@ FORMS    += src/mainwindow.ui \
 RESOURCES += \
     assets.qrc
 
-TRANSLATIONS += i18n_ts/zh_CN.ts
+TRANSLATIONS += i18n_ts/zh_CN.ts \
+                i18n_ts/fr.ts \
+                i18n_ts/pt.ts \
+                i18n_ts/ru.ts \
+                i18n_ts/es.ts
 
-system("lrelease i18n_ts/zh_CN.ts i18n_ts/zh_CN.qm")
+system("lrelease i18n_ts/*.ts")
 
 qm_file.files = i18n_ts/*.qm
 qm_file.path = $${PREFIX}/i18n_qm/

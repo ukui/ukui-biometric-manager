@@ -1,9 +1,27 @@
+/*
+ * Copyright (C) 2018 Tianjin KYLIN Information Technology Co., Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ * 
+**/
 #include "contentpane.h"
 #include "ui_contentpane.h"
 #include <QInputDialog>
 #include "promptdialog.h"
 #include "inputdialog.h"
 #include "messagedialog.h"
+#include "configuration.h"
 
 
 #define ICON_SIZE 32
@@ -49,10 +67,20 @@ void ContentPane::setModel()
     ui->treeView->setFocusPolicy(Qt::NoFocus);
 }
 
+void ContentPane::setDeviceInfo(DeviceInfo *deviceInfo)
+{
+    this->deviceInfo = deviceInfo;
+    updateWidgetStatus();
+}
+
 void ContentPane::setDeviceAvailable(int deviceAvailable)
 {
+    if(deviceAvailable) {
+        ui->lblDevStatus->setText(tr("Connected"));
+    } else {
+        ui->lblDevStatus->setText(tr("Unconnected"));
+    }
     deviceInfo->device_available = deviceAvailable;
-	updateWidgetStatus();
 }
 
 int ContentPane::featuresCount()
@@ -64,7 +92,7 @@ int ContentPane::featuresCount()
 
 void ContentPane::updateWidgetStatus()
 {
-    if (deviceInfo->device_available > 0) {
+    if (deviceInfo->driver_enable > 0) {
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_open_small.png);}");
         ui->labelStatusText->setText(tr("Opened"));
 	} else {
@@ -106,6 +134,7 @@ void ContentPane::showDeviceInfo()
     QString storageType = EnumToString::transferStorageType(deviceInfo->stotype);
     QString identifyType = EnumToString::transferIdentifyType(deviceInfo->idtype);
     QString listName = EnumToString::transferBioType(deviceInfo->biotype) + tr("List");
+    QString devStatus = deviceInfo->device_available > 0 ? tr("Connected") : tr("Unconnected");
 
 	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
 	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
@@ -114,10 +143,18 @@ void ContentPane::showDeviceInfo()
     ui->labelStorageType->setText(storageType);
     ui->labelIdentificationType->setText(identifyType);
     ui->labelListName->setText(listName);
+    ui->lblDevStatus->setText(devStatus);
 
-    ui->labelDefault->hide();
-    ui->btnDefault->hide();
-//    ui->btnDefault->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
+    if(Configuration::instance()->getDefaultDevice() == deviceInfo->device_shortname)
+        ui->cbDefault->setChecked(true);
+
+    connect(Configuration::instance(), &Configuration::defaultDeviceChanged,
+            this, [&](const QString &deviceName) {
+        if(deviceName == deviceInfo->device_shortname)
+            ui->cbDefault->setChecked(true);
+        else
+            ui->cbDefault->setChecked(false);
+    });
 }
 
 void ContentPane::on_btnStatus_clicked()
@@ -125,9 +162,14 @@ void ContentPane::on_btnStatus_clicked()
     Q_EMIT changeDeviceStatus(deviceInfo);
 }
 
-void ContentPane::on_btnDefault_clicked()
+void ContentPane::on_cbDefault_clicked(bool checked)
 {
+    if(checked)
+        Configuration::instance()->setDefaultDevice(deviceInfo->device_shortname);
+    else
+        Configuration::instance()->setDefaultDevice("");
 }
+
 
 
 /**
@@ -478,4 +520,3 @@ QString ContentPane::getErrorMessage(int type, int result)
     }
     return errorMessage;
 }
-
