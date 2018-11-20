@@ -59,9 +59,10 @@ private slots:
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
     void onUSBDeviceHotPlug(int, int, int);
 
+public slots:
+    void onServiceStatusChanged(bool activate);
+
 private:
-    void checkServiceExist();
-	void checkAPICompatibility();
 	void prettify();
     void initSysMenu();
 	void getDeviceInfo();
@@ -104,6 +105,9 @@ private:
 
     QMenu *menu;
     AboutDialog *aboutDlg;
+
+    /* 服务被关闭时提示 */
+    QLabel *lblPrompt;
 };
 
 #endif // MAINWINDOW_H

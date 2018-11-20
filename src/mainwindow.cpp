@@ -46,8 +46,6 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
     dragWindow(false),
     aboutDlg(nullptr)
 {
-    checkServiceExist();
-
 	ui->setupUi(this);
 	prettify();
 
@@ -78,45 +76,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     dragWindow = false;
-}
-
-/*!
- * \brief MainWindow::checkServiceExist
- * 检查生物识别后台服务是否已启动
- */
-void MainWindow::checkServiceExist()
-{
-    QDBusInterface iface("org.freedesktop.DBus", "/", "org.freedesktop.DBus",
-                         QDBusConnection::systemBus());
-    QDBusReply<QStringList> reply = iface.call("ListNames");
-    bool serviceExist = reply.value().contains(DBUS_SERVICE);
-    if(!serviceExist) {
-        MessageDialog msgDialog(MessageDialog::Error,
-                            tr("Fatal Error"),
-                            tr("the biometric-authentication service was not started"));
-        msgDialog.exec();
-        QTimer::singleShot(0, qApp, &QCoreApplication::quit);
-    }
-}
-
-void MainWindow::checkAPICompatibility()
-{
-    QDBusPendingReply<int> reply = serviceInterface->call("CheckAppApiVersion",
-                                                          APP_API_MAJOR, APP_API_MINOR, APP_API_FUNC);
-	reply.waitForFinished();
-	if (reply.isError()) {
-		qDebug() << "GUI:" << reply.error();
-		return;
-	}
-	int result = reply.argumentAt(0).value<int>();
-	if (result != 0) {
-        MessageDialog msgDialog(MessageDialog::Error,
-							tr("Fatal Error"),
-                            tr("API version is not compatible"));
-        msgDialog.exec();
-		/* https://stackoverflow.com/a/31081379/4112667 */
-		QTimer::singleShot(0, qApp, &QCoreApplication::quit);
-	}
 }
 
 void MainWindow::prettify()
@@ -190,8 +149,6 @@ void MainWindow::initialize()
                                           DBUS_INTERFACE,
                                           QDBusConnection::systemBus());
     serviceInterface->setTimeout(2147483647); /* 微秒 */
-
-	checkAPICompatibility();
 
     initSysMenu();
 
@@ -900,4 +857,26 @@ void MainWindow::setDeviceStatus(QTableWidgetItem *item, bool connected)
         item->setTextColor(Qt::black);
     }
     item->setText(deviceStatus);
+}
+
+
+void MainWindow::onServiceStatusChanged(bool activate)
+{
+    if(!activate)
+    {
+        ui->stackedWidgetMain->hide();
+        lblPrompt = new QLabel(this);
+        lblPrompt->setGeometry(ui->stackedWidgetMain->x(),ui->stackedWidgetMain->y(),
+                               ui->stackedWidgetMain->width(),
+                               ui->stackedWidgetMain->height());
+        lblPrompt->setText(tr("The Service is stopped"));
+        lblPrompt->setAlignment(Qt::AlignCenter);
+        lblPrompt->setStyleSheet("QLabel{color: red; font-size: 20px;}");
+        lblPrompt->show();
+    }
+    else
+    {
+        lblPrompt->hide();
+        ui->stackedWidgetMain->show();
+    }
 }

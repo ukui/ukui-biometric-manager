@@ -23,6 +23,7 @@
 #include <QKeyEvent>
 #include <QStandardItemModel>
 #include <pwd.h>
+#include "servicemanager.h"
 
 PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
                            int deviceId, int uid, QWidget *parent)
@@ -54,6 +55,15 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
 
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)),
             this, SLOT(onStatusChanged(int,int)));
+
+    ServiceManager *sm = ServiceManager::instance();
+    connect(sm, &ServiceManager::serviceStatusChanged,
+            this, [&](bool activate){
+        if(!activate)
+        {
+            close();
+        }
+    });
 }
 
 PromptDialog::~PromptDialog()
@@ -310,6 +320,7 @@ void PromptDialog::StopOpsCallBack(const QDBusMessage &reply)
 void PromptDialog::errorCallBack(const QDBusError &error)
 {
     qDebug() << "DBus Error: " << error.message();
+    accept();
 }
 
 void PromptDialog::onStatusChanged(int drvId, int statusType)

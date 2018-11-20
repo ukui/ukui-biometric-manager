@@ -26,6 +26,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include "servicemanager.h"
+#include "messagedialog.h"
+
 #define WORKING_DIRECTORY "/usr/share/biometric-manager"
 const QString PID_DIR = QDir::homePath() + "/.config/ukui-biometric";
 const QString PID_FILE = PID_DIR + "/bm.pid";
@@ -101,9 +104,31 @@ int main(int argc, char *argv[])
 	QMap<QString, QString> argMap;
 	parseArguments(a, argMap);
 
+    ServiceManager *sm = ServiceManager::instance();
+
+    if(!sm->serviceExists())
+    {
+        MessageDialog msgDialog(MessageDialog::Error,
+                                QObject::tr("Fatal Error"),
+                                QObject::tr("the biometric-authentication service was not started"));
+        msgDialog.exec();
+        exit(EXIT_FAILURE);
+    }
+
+    if(!sm->apiCompatible())
+    {
+        MessageDialog msgDialog(MessageDialog::Error,
+                                QObject::tr("Fatal Error"),
+                                QObject::tr("API version is not compatible"));
+        msgDialog.exec();
+        exit(EXIT_FAILURE);
+    }
+
     MainWindow w(argMap.value("username"));
     w.setObjectName("MainWindow");
     w.show();
+    QObject::connect(sm, &ServiceManager::serviceStatusChanged,
+                     &w, &MainWindow::onServiceStatusChanged);
 
 	return a.exec();
 }
