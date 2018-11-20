@@ -81,6 +81,8 @@ void ContentPane::setDeviceAvailable(int deviceAvailable)
         ui->lblDevStatus->setText(tr("Unconnected"));
     }
     deviceInfo->device_available = deviceAvailable;
+    updateWidgetStatus();
+    qDebug() << "status changed:" << ui->lblDevStatus->text();
 }
 
 int ContentPane::featuresCount()

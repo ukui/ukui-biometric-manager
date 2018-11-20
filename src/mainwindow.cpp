@@ -857,23 +857,31 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
 
 void MainWindow::onUSBDeviceHotPlug(int drvid, int action, int devNumNow)
 {
-    qDebug() << drvid << action << devNumNow;
+    qDebug() << "device"<< (action > 0 ? "insert:" : "pull out:");
+    qDebug() << "id:" << drvid;
     for(int type : deviceInfosMap.keys()) {
         auto &deviceInfoList = deviceInfosMap[type];
         for(int i = 0; i < deviceInfoList.size(); i++) {
             auto deviceInfo = deviceInfoList[i];
             if(deviceInfo->device_id == drvid) {
-                qDebug() << deviceInfo->device_shortname;
+                qDebug() << "name:" << deviceInfo->device_shortname;
+
+                //更新结构体
+                deviceInfo->device_available = devNumNow;
+                //更新标签页中的设备状态
+                ContentPane *pane = contentPaneMap[deviceInfo->device_shortname];
+                pane->setDeviceAvailable(devNumNow);
+
+                if(type != ui->listWidgetDevicesType->currentRow())
+                {
+                    return;
+                }
+
                 int row = i / 2;
                 int column = i % 2 == 0 ? 1 : 5;
                 //更新表中的设备状态
                 QTableWidgetItem *item = ui->tableWidgetDevices->item(row, column);
                 setDeviceStatus(item, devNumNow > 0);
-                //更新标签页中的设备状态
-                ContentPane *pane = contentPaneMap[deviceInfo->device_shortname];
-                pane->setDeviceAvailable(devNumNow);
-                //更新结构体
-                deviceInfo->device_available = devNumNow;
                 return;
             }
         }
