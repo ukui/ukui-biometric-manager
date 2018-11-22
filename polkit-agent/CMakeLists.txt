@@ -4,8 +4,6 @@ project(ukui-polkit-agent)
 
 find_package(PolkitQt5-1 REQUIRED 0.103.0)
 
-set(CMAKE_CXX_STANDARD 11)
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)

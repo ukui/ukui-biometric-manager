@@ -8,6 +8,7 @@ set(UKUI_BIOMETRIC_DIR /usr/share/ukui-biometric)
 set(CMAKE_INSTALL_PREFIX /usr)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_CXX_STANDARD 11)
 
 add_compile_options(-fPIC)
 add_definitions(-DUKUI_BIOMETRIC=${UKUI_BIOMETRIC_DIR})
