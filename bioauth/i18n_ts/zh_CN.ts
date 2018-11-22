@@ -11,23 +11,29 @@
     <message>
         <location filename="../src/bioauthwidget.ui" line="49"/>
         <location filename="../src/bioauthwidget.ui" line="90"/>
+        <location filename="../src/bioauthwidget.ui" line="100"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/bioauthwidget.ui" line="127"/>
+        <location filename="../src/bioauthwidget.ui" line="140"/>
         <source>More</source>
         <translation>更多</translation>
     </message>
     <message>
-        <location filename="../src/bioauthwidget.ui" line="140"/>
+        <location filename="../src/bioauthwidget.ui" line="156"/>
         <source>Retry</source>
         <translation>重试</translation>
     </message>
     <message>
-        <location filename="../src/bioauthwidget.ui" line="153"/>
+        <location filename="../src/bioauthwidget.ui" line="172"/>
         <source>Password</source>
         <translation>密码</translation>
+    </message>
+    <message>
+        <location filename="../src/bioauthwidget.cpp" line="105"/>
+        <source>Current Device: </source>
+        <translation>当前设备：</translation>
     </message>
 </context>
 <context>
@@ -71,12 +77,12 @@
         <translation>设备类型：</translation>
     </message>
     <message>
-        <location filename="../src/biodeviceswidget.ui" line="80"/>
+        <location filename="../src/biodeviceswidget.ui" line="83"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/biodeviceswidget.ui" line="115"/>
+        <location filename="../src/biodeviceswidget.ui" line="121"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>

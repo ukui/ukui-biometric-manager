@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->cmbUsers->hide();
     ui->widgetDetails->hide();
-    ui->btnDetails->setIcon(QIcon(":/image/assets/right-arrow.png"));
+    ui->btnDetails->setIcon(QIcon(":/image/assets/arrow_right.svg"));
 
     switchWidget(UNDEFINED);
 }
@@ -122,12 +122,12 @@ void MainWindow::on_btnDetails_clicked()
 {
     if(ui->widgetDetails->isHidden()) {
         ui->widgetDetails->show();
-        ui->btnDetails->setIcon(QIcon(":/image/assets/left-arrow.png"));
+        ui->btnDetails->setIcon(QIcon(":/image/assets/arrow_down.svg"));
 //        resize(width(), height() + ui->widgetDetails->height());
     }
     else {
         ui->widgetDetails->hide();
-        ui->btnDetails->setIcon(QIcon(":/image/assets/right-arrow.png"));
+        ui->btnDetails->setIcon(QIcon(":/image/assets/arrow_right.svg"));
 //        resize(width(), height() - ui->widgetDetails->height());
     }
     adjustSize();
