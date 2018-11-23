@@ -31,8 +31,8 @@
 #define START_COLOR     "\033[1;31m"
 #define RESULT_COLOR    "\033[1;31m"
 #define PROMPT_COLOR    "\033[33m"
-#define NOTIFY_COLOR    "\033[37m"
-#define QUESTION_COLOR  "\033[1;37m"
+#define NOTIFY_COLOR    //"\033[37m"
+#define QUESTION_COLOR  //"\033[1;37m"
 #define RESET_COLOR     "\033[0m"
 
 bool enableDebug;
