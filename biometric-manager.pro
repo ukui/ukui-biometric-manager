@@ -28,7 +28,8 @@ SOURCES += src/main.cpp\
     src/inputdialog.cpp \
     src/messagedialog.cpp \
     src/aboutdialog.cpp \
-    src/configuration.cpp
+    src/configuration.cpp \
+    src/servicemanager.cpp
 
 
 HEADERS  += src/mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS  += src/mainwindow.h \
     src/inputdialog.h \
     src/messagedialog.h \
     src/aboutdialog.h \
-    src/configuration.h
+    src/configuration.h \
+    src/servicemanager.h
 
 
 FORMS    += src/mainwindow.ui \

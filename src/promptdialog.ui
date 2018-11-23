@@ -240,7 +240,11 @@
       </spacer>
      </item>
      <item>
-      <widget class="QTreeView" name="treeViewResult"/>
+      <widget class="QTreeView" name="treeViewResult">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_7">

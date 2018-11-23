@@ -29,6 +29,10 @@
 #define DBUS_PATH "/org/ukui/Biometric"
 #define DBUS_INTERFACE "org.ukui.Biometric"
 
+#define FD_DBUS_SERVICE     "org.freedesktop.DBus"
+#define FD_DBUS_PATH        "/org/freedesktop/DBus"
+#define FD_DBUS_INTERFACE   "org.freedesktop.DBus"
+
 enum BioType {
 	BIOTYPE_FINGERPRINT,
 	BIOTYPE_FINGERVEIN,
