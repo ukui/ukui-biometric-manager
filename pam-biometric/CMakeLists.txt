@@ -30,4 +30,4 @@ install(FILES data/org.freedesktop.plicykit.pkexec.bioctl.policy
     data/org.freedesktop.plicykit.pkexec.biodrvctl.policy
     DESTINATION /usr/share/polkit-1/actions
     )
-install(FILES utils/bioctl utils/biodrvctl DESTINATION bin)
+install(FILES utils/bioctl utils/biodrvctl DESTINATION bin PERMISSIONS ${CONDOR_SCRIPT_PERMS})
