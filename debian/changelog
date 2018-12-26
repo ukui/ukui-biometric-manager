@@ -1,3 +1,23 @@
+ukui-biometric-manager (0.5.11~rc0) juniper; urgency=medium
+
+  * Bugfix: the application crashs if the status of
+    some device change and the status of the device
+    is different from the type of devices displayed
+    in the mainwindow.
+  * Update the feature list if the status of some
+    devices change.
+  * Hide the main widgets and show prompt for service
+    stoppped.
+  * Enhance user experience when enroll, search or verify
+    - Don't start movie before the ops of enroll
+      is authenticated.
+    - Filter out the message received after the
+      end of the ops.
+  * Bugfix: Stop ops after the prompt dialog is
+    closed by press esc key. 
+
+ -- yanghao <yanghao@kylinos.cn>  Wed, 26 Dec 2018 11:05:49 +0800
+
 ukui-biometric-manager (0.5.10~rc1) juniper; urgency=medium
 
   * Make the process a singleton;
