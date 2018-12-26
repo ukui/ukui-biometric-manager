@@ -30,8 +30,6 @@
 #include "messagedialog.h"
 
 #define WORKING_DIRECTORY "/usr/share/biometric-manager"
-const QString PID_DIR = QDir::homePath() + "/.config/ukui-biometric";
-const QString PID_FILE = PID_DIR + "/bm.pid";
 
 void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 {
@@ -47,7 +45,7 @@ void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 	parser.process(app);
 	username = parser.value(usernameOption);
 	argMap.insert("username", username);
-	qDebug() << "GUI:" << "Get username from command line - " << username;
+//	qDebug() << "GUI:" << "Get username from command line - " << username;
 }
 
 void checkIsRunning()
@@ -56,6 +54,10 @@ void checkIsRunning()
     char buf[32];
     struct flock lock;
 
+    const QString PID_DIR = QString("/var/run/user/%1").arg(QString::number(getuid()));
+    const QString PID_FILE = PID_DIR + "/biometric-manager.pid";
+
+    qDebug() << PID_DIR;
     QDir dir(PID_DIR);
     if(!dir.exists()) {
         if(!dir.mkdir(PID_DIR.toLocal8Bit().data())) {
