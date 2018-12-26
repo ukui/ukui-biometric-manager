@@ -4,7 +4,7 @@
 #include <QDebug>
 
 QString Configuration::configFile = QDir::homePath() +
-        "/.config/ukui-biometric/biometric-auth.conf";
+        "/.biometric_auth/ukui_biometric.conf";
 
 Configuration* Configuration::instance_ = new Configuration;
 
