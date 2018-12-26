@@ -25,7 +25,7 @@ set_target_properties(pam_biometric PROPERTIES PREFIX "")
 
 install(TARGETS pam_biometric DESTINATION /lib/security)
 install(FILES pam-configs/pam-biometric DESTINATION /usr/share/pam-configs)
-install(FILES data/biometric-auth.conf DESTINATION ${UKUI_BIOMETRIC_DIR})
+install(FILES data/ukui-biometric.conf DESTINATION /etc/biometric-auth)
 install(FILES data/org.freedesktop.plicykit.pkexec.bioctl.policy
     data/org.freedesktop.plicykit.pkexec.biodrvctl.policy
     DESTINATION /usr/share/polkit-1/actions

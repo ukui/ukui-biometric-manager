@@ -2,8 +2,8 @@
 
 # Usage: bioctl status|enable|disable
 
-CONFIG_DIR=/usr/share/ukui-biometric
-CONFIG_FILE=$CONFIG_DIR/biometric-auth.conf
+CONFIG_DIR=/etc/biometric-auth
+CONFIG_FILE=$CONFIG_DIR/ukui-biometric.conf
 
 function test_privilege()
 {
