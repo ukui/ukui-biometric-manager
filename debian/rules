@@ -2,6 +2,7 @@
 
 export QT_SELECT := qt5
 export NO_PKG_MANGLE=1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 APP_API_MAJOR := 0
 APP_API_MINOR := 11
