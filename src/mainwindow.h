@@ -20,6 +20,7 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
+#include <QCheckBox>
 #include "customtype.h"
 #include "contentpane.h"
 
@@ -53,12 +54,15 @@ private slots:
     void on_listWidgetDevicesType_currentRowChanged(int);
     void on_tableWidgetDevices_cellDoubleClicked(int row, int column);
 
-    void onDeviceStatusClicked();
+    void onDriverStatusClicked();
+    void onDefaultDeviceChanged(bool checked);
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
+    void onUSBDeviceHotPlug(int, int, int);
+
+public slots:
+    void onServiceStatusChanged(bool activate);
 
 private:
-    void checkServiceExist();
-	void checkAPICompatibility();
 	void prettify();
     void initSysMenu();
 	void getDeviceInfo();
@@ -75,6 +79,8 @@ private:
     bool restartService();
     void updateDevice();
     void updateDeviceListWidget(int biotype);
+    void setDeviceStatus(QTableWidgetItem *item, bool connected);
+
 
 
 
@@ -82,6 +88,8 @@ private:
 private:
 	Ui::MainWindow *ui;
     QLabel  *lblStatus;
+    //由于互斥的QButtonGroup会保证至少有一个被选中，所以这里不使用它
+    QList<QCheckBox*> btnGroup;
 	/* 用于和远端 DBus 对象交互的代理接口 */
     QDBusInterface *serviceInterface;
 	int deviceCount;
@@ -97,6 +105,9 @@ private:
 
     QMenu *menu;
     AboutDialog *aboutDlg;
+
+    /* 服务被关闭时提示 */
+    QLabel *lblPrompt;
 };
 
 #endif // MAINWINDOW_H

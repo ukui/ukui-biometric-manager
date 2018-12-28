@@ -23,6 +23,7 @@
 #include <QKeyEvent>
 #include <QStandardItemModel>
 #include <pwd.h>
+#include "servicemanager.h"
 
 PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
                            int deviceId, int uid, QWidget *parent)
@@ -48,12 +49,21 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
 	this->setStyleSheet(styleSheet);
 	qssFile.close();
     ui->treeViewResult->hide();
+    ui->lblImage->setPixmap(getImage(type));
 
     movie = new QMovie(getGif(type));
-    ui->lblImage->setMovie(movie);
 
     connect(serviceInterface, SIGNAL(StatusChanged(int,int)),
             this, SLOT(onStatusChanged(int,int)));
+
+    ServiceManager *sm = ServiceManager::instance();
+    connect(sm, &ServiceManager::serviceStatusChanged,
+            this, [&](bool activate){
+        if(!activate)
+        {
+            close();
+        }
+    });
 }
 
 PromptDialog::~PromptDialog()
@@ -94,7 +104,10 @@ void PromptDialog::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Escape) {
         if(ui->btnClose->isEnabled())
+        {
+            on_btnClose_clicked();
             accept();
+        }
         return;
     }
 }
@@ -189,7 +202,6 @@ int PromptDialog::enroll(int drvId, int uid, int idx, const QString &idxName)
                         SLOT(errorCallBack(const QDBusError &)));
     ops = ENROLL;
 
-    movie->start();
     return exec();
 }
 
@@ -205,6 +217,7 @@ void PromptDialog::enrollCallBack(const QDBusMessage &reply)
     case DBUS_RESULT_SUCCESS: { /* 录入成功 */
         opsResult = SUCESS;
         setPrompt(tr("Enroll successfully"));
+        showClosePrompt();
         break;
     }
     default:
@@ -213,7 +226,6 @@ void PromptDialog::enrollCallBack(const QDBusMessage &reply)
         break;
     }
     ops = IDLE;
-    showClosePrompt();
 }
 
 int PromptDialog::verify(int drvId, int uid, int idx)
@@ -228,7 +240,7 @@ int PromptDialog::verify(int drvId, int uid, int idx)
                         SLOT(errorCallBack(const QDBusError &)));
     ops = VERIFY;
 
-    movie->start();
+//    movie->start();
     return exec();
 }
 
@@ -241,14 +253,15 @@ void PromptDialog::verifyCallBack(const QDBusMessage &reply)
     if(result >= 0) {
         opsResult = SUCESS;
         setPrompt(tr("Verify successfully"));
+        showClosePrompt();
     } else if(result == DBUS_RESULT_NOTMATCH) {
         setPrompt(tr("Not Match"));
+        showClosePrompt();
     } else {
         handleErrorResult(result);
     }
 
     ops = IDLE;
-    showClosePrompt();
 }
 
 int PromptDialog::search(int drvId, int uid, int idxStart, int idxEnd)
@@ -264,7 +277,7 @@ int PromptDialog::search(int drvId, int uid, int idxStart, int idxEnd)
 
     ops = SEARCH;
 
-    movie->start();
+//    movie->start();
     return exec();
 }
 
@@ -310,6 +323,7 @@ void PromptDialog::StopOpsCallBack(const QDBusMessage &reply)
 void PromptDialog::errorCallBack(const QDBusError &error)
 {
     qDebug() << "DBus Error: " << error.message();
+    accept();
 }
 
 void PromptDialog::onStatusChanged(int drvId, int statusType)
@@ -333,6 +347,16 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
             return;
         }
     }
+    else if(ops == IDLE)
+    {
+        return;
+    }
+
+    if(movie->state() != QMovie::Running)
+    {
+        ui->lblImage->setMovie(movie);
+        movie->start();
+    }
 
     QDBusMessage notifyReply = serviceInterface->call("GetNotifyMesg", drvId);
     if(notifyReply.type() == QDBusMessage::ErrorMessage) {
@@ -350,33 +374,15 @@ void PromptDialog::handleErrorResult(int error)
     switch(error) {
     case DBUS_RESULT_ERROR: {
         //操作失败，需要进一步获取失败原因
-        QDBusPendingReply<int, int, int, int, int, int> reply =
-                serviceInterface->call("UpdateStatus", deviceId);
-        reply.waitForFinished();
-        if (reply.isError()) {
-            qDebug() << "DBUS:" << reply.error();
+        QDBusMessage msg = serviceInterface->call("GetOpsMesg", deviceId);
+        if(msg.type() == QDBusMessage::ErrorMessage)
+        {
+            qDebug() << "UpdateStatus error: " << msg.errorMessage();
             setPrompt(tr("D-Bus calling error"));
             return;
         }
-        int opsStatus = reply.argumentAt(OPS_STATUS_INDEX).value<int>();
-        opsStatus = opsStatus % 100;
-        qDebug() << "Ops Error: " << opsStatus;
-        switch(opsStatus) {
-        case OPS_FAILED:
-            setFailed();
-            break;
-        case OPS_ERROR:
-            //设备底层发生了错误
-            setPrompt(tr("Device encounters an error"));
-            break;
-        case OPS_CANCEL:
-            //用户取消了操作，直接返回
-            return;
-        case OPS_TIMEOUT:
-            //超时
-            setPrompt(tr("Operation timeout"));
-            break;;
-        }
+        setPrompt(msg.arguments().at(0).toString());
+        qDebug() << "GetOpsMesg: deviceId--" << deviceId;
         break;
     }
     case DBUS_RESULT_DEVICEBUSY:
@@ -392,6 +398,12 @@ void PromptDialog::handleErrorResult(int error)
         setPrompt(tr("Permission denied"));
         break;
     }
+
+    ui->lblPrompt->setStyleSheet("QLabel{color: red;}");
+    ui->lblImage->setPixmap(getImage(type));
+    qDebug() << QString("Error:(%1)%2")
+                .arg(QString::number(error))
+                .arg(ui->lblPrompt->text());
 }
 
 void PromptDialog::setFailed()
