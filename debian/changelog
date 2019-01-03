@@ -1,3 +1,13 @@
+ukui-biometric-manager (1.0.1-1) unstable; urgency=medium
+
+  * Bugfix:the application gets the auth results but has
+    not yet authenticated.
+  * Add device status display and default device configuration.
+  * Add supporting for usb device hot-plug.
+  * Hide the main widgets and show prompt for service stoppped.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 03 Jan 2019 13:52:41 +0800
+
 ukui-biometric-manager (1.0.0-2) unstable; urgency=medium
 
   * Initial Release. (Closes: #908462)
