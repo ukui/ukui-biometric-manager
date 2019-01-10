@@ -53,6 +53,7 @@ private slots:
     void on_btnStatus_clicked();
     void on_listWidgetDevicesType_currentRowChanged(int);
     void on_tableWidgetDevices_cellDoubleClicked(int row, int column);
+    void on_btnClose_clicked();
 
     void onDriverStatusClicked();
     void onDefaultDeviceChanged(bool checked);
