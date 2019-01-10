@@ -171,7 +171,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/contentpane.ui" line="411"/>
-        <location filename="../src/contentpane.cpp" line="376"/>
+        <location filename="../src/contentpane.cpp" line="375"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -206,94 +206,94 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">设备可用</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="102"/>
+        <location filename="../src/contentpane.cpp" line="101"/>
         <source>Opened</source>
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="105"/>
+        <location filename="../src/contentpane.cpp" line="104"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="80"/>
-        <location filename="../src/contentpane.cpp" line="142"/>
+        <location filename="../src/contentpane.cpp" line="79"/>
+        <location filename="../src/contentpane.cpp" line="141"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="83"/>
-        <location filename="../src/contentpane.cpp" line="142"/>
+        <location filename="../src/contentpane.cpp" line="82"/>
+        <location filename="../src/contentpane.cpp" line="141"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="228"/>
+        <location filename="../src/contentpane.cpp" line="227"/>
         <source>New Feature</source>
         <translation>新的特征</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="229"/>
+        <location filename="../src/contentpane.cpp" line="228"/>
         <source>Please input a name for the feature:</source>
         <translation>请输入特征名称：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="231"/>
+        <location filename="../src/contentpane.cpp" line="230"/>
         <source>Rename Feature</source>
         <translation>特征重命名</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="236"/>
+        <location filename="../src/contentpane.cpp" line="235"/>
         <source>Duplicate feature name</source>
         <translation>特征名称重复</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="238"/>
+        <location filename="../src/contentpane.cpp" line="237"/>
         <source>Empty feature name</source>
         <translation>空的特征名称</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="302"/>
+        <location filename="../src/contentpane.cpp" line="301"/>
         <source>Confirm whether clean all the features?</source>
         <translation>确认是否清除所有特征？</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="303"/>
+        <location filename="../src/contentpane.cpp" line="302"/>
         <source>Confirm Clean</source>
         <translation>确认清空</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="306"/>
+        <location filename="../src/contentpane.cpp" line="305"/>
         <source>Confirm whether delete the features selected?</source>
         <translation>确认是否删除选中的特征？</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="307"/>
+        <location filename="../src/contentpane.cpp" line="306"/>
         <source>Confirm Delete</source>
         <translation>确认删除</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="364"/>
+        <location filename="../src/contentpane.cpp" line="363"/>
         <source>Delete successfully</source>
         <translation>删除成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="377"/>
+        <location filename="../src/contentpane.cpp" line="376"/>
         <source>The result of delete:</source>
         <translation>删除结果：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="402"/>
+        <location filename="../src/contentpane.cpp" line="401"/>
         <source>Clean Failed: </source>
         <translation>清空失败：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="404"/>
+        <location filename="../src/contentpane.cpp" line="403"/>
         <source>Clean successfully</source>
         <translation>清空成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="507"/>
+        <location filename="../src/contentpane.cpp" line="506"/>
         <source>DBus calling error</source>
         <translation>DBus调用发生错误</translation>
     </message>
@@ -310,17 +310,17 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">清空成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="407"/>
+        <location filename="../src/contentpane.cpp" line="406"/>
         <source>Clean Result</source>
         <translation>清空结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="485"/>
+        <location filename="../src/contentpane.cpp" line="484"/>
         <source>Rename Successfully</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="492"/>
+        <location filename="../src/contentpane.cpp" line="491"/>
         <source>Rename Result</source>
         <translation>重命名结果</translation>
     </message>
@@ -417,7 +417,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">列表</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="141"/>
+        <location filename="../src/contentpane.cpp" line="140"/>
         <source>List</source>
         <translation>列表</translation>
     </message>
@@ -438,7 +438,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">特征重命名</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="232"/>
+        <location filename="../src/contentpane.cpp" line="231"/>
         <source>Please input a new name for the feature:</source>
         <translation>请输入特征的新名称：</translation>
     </message>
@@ -467,17 +467,17 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">操作超时</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="515"/>
+        <location filename="../src/contentpane.cpp" line="514"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="519"/>
+        <location filename="../src/contentpane.cpp" line="518"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="523"/>
+        <location filename="../src/contentpane.cpp" line="522"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
@@ -750,19 +750,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="222"/>
-        <location filename="../src/mainwindow.cpp" line="437"/>
+        <location filename="../src/mainwindow.cpp" line="436"/>
         <source>FingerPrint</source>
         <translation>指纹</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="241"/>
-        <location filename="../src/mainwindow.cpp" line="437"/>
+        <location filename="../src/mainwindow.cpp" line="436"/>
         <source>FingerVein</source>
         <translation>指静脉</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="279"/>
-        <location filename="../src/mainwindow.cpp" line="438"/>
+        <location filename="../src/mainwindow.cpp" line="437"/>
         <source>VoicePrint</source>
         <translation>声纹</translation>
     </message>
@@ -773,7 +773,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="442"/>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="458"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
@@ -804,12 +804,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="260"/>
-        <location filename="../src/mainwindow.cpp" line="438"/>
+        <location filename="../src/mainwindow.cpp" line="437"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="658"/>
+        <location filename="../src/mainwindow.cpp" line="657"/>
         <source>Fatal Error</source>
         <translation>错误</translation>
     </message>
@@ -822,75 +822,93 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">API 版本不兼容</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="186"/>
+        <location filename="../src/mainwindow.cpp" line="185"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="453"/>
+        <location filename="../src/mainwindow.cpp" line="452"/>
         <source>Opened</source>
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="454"/>
+        <location filename="../src/mainwindow.cpp" line="453"/>
         <source>Biometric Authentication can take over system authentication processes which include Login, LockScreen, sudo/su and Polkit</source>
         <translation>生物识别可进行系统认证，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="460"/>
+        <location filename="../src/mainwindow.cpp" line="459"/>
         <source>There is no any available biometric device or no features enrolled currently.</source>
         <translation>当前没有可用的生物识别设备，或者当前用户没有录入任何特征。</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="502"/>
         <location filename="../src/mainwindow.cpp" line="503"/>
-        <location filename="../src/mainwindow.cpp" line="504"/>
         <source>Device Name</source>
         <translation>设备名称</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="502"/>
         <location filename="../src/mainwindow.cpp" line="503"/>
-        <location filename="../src/mainwindow.cpp" line="504"/>
         <source>Device Status</source>
         <translation>设备状态</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="502"/>
         <location filename="../src/mainwindow.cpp" line="503"/>
-        <location filename="../src/mainwindow.cpp" line="504"/>
         <source>Driver Status</source>
         <translation>驱动状态</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="502"/>
         <location filename="../src/mainwindow.cpp" line="503"/>
-        <location filename="../src/mainwindow.cpp" line="504"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="852"/>
+        <location filename="../src/mainwindow.cpp" line="851"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="856"/>
+        <location filename="../src/mainwindow.cpp" line="855"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="872"/>
+        <location filename="../src/mainwindow.cpp" line="871"/>
         <source>The Service is stopped</source>
         <translation>服务已关闭</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="888"/>
+        <location filename="../src/mainwindow.cpp" line="892"/>
+        <source>Exit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="889"/>
+        <source>You haven&apos;t set the default device yet.
+Do you want to set it?</source>
+        <translation>您还没有设置默认设备.
+是否现在去设置？</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="891"/>
+        <source>Set up</source>
+        <translation>去设置</translation>
     </message>
     <message>
         <source>Status</source>
         <translation type="vanished">状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="659"/>
+        <location filename="../src/mainwindow.cpp" line="658"/>
         <source>Fail to change device status</source>
         <translation>更该设备状态失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="179"/>
+        <location filename="../src/mainwindow.cpp" line="178"/>
         <source>Restart Service</source>
         <translation>重启服务</translation>
     </message>
@@ -915,12 +933,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">设备未连接</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="478"/>
+        <location filename="../src/mainwindow.cpp" line="477"/>
         <source>Warnning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="479"/>
+        <location filename="../src/mainwindow.cpp" line="478"/>
         <source>There is no available device or no features enrolled</source>
         <translation>没有可用设备或者没有录入特征</translation>
     </message>

@@ -164,7 +164,6 @@ void MainWindow::initialize()
     initDeviceTypeList();
 
     connect(ui->btnMin, &QPushButton::clicked, this, &MainWindow::showMinimized);
-    connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
 
     ui->btnDashBoard->click();
 
@@ -878,5 +877,22 @@ void MainWindow::onServiceStatusChanged(bool activate)
     {
         lblPrompt->hide();
         ui->stackedWidgetMain->show();
+    }
+}
+
+void MainWindow::on_btnClose_clicked()
+{
+    //如果用户没有设置默认设备，则提示
+    if(Configuration::instance()->getDefaultDevice().isEmpty())
+    {
+        MessageDialog dialog(MessageDialog::Question, tr("Exit"),
+                             tr("You haven't set the default device yet.\n"
+                                "Do you want to set it?"));
+        dialog.setOkText(tr("Set up"));
+        dialog.setCancelText(tr("Exit"));
+        if(dialog.exec() == QDialog::Rejected)
+        {
+            close();
+        }
     }
 }
