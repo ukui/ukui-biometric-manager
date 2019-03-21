@@ -1,0 +1,3 @@
+/etc/xdg/*
+/usr/lib/*
+/usr/share/ukui-biometric/i18n_qm/polkit/*.qm

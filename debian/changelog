@@ -1,0 +1,13 @@
+ukui-biometric-auth (1.0.3-1) experimental; urgency=medium
+
+  * Implement auto restart in session.
+  * The dialog of su or sudo is replaced by command output.
+  * Add biodrvctl script to control driver status.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Tue, 16 Oct 2018 09:12:54 +0800
+
+ukui-biometric-auth (1.0.2-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #908469)
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Tue, 25 Sep 2018 15:37:06 +0800
