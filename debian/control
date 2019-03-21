@@ -31,6 +31,7 @@ Depends: policykit-1,
          ${shlibs:Depends},
          ${misc:Depends}
 Suggests: biometric-auth
+Provides: polkit-1-auth-agent
 Description: UKUI authentication agent for PolicyKit-1
  The ukui-polkit package supports general authentication and
  biometric authentication that the service is provided by the
