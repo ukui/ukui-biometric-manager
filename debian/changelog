@@ -1,10 +1,20 @@
 ukui-biometric-auth (1.0.3-1) experimental; urgency=medium
 
-  * Implement auto restart in session.
   * The dialog of su or sudo is replaced by command output.
+  * Autorestart biometric authentication if authentication failed.
+  * Change the path of some config files.
   * Add biodrvctl script to control driver status.
+  * Add fr/pt/ru/es translation.
+  * Add a series of biometric image.
+  * migrate to cmake.
+  * Fix the bug that polit can't load qm file.
+  * Fix the bug that polkit can't load icon.
+  * Fix the bug that polkit doesn't exit when logout.
+  * debian/control:
+   - Now ukui-polkit provides polkit-1-auto-agent.
+   - Bump standards-version to 4.3.0.
 
- -- handsome_feng <jianfengli@ubuntukylin.com>  Tue, 16 Oct 2018 09:12:54 +0800
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 21 Mar 2019 10:55:27 +0800
 
 ukui-biometric-auth (1.0.2-1) unstable; urgency=medium
 
