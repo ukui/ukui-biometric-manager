@@ -1,3 +1,11 @@
+ukui-biometric-auth (1.0.3-2) experimental; urgency=medium
+
+  * Debian/control:
+    - libpam-biometric: Breaks and Replaces ukui-polkit(<<1.0.3)
+      (Closes: #925377)
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Wed, 27 Mar 2019 11:58:32 +0800
+
 ukui-biometric-auth (1.0.3-1) experimental; urgency=medium
 
   * The dialog of su or sudo is replaced by command output.
