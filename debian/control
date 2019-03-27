@@ -20,6 +20,8 @@ Package: libpam-biometric
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: biometric-auth
+Breaks: ukui-polkit (<<1.0.3)
+Replaces: ukui-polkit (<<1.0.3)
 Description: Insertable authentication module for PAM
  The indispensable part for biometric authentication in
  ukui desktop environment.
