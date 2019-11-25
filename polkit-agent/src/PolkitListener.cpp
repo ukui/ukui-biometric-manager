@@ -180,7 +180,9 @@ void PolkitListener::finishObtainPrivilege()
     }
     session.data()->deleteLater();
     if (mainWindow) {
-        delete (mainWindow);
+        //delete (mainWindow);
+	mainWindow->hide();
+	mainWindow->deleteLater();
         mainWindow = NULL;
     }
     this->inProgress = false;
