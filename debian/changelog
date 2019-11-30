@@ -1,3 +1,15 @@
+ukui-biometric-auth (1.0.4-1) unstable; urgency=medium
+
+  * Upload to unstable.
+  * New upstream release.
+  * debian/control:
+    - Bump standards-version to 4.4.1. No changes needed.
+  * debian/{compat,control}:
+    - Use debhelper-compat notation. Bump to DH compat level
+      version 12.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sat, 30 Nov 2019 17:16:35 +0800
+
 ukui-biometric-auth (1.0.3-2) experimental; urgency=medium
 
   * Debian/control:
