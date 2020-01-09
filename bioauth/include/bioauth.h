@@ -46,17 +46,13 @@ signals:
 private slots:
     void onIdentityComplete(QDBusPendingCallWatcher *watcher);
     void onStatusChanged(int deviceId, int statusType);
-    void _startAuth();
 
 private:
     QDBusInterface      *serviceInterface;
 
     qint32              uid;
-    QString             userName;
     DeviceInfo          deviceInfo;
-    bool                isInAuthentication;
-    int                 failedCount;
-    bool                beStopped;
+    bool isInAuthentication;
 };
 
 #endif // BIOAUTH_H

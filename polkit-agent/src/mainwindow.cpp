@@ -27,8 +27,11 @@
 
 #include <sys/types.h>
 #include <pwd.h>
+#include <libintl.h>
+#include <locale.h>
 
 #include "generic.h"
+#define _(string) gettext(string)
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -237,9 +240,36 @@ void MainWindow::setPrompt(const QString &text, bool echo)
     switchWidget(PASSWORD);
 }
 
+QString MainWindow::check_is_pam_message(QString text)
+{
+    if(!(text.startsWith("Authenticated failed, ")&&text.endsWith(" login attemps left")) \
+            &&!(text.startsWith("Account locked ")&&text.endsWith(" fail attempts")))
+        return text;
+
+
+    setlocale(LC_ALL,"");
+    bindtextdomain("Linux-PAM","/usr/share/locale");
+    bind_textdomain_codeset("Linux-PAM","UTF-8");
+    textdomain("Linux-PAM");
+    char*  str;
+    QByteArray ba = text.toLatin1(); // must
+    str=ba.data();
+
+    int a,b;
+    if(sscanf(str,"Authenticated failed, %d login attemps left",&a))
+          sprintf(str,_("Authenticated failed, %d login attemps left"),a);
+
+    if(sscanf(str,"Account locked %d minutes due to %d fail attempts",&a,&b))
+          sprintf(str,_("Account locked %d minutes due to %d fail attempts"),a,b);
+    qDebug()<<"str = "<<str;
+    return QString(str);
+
+}
+
 void MainWindow::setMessage(const QString &text)
 {
-    ui->lblMessage->setText(text);
+    QString message = this->check_is_pam_message(text);
+    ui->lblMessage->setText(message);
 }
 
 void MainWindow::setAuthResult(bool result, const QString &text)
@@ -265,7 +295,11 @@ void MainWindow::clearEdit()
 void MainWindow::switchAuthMode(Mode mode)
 {
     enableBioAuth  = bioDevices.count() > 0;
-
+    
+    int uid = getUid(userName);
+    if(bioDevices.getFeatureCount(uid)<1)
+        enableBioAuth = false;
+    
     switch(mode){
     case PASSWORD:
     {

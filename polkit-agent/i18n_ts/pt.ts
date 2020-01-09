@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt">
+<TS version="2.0" language="pt">
 <context>
     <name>MainWindow</name>
     <message>
@@ -73,6 +73,14 @@
     <message>
         <source>Authentication failure, please try again.</source>
         <translation>Falha de autenticação, por favor, tente novamente.</translation>
+    </message>
+    <message>
+        <source>Account locked %1 minutes due to %2 fail attempts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authentication failure,there are still %1 remaining opportunities</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

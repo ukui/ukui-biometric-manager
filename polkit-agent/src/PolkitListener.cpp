@@ -65,8 +65,13 @@ void PolkitListener::initiateAuthentication(
     QString subjectPid, callerPid;
     PolkitQt1::ActionDescription actionDesc;
 
-    for(auto identity : identities)
-        usersList.append(identity.toString().remove("unix-user:"));
+    QString username = getenv("USER");
+    for(auto identity : identities){
+        if(identity.toString().remove("unix-user:") == username)
+            usersList.prepend(identity.toString().remove("unix-user:"));
+        else
+            usersList.append(identity.toString().remove("unix-user:"));
+    }
 
     subjectPid = details.lookup("polkit.subject-pid");
     callerPid = details.lookup("polkit.caller-pid");
@@ -150,7 +155,40 @@ void PolkitListener::initiateAuthentication(
     wasCancelled = false;
     wasSwitchToBiometric = false;
 
-    startAuthentication();
+    mainWindow->userChanged(usersList.at(0));
+
+}
+
+static
+int get_pam_tally(int *deny, int *unlock_time)
+{
+    char buf[128];
+    FILE *auth_file;
+
+    if( (auth_file = fopen("/etc/pam.d/common-auth", "r")) == NULL)
+        return -1;
+
+    while(fgets(buf, sizeof(buf), auth_file)) {
+        if(strlen(buf) == 0 || buf[0] == '#')
+            continue;
+        if(!strstr(buf, "deny"))
+            continue;
+
+        char *ptr = strtok(buf, " \t");
+        while(ptr) {
+            if(strncmp(ptr, "deny=", 5)==0){
+                sscanf(ptr, "deny=%d", deny);
+                //gs_debug("-------------------- deny=%d", *deny);
+            }
+            if(strncmp(ptr, "unlock_time=", 12)==0){
+                sscanf(ptr, "unlock_time=%d", unlock_time);
+                //gs_debug("-------------------- unlock_time=%d", *unlock_time);
+            }
+            ptr = strtok(NULL, " \t");
+        }
+        return 1;
+    }
+    return 0;
 }
 
 void PolkitListener::finishObtainPrivilege()
@@ -164,15 +202,21 @@ void PolkitListener::finishObtainPrivilege()
                     .arg(gainedAuthorization)
                     .arg(wasCancelled)
                     .arg(mainWindow != NULL);
+
     if (!gainedAuthorization && !wasCancelled && (mainWindow != NULL)) {
-        if(!wasSwitchToBiometric)
-            mainWindow->setAuthResult(gainedAuthorization,
-                                  tr("Authentication failure, please try again."));
-        if (numTries < 3) {
+        int deny = 0, unlock_time = 0;
+        if(!get_pam_tally(&deny, &unlock_time)||(deny  == 0 &&unlock_time == 0)) {
+            if(!wasSwitchToBiometric)
+                mainWindow->setAuthResult(gainedAuthorization, tr("Authentication failure, please try again."));
+            startAuthentication();
+            return;
+        }
+        else {
             startAuthentication();
             return;
         }
     }
+
     if (!session.isNull()) {
     	session.data()->result()->setCompleted();
     } else {
@@ -180,10 +224,9 @@ void PolkitListener::finishObtainPrivilege()
     }
     session.data()->deleteLater();
     if (mainWindow) {
-        //delete (mainWindow);
         mainWindow->hide();
         mainWindow->deleteLater();
-        mainWindow = NULL;
+	mainWindow = NULL;
     }
     this->inProgress = false;
     qDebug() << "Finish obtain authorization:" << gainedAuthorization;
@@ -251,8 +294,11 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
 void PolkitListener::onShowError(const QString &text)
 {
     qDebug() << "[Polkit]:"    << "Error:" << text;
-    if(mainWindow)
+
+    if(mainWindow){
+        qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
         mainWindow->setMessage(text);
+    }
 }
 
 void PolkitListener::onShowInfo(const QString &text)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>MainWindow</name>
     <message>
@@ -15,84 +15,84 @@
     </message>
     <message>
         <source>More</source>
-        <translation type="vanished">更多</translation>
+        <translation type="obsolete">更多</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation type="vanished">重新开始</translation>
+        <translation type="obsolete">重新开始</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="vanished">密码</translation>
+        <translation type="obsolete">密码</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="153"/>
+        <location filename="../src/mainwindow.ui" line="156"/>
         <source>Biometric</source>
         <translation>使用生物识别</translation>
     </message>
     <message>
         <source>DeviceType:</source>
-        <translation type="vanished">设备类型：</translation>
+        <translation type="obsolete">设备类型：</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="vanished">返回</translation>
+        <translation type="obsolete">返回</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="188"/>
+        <location filename="../src/mainwindow.ui" line="194"/>
         <source>Details</source>
         <translation>详细</translation>
     </message>
     <message>
         <source>Action Id:</source>
-        <translation type="vanished">动作:</translation>
+        <translation type="obsolete">动作:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="326"/>
+        <location filename="../src/mainwindow.ui" line="332"/>
         <source>Description:</source>
         <translation>描述：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="245"/>
+        <location filename="../src/mainwindow.ui" line="251"/>
         <source>Polkit.subject-pid:</source>
         <translation>Polkit.subject-pid：</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="vanished">重试</translation>
+        <translation type="obsolete">重试</translation>
     </message>
     <message>
         <source>Device types:</source>
-        <translation type="vanished">设备类型：</translation>
+        <translation type="obsolete">设备类型：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="268"/>
+        <location filename="../src/mainwindow.ui" line="274"/>
         <source>Vendor:</source>
         <translation>发行商：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="359"/>
+        <location filename="../src/mainwindow.ui" line="365"/>
         <source>Action:</source>
         <translation>动作：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="336"/>
+        <location filename="../src/mainwindow.ui" line="342"/>
         <source>Polkit.caller-pid:</source>
         <translation>Polkit.caller-pid：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="398"/>
+        <location filename="../src/mainwindow.ui" line="407"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="411"/>
+        <location filename="../src/mainwindow.ui" line="423"/>
         <source>Authenticate</source>
         <translation>授权</translation>
     </message>
     <message>
         <source>Auth</source>
-        <translation type="vanished">授权</translation>
+        <translation type="obsolete">授权</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="152"/>
@@ -115,7 +115,7 @@
     </message>
     <message>
         <source>_Password:</source>
-        <translation type="vanished">密码：</translation>
+        <translation type="obsolete">密码：</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="250"/>
@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>Authentication failed, please try again</source>
-        <translation type="vanished">认证失败，请重试</translation>
+        <translation type="obsolete">认证失败，请重试</translation>
     </message>
 </context>
 <context>
@@ -135,32 +135,42 @@
         <translation>有另外一个客户端正在认证，请稍后重试。</translation>
     </message>
     <message>
-        <location filename="../src/PolkitListener.cpp" line="170"/>
+        <location filename="../src/PolkitListener.cpp" line="210"/>
         <source>Authentication failure, please try again.</source>
         <translation>认证失败，请重试。</translation>
+    </message>
+    <message>
+        <location filename="../src/PolkitListener.cpp" line="219"/>
+        <source>Account locked %1 minutes due to %2 fail attempts</source>
+        <translation>账户锁定%1分钟由于%2次错误尝试</translation>
+    </message>
+    <message>
+        <location filename="../src/PolkitListener.cpp" line="223"/>
+        <source>Authentication failure,there are still %1 remaining opportunities</source>
+        <translation>认证失败，还剩余%1次尝试机会</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>FingerPrint</source>
-        <translation type="vanished">指纹</translation>
+        <translation type="obsolete">指纹</translation>
     </message>
     <message>
         <source>FingerVein</source>
-        <translation type="vanished">指静脉</translation>
+        <translation type="obsolete">指静脉</translation>
     </message>
     <message>
         <source>Iris</source>
-        <translation type="vanished">虹膜</translation>
+        <translation type="obsolete">虹膜</translation>
     </message>
     <message>
         <source>Face</source>
-        <translation type="vanished">人脸</translation>
+        <translation type="obsolete">人脸</translation>
     </message>
     <message>
         <source>VoicePrint</source>
-        <translation type="vanished">声纹</translation>
+        <translation type="obsolete">声纹</translation>
     </message>
 </context>
 </TS>

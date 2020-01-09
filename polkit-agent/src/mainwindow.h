@@ -55,6 +55,7 @@ private:
     void setPixmap();
     void startBioAuth();
     void switchWidget(Mode mode);
+    QString check_is_pam_message(QString text);
 
 private slots:
     void on_btnDetails_clicked();
