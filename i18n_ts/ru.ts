@@ -295,6 +295,10 @@ p, li { white-space: pre-wrap; }
         <source>Other Identification</source>
         <translation>Другая идентификация</translation>
     </message>
+    <message>
+        <source>Fingervein</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InputDialog</name>
@@ -347,7 +351,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Verification Status:</source>
-        <translation>Биометрический статус проверки:</translation>
+        <translation type="obsolete">Биометрический статус проверки:</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -367,11 +371,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>the biometric-authentication service was not started</source>
-        <translation>служба биометрической аутентификации не была запущена</translation>
+        <translation type="obsolete">служба биометрической аутентификации не была запущена</translation>
     </message>
     <message>
         <source>API version is not compatible</source>
-        <translation>Версия API несовместима</translation>
+        <translation type="obsolete">Версия API несовместима</translation>
     </message>
     <message>
         <source>Restart Service</source>
@@ -391,15 +395,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation>В настоящее время нет никакого доступного биометрического устройства или никаких функций.</translation>
+        <translation type="vanished">В настоящее время нет никакого доступного биометрического устройства или никаких функций.</translation>
     </message>
     <message>
         <source>Warnning</source>
-        <translation>Warnning</translation>
+        <translation type="vanished">Warnning</translation>
     </message>
     <message>
         <source>There is no available device or no features enrolled</source>
-        <translation>Нет доступных устройств или нет зарегистрированных функций</translation>
+        <translation type="vanished">Нет доступных устройств или нет зарегистрированных функций</translation>
     </message>
     <message>
         <source>Device Name</source>
@@ -428,6 +432,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Unconnected</source>
         <translation>несвязанный</translation>
+    </message>
+    <message>
+        <source>The Service is stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System components are certified using biometrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -526,11 +542,11 @@ Please authenticate yourself to continue</source>
     </message>
     <message>
         <source>Device encounters an error</source>
-        <translation>Устройство обнаруживает ошибку</translation>
+        <translation type="obsolete">Устройство обнаруживает ошибку</translation>
     </message>
     <message>
         <source>Operation timeout</source>
-        <translation>Тайм-аут работы</translation>
+        <translation type="obsolete">Тайм-аут работы</translation>
     </message>
     <message>
         <source>Device is busy</source>
@@ -566,6 +582,18 @@ Please authenticate yourself to continue</source>
     <message>
         <source>Username</source>
         <translation>имя пользователя</translation>
+    </message>
+    <message>
+        <source>Fatal Error</source>
+        <translation type="unfinished">Фатальная ошибка</translation>
+    </message>
+    <message>
+        <source>the biometric-authentication service was not started</source>
+        <translation type="unfinished">служба биометрической аутентификации не была запущена</translation>
+    </message>
+    <message>
+        <source>API version is not compatible</source>
+        <translation type="unfinished">Версия API несовместима</translation>
     </message>
 </context>
 <context>

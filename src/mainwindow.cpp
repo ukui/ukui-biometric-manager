@@ -334,10 +334,51 @@ void MainWindow::getDeviceInfo()
 		argument = variant.value<QDBusArgument>();
 		deviceInfo = new DeviceInfo();
 		argument >> *deviceInfo; /* 提取最终的 DeviceInfo 结构体 */
+
         deviceInfosMap[bioTypeToIndex(deviceInfo->biotype)].append(deviceInfo);
 
 //        qDebug() << deviceInfo->biotype << deviceInfo->device_shortname << deviceInfo->device_available;
 	}
+}
+
+void MainWindow::raiseContentPane(DeviceInfo *deviceInfo)
+{
+    if(deviceInfo->device_available<=0)
+        return ;
+
+    QListWidget *lw;
+    QStackedWidget *sw;
+
+    switch(deviceInfo->biotype) {
+    case BIOTYPE_FINGERPRINT:
+        lw = ui->listWidgetFingerPrint;
+        sw = ui->stackedWidgetFingerPrint;
+        break;
+    case BIOTYPE_FINGERVEIN:
+        lw = ui->listWidgetFingerVein;
+        sw = ui->stackedWidgetFingerVein;
+        break;
+    case BIOTYPE_IRIS:
+        lw = ui->listWidgetIris;
+        sw = ui->stackedWidgetIris;
+        break;
+    case BIOTYPE_VOICEPRINT:
+        lw = ui->listWidgetVoicePrint;
+        sw = ui->stackedWidgetVoicePrint;
+        break;
+    }
+
+    for(int i=0;i<lw->count();i++)
+    {
+        if(lw->item(i)->text()==deviceInfo->device_shortname)
+        {
+            QListWidgetItem *item = lw->takeItem(i);
+            lw->insertItem(0,item);
+            QWidget *widget = sw->widget(i);
+            sw->removeWidget(sw->widget(i));
+            sw->insertWidget(0,widget);
+        }
+    }
 }
 
 void MainWindow::addContentPane(DeviceInfo *deviceInfo)
@@ -365,20 +406,24 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
     }
 
     QListWidgetItem *item = new QListWidgetItem(deviceInfo->device_shortname);
+    ContentPane *contentPane = new ContentPane(getuid(), deviceInfo);
 	item->setTextAlignment(Qt::AlignCenter);
-	lw->insertItem(lw->count(), item);
+    if(deviceInfo->device_available==false){
+        lw->insertItem(lw->count(), item);
+        sw->insertWidget(sw->count(),contentPane);
+    }
+    else {
+        lw->insertItem(0,item);
+        sw->insertWidget(0,contentPane);
+    }
     if(deviceInfo->device_available <= 0)
         item->setTextColor(Qt::gray);
 
-    ContentPane *contentPane = new ContentPane(getuid(), deviceInfo);
-	sw->addWidget(contentPane);
     contentPaneMap.insert(deviceInfo->device_shortname, contentPane);
 
     connect(lw, &QListWidget::currentRowChanged, sw, &QStackedWidget::setCurrentIndex);
     connect(contentPane, &ContentPane::changeDeviceStatus, this, &MainWindow::changeDeviceStatus);
 }
-
-
 
 #define checkBiometricPage(biometric) do {				\
 	if (ui->listWidget##biometric->count() >= 1) {			\
@@ -401,6 +446,17 @@ void MainWindow::initBiometricPage()
     checkBiometricPage(FingerPrint);
     checkBiometricPage(FingerVein);
 	checkBiometricPage(Iris);
+    checkBiometricPage(VoicePrint);
+}
+
+void MainWindow::sortContentPane()
+{
+    for(int i = 0; i < __MAX_NR_BIOTYPES; i++)
+        for (auto deviceInfo : deviceInfosMap[i])
+            raiseContentPane(deviceInfo);
+    checkBiometricPage(FingerPrint);
+    checkBiometricPage(FingerVein);
+    checkBiometricPage(Iris);
     checkBiometricPage(VoicePrint);
 }
 
@@ -443,44 +499,32 @@ void MainWindow::initDeviceTypeList()
     ui->listWidgetDevicesType->setCurrentRow(0);
 }
 
+
 void MainWindow::setVerificationStatus(bool status)
 {
-    QString noteText, statusText, statusStyle;
+   QString noteText, statusText, statusStyle;
 
-    verificationStatus = status;
+   verificationStatus = status;
 
-    if (status) {
-        statusText = tr("Opened");
-        noteText = tr("Biometric Authentication can take over system authentication processes "
-                      "which include Login, LockScreen, sudo/su and Polkit");
-        statusStyle = "background:url(:/images/assets/switch_open_large.png)";
-    }
-    else {
-        statusText = tr("Closed");
-        noteText = tr("There is no any available biometric device or no features enrolled currently.");
-        statusStyle = "background:url(:/images/assets/switch_close_large.png)";
-    }
-    ui->lblNote->setText(noteText);
-    ui->lblStatus->setText(statusText);
-    ui->btnStatus->setStyleSheet(statusStyle);
+   if (status) {
+       statusText = tr("Opened");
+       noteText = tr("Biometric Authentication can take over system authentication processes "
+                     "which include Login, LockScreen, sudo/su and Polkit");
+       statusStyle = "background:url(:/images/assets/switch_open_large.png)";
+   }
+   else {
+       statusText = tr("Closed");
+       noteText = tr("Process of using biometrics 1.Confirm that the device is connected \
+2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint");
+       statusStyle = "background:url(:/images/assets/switch_close_large.png)";
+   }
+   ui->lblNote->setText(noteText);
+   ui->lblStatus->setText(statusText);
+   ui->btnStatus->setStyleSheet(statusStyle);
 }
 
 void MainWindow::on_btnStatus_clicked()
 {
-    if(!verificationStatus){
-        int featuresCount = 0;
-        for(auto contentPane :contentPaneMap){
-            featuresCount += contentPane->featuresCount();
-        }
-        qDebug() << "FeatureCount: " << featuresCount;
-        if(featuresCount <= 0){
-            MessageDialog msgDialog(MessageDialog::Error,
-                            tr("Warnning"),
-                            tr("There is no available device or no features enrolled"));
-            msgDialog.exec();
-            return;
-        }
-    }
     QProcess process;
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
     if (verificationStatus) {
@@ -523,6 +567,21 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
     ui->tableWidgetDevices->setColumnWidth(6, 100);
     ui->tableWidgetDevices->setColumnWidth(7, 50);
     int column = 0;
+    
+    while(!btnGroup.isEmpty())
+    {
+           QCheckBox *box = btnGroup.last();
+           btnGroup.removeLast();
+           delete  box;
+    }
+    
+    for(int i=0;i<deviceInfosMap[deviceType].count();i++)
+    {
+        if(deviceInfosMap[deviceType].at(i)->device_available==true)
+        {
+            deviceInfosMap[deviceType].move(i,0);
+        }
+    } 
     for(auto deviceInfo : deviceInfosMap[deviceType]) {
         if(bioTypeToIndex(deviceInfo->biotype) == deviceType) {
             int row_index = ui->tableWidgetDevices->rowCount();
@@ -778,6 +837,7 @@ void MainWindow::updateDevice()
         updateDeviceListWidget(i);
     }
     setCursor(Qt::ArrowCursor);
+     sortContentPane();
 }
 
 void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
@@ -838,11 +898,11 @@ void MainWindow::onUSBDeviceHotPlug(int drvid, int action, int devNumNow)
                 int column = i % 2 == 0 ? 1 : 5;
                 //更新表中的设备状态
                 QTableWidgetItem *item = ui->tableWidgetDevices->item(row, column);
-                setDeviceStatus(item, devNumNow > 0);
                 return;
             }
         }
     }
+    sortContentPane();
 }
 
 void MainWindow::setDeviceStatus(QTableWidgetItem *item, bool connected)

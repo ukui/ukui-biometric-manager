@@ -16,7 +16,7 @@ PREFIX = /usr/share/biometric-manager
 
 TARGET = biometric-manager
 TEMPLATE = app
-
+CONFIG += c++11
 
 SOURCES += src/main.cpp\
     src/mainwindow.cpp \

@@ -80,8 +80,8 @@ private:
     void updateDevice();
     void updateDeviceListWidget(int biotype);
     void setDeviceStatus(QTableWidgetItem *item, bool connected);
-
-
+    void raiseContentPane(DeviceInfo *deviceInfo);
+    void sortContentPane();
 
 
 /* Members */

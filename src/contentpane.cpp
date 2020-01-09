@@ -402,16 +402,17 @@ void ContentPane::on_btnClean_clicked()
     else
         resultString = tr("Clean successfully");
 
-    MessageDialog msgDialog(MessageDialog::Normal);
-    msgDialog.setTitle(tr("Clean Result"));
-    msgDialog.setMessage(resultString);
-    msgDialog.exec();
-
     //如果清除成功，则更新特征列表
     if(result == DBUS_RESULT_SUCCESS) {
         showFeatures();
         updateButtonUsefulness();
     }
+
+    MessageDialog msgDialog(MessageDialog::Normal);
+    msgDialog.setTitle(tr("Clean Result"));
+    msgDialog.setMessage(resultString);
+    msgDialog.exec();
+
 }
 
 /**
