@@ -87,6 +87,8 @@ void BioDevicesWidget::on_cmbDeviceTypes_currentIndexChanged(int index)
     int i = ui->cmbDeviceTypes->itemData(index).toInt();
     for(auto device : devicesMap[i])
         ui->lwDevices->addItem(device.device_shortname);
+    if(ui->lwDevices->currentRow()<0)
+        ui->lwDevices->setCurrentRow(0);
 }
 
 void BioDevicesWidget::onDeviceCountChanged()

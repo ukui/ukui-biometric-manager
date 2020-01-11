@@ -42,7 +42,7 @@ public:
     DeviceInfo* getDefaultDevice(uid_t uid);
     DeviceInfo* findDevice(const QString &deviceName);
     DeviceInfo* getFirstDevice();
-
+    int getFeatureCount(int uid, int indexStart = 0, int indexEnd = -1);
     static QString bioTypeToString_tr(int type);
 
 private:

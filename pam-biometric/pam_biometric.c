@@ -59,6 +59,8 @@ int service_filter(char *service)
     	return 1;
     if (strcmp(service, "sudo") == 0)
     	return 1;
+    if (strcmp(service, "login") == 0)
+        return 1;
     if (strcmp(service, "su") == 0)
     	return 1;
 //    if (strcmp(service, "mate-screensaver") == 0)
@@ -119,7 +121,7 @@ void child(char *service, char *username, char *xdisp)
     execl(gui, "bioauth",
           "--service", service,
           "--user", username,
-          "--display", xdisp,
+    //      "--display", xdisp,
           enable_debug ? "--debug" : "",
           (char *)0);
     /*
@@ -438,6 +440,8 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
     }
     else if (strcmp(service, "sudo") == 0)
         return biometric_auth_independent(pamh, "sudo", 0);
+    else if (strcmp(service, "login") == 0)
+        return biometric_auth_independent(pamh, "login", 0);
     else if (strcmp(service, "su") == 0)
         return biometric_auth_independent(pamh, "su", 0);
 //    else if (strcmp(service, "mate-screensaver") == 0)
