@@ -295,6 +295,10 @@ p, li { white-space: pre-wrap; }
         <source>Other Identification</source>
         <translation>Autre identification</translation>
     </message>
+    <message>
+        <source>Fingervein</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InputDialog</name>
@@ -347,7 +351,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Verification Status:</source>
-        <translation>Statut de vérification biométrique:</translation>
+        <translation type="obsolete">Statut de vérification biométrique:</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -367,11 +371,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>the biometric-authentication service was not started</source>
-        <translation>le service d&apos;authentification biométrique n&apos;a pas été démarré</translation>
+        <translation type="obsolete">le service d&apos;authentification biométrique n&apos;a pas été démarré</translation>
     </message>
     <message>
         <source>API version is not compatible</source>
-        <translation>La version de l&apos;API n&apos;est pas compatible</translation>
+        <translation type="obsolete">La version de l&apos;API n&apos;est pas compatible</translation>
     </message>
     <message>
         <source>Restart Service</source>
@@ -391,15 +395,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation>Il n&apos;y a pas de dispositif biométrique disponible ou aucune fonctionnalité inscrite actuellement.</translation>
+        <translation type="vanished">Il n&apos;y a pas de dispositif biométrique disponible ou aucune fonctionnalité inscrite actuellement.</translation>
     </message>
     <message>
         <source>Warnning</source>
-        <translation>Mise en garde</translation>
+        <translation type="vanished">Mise en garde</translation>
     </message>
     <message>
         <source>There is no available device or no features enrolled</source>
-        <translation>Il n&apos;y a pas d&apos;appareil disponible ou pas de fonctionnalités inscrites</translation>
+        <translation type="vanished">Il n&apos;y a pas d&apos;appareil disponible ou pas de fonctionnalités inscrites</translation>
     </message>
     <message>
         <source>Device Name</source>
@@ -428,6 +432,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Unconnected</source>
         <translation>Sans rapport</translation>
+    </message>
+    <message>
+        <source>The Service is stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System components are certified using biometrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -526,11 +542,11 @@ Please authenticate yourself to continue</source>
     </message>
     <message>
         <source>Device encounters an error</source>
-        <translation>Le périphérique rencontre une erreur</translation>
+        <translation type="obsolete">Le périphérique rencontre une erreur</translation>
     </message>
     <message>
         <source>Operation timeout</source>
-        <translation>Délai d&apos;attente de l&apos;opération</translation>
+        <translation type="obsolete">Délai d&apos;attente de l&apos;opération</translation>
     </message>
     <message>
         <source>Device is busy</source>
@@ -566,6 +582,18 @@ Please authenticate yourself to continue</source>
     <message>
         <source>Username</source>
         <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>Fatal Error</source>
+        <translation type="unfinished">Erreur fatale</translation>
+    </message>
+    <message>
+        <source>the biometric-authentication service was not started</source>
+        <translation type="unfinished">le service d&apos;authentification biométrique n&apos;a pas été démarré</translation>
+    </message>
+    <message>
+        <source>API version is not compatible</source>
+        <translation type="unfinished">La version de l&apos;API n&apos;est pas compatible</translation>
     </message>
 </context>
 <context>

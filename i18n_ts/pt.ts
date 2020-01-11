@@ -295,6 +295,10 @@ p, li { white-space: pre-wrap; }
         <source>Other Identification</source>
         <translation>Outra identificação</translation>
     </message>
+    <message>
+        <source>Fingervein</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InputDialog</name>
@@ -347,7 +351,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Verification Status:</source>
-        <translation>Status de verificação biométrica:</translation>
+        <translation type="obsolete">Status de verificação biométrica:</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -367,11 +371,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>the biometric-authentication service was not started</source>
-        <translation>o serviço de autenticação biométrica não foi iniciado</translation>
+        <translation type="obsolete">o serviço de autenticação biométrica não foi iniciado</translation>
     </message>
     <message>
         <source>API version is not compatible</source>
-        <translation>A versão da API não é compatível</translation>
+        <translation type="obsolete">A versão da API não é compatível</translation>
     </message>
     <message>
         <source>Restart Service</source>
@@ -391,15 +395,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation>Não há nenhum dispositivo biométrico disponível ou nenhum recurso registrado atualmente.</translation>
+        <translation type="vanished">Não há nenhum dispositivo biométrico disponível ou nenhum recurso registrado atualmente.</translation>
     </message>
     <message>
         <source>Warnning</source>
-        <translation>Advertindo</translation>
+        <translation type="vanished">Advertindo</translation>
     </message>
     <message>
         <source>There is no available device or no features enrolled</source>
-        <translation>Não há dispositivo disponível ou nenhum recurso inscrito</translation>
+        <translation type="vanished">Não há dispositivo disponível ou nenhum recurso inscrito</translation>
     </message>
     <message>
         <source>Device Name</source>
@@ -428,6 +432,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Unconnected</source>
         <translation>Desconectado</translation>
+    </message>
+    <message>
+        <source>The Service is stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System components are certified using biometrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -526,11 +542,11 @@ Please authenticate yourself to continue</source>
     </message>
     <message>
         <source>Device encounters an error</source>
-        <translation>O dispositivo encontra um erro</translation>
+        <translation type="obsolete">O dispositivo encontra um erro</translation>
     </message>
     <message>
         <source>Operation timeout</source>
-        <translation>Tempo limite de operação</translation>
+        <translation type="obsolete">Tempo limite de operação</translation>
     </message>
     <message>
         <source>Device is busy</source>
@@ -566,6 +582,18 @@ Please authenticate yourself to continue</source>
     <message>
         <source>Username</source>
         <translation>Nome de usuário</translation>
+    </message>
+    <message>
+        <source>Fatal Error</source>
+        <translation type="unfinished">Erro fatal</translation>
+    </message>
+    <message>
+        <source>the biometric-authentication service was not started</source>
+        <translation type="unfinished">o serviço de autenticação biométrica não foi iniciado</translation>
+    </message>
+    <message>
+        <source>API version is not compatible</source>
+        <translation type="unfinished">A versão da API não é compatível</translation>
     </message>
 </context>
 <context>

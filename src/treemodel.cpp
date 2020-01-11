@@ -367,6 +367,9 @@ void TreeModel::insertData(const FeatureInfo *featureInfo)
             appendData(featureInfo);
         }
     } else {
+        if(parentItems.isEmpty())
+            parentItems[uid_] = rootItem;
+
         int pos = findInsertPosition(featureInfo, rootItem);
         TreeItem *childItem = createItem(pos+1, featureInfo, NORMAL);
 
@@ -483,6 +486,11 @@ bool TreeModel::hasFeature(int uid, const QString &featureName)
         return false;
 
     TreeItem *parent = parentItems[uid];
+    if(isAdmin(uid)) {
+        if(parent->data(2).toString() == featureName)
+            return true;
+    } 
+
     for(int i = 0; i < parent->childCount(); i++)
     {
         TreeItem *child = parent->child(i);

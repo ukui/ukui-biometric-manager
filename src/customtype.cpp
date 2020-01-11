@@ -100,7 +100,7 @@ QString EnumToString::transferBioType(int type)
     case BIOTYPE_FINGERPRINT:
         return tr("FingerPrint");
     case BIOTYPE_FINGERVEIN:
-        return tr("FingerPrint");
+        return tr("Fingervein");
     case BIOTYPE_IRIS:
         return tr("Iris");
     case BIOTYPE_FACE:

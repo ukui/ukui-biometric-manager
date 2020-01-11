@@ -394,7 +394,7 @@
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Biometric Verification Status:</string>
+             <string>System components are certified using biometrics</string>
             </property>
            </widget>
           </item>
