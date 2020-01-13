@@ -36,7 +36,7 @@ BioAuth::BioAuth(qint32 uid, const DeviceInfo &deviceInfo, QObject *parent)
 
 BioAuth::~BioAuth()
 {
-    stopAuth();
+  //  stopAuth();
 }
 
 void BioAuth::setDevice(const DeviceInfo &deviceInfo)
@@ -46,7 +46,7 @@ void BioAuth::setDevice(const DeviceInfo &deviceInfo)
 
 void BioAuth::startAuth()
 {
-    stopAuth();
+//    stopAuth();
 
     /* 开始认证识别 */
     LOG() << "start biometric verification";
