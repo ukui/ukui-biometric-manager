@@ -297,8 +297,8 @@ void MainWindow::switchAuthMode(Mode mode)
     enableBioAuth  = bioDevices.count() > 0;
     
     int uid = getUid(userName);
-    if(bioDevices.getFeatureCount(uid)<1)
-        enableBioAuth = false;
+//    if(bioDevices.getFeatureCount(uid)<1)
+//        enableBioAuth = false;
     
     switch(mode){
     case PASSWORD:
