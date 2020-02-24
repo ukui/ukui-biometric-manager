@@ -11,7 +11,7 @@ Build-Depends: debhelper-compat (= 12),
                qttools5-dev,
                qttools5-dev-tools,
                pkg-config
-Standards-Version: 4.4.1
+Standards-Version: 4.5.0
 Rules-Requires-Root: no
 Homepage: https://github.com/ukui/ukui-biometric-auth
 Vcs-Git: https://github.com/ukui/ukui-biometric.git

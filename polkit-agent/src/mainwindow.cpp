@@ -242,7 +242,7 @@ void MainWindow::setPrompt(const QString &text, bool echo)
 
 QString MainWindow::check_is_pam_message(QString text)
 {
-    if(!(text.startsWith("Authenticated failed, ")&&text.endsWith(" login attemps left")) \
+    if(!(text.startsWith("Authenticated failed, ")&&text.endsWith(" login attempts left")) \
             &&!(text.startsWith("Account locked ")&&text.endsWith(" fail attempts")))
         return text;
 
@@ -256,8 +256,8 @@ QString MainWindow::check_is_pam_message(QString text)
     str=ba.data();
 
     int a,b;
-    if(sscanf(str,"Authenticated failed, %d login attemps left",&a))
-          sprintf(str,_("Authenticated failed, %d login attemps left"),a);
+    if(sscanf(str,"Authenticated failed, %d login attempts left",&a))
+          sprintf(str,_("Authenticated failed, %d login attempts left"),a);
 
     if(sscanf(str,"Account locked %d minutes due to %d fail attempts",&a,&b))
           sprintf(str,_("Account locked %d minutes due to %d fail attempts"),a,b);
