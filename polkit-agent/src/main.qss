@@ -1,21 +1,4 @@
-QPushButton{
-    border:none;
-    outline: none;
-}
-
-#MainWindow{
-    background: white;
-}
-
-#btnPasswdAuth, #btnBioAuth,
-#btnMore, #btnRetry, #btnBack,
-#btnOK{
-    border-bottom: 1px solid #0078d7;
-    color: #0078d7;
-}
-
 #btnCancel, #btnAuth {
-    border: 1px solid gray;
     min-height: 24px;
     min-width: 80px;
 }
@@ -24,12 +7,7 @@ QPushButton{
     icon-size: 14px;
 }
 
-#btnCancel::hover, #btnAuth::hover {
-    border: 1px solid #65b0eb;
-}
-
 #lwDevices {
-    border: 1px solid gray;
 }
 #lwDevices::item {
     height: 30px;
