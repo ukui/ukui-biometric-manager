@@ -24,6 +24,10 @@
 #include "customtype.h"
 #include "contentpane.h"
 
+#define KYLIN_USER_GUIDE_PATH "/"
+#define KYLIN_USER_GUIDE_SERVICE "com.kylinUserGuide.hotel"
+#define KYLIN_USER_GUIDE_INTERFACE "com.guide.hotel"
+
 namespace Ui {
 class MainWindow;
 }
@@ -42,6 +46,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 /* Qt slots */
 private slots:
@@ -82,7 +87,8 @@ private:
     void setDeviceStatus(QTableWidgetItem *item, bool connected);
     void raiseContentPane(DeviceInfo *deviceInfo);
     void sortContentPane();
-
+    void showGuide(QString appName);
+    int daemonIsNotRunning();
 
 /* Members */
 private:

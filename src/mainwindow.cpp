@@ -73,6 +73,42 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_F1) {
+        if(!daemonIsNotRunning()){
+            showGuide("biometric-manager");
+        }
+    }
+}
+
+int MainWindow::daemonIsNotRunning()
+{
+    QString service_name = "com.kylinUserGuide.hotel_" + QString::number(getuid());
+    QDBusConnection conn = QDBusConnection::sessionBus();
+    if (!conn.isConnected())
+        return 0;
+
+    QDBusReply<QString> reply = conn.interface()->call("GetNameOwner", service_name);
+    return reply.value() == "";
+}
+
+
+void MainWindow::showGuide(QString appName)
+{
+    qDebug() << Q_FUNC_INFO << appName;
+
+    QString service_name = "com.kylinUserGuide.hotel_" + QString::number(getuid());
+
+    QDBusInterface *interface = new QDBusInterface(service_name,
+                                                       KYLIN_USER_GUIDE_PATH,
+                                                       KYLIN_USER_GUIDE_INTERFACE,
+                                                       QDBusConnection::sessionBus(),
+                                                       this);
+
+    QDBusMessage msg = interface->call(QStringLiteral("showGuide"),"biometric-manager");
+}
+
 void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
 {
     dragWindow = false;
