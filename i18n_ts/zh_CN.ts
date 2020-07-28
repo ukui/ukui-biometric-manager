@@ -35,7 +35,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征特征的管理等功能。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -59,7 +59,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -129,7 +129,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Type:</source>
-        <translation type="obsolete">生物识别类型：</translation>
+        <translation type="obsolete">生物特征类型：</translation>
     </message>
     <message>
         <location filename="../src/contentpane.ui" line="63"/>
@@ -682,15 +682,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Authentication Status:</source>
-        <translation type="obsolete">生物识别认证状态：</translation>
+        <translation type="obsolete">生物特征认证状态：</translation>
     </message>
     <message>
         <source>Biometric Authentication can take over system authentication processes which include Login, Screensaver, sudo/su and Polkit.</source>
-        <translation type="obsolete">生物识别可接管系统认证过程，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
+        <translation type="obsolete">生物特征可接管系统认证过程，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
         <source>Biometric authentication is enabled only when the biometric identification is opened, existing available devices are turned on and the user has enrolled the feature.</source>
-        <translation type="obsolete">只用当开启了生物识别、存在可用设备而且该用户已经录入了特征才会启用生物识别认证</translation>
+        <translation type="obsolete">只用当开启了生物特征、存在可用设备而且该用户已经录入了特征才会启用生物特征认证</translation>
     </message>
     <message>
         <source>Device Driver Management</source>
@@ -773,7 +773,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Verification Status:</source>
-        <translation type="obsolete">生物识别状态：</translation>
+        <translation type="obsolete">生物特征状态：</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="442"/>
@@ -838,11 +838,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="547"/>
         <source>Biometric Authentication can take over system authentication processes which include Login, LockScreen, sudo/su and Polkit</source>
-        <translation>生物识别可进行系统认证，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
+        <translation>生物特征可进行系统认证，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation type="vanished">当前没有可用的生物识别设备，或者当前用户没有录入任何特征。</translation>
+        <translation type="vanished">当前没有可用的生物特征设备，或者当前用户没有录入任何特征。</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="553"/>

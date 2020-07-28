@@ -1,10 +1,10 @@
 [Desktop Entry]
 Name=Biometric Manager
 Name[tr]=Biyometrik Yönetici
-Name[zh_CN]=生物识别管理工具
+Name[zh_CN]=生物特征管理工具
 Comment=Biometric Manager
 Comment[tr]=Biyometrik Yönetici
-Comment[zh_CN]=生物识别管理工具
+Comment[zh_CN]=生物特征管理工具
 Icon=biometric-manager
 Exec=/usr/bin/biometric-manager
 Keywords=Settings

@@ -25,6 +25,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QMenu>
+#include <QDBusInterface>
 #include <QCheckBox>
 #include <QSettings>
 #include <unistd.h>
@@ -116,7 +117,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
 
 void MainWindow::prettify()
 {
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::WindowCloseButtonHint|Qt::FramelessWindowHint);
 	/* 设置窗口图标 */
     QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
 	/* 设置 CSS */
@@ -934,11 +935,15 @@ void MainWindow::onUSBDeviceHotPlug(int drvid, int action, int devNumNow)
                 int column = i % 2 == 0 ? 1 : 5;
                 //更新表中的设备状态
                 QTableWidgetItem *item = ui->tableWidgetDevices->item(row, column);
+                setDeviceStatus(item, devNumNow > 0);
+                if(devNumNow > 0 ){
+                    sortContentPane();
+                    on_listWidgetDevicesType_currentRowChanged(ui->listWidgetDevicesType->currentRow());
+                }
                 return;
             }
         }
     }
-    sortContentPane();
 }
 
 void MainWindow::setDeviceStatus(QTableWidgetItem *item, bool connected)
