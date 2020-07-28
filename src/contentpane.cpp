@@ -235,6 +235,8 @@ QString ContentPane::inputFeatureName(bool isNew)
             inputDialog->setError(tr("Duplicate feature name"));
         } else if(text.isEmpty()) {
             inputDialog->setError(tr("Empty feature name"));
+        }else if(text.length() > 128){
+            inputDialog->setError(tr("feature name is too long"));
         } else {
             inputDialog->accept();
         }

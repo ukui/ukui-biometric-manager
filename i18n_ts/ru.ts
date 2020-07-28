@@ -212,6 +212,10 @@ p, li { white-space: pre-wrap; }
         <source>Permission denied</source>
         <translation>Доступ запрещен</translation>
     </message>
+    <message>
+        <source>feature name is too long</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EnumToString</name>
