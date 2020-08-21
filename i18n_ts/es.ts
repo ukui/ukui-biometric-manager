@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es">
+<TS version="2.0" language="es">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -28,7 +28,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;! DOCTYPE HTML PUBLIC \ &quot;- // W3C // DTD HTML 4.0 // EN &quot; \ &quot;http: //www.w3.org/TR/REC-html40/strict.dtd &quot;&gt; \ n &lt;html&gt; &lt;head&gt; &lt;meta name = \ &quot;qrichtext &quot; content = \ &quot;1 &quot; /&gt; &lt;style type = \ &quot;text / css &quot;&gt; \ np, li {white-space: pre-wrap; } \ n &lt;/style&gt; &lt;/head&gt; &lt;body style = \ &quot;font-family: &apos;Cantarell&apos;; font-size: 11pt; font-weight: 400; font-style: normal; &quot;&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; font-size: 9pt; &quot;&gt; Biometric Manager es un software de soporte para la gestión de la identificación biométrica que está desarrollado por el equipo de Kylin. Contiene principalmente la gestión de la verificación biométrica, la gestión del servicio biométrico, la gestión del controlador del dispositivo biométrico y la gestión de las características biométricas, etc. &lt;/span&gt; &lt;/p&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; \ &quot;&gt; &lt;span style = &quot; font-family: &apos;Sans Serif&apos;; tamaño de fuente: 9pt ; \ &quot;&gt; &lt;/span&gt; &lt;a name=&quot;textarea-bg-text&quot;&gt; &lt;/a&gt; &lt;span style = &quot; font-family: &apos;Sans Serif&apos;; tamaño de letra: 9pt; \ &quot;&gt; A &lt;/span&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; font-size: 9pt; &quot;&gt; Todas las funciones del software aún se están perfeccionando. Por favor espérenlo. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt; &lt;/html&gt;</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -216,6 +216,14 @@ p, li { white-space: pre-wrap; }
         <source>feature name is too long</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Feature Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the feature you want to verify.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EnumToString</name>
@@ -399,15 +407,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation type="vanished">No hay ningún dispositivo biométrico disponible o no hay funciones registradas actualmente.</translation>
+        <translation type="obsolete">No hay ningún dispositivo biométrico disponible o no hay funciones registradas actualmente.</translation>
     </message>
     <message>
         <source>Warnning</source>
-        <translation type="vanished">Advertencias</translation>
+        <translation type="obsolete">Advertencias</translation>
     </message>
     <message>
         <source>There is no available device or no features enrolled</source>
-        <translation type="vanished">No hay ningún dispositivo disponible o ninguna función inscrita</translation>
+        <translation type="obsolete">No hay ningún dispositivo disponible o ninguna función inscrita</translation>
     </message>
     <message>
         <source>Device Name</source>
@@ -462,7 +470,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation type="obsolete">TextLabel</translation>
     </message>
     <message>
         <source>OK</source>
@@ -485,7 +493,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation type="obsolete">TextLabel</translation>
     </message>
     <message>
         <source>Enroll</source>
