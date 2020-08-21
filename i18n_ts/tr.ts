@@ -28,25 +28,35 @@
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         Biometric Manager, Kylin ekibi tarafından geliştirilen biyometrik tanımlamayı yönetmek için destekleyici bir yazılımdır. Temelde biyometrik doğrulama yönetimi, biyometrik hizmet yönetimi, biyometrik aygıtın sürücü yönetimi ve biyometrik özellik yönetimi vb.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Yazılımın tüm fonksiyonları hala mükemmelleştirilmektedir. Lütfen sabırla bekleyin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/aboutdialog.ui" line="294"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2019-2020 liuyuanpeng &amp;lt;liuyuanpeng@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         Biometric Manager, Kylin ekibi tarafından geliştirilen biyometrik tanımlamayı yönetmek için destekleyici bir yazılımdır. Temelde biyometrik doğrulama yönetimi, biyometrik hizmet yönetimi, biyometrik aygıtın sürücü yönetimi ve biyometrik özellik yönetimi vb.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Yazılımın tüm fonksiyonları hala mükemmelleştirilmektedir. Lütfen sabırla bekleyin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -77,7 +87,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="338"/>
+        <location filename="../src/aboutdialog.ui" line="339"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
@@ -298,7 +308,17 @@ p, li { white-space: pre-wrap; }
         <translation>Silme başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="509"/>
+        <location filename="../src/contentpane.cpp" line="434"/>
+        <source>Feature Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="435"/>
+        <source>Please select the feature you want to verify.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="519"/>
         <source>DBus calling error</source>
         <translation>DBus arama hatası</translation>
     </message>
@@ -320,12 +340,12 @@ p, li { white-space: pre-wrap; }
         <translation>Temizleme Sonucu</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="487"/>
+        <location filename="../src/contentpane.cpp" line="497"/>
         <source>Rename Successfully</source>
         <translation>Yeniden Adlandırma Başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="494"/>
+        <location filename="../src/contentpane.cpp" line="504"/>
         <source>Rename Result</source>
         <translation>Yeniden Adlandırma Sonucu</translation>
     </message>
@@ -472,17 +492,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Operasyon süresi doldu</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="517"/>
+        <location filename="../src/contentpane.cpp" line="527"/>
         <source>Device is busy</source>
         <translation>Aygıt meşgul</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="521"/>
+        <location filename="../src/contentpane.cpp" line="531"/>
         <source>No such device</source>
         <translation>Böyle bir cihaz yok</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="525"/>
+        <location filename="../src/contentpane.cpp" line="535"/>
         <source>Permission denied</source>
         <translation>İzin reddedildi</translation>
     </message>
@@ -949,11 +969,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/messagedialog.ui" line="145"/>
-        <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../src/messagedialog.ui" line="217"/>
         <source>OK</source>
         <translation>Tamam</translation>
@@ -974,12 +989,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/promptdialog.ui" line="77"/>
         <source>PromptDialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/promptdialog.ui" line="138"/>
-        <location filename="../src/promptdialog.ui" line="199"/>
-        <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
@@ -1120,18 +1129,18 @@ Lütfen devam etmek için kendinizi doğrulayın</translation>
         <translation>Kullanıcı Adı</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="145"/>
-        <location filename="../src/main.cpp" line="154"/>
+        <location filename="../src/main.cpp" line="141"/>
+        <location filename="../src/main.cpp" line="150"/>
         <source>Fatal Error</source>
         <translation>Ölümcül Hata</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="146"/>
+        <location filename="../src/main.cpp" line="142"/>
         <source>the biometric-authentication service was not started</source>
         <translation>biyometrik kimlik doğrulama hizmeti başlatılmadı</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="155"/>
+        <location filename="../src/main.cpp" line="151"/>
         <source>API version is not compatible</source>
         <translation>API sürümü uyumlu değil</translation>
     </message>
