@@ -242,7 +242,7 @@ void MainWindow::setPrompt(const QString &text, bool echo)
 
 QString MainWindow::check_is_pam_message(QString text)
 {
-    if(!(text.startsWith("Authenticated failed, ")&&text.endsWith(" login attempts left")) \
+    if(!(text.startsWith("Authenticated failed, ")&&text.endsWith(" login attemps left")) \
             &&!(text.startsWith("Account locked ")&&text.endsWith(" fail attempts")))
         return text;
 
@@ -256,8 +256,8 @@ QString MainWindow::check_is_pam_message(QString text)
     str=ba.data();
 
     int a,b;
-    if(sscanf(str,"Authenticated failed, %d login attempts left",&a))
-          sprintf(str,_("Authenticated failed, %d login attempts left"),a);
+    if(sscanf(str,"Authenticated failed, %d login attemps left",&a))
+          sprintf(str,_("Authenticated failed, %d login attemps left"),a);
 
     if(sscanf(str,"Account locked %d minutes due to %d fail attempts",&a,&b))
           sprintf(str,_("Account locked %d minutes due to %d fail attempts"),a,b);
@@ -297,8 +297,8 @@ void MainWindow::switchAuthMode(Mode mode)
     enableBioAuth  = bioDevices.count() > 0;
     
     int uid = getUid(userName);
-//    if(bioDevices.getFeatureCount(uid)<1)
-//        enableBioAuth = false;
+    if(bioDevices.getFeatureCount(uid)<1)
+        enableBioAuth = false;
     
     switch(mode){
     case PASSWORD:
@@ -321,7 +321,12 @@ void MainWindow::switchAuthMode(Mode mode)
         if(authMode == PASSWORD) {
             emit accept(BIOMETRIC_IGNORE);
             break;
-        } else if(authMode == BIOMETRIC) {
+        }else if(!enableBioAuth){
+	    qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
+            emit accept(BIOMETRIC_IGNORE);
+            switchAuthMode(PASSWORD);
+	} 
+	else if(authMode == BIOMETRIC) {
             DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
             if(!device)
                 device = bioDevices.getFirstDevice();
@@ -389,7 +394,8 @@ void MainWindow::switchWidget(Mode mode)
         setMinimumWidth(420);
         ui->widgetPasswdAuth->show();
         ui->lePassword->setFocus();
-        ui->btnAuth->show();
+        ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
+	ui->btnAuth->show();
         break;
     case BIOMETRIC:
         setMaximumWidth(380);

@@ -240,6 +240,8 @@ int main(int argc, char *argv[])
     DeviceInfo *deviceInfo = bioDevices.getDefaultDevice(uid);
     if(!deviceInfo)
         exit(BIO_ERROR);
+    if(bioDevices.getFeatureCount(uid)<1)
+	exit(BIO_ERROR);
 
     showMessage(QObject::tr("BIOMETRIC AUTHENTICATION"), START);
     showMessage(QObject::tr("Press Q or Esc to cancel"), PROMPT);
