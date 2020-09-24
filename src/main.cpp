@@ -35,7 +35,7 @@
 void parseArguments(QApplication &app, QMap<QString, QString> &argMap)
 {
 	QApplication::setApplicationName("Biometric Manager");
-    QApplication::setWindowIcon(QIcon(":/images/assets/logo.png"));
+    	QApplication::setWindowIcon(QIcon::fromTheme("biometric-manager"));
 	QCommandLineParser parser;
 	parser.addHelpOption();
 	QString username;

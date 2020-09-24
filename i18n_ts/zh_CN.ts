@@ -882,7 +882,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainwindow.cpp" line="755"/>
         <source>Fail to change device status</source>
-        <translation>更该设备状态失败</translation>
+        <translation>更改设备状态失败</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="216"/>

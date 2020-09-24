@@ -51,7 +51,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	prettify();
 
     initialize();
-    setWindowIcon(QIcon(":/images/assets/logo.png"));
+    setWindowIcon(QIcon::fromTheme("biometric-manager"));
 }
 
 MainWindow::~MainWindow()
@@ -119,7 +119,7 @@ void MainWindow::prettify()
 {
     setWindowFlags(Qt::WindowCloseButtonHint|Qt::FramelessWindowHint);
 	/* 设置窗口图标 */
-    QApplication::setWindowIcon(QIcon(":/images/assets/icon.png"));
+    QApplication::setWindowIcon(QIcon::fromTheme("biometric-manager"));
 	/* 设置 CSS */
 	QFile qssFile(":/css/assets/mainwindow.qss");
 	qssFile.open(QFile::ReadOnly);
