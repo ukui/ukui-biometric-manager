@@ -24,60 +24,32 @@
         <translation>贡献者</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="278"/>
+        <location filename="../src/aboutdialog.ui" line="294"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2019-2020 liuyuanpeng &amp;lt;liuyuanpeng@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="294"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;       &lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;All functions of the software are still being perfected. Please look forward to it. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         生物识别管理工具是由麒麟团队开发的一款用于管理生物识别的辅助软件。主要功能包括生物识别认证管理、生物识别服务管理、生物识别设备驱动管理以及生物识别特征的管理等功能。&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutdialog.ui" line="338"/>
+        <location filename="../src/aboutdialog.ui" line="339"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -129,7 +101,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Type:</source>
-        <translation type="obsolete">生物识别类型：</translation>
+        <translation type="obsolete">生物特征类型：</translation>
     </message>
     <message>
         <location filename="../src/contentpane.ui" line="63"/>
@@ -171,7 +143,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/contentpane.ui" line="411"/>
-        <location filename="../src/contentpane.cpp" line="375"/>
+        <location filename="../src/contentpane.cpp" line="377"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -253,47 +225,52 @@ p, li { white-space: pre-wrap; }
         <translation>空的特征名称</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="301"/>
+        <location filename="../src/contentpane.cpp" line="239"/>
+        <source>feature name is too long</source>
+        <translation>特征名称太长</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="303"/>
         <source>Confirm whether clean all the features?</source>
         <translation>确认是否清除所有特征？</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="302"/>
+        <location filename="../src/contentpane.cpp" line="304"/>
         <source>Confirm Clean</source>
         <translation>确认清空</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="305"/>
+        <location filename="../src/contentpane.cpp" line="307"/>
         <source>Confirm whether delete the features selected?</source>
         <translation>确认是否删除选中的特征？</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="306"/>
+        <location filename="../src/contentpane.cpp" line="308"/>
         <source>Confirm Delete</source>
         <translation>确认删除</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="363"/>
+        <location filename="../src/contentpane.cpp" line="365"/>
         <source>Delete successfully</source>
         <translation>删除成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="376"/>
+        <location filename="../src/contentpane.cpp" line="378"/>
         <source>The result of delete:</source>
         <translation>删除结果：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="401"/>
+        <location filename="../src/contentpane.cpp" line="403"/>
         <source>Clean Failed: </source>
         <translation>清空失败：</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="403"/>
+        <location filename="../src/contentpane.cpp" line="405"/>
         <source>Clean successfully</source>
         <translation>清空成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="507"/>
+        <location filename="../src/contentpane.cpp" line="519"/>
         <source>DBus calling error</source>
         <translation>DBus调用发生错误</translation>
     </message>
@@ -310,17 +287,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">清空成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="412"/>
+        <location filename="../src/contentpane.cpp" line="414"/>
         <source>Clean Result</source>
         <translation>清空结果</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="485"/>
+        <location filename="../src/contentpane.cpp" line="434"/>
+        <source>Feature Verify</source>
+        <translation>特征验证</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="435"/>
+        <source>Please select the feature you want to verify.</source>
+        <translation>请选择您想要验证的特征</translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="497"/>
         <source>Rename Successfully</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="492"/>
+        <location filename="../src/contentpane.cpp" line="504"/>
         <source>Rename Result</source>
         <translation>重命名结果</translation>
     </message>
@@ -467,17 +454,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">操作超时</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="515"/>
+        <location filename="../src/contentpane.cpp" line="527"/>
         <source>Device is busy</source>
         <translation>设备忙</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="519"/>
+        <location filename="../src/contentpane.cpp" line="531"/>
         <source>No such device</source>
         <translation>设备不存在</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="523"/>
+        <location filename="../src/contentpane.cpp" line="535"/>
         <source>Permission denied</source>
         <translation>没有权限</translation>
     </message>
@@ -682,15 +669,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Authentication Status:</source>
-        <translation type="obsolete">生物识别认证状态：</translation>
+        <translation type="obsolete">生物特征认证状态：</translation>
     </message>
     <message>
         <source>Biometric Authentication can take over system authentication processes which include Login, Screensaver, sudo/su and Polkit.</source>
-        <translation type="obsolete">生物识别可接管系统认证过程，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
+        <translation type="obsolete">生物特征可接管系统认证过程，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
         <source>Biometric authentication is enabled only when the biometric identification is opened, existing available devices are turned on and the user has enrolled the feature.</source>
-        <translation type="obsolete">只用当开启了生物识别、存在可用设备而且该用户已经录入了特征才会启用生物识别认证</translation>
+        <translation type="obsolete">只用当开启了生物特征、存在可用设备而且该用户已经录入了特征才会启用生物特征认证</translation>
     </message>
     <message>
         <source>Device Driver Management</source>
@@ -750,19 +737,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="222"/>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="530"/>
         <source>FingerPrint</source>
         <translation>指纹</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="241"/>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="530"/>
         <source>FingerVein</source>
         <translation>指静脉</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="279"/>
-        <location filename="../src/mainwindow.cpp" line="530"/>
+        <location filename="../src/mainwindow.cpp" line="531"/>
         <source>VoicePrint</source>
         <translation>声纹</translation>
     </message>
@@ -773,11 +760,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Biometric Verification Status:</source>
-        <translation type="obsolete">生物识别状态：</translation>
+        <translation type="obsolete">生物特征状态：</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="442"/>
-        <location filename="../src/mainwindow.cpp" line="552"/>
+        <location filename="../src/mainwindow.cpp" line="553"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
@@ -808,12 +795,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="260"/>
-        <location filename="../src/mainwindow.cpp" line="530"/>
+        <location filename="../src/mainwindow.cpp" line="531"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="753"/>
+        <location filename="../src/mainwindow.cpp" line="754"/>
         <source>Fatal Error</source>
         <translation>错误</translation>
     </message>
@@ -826,65 +813,65 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">API 版本不兼容</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="222"/>
+        <location filename="../src/mainwindow.cpp" line="223"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="547"/>
         <source>Opened</source>
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="547"/>
+        <location filename="../src/mainwindow.cpp" line="548"/>
         <source>Biometric Authentication can take over system authentication processes which include Login, LockScreen, sudo/su and Polkit</source>
-        <translation>生物识别可进行系统认证，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
+        <translation>生物特征可进行系统认证，包括登录、锁屏、sudo/su 授权和 Polkit 提权。</translation>
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation type="vanished">当前没有可用的生物识别设备，或者当前用户没有录入任何特征。</translation>
+        <translation type="obsolete">当前没有可用的生物特征设备，或者当前用户没有录入任何特征。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="553"/>
+        <location filename="../src/mainwindow.cpp" line="554"/>
         <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
         <translation> 使用生物特征的流程 1.确认设备已连接 2.将已连接的设备设为默认 3.打开生物特征状态开关 4.最后录入指纹 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
         <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Device Name</source>
         <translation>设备名称</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
         <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Device Status</source>
         <translation>设备状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
         <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Driver Status</source>
         <translation>驱动状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
         <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="948"/>
+        <location filename="../src/mainwindow.cpp" line="953"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="952"/>
+        <location filename="../src/mainwindow.cpp" line="957"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="968"/>
+        <location filename="../src/mainwindow.cpp" line="973"/>
         <source>The Service is stopped</source>
         <translation>服务已关闭</translation>
     </message>
@@ -893,12 +880,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="754"/>
+        <location filename="../src/mainwindow.cpp" line="755"/>
         <source>Fail to change device status</source>
-        <translation>更该设备状态失败</translation>
+        <translation>更改设备状态失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="215"/>
+        <location filename="../src/mainwindow.cpp" line="216"/>
         <source>Restart Service</source>
         <translation>重启服务</translation>
     </message>
@@ -924,11 +911,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Warnning</source>
-        <translation type="vanished">警告</translation>
+        <translation type="obsolete">警告</translation>
     </message>
     <message>
         <source>There is no available device or no features enrolled</source>
-        <translation type="vanished">没有可用设备或者没有录入特征</translation>
+        <translation type="obsolete">没有可用设备或者没有录入特征</translation>
     </message>
 </context>
 <context>
@@ -941,11 +928,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/messagedialog.ui" line="74"/>
         <source>MessageDialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/messagedialog.ui" line="145"/>
-        <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
@@ -969,12 +951,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/promptdialog.ui" line="77"/>
         <source>PromptDialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/promptdialog.ui" line="138"/>
-        <location filename="../src/promptdialog.ui" line="199"/>
-        <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
@@ -1109,23 +1085,23 @@ Please authenticate yourself to continue</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="42"/>
+        <location filename="../src/main.cpp" line="43"/>
         <source>Username</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="114"/>
-        <location filename="../src/main.cpp" line="123"/>
+        <location filename="../src/main.cpp" line="141"/>
+        <location filename="../src/main.cpp" line="150"/>
         <source>Fatal Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="115"/>
+        <location filename="../src/main.cpp" line="142"/>
         <source>the biometric-authentication service was not started</source>
         <translation>&apos;biometric-authentication&apos;服务没有启动</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="124"/>
+        <location filename="../src/main.cpp" line="151"/>
         <source>API version is not compatible</source>
         <translation>API 版本不兼容</translation>
     </message>

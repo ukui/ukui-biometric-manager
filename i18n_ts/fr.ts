@@ -26,7 +26,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;! DOCTYPE HTML PUBLIC \ &quot;- // W3C // DTD HTML 4.0 // EN &quot; \ &quot;http: //www.w3.org/TR/REC-html40/strict.dtd &quot;&gt; \ n &lt;html&gt; &lt;head&gt; &lt;meta name = \ &quot;qrichtext &quot; content = \ &quot;1 &quot; /&gt; &lt;style type = \ &quot;text / css &quot;&gt; \ np, li {espace blanc: pre-wrap; } \ n &lt;/ style&gt; &lt;/ head&gt; &lt;body style = \ &quot;font-family: &apos;Cantarell&apos;; taille de la police: 11pt; taille de la police: 400; style de la police de caractères: normal; &quot;&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; taille de la police de caractères: 9 pt; &quot;&gt; Biometric Manager est un logiciel d’appui pour la gestion de l’identification biométrique développé par l’équipe Kylin. Il contient principalement la gestion de la vérification biometirc, la gestion du service biometirc, la gestion des pilotes du dispositif biométrique et la gestion des fonctionnalités biometirc, etc. &lt;/ span&gt; &lt;/ p&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; indentation du texte: 0px; \ &quot;&gt; &lt;span style = &quot; font-family: &apos;Sans Serif&apos;; taille de la police: 9pt ; \ &quot;&gt; &lt;/ span&gt; &lt;a name=&quot;textarea-bg-text&quot;&gt; &lt;/a&gt; &lt;span style = &quot; font-family: &apos;Sans Serif&apos;; font-size: 9pt; \ &quot;&gt; Une &lt;/ span&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; font-size: 9pt; &quot;&gt; Toutes les fonctions du logiciel sont en cours de perfectionnement. S&apos;il vous plaît attendre avec impatience. &lt;/ span&gt; &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
+        <translation type="vanished">&lt;! DOCTYPE HTML PUBLIC \ &quot;- // W3C // DTD HTML 4.0 // EN &quot; \ &quot;http: //www.w3.org/TR/REC-html40/strict.dtd &quot;&gt; \ n &lt;html&gt; &lt;head&gt; &lt;meta name = \ &quot;qrichtext &quot; content = \ &quot;1 &quot; /&gt; &lt;style type = \ &quot;text / css &quot;&gt; \ np, li {espace blanc: pre-wrap; } \ n &lt;/ style&gt; &lt;/ head&gt; &lt;body style = \ &quot;font-family: &apos;Cantarell&apos;; taille de la police: 11pt; taille de la police: 400; style de la police de caractères: normal; &quot;&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; taille de la police de caractères: 9 pt; &quot;&gt; Biometric Manager est un logiciel d’appui pour la gestion de l’identification biométrique développé par l’équipe Kylin. Il contient principalement la gestion de la vérification biometirc, la gestion du service biometirc, la gestion des pilotes du dispositif biométrique et la gestion des fonctionnalités biometirc, etc. &lt;/ span&gt; &lt;/ p&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; indentation du texte: 0px; \ &quot;&gt; &lt;span style = &quot; font-family: &apos;Sans Serif&apos;; taille de la police: 9pt ; \ &quot;&gt; &lt;/ span&gt; &lt;a name=&quot;textarea-bg-text&quot;&gt; &lt;/a&gt; &lt;span style = &quot; font-family: &apos;Sans Serif&apos;; font-size: 9pt; \ &quot;&gt; Une &lt;/ span&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; font-size: 9pt; &quot;&gt; Toutes les fonctions du logiciel sont en cours de perfectionnement. S&apos;il vous plaît attendre avec impatience. &lt;/ span&gt; &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -35,11 +35,30 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;! DOCTYPE HTML PUBLIC \ &quot;- // W3C // DTD HTML 4.0 // EN &quot; \ &quot;http: //www.w3.org/TR/REC-html40/strict.dtd &quot;&gt; \ n &lt;html&gt; &lt;head&gt; &lt;meta name = \ &quot;qrichtext &quot; content = \ &quot;1 &quot; /&gt; &lt;style type = \ &quot;text / css &quot;&gt; \ np, li {espace blanc: pre-wrap; } \ n &lt;/ style&gt; &lt;/ head&gt; &lt;body style = \ &quot;font-family: &apos;Cantarell&apos;; taille de la police: 11pt; taille de la police: 400; style de la police de caractères: normal; &quot;&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; taille de police: 9pt; &quot;&gt; © 2016-2017 lihao &amp; lt; lihao@kylinos.cn&amp;gt; &lt;/ span&gt; &lt;/ p&gt; \ n &lt;p style = \ &quot;margin -top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; indentation du texte: 0px; \ &quot;&gt; &lt;span style = &quot; font-family &lt;2017&gt; &lt;2017&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;2017&gt; &lt;2017&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt;</translation>
+        <translation type="vanished">&lt;! DOCTYPE HTML PUBLIC \ &quot;- // W3C // DTD HTML 4.0 // EN &quot; \ &quot;http: //www.w3.org/TR/REC-html40/strict.dtd &quot;&gt; \ n &lt;html&gt; &lt;head&gt; &lt;meta name = \ &quot;qrichtext &quot; content = \ &quot;1 &quot; /&gt; &lt;style type = \ &quot;text / css &quot;&gt; \ np, li {espace blanc: pre-wrap; } \ n &lt;/ style&gt; &lt;/ head&gt; &lt;body style = \ &quot;font-family: &apos;Cantarell&apos;; taille de la police: 11pt; taille de la police: 400; style de la police de caractères: normal; &quot;&gt; \ n &lt;p style = \ &quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; &lt;span style = \ &quot;font-family: &apos;Sans Serif&apos;; taille de police: 9pt; &quot;&gt; © 2016-2017 lihao &amp; lt; lihao@kylinos.cn&amp;gt; &lt;/ span&gt; &lt;/ p&gt; \ n &lt;p style = \ &quot;margin -top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; indentation du texte: 0px; \ &quot;&gt; &lt;span style = &quot; font-family &lt;2017&gt; &lt;2017&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;2017&gt; &lt;2017&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt; &lt;/ span&gt;</translation>
     </message>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2019-2020 liuyuanpeng &amp;lt;liuyuanpeng@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -211,6 +230,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Permission denied</source>
         <translation>Permission refusée</translation>
+    </message>
+    <message>
+        <source>feature name is too long</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feature Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the feature you want to verify.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -395,15 +426,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There is no any available biometric device or no features enrolled currently.</source>
-        <translation type="vanished">Il n&apos;y a pas de dispositif biométrique disponible ou aucune fonctionnalité inscrite actuellement.</translation>
+        <translation type="obsolete">Il n&apos;y a pas de dispositif biométrique disponible ou aucune fonctionnalité inscrite actuellement.</translation>
     </message>
     <message>
         <source>Warnning</source>
-        <translation type="vanished">Mise en garde</translation>
+        <translation type="obsolete">Mise en garde</translation>
     </message>
     <message>
         <source>There is no available device or no features enrolled</source>
-        <translation type="vanished">Il n&apos;y a pas d&apos;appareil disponible ou pas de fonctionnalités inscrites</translation>
+        <translation type="obsolete">Il n&apos;y a pas d&apos;appareil disponible ou pas de fonctionnalités inscrites</translation>
     </message>
     <message>
         <source>Device Name</source>
@@ -458,7 +489,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation type="obsolete">TextLabel</translation>
     </message>
     <message>
         <source>OK</source>
@@ -481,7 +512,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation type="obsolete">TextLabel</translation>
     </message>
     <message>
         <source>Enroll</source>

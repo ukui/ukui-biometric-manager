@@ -28,25 +28,35 @@
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         Biometric Manager, Kylin ekibi tarafından geliştirilen biyometrik tanımlamayı yönetmek için destekleyici bir yazılımdır. Temelde biyometrik doğrulama yönetimi, biyometrik hizmet yönetimi, biyometrik aygıtın sürücü yönetimi ve biyometrik özellik yönetimi vb.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Yazılımın tüm fonksiyonları hala mükemmelleştirilmektedir. Lütfen sabırla bekleyin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/aboutdialog.ui" line="294"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2019-2020 liuyuanpeng &amp;lt;liuyuanpeng@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;         Biometric Manager, Kylin ekibi tarafından geliştirilen biyometrik tanımlamayı yönetmek için destekleyici bir yazılımdır. Temelde biyometrik doğrulama yönetimi, biyometrik hizmet yönetimi, biyometrik aygıtın sürücü yönetimi ve biyometrik özellik yönetimi vb.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Yazılımın tüm fonksiyonları hala mükemmelleştirilmektedir. Lütfen sabırla bekleyin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -77,7 +87,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        各项功能目前还在不断完善中，敬请期待。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="338"/>
+        <location filename="../src/aboutdialog.ui" line="339"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
@@ -171,7 +181,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/contentpane.ui" line="411"/>
-        <location filename="../src/contentpane.cpp" line="375"/>
+        <location filename="../src/contentpane.cpp" line="377"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
@@ -253,47 +263,62 @@ p, li { white-space: pre-wrap; }
         <translation>Boş özellik adı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="301"/>
+        <location filename="../src/contentpane.cpp" line="239"/>
+        <source>feature name is too long</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="303"/>
         <source>Confirm whether clean all the features?</source>
         <translation>Tüm özellikleri temizlemek istediğinizi onaylayın?</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="302"/>
+        <location filename="../src/contentpane.cpp" line="304"/>
         <source>Confirm Clean</source>
         <translation>Temizlemeyi Onayla</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="305"/>
+        <location filename="../src/contentpane.cpp" line="307"/>
         <source>Confirm whether delete the features selected?</source>
         <translation>Seçilen özelliklerin silmek istediğinizi onaylayın?</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="306"/>
+        <location filename="../src/contentpane.cpp" line="308"/>
         <source>Confirm Delete</source>
         <translation>Silmeyi Onayla</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="363"/>
+        <location filename="../src/contentpane.cpp" line="365"/>
         <source>Delete successfully</source>
         <translation>Silme başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="376"/>
+        <location filename="../src/contentpane.cpp" line="378"/>
         <source>The result of delete:</source>
         <translation>Silme sonucu:</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="401"/>
+        <location filename="../src/contentpane.cpp" line="403"/>
         <source>Clean Failed: </source>
         <translation>Silme Başarısız: </translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="403"/>
+        <location filename="../src/contentpane.cpp" line="405"/>
         <source>Clean successfully</source>
         <translation>Silme başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="506"/>
+        <location filename="../src/contentpane.cpp" line="434"/>
+        <source>Feature Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="435"/>
+        <source>Please select the feature you want to verify.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="519"/>
         <source>DBus calling error</source>
         <translation>DBus arama hatası</translation>
     </message>
@@ -310,17 +335,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Temizleme Başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="406"/>
+        <location filename="../src/contentpane.cpp" line="414"/>
         <source>Clean Result</source>
         <translation>Temizleme Sonucu</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="484"/>
+        <location filename="../src/contentpane.cpp" line="497"/>
         <source>Rename Successfully</source>
         <translation>Yeniden Adlandırma Başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="491"/>
+        <location filename="../src/contentpane.cpp" line="504"/>
         <source>Rename Result</source>
         <translation>Yeniden Adlandırma Sonucu</translation>
     </message>
@@ -467,17 +492,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Operasyon süresi doldu</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="514"/>
+        <location filename="../src/contentpane.cpp" line="527"/>
         <source>Device is busy</source>
         <translation>Aygıt meşgul</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="518"/>
+        <location filename="../src/contentpane.cpp" line="531"/>
         <source>No such device</source>
         <translation>Böyle bir cihaz yok</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="522"/>
+        <location filename="../src/contentpane.cpp" line="535"/>
         <source>Permission denied</source>
         <translation>İzin reddedildi</translation>
     </message>
@@ -750,19 +775,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="222"/>
-        <location filename="../src/mainwindow.cpp" line="442"/>
+        <location filename="../src/mainwindow.cpp" line="530"/>
         <source>FingerPrint</source>
         <translation>Parmak İzi</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="241"/>
-        <location filename="../src/mainwindow.cpp" line="442"/>
+        <location filename="../src/mainwindow.cpp" line="530"/>
         <source>FingerVein</source>
         <translation>Damar İzi</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="279"/>
-        <location filename="../src/mainwindow.cpp" line="443"/>
+        <location filename="../src/mainwindow.cpp" line="531"/>
         <source>VoicePrint</source>
         <translation>Ses İzi</translation>
     </message>
@@ -777,7 +802,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="442"/>
-        <location filename="../src/mainwindow.cpp" line="465"/>
+        <location filename="../src/mainwindow.cpp" line="553"/>
         <source>Closed</source>
         <translation>Kapalı</translation>
     </message>
@@ -808,12 +833,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="260"/>
-        <location filename="../src/mainwindow.cpp" line="443"/>
+        <location filename="../src/mainwindow.cpp" line="531"/>
         <source>Iris</source>
         <translation>Göz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="659"/>
+        <location filename="../src/mainwindow.cpp" line="754"/>
         <source>Fatal Error</source>
         <translation>Ölümcül Hata</translation>
     </message>
@@ -826,17 +851,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">API sürümü uyumlu değil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="186"/>
+        <location filename="../src/mainwindow.cpp" line="223"/>
         <source>About</source>
         <translation>Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="547"/>
         <source>Opened</source>
         <translation>Açık</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="460"/>
+        <location filename="../src/mainwindow.cpp" line="548"/>
         <source>Biometric Authentication can take over system authentication processes which include Login, LockScreen, sudo/su and Polkit</source>
         <translation>Biyometrik Kimlik Doğrulama, Oturum Açma, Kilit Ekranı, sudo / su ve Polkit gibi sistem kimlik doğrulama süreçlerini devralabilir</translation>
     </message>
@@ -845,46 +870,46 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Mevcut biyometrik cihaz yok veya şu anda kayıtlı özellik yok.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="466"/>
+        <location filename="../src/mainwindow.cpp" line="554"/>
         <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
         <translation>Biyometri kullanma süreci 1.Cihazın bağlı olduğundan emin olun 2.Bağlı cihazı varsayılan olarak ayarlayın 3. Biyometrik durum açılacaktır. 4. Parmak izi girin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="496"/>
-        <location filename="../src/mainwindow.cpp" line="497"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Device Name</source>
         <translation>Aygıt Adı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="496"/>
-        <location filename="../src/mainwindow.cpp" line="497"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Device Status</source>
         <translation>Aygıt Durumu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="496"/>
-        <location filename="../src/mainwindow.cpp" line="497"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Driver Status</source>
         <translation>Sürücü Durumu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="496"/>
-        <location filename="../src/mainwindow.cpp" line="497"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="585"/>
         <source>Default</source>
         <translation>Varsayılan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="853"/>
+        <location filename="../src/mainwindow.cpp" line="953"/>
         <source>Connected</source>
         <translation>Bağlandı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="857"/>
+        <location filename="../src/mainwindow.cpp" line="957"/>
         <source>Unconnected</source>
         <translation>Bağlı Değil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="973"/>
         <source>The Service is stopped</source>
         <translation>Hizmet Durdu</translation>
     </message>
@@ -893,12 +918,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Durum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="660"/>
+        <location filename="../src/mainwindow.cpp" line="755"/>
         <source>Fail to change device status</source>
         <translation>Cihaz durumu değiştirilemedi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="179"/>
+        <location filename="../src/mainwindow.cpp" line="216"/>
         <source>Restart Service</source>
         <translation>Servisi yeniden başlat</translation>
     </message>
@@ -944,11 +969,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/messagedialog.ui" line="145"/>
-        <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../src/messagedialog.ui" line="217"/>
         <source>OK</source>
         <translation>Tamam</translation>
@@ -969,12 +989,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/promptdialog.ui" line="77"/>
         <source>PromptDialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/promptdialog.ui" line="138"/>
-        <location filename="../src/promptdialog.ui" line="199"/>
-        <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
@@ -1110,23 +1124,23 @@ Lütfen devam etmek için kendinizi doğrulayın</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="42"/>
+        <location filename="../src/main.cpp" line="43"/>
         <source>Username</source>
         <translation>Kullanıcı Adı</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="114"/>
-        <location filename="../src/main.cpp" line="123"/>
+        <location filename="../src/main.cpp" line="141"/>
+        <location filename="../src/main.cpp" line="150"/>
         <source>Fatal Error</source>
         <translation>Ölümcül Hata</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="115"/>
+        <location filename="../src/main.cpp" line="142"/>
         <source>the biometric-authentication service was not started</source>
         <translation>biyometrik kimlik doğrulama hizmeti başlatılmadı</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="124"/>
+        <location filename="../src/main.cpp" line="151"/>
         <source>API version is not compatible</source>
         <translation>API sürümü uyumlu değil</translation>
     </message>

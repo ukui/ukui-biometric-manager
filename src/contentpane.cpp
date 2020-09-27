@@ -235,6 +235,8 @@ QString ContentPane::inputFeatureName(bool isNew)
             inputDialog->setError(tr("Duplicate feature name"));
         } else if(text.isEmpty()) {
             inputDialog->setError(tr("Empty feature name"));
+        }else if(text.length() > 128){
+            inputDialog->setError(tr("feature name is too long"));
         } else {
             inputDialog->accept();
         }
@@ -424,8 +426,17 @@ void ContentPane::on_btnVerify_clicked()
     int verifyIndex, uid;
 
     currentModelIndex = ui->treeView->selectionModel()->currentIndex();
-    if(!currentModelIndex.isValid())
+    bool selected = ui->treeView->selectionModel()->isSelected(currentModelIndex);
+
+
+    if(!currentModelIndex.isValid() || !selected){
+        MessageDialog msgDialog(MessageDialog::Normal);
+        msgDialog.setTitle(tr("Feature Verify"));
+        msgDialog.setMessage(tr("Please select the feature you want to verify."));
+        msgDialog.exec();
+
         return;
+    }
 
     verifyIndex = currentModelIndex.data(Qt::UserRole).toInt();
     uid = currentModelIndex.data(TreeModel::UidRole).toInt();
@@ -433,6 +444,7 @@ void ContentPane::on_btnVerify_clicked()
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
     promptDialog->verify(deviceInfo->device_id, uid, verifyIndex);
+
 
     delete promptDialog;
 }
