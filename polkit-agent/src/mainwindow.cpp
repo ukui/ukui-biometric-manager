@@ -192,6 +192,7 @@ void MainWindow::setIcon(const QString &iconName)
     painter.drawPixmap(rect, actionIcon);
     painter.end();
 
+    setWindowIcon(icon);
     ui->lblIcon->setPixmap(icon);
 }
 
