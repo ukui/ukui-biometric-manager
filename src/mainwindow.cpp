@@ -445,7 +445,7 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
     QListWidgetItem *item = new QListWidgetItem(deviceInfo->device_shortname);
     ContentPane *contentPane = new ContentPane(getuid(), deviceInfo);
 	item->setTextAlignment(Qt::AlignCenter);
-    if(deviceInfo->device_available==false){
+    if(deviceInfo->device_available <= 0){
         lw->insertItem(lw->count(), item);
         sw->insertWidget(sw->count(),contentPane);
     }
@@ -614,7 +614,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
     
     for(int i=0;i<deviceInfosMap[deviceType].count();i++)
     {
-        if(deviceInfosMap[deviceType].at(i)->device_available==true)
+        if(deviceInfosMap[deviceType].at(i)->device_available > 0)
         {
             deviceInfosMap[deviceType].move(i,0);
         }
@@ -666,11 +666,11 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             if(Configuration::instance()->getDefaultDevice() == deviceInfo->device_shortname)
                 cbDefault->setChecked(true);
             btnGroup.push_back(cbDefault);
-            cbDefault->setObjectName("cb_" + deviceInfo->device_shortname);
+            cbDefault->setObjectName(deviceInfo->device_shortname);
             connect(cbDefault, &QCheckBox::clicked, this, &MainWindow::onDefaultDeviceChanged);
             connect(Configuration::instance(), &Configuration::defaultDeviceChanged,
                     this, [&](const QString &deviceName) {
-                QString objName = "cb_" + deviceName;
+                QString objName = deviceName;
                 QCheckBox *check = findChild<QCheckBox*>(objName);
                 if(check) {
                     check->setChecked(true);
@@ -716,7 +716,7 @@ void MainWindow::onDriverStatusClicked()
 void MainWindow::onDefaultDeviceChanged(bool checked)
 {
     QString objName = sender()->objectName();
-    QString deviceName = objName.split("_").at(1);
+    QString deviceName = objName;
 
     for(auto cb : btnGroup)
         if(cb != sender())

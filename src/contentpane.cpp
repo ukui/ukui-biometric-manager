@@ -103,12 +103,12 @@ void ContentPane::updateWidgetStatus()
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
         ui->labelStatusText->setText(tr("Closed"));
 	}
-	ui->btnEnroll->setEnabled(deviceInfo->device_available);
-	ui->btnDelete->setEnabled(deviceInfo->device_available);
-	ui->btnVerify->setEnabled(deviceInfo->device_available);
-	ui->btnSearch->setEnabled(deviceInfo->device_available);
-    ui->btnClean->setEnabled(deviceInfo->device_available);
-	ui->treeView->setEnabled(deviceInfo->device_available);
+    ui->btnEnroll->setEnabled(deviceInfo->device_available > 0);
+    ui->btnDelete->setEnabled(deviceInfo->device_available > 0);
+    ui->btnVerify->setEnabled(deviceInfo->device_available > 0);
+    ui->btnSearch->setEnabled(deviceInfo->device_available > 0);
+    ui->btnClean->setEnabled(deviceInfo->device_available > 0);
+    ui->treeView->setEnabled(deviceInfo->device_available > 0);
 }
 
 void ContentPane::updateButtonUsefulness()
@@ -127,7 +127,7 @@ void ContentPane::updateButtonUsefulness()
  */
 bool ContentPane::deviceIsAvailable()
 {
-	return deviceInfo->device_available;
+    return deviceInfo->device_available > 0;
 }
 
 

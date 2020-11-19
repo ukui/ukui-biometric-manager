@@ -1003,6 +1003,12 @@ p, li { white-space: pre-wrap; }
         <translation>特征名称</translation>
     </message>
     <message>
+        <location filename="../src/promptdialog.cpp" line="134"/>
+        <location filename="../src/promptdialog.cpp" line="136"/>
+        <source>Serial number</source>
+        <translation>序号</translation>
+    </message>
+    <message>
         <location filename="../src/promptdialog.cpp" line="192"/>
         <source>Permission is required.
 Please authenticate yourself to continue</source>

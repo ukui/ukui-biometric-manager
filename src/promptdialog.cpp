@@ -131,9 +131,9 @@ void PromptDialog::setSearchResult(bool isAdmin, const QList<SearchResult> &sear
 {
     QStandardItemModel *model = new QStandardItemModel(ui->treeViewResult);
     if(isAdmin)
-        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Index"), tr("UserName"), tr("FeatureName")});
+        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Serial number"), tr("UserName"), tr("FeatureName")});
     else
-        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Index"), tr("FeatureName")});
+        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Serial number"), tr("FeatureName")});
 
     for(int i = 0; i < searchResultList.size(); i++) {
         SearchResult ret = searchResultList[i];
