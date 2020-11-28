@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cmbUsers->hide();
     ui->widgetDetails->hide();
     ui->btnDetails->setIcon(QIcon(":/image/assets/arrow_right.svg"));
-
+    ui->btnDetails->hide();
     switchWidget(UNDEFINED);
 }
 
@@ -169,19 +169,19 @@ void MainWindow::on_btnBioAuth_clicked()
 void MainWindow::setIcon(const QString &iconName)
 {
     QIcon::setThemeName("ukui-icon-theme");
-    if(!QIcon::hasThemeIcon("dialog-password")) {
+    if(!QIcon::hasThemeIcon("ukui-polkit")) {
         QDir iconsDir("/usr/share/icons");
         auto themesList = iconsDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
         qDebug() << themesList;
         for(auto theme : themesList) {
             QIcon::setThemeName(theme);
-            if(QIcon::hasThemeIcon("dialog-password")) {
-                qDebug() << theme << "has dialog-password";
+            if(QIcon::hasThemeIcon("ukui-polkit")) {
+                qDebug() << theme << "has ukui-polkit icon";
                 break;
             }
         }
     }
-    QPixmap icon = QIcon::fromTheme("dialog-password").pixmap(64, 64);
+    QPixmap icon = QIcon::fromTheme("ukui-polkit").pixmap(64, 64);
     QPixmap actionIcon = QIcon::fromTheme(iconName).pixmap(32, 32);
     QPainter painter;
 
