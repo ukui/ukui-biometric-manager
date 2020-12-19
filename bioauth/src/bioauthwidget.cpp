@@ -35,12 +35,16 @@ BioAuthWidget::~BioAuthWidget()
     delete ui;
 }
 
+void BioAuthWidget::emitSwithToPassword()
+{
+    Q_EMIT switchToPassword();
+}
+
 void BioAuthWidget::on_btnPasswdAuth_clicked()
 {
-    if(bioAuth->isAuthenticating())
-        bioAuth->stopAuth();
-
-    Q_EMIT switchToPassword();
+    stopAuth();
+    //Q_EMIT switchToPassword();
+    QTimer::singleShot(100,this,SLOT(emitSwithToPassword()));
 }
 
 void BioAuthWidget::on_btnMore_clicked()
@@ -95,6 +99,13 @@ void BioAuthWidget::setImage()
     ui->btnRetry->setVisible(true);
 
     qDebug() << "set pixmap " << typeString;
+}
+
+void BioAuthWidget::stopAuth()
+{
+    if(bioAuth){
+        bioAuth->stopAuth();
+    }
 }
 
 void BioAuthWidget::startAuth(uid_t uid, const DeviceInfo &device)

@@ -104,6 +104,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    widgetBioAuth->stopAuth();
     emit canceled();
 
     return QWidget::closeEvent(event);
