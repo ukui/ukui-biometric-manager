@@ -309,6 +309,7 @@ bool ContentPane::confirmDelete(bool all)
     }
     MessageDialog dialog(MessageDialog::Question);
     dialog.setTitle(title);
+    dialog.setWindowTitle(title);
     dialog.setMessage(text);
     return dialog.exec() == QDialog::Accepted;
 }
@@ -375,6 +376,7 @@ void ContentPane::on_btnDelete_clicked()
 
     MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Delete"));
+    msgDialog.setWindowTitle(tr("Delete"));
     msgDialog.setMessage("             " + tr("The result of delete:"));
     msgDialog.setMessageList(resultStrings);
     msgDialog.exec();
@@ -412,6 +414,7 @@ void ContentPane::on_btnClean_clicked()
 
     MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Clean Result"));
+    msgDialog.setWindowTitle(tr("Clean Result"));
     msgDialog.setMessage(resultString);
     msgDialog.exec();
 
@@ -432,7 +435,8 @@ void ContentPane::on_btnVerify_clicked()
     if(!currentModelIndex.isValid() || !selected){
         MessageDialog msgDialog(MessageDialog::Normal);
         msgDialog.setTitle(tr("Feature Verify"));
-        msgDialog.setMessage(tr("Please select the feature you want to verify."));
+	msgDialog.setWindowTitle(tr("Feature Verify"));
+	msgDialog.setMessage(tr("Please select the feature you want to verify."));
         msgDialog.exec();
 
         return;
@@ -502,6 +506,7 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
     }
     MessageDialog msgDialog(type);
     msgDialog.setTitle(tr("Rename Result"));
+    msgDialog.setWindowTitle(tr("Rename Result"));
     msgDialog.setMessage(resultMessage);
     msgDialog.exec();
 }

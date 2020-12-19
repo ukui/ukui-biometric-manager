@@ -25,7 +25,6 @@ InputDialog::InputDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-
     QFile qssFile(":/css/assets/promptdialog.qss");
     qssFile.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(qssFile.readAll());
@@ -44,6 +43,7 @@ InputDialog::~InputDialog()
 void InputDialog::setTitle(const QString &text)
 {
     ui->lblTitle->setText(text);
+    setWindowTitle(text);
 }
 
 void InputDialog::setPrompt(const QString &text)
