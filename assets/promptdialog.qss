@@ -2,14 +2,17 @@
 #ServiceDialog, #AboutDialog {
     background-color: white;
     border: 1px solid #0066b8;
+    border-radius:6px;
 }
 
 #widgetHeader{
     background-color: #0078d7;
+    border-radius:6px;
 }
 
 #lblTitle {
     color: white;
+    border-radius:6px;
 }
 
 QPushButton{
@@ -36,6 +39,7 @@ QPushButton:flat{
 /* 标题栏 背景色*/
 #widgetTitle {
     background-color: #0078d7;
+    border-radius:6px;
 }
 
 

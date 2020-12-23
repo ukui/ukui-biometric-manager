@@ -117,7 +117,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
 
 void MainWindow::prettify()
 {
-    setWindowFlags(Qt::WindowCloseButtonHint|Qt::FramelessWindowHint);
+   // setWindowFlags(Qt::WindowCloseButtonHint|Qt::FramelessWindowHint);
 	/* 设置窗口图标 */
     QApplication::setWindowIcon(QIcon::fromTheme("biometric-manager"));
 	/* 设置 CSS */
@@ -128,16 +128,36 @@ void MainWindow::prettify()
 	qssFile.close();
 
 	/* Set Icon for each tab on tabwidget */
-    ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_default.png"));
-    ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
-    ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
-    ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
-    ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_default.png"));
-    /* Set logo on lblLogo */
-    ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
-    ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
-    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
-    ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
+    ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard.png"));
+    ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint.png"));
+    ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein.png"));
+    ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
+    ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
+//    /* Set logo on lblLogo */
+//    ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
+// //   ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
+//    ui->btnMin->setProperty("isWindowButton", 0x1);
+//    ui->btnMin->setProperty("useIconHighlightEffect", 0x2);
+//    ui->btnMin->setFlat(true);
+//    ui->btnMin->setFixedSize(30, 30);
+//    ui->btnMin->setIconSize(QSize(16, 16));
+//    ui->btnMin->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+
+//  //  ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+//    ui->btnClose->setProperty("isWindowButton", 0x2);
+//    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
+//    ui->btnClose->setFlat(true);
+//    ui->btnClose->setFixedSize(30, 30);
+//   // ui->btnClose->setIconSize(QSize(16, 16));
+//    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
+
+//  //  ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
+//    ui->btnMenu->setProperty("isWindowButton", 0x1);
+//    ui->btnMenu->setProperty("useIconHighlightEffect", 0x2);
+//    ui->btnMenu->setFlat(true);
+//    ui->btnMenu->setFixedSize(30, 30);
+//    ui->btnMenu->setIconSize(QSize(16, 16));
+//    ui->btnMenu->setIcon(QIcon::fromTheme("open-menu-symbolic"));
 }
 
 QPixmap *MainWindow::getUserAvatar(QString username)
@@ -169,12 +189,12 @@ QPixmap *MainWindow::getUserAvatar(QString username)
 
 void MainWindow::setCurrentUser()
 {
-    struct passwd *pwd;
-    pwd = getpwuid(getuid());
-    username = QString(pwd->pw_name);
-    ui->lblUserName->setText(username);
+//    struct passwd *pwd;
+//    pwd = getpwuid(getuid());
+//    username = QString(pwd->pw_name);
+//    ui->lblUserName->setText(username);
 
-    ui->lblAvatar->setPixmap(QPixmap(":/images/assets/avatar.png"));
+//    ui->lblAvatar->setPixmap(QPixmap(":/images/assets/avatar.png"));
 }
 
 void MainWindow::initialize()
@@ -200,8 +220,8 @@ void MainWindow::initialize()
 	initBiometricPage();
     initDeviceTypeList();
 
-    connect(ui->btnMin, &QPushButton::clicked, this, &MainWindow::showMinimized);
-    connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
+//    connect(ui->btnMin, &QPushButton::clicked, this, &MainWindow::showMinimized);
+//    connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
 
     ui->btnDashBoard->click();
 
@@ -234,50 +254,45 @@ void MainWindow::initSysMenu()
     });
 
     menu->addActions({serviceStatusAction, aboutAction});
-    ui->btnMenu->setMenu(menu);
+    //ui->btnMenu->setMenu(menu);
 }
 
 void MainWindow::changeBtnColor(QPushButton *btn)
 {
     if(btn == ui->btnDashBoard) {
-        ui->btnDashBoard->setStyleSheet("background-color: #0066b8;");
-        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_click.png"));
+        ui->btnDashBoard->setStyleSheet("background-color: #3d6be5;");
     }
     else {
-        ui->btnDashBoard->setStyleSheet("background-color: #0078d7;");
-        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_default.png"));
+        ui->btnDashBoard->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                        "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnFingerPrint) {
-        ui->btnFingerPrint->setStyleSheet("background-color: #0066b8;");
-        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_click.png"));
+        ui->btnFingerPrint->setStyleSheet("background-color: #3d6be5;");
     }
     else {
-        ui->btnFingerPrint->setStyleSheet("background-color: #0078d7;");
-        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
+        ui->btnFingerPrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                          "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnFingerVein) {
-        ui->btnFingerVein->setStyleSheet("background-color: #0066b8;");
-        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_click.png"));
+        ui->btnFingerVein->setStyleSheet("background-color: #3d6be5;");
     }
     else {
-        ui->btnFingerVein->setStyleSheet("background-color: #0078d7;");
-        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
+        ui->btnFingerVein->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                         "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnIris) {
-        ui->btnIris->setStyleSheet("background-color: #0066b8;");
-        ui->btnIris->setIcon(QIcon(":/images/assets/iris_click.png"));
+        ui->btnIris->setStyleSheet("background-color: #3d6be5;");
     }
     else {
-        ui->btnIris->setStyleSheet("background-color: #0078d7;");
-        ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
+        ui->btnIris->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                   "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnVoicePrint) {
-        ui->btnVoicePrint->setStyleSheet("background-color: #0066b8;");
-        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_click.png"));
+        ui->btnVoicePrint->setStyleSheet("background-color: #3d6be5;");
     }
     else {
-        ui->btnVoicePrint->setStyleSheet("background-color: #0078d7;");
-        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_default.png"));
+        ui->btnVoicePrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                         "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
 }
 
