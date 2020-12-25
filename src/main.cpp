@@ -19,7 +19,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QDir>
-
+#include <QStyleFactory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
-
+	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	QApplication a(argc, argv);
 
 	/* 对中文环境安装翻译 */

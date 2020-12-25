@@ -260,37 +260,47 @@ void MainWindow::initSysMenu()
 void MainWindow::changeBtnColor(QPushButton *btn)
 {
     if(btn == ui->btnDashBoard) {
-        ui->btnDashBoard->setStyleSheet("background-color: #3d6be5;");
+        ui->btnDashBoard->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard-white.png"));
     }
     else {
+        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard.png"));
         ui->btnDashBoard->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
                                         "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnFingerPrint) {
-        ui->btnFingerPrint->setStyleSheet("background-color: #3d6be5;");
+        ui->btnFingerPrint->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint-white.png"));
     }
     else {
+        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint.png"));
         ui->btnFingerPrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
                                           "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnFingerVein) {
-        ui->btnFingerVein->setStyleSheet("background-color: #3d6be5;");
+        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein-white.png"));
+        ui->btnFingerVein->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
+        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein.png"));
         ui->btnFingerVein->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
                                          "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnIris) {
-        ui->btnIris->setStyleSheet("background-color: #3d6be5;");
+        ui->btnIris->setIcon(QIcon(":/images/assets/iris-white.png"));
+        ui->btnIris->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
+        ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
         ui->btnIris->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
                                    "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }
     if(btn == ui->btnVoicePrint) {
-        ui->btnVoicePrint->setStyleSheet("background-color: #3d6be5;");
+        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint-white.png"));
+        ui->btnVoicePrint->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
+        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
         ui->btnVoicePrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
                                          "QPushButton:hover{background-color:#ebebeb;border:none;}");
     }

@@ -2,6 +2,7 @@
     <qresource prefix="/images">
         <file>assets/avatar.png</file>
         <file>assets/dashboard.png</file>
+        <file>assets/dashboard-white.png</file>
         <file>assets/switch_close_large.png</file>
         <file>assets/switch_close_small.png</file>
         <file>assets/switch_open_large.png</file>
@@ -11,14 +12,18 @@
         <file>assets/logo.png</file>
         <file>assets/fingerprint.gif</file>
         <file>assets/fingerprint.png</file>
+        <file>assets/fingerprint-white.png</file>
         <file>assets/fingervein.gif</file>
         <file>assets/fingervein.png</file>
+        <file>assets/fingervein-white.png</file>
         <file>assets/iris.gif</file>
         <file>assets/iris.png</file>
+        <file>assets/iris-white.png</file>
         <file>assets/collapse.png</file>
         <file>assets/expand.png</file>
         <file>assets/voiceprint.gif</file>
         <file>assets/voiceprint.png</file>
+        <file>assets/voiceprint-white.png</file>
         <file>assets/menu.png</file>
         <file>assets/restart_service.png</file>
         <file>assets/about.png</file>

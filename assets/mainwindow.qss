@@ -23,7 +23,8 @@ QPushButton:flat{
 }
 
 #line{
-    background-color;
+    background-color: #ebebeb;
+    border:0px;
 }
 
 #btnDashBoard, #btnFingerPrint, #btnFingerVein, #btnIris, #btnVoicePrint {
