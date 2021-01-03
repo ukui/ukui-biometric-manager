@@ -116,6 +116,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_cmbUsers_currentTextChanged(const QString &userName)
 {
     qDebug() << "user changed to " << userName;
+    widgetBioAuth->stopAuth();	
+    authMode=UNDEFINED;
 
     this->userName = userName;
     ui->lblMessage->clear();
@@ -211,7 +213,6 @@ void MainWindow::setUsers(const QStringList &usersList)
 
     if(usersList.size() == 1) {
         userName = usersList.at(0);
-        return;
     }
 
     ui->cmbUsers->addItems(usersList);
@@ -297,7 +298,6 @@ void MainWindow::clearEdit()
 void MainWindow::switchAuthMode(Mode mode)
 {
     enableBioAuth  = bioDevices.count() > 0;
-    
     int uid = getUid(userName);
     if(bioDevices.getFeatureCount(uid)<1)
         enableBioAuth = false;
@@ -311,6 +311,8 @@ void MainWindow::switchAuthMode(Mode mode)
 
         if(!enableBioAuth || !receiveBioPAM) {
             ui->btnBioAuth->hide();
+        }else{
+            ui->btnBioAuth->show();
         }
     }
         break;
@@ -322,13 +324,12 @@ void MainWindow::switchAuthMode(Mode mode)
 
         if(authMode == PASSWORD) {
             emit accept(BIOMETRIC_IGNORE);
-            break;
+            return;
         }else if(!enableBioAuth){
-	    qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
+            qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
             emit accept(BIOMETRIC_IGNORE);
-            switchAuthMode(PASSWORD);
-	} 
-	else if(authMode == BIOMETRIC) {
+            return;
+        } else if(authMode == BIOMETRIC) {
             DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
             if(!device)
                 device = bioDevices.getFirstDevice();
@@ -338,7 +339,6 @@ void MainWindow::switchAuthMode(Mode mode)
             }
             authMode = BIOMETRIC;
         } else if(authMode == UNDEFINED){
-
             authMode = BIOMETRIC;
 
             if(enableBioAuth) {
@@ -350,14 +350,14 @@ void MainWindow::switchAuthMode(Mode mode)
                 } else {
                     qDebug() << "No default device, switch to password";
                     emit accept(BIOMETRIC_IGNORE);
-                    switchAuthMode(PASSWORD);
+                    return;
                 }
 
             } else {
                 /* pass biometric's pam module if there are not available devices */
                 qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
                 emit accept(BIOMETRIC_IGNORE);
-                switchAuthMode(PASSWORD);
+                return;
             }
         }
     }

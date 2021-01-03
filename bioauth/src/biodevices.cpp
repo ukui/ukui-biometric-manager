@@ -21,6 +21,7 @@
 
 #include <sys/types.h>
 #include <pwd.h>
+#include <unistd.h>
 
 #include "generic.h"
 
@@ -98,14 +99,13 @@ int BioDevices::getFeatureCount(int uid, int indexStart, int indexEnd)
     int res = 0;
     for(int i = 0; i < deviceInfos.count(); i++) {
         DeviceInfo *deviceInfo = deviceInfos.at(i);
-        //QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo->device_id), QVariant(5));
-	QDBusMessage featurecount = serviceInterface->call("GetFeatureList",deviceInfo->device_id,uid,indexStart,indexEnd);
+        QDBusMessage featurecount = serviceInterface->call("GetFeatureList",deviceInfo->device_id,uid,indexStart,indexEnd);
         if(featurecount.type() == QDBusMessage::ErrorMessage)
         {
                 qWarning() << "GetFeatureList error:" << featurecount.errorMessage();
-        return 0;
+        }else{
+            res += featurecount.arguments().takeFirst().toInt();
         }
-        res += featurecount.arguments().takeFirst().toInt();
     }
     return res;
 }
@@ -152,6 +152,14 @@ DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
         defaultDeviceName = sysConfig.value(DEFAULT_DEVICE).toString();
     }
 
+    if(defaultDeviceName.isEmpty() || !findDevice(defaultDeviceName)){
+        struct passwd *pwd1 = getpwuid(getuid());
+        QString userConfigFile = QString(pwd->pw_dir) + "/.biometric_auth/ukui_biometric.conf";
+        QSettings userConfig(userConfigFile, QSettings::IniFormat);
+        defaultDeviceName = userConfig.value(DEFAULT_DEVICE).toString();
+
+
+    }
     qDebug() << "default device: " << defaultDeviceName;
 
     if(defaultDeviceName.isEmpty())
