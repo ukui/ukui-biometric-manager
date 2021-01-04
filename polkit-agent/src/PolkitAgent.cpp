@@ -35,10 +35,13 @@ int main(int argc, char *argv[])
     enableDebug = true;
     logPrefix = "[ukui-polkit]:";
     qInstallMessageHandler(outputMessage);
+    qDebug() << "Polkit Agent Started";
+#if(QT_VERSION>=QT_VERSION_CHECK(5,6,0))
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
 
-	qDebug() << "Polkit Agent Started";
-
-	QApplication agent(argc, argv);
+    QApplication agent(argc, argv);
 
     QString locale = QLocale::system().name();
     qDebug() << "Language: " <<locale;
