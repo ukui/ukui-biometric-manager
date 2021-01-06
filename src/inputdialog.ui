@@ -51,10 +51,10 @@
        <number>5</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -81,6 +81,18 @@
       </item>
       <item alignment="Qt::AlignVCenter">
        <widget class="QPushButton" name="btnClose">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="text">
          <string/>
         </property>

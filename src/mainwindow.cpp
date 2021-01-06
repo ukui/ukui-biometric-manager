@@ -117,7 +117,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
 
 void MainWindow::prettify()
 {
-   // setWindowFlags(Qt::WindowCloseButtonHint|Qt::FramelessWindowHint);
+    setWindowFlags(Qt::WindowCloseButtonHint);
 	/* 设置窗口图标 */
     QApplication::setWindowIcon(QIcon::fromTheme("biometric-manager"));
 	/* 设置 CSS */
@@ -127,6 +127,7 @@ void MainWindow::prettify()
 	this->setStyleSheet(styleSheet);
 	qssFile.close();
 
+    ui->lblTitle->setText(tr("Biometric Manager"));
 	/* Set Icon for each tab on tabwidget */
     ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard.png"));
     ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint.png"));
@@ -134,30 +135,33 @@ void MainWindow::prettify()
     ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
     ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
 //    /* Set logo on lblLogo */
-//    ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
-// //   ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
-//    ui->btnMin->setProperty("isWindowButton", 0x1);
-//    ui->btnMin->setProperty("useIconHighlightEffect", 0x2);
-//    ui->btnMin->setFlat(true);
-//    ui->btnMin->setFixedSize(30, 30);
-//    ui->btnMin->setIconSize(QSize(16, 16));
-//    ui->btnMin->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+    ui->lblLogo->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(24,24)));
+ //   ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
+    ui->btnMin->setProperty("isWindowButton", 0x1);
+    ui->btnMin->setProperty("useIconHighlightEffect", 0x2);
+    ui->btnMin->setProperty("setIconHighlightEffectDefaultColor", ui->btnMin->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnMin->setFixedSize(30, 30);
+    ui->btnMin->setAutoRaise(true);
+    ui->btnMin->setIconSize(QSize(16, 16));
+    ui->btnMin->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
 
-//  //  ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
-//    ui->btnClose->setProperty("isWindowButton", 0x2);
-//    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
-//    ui->btnClose->setFlat(true);
-//    ui->btnClose->setFixedSize(30, 30);
-//   // ui->btnClose->setIconSize(QSize(16, 16));
-//    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
+  //  ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    ui->btnClose->setProperty("isWindowButton", 0x2);
+    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
+    ui->btnClose->setProperty("setIconHighlightEffectDefaultColor", ui->btnClose->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnClose->setFixedSize(30, 30);
+    ui->btnClose->setAutoRaise(true);
+   // ui->btnClose->setIconSize(QSize(16, 16));
+    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
 
-//  //  ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
-//    ui->btnMenu->setProperty("isWindowButton", 0x1);
-//    ui->btnMenu->setProperty("useIconHighlightEffect", 0x2);
-//    ui->btnMenu->setFlat(true);
-//    ui->btnMenu->setFixedSize(30, 30);
-//    ui->btnMenu->setIconSize(QSize(16, 16));
-//    ui->btnMenu->setIcon(QIcon::fromTheme("open-menu-symbolic"));
+  //  ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
+    ui->btnMenu->setProperty("isWindowButton", 0x1);
+    ui->btnMenu->setProperty("useIconHighlightEffect", 0x2);
+    ui->btnMenu->setProperty("setIconHighlightEffectDefaultColor", ui->btnMenu->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnMenu->setFixedSize(30, 30);
+    ui->btnMenu->setIconSize(QSize(16, 16));
+    ui->btnMenu->setAutoRaise(true);
+    ui->btnMenu->setIcon(QIcon::fromTheme("open-menu-symbolic"));
 }
 
 QPixmap *MainWindow::getUserAvatar(QString username)
@@ -220,8 +224,8 @@ void MainWindow::initialize()
 	initBiometricPage();
     initDeviceTypeList();
 
-//    connect(ui->btnMin, &QPushButton::clicked, this, &MainWindow::showMinimized);
-//    connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
+    connect(ui->btnMin, &QPushButton::clicked, this, &MainWindow::showMinimized);
+    connect(ui->btnClose, &QPushButton::clicked, this, &MainWindow::close);
 
     ui->btnDashBoard->click();
 
@@ -254,55 +258,56 @@ void MainWindow::initSysMenu()
     });
 
     menu->addActions({serviceStatusAction, aboutAction});
-    //ui->btnMenu->setMenu(menu);
+    ui->btnMenu->setPopupMode(QToolButton::InstantPopup   );
+    ui->btnMenu->setMenu(menu);
 }
 
 void MainWindow::changeBtnColor(QPushButton *btn)
 {
-    if(btn == ui->btnDashBoard) {
+    if(btn != ui->btnDashBoard) {
         ui->btnDashBoard->setStyleSheet("background-color: #3d6be5;color:#ffffff");
         ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard-white.png"));
     }
     else {
         ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard.png"));
         ui->btnDashBoard->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
-                                        "QPushButton:hover{background-color:#ebebeb;border:none;}");
+                                        "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
-    if(btn == ui->btnFingerPrint) {
+    if(btn != ui->btnFingerPrint) {
         ui->btnFingerPrint->setStyleSheet("background-color: #3d6be5;color:#ffffff");
         ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint-white.png"));
     }
     else {
         ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint.png"));
         ui->btnFingerPrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
-                                          "QPushButton:hover{background-color:#ebebeb;border:none;}");
+                                          "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
-    if(btn == ui->btnFingerVein) {
+    if(btn != ui->btnFingerVein) {
         ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein-white.png"));
         ui->btnFingerVein->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
         ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein.png"));
         ui->btnFingerVein->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
-                                         "QPushButton:hover{background-color:#ebebeb;border:none;}");
+                                         "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
-    if(btn == ui->btnIris) {
+    if(btn != ui->btnIris) {
         ui->btnIris->setIcon(QIcon(":/images/assets/iris-white.png"));
         ui->btnIris->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
         ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
         ui->btnIris->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
-                                   "QPushButton:hover{background-color:#ebebeb;border:none;}");
+                                   "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
-    if(btn == ui->btnVoicePrint) {
+    if(btn != ui->btnVoicePrint) {
         ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint-white.png"));
         ui->btnVoicePrint->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
         ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
         ui->btnVoicePrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
-                                         "QPushButton:hover{background-color:#ebebeb;border:none;}");
+                                         "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
 }
 
@@ -670,9 +675,9 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             btnDrvStatus->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
             btnDrvStatus->setFixedSize(40, 20);
             if(deviceInfo->driver_enable > 0)
-                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
+                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png);text-align:center;border: none;outline: none;background-repeat:no-repeat;");
             else
-                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
+                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png);text-align:center;border: none;outline: none;background-repeat:no-repeat;");
             connect(btnDrvStatus, &QPushButton::clicked, this, &MainWindow::onDriverStatusClicked);
 
             QVBoxLayout *layout = new QVBoxLayout(item_drvStatus);

@@ -28,6 +28,8 @@
 
 #include "servicemanager.h"
 #include "messagedialog.h"
+#include "xatom-helper.h"
+
 #include <X11/Xlib.h>
 
 #define WORKING_DIRECTORY "/usr/share/biometric-manager"
@@ -119,7 +121,6 @@ int main(int argc, char *argv[])
     	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
-	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	QApplication a(argc, argv);
 
 	/* 对中文环境安装翻译 */
@@ -156,6 +157,11 @@ int main(int argc, char *argv[])
 
     MainWindow w(argMap.value("username"));
     w.setObjectName("MainWindow");
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
     w.show();
     QObject::connect(sm, &ServiceManager::serviceStatusChanged,
                      &w, &MainWindow::onServiceStatusChanged);

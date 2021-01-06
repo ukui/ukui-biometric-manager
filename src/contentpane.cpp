@@ -321,8 +321,15 @@ bool ContentPane::confirmDelete(bool all)
 void ContentPane::on_btnDelete_clicked()
 {
     QModelIndexList selectedIndexList = ui->treeView->selectionModel()->selectedRows(0);
-    if(selectedIndexList.size() <= 0)
+    if(selectedIndexList.size() <= 0){
+        MessageDialog msgDialog(MessageDialog::Normal);
+        msgDialog.setTitle(tr("Feature Delete"));
+        msgDialog.setWindowTitle(tr("Feature Delete"));
+        msgDialog.setMessage(tr("Please select the feature you want to delete."));
+        msgDialog.exec();
+
         return;
+    }
     if(!confirmDelete(false))
         return;
 
@@ -435,8 +442,8 @@ void ContentPane::on_btnVerify_clicked()
     if(!currentModelIndex.isValid() || !selected){
         MessageDialog msgDialog(MessageDialog::Normal);
         msgDialog.setTitle(tr("Feature Verify"));
-	msgDialog.setWindowTitle(tr("Feature Verify"));
-	msgDialog.setMessage(tr("Please select the feature you want to verify."));
+        msgDialog.setWindowTitle(tr("Feature Verify"));
+        msgDialog.setMessage(tr("Please select the feature you want to verify."));
         msgDialog.exec();
 
         return;

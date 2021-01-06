@@ -34,6 +34,7 @@ public:
 
 private:
     Ui::AboutDialog *ui;
+    QString get_current_version();
 };
 
 #endif // ABOUTDIALOG_H

@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Около</translation>
+        <translation type="vanished">Около</translation>
     </message>
     <message>
         <source>Contributor</source>
-        <translation>участник</translation>
+        <translation type="vanished">участник</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -39,25 +39,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрыть</translation>
+        <translation type="vanished">Закрыть</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans CJK SC&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2019-2020 liuyuanpeng &amp;lt;liuyuanpeng@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Version number: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.All functions of the software are still being perfected. Please look forward to it. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>developers：</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -243,6 +244,14 @@ p, li { white-space: pre-wrap; }
         <source>Please select the feature you want to verify.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Feature Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the feature you want to delete.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EnumToString</name>
@@ -358,7 +367,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>UserName</source>
-        <translation>UserName</translation>
+        <translation type="vanished">UserName</translation>
     </message>
     <message>
         <source>DashBoard</source>
@@ -476,6 +485,10 @@ p, li { white-space: pre-wrap; }
         <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Biometric Manager</source>
+        <translation type="unfinished">Биометрический менеджер</translation>
+    </message>
 </context>
 <context>
     <name>MessageDialog</name>
@@ -532,7 +545,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Index</source>
-        <translation>Индекс</translation>
+        <translation type="vanished">Индекс</translation>
     </message>
     <message>
         <source>UserName</source>
@@ -606,6 +619,10 @@ Please authenticate yourself to continue</source>
     <message>
         <source>&lt;font size=&apos;2&apos;&gt;the window will be closed after two second&lt;/font&gt;</source>
         <translation>&lt;font size = &apos;2&apos;&gt; окно будет закрыто после двух секунд &lt;/ font&gt;</translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

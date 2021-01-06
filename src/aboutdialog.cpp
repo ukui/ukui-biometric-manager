@@ -18,6 +18,7 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 #include <QFile>
+#include <QIcon>
 #include <QDebug>
 
 AboutDialog::AboutDialog(QWidget *parent) :
@@ -25,33 +26,50 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    setWindowTitle(tr("Biometric Manager"));
+    ui->ksc_about_icon_label->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(96,96)));
+    QFont font;
+    font.setPointSize(18);
+    ui->ksc_security_center_about_name_label->setFont(font);
+    ui->ksc_security_center_about_name_label->setText(tr("Biometric Manager"));
+    ui->ksc_security_center_about_version_label->setText(tr("Version number: ") + get_current_version());
+    ui->ksc_security_center_about_brief_textedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."
+                                                                      "All functions of the software are still being perfected. Please look forward to it. "));
+    ui->ksc_security_center_about_version_label->setStyleSheet("color:#595959;");
+    ui->ksc_security_center_about_develop_textedit->setText(tr("developers：") + "\nliuyuanpeng@kylinos.cn");
+    this->setBackgroundRole(QPalette::Base);
+    this->setAutoFillBackground(true);
+}
 
-    QFile qssFile(":/css/assets/promptdialog.qss");
-    qssFile.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(qssFile.readAll());
-    this->setStyleSheet(styleSheet);
-    qssFile.close();
+QString AboutDialog::get_current_version()
+{
+    FILE *pp = NULL;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    char *q = NULL;
+    QString version = "none";
 
-    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    pp = popen("dpkg -l  ukui-biometric-manager | grep  ukui-biometric-manager", "r");
+    if(NULL == pp)
+        return version;
 
-    connect(ui->btnClose, &QPushButton::clicked, this, &AboutDialog::close);
-    connect(ui->btnCloseDialog, &QPushButton::clicked, this, &AboutDialog::close);
-    connect(ui->btnAbout, &QPushButton::clicked, this, [&]{
-        ui->stackedWidget->setCurrentWidget(ui->pageAbout);
-        ui->lblIndAbout->setStyleSheet("QLabel{background:url(:/images/assets/underline.png)}");
-        ui->lblIndContrib->setStyleSheet("QLabel{background:transparent;}");
-    });
-    connect(ui->btnContributor, &QPushButton::clicked, this, [&]{
-        ui->stackedWidget->setCurrentWidget(ui->pageContributor);
-        ui->lblIndContrib->setStyleSheet("QLabel{background:url(:/images/assets/underline.png)}");
-        ui->lblIndAbout->setStyleSheet("QLabel{background:transparent;}");
-    });
-    ui->btnAbout->click();
+    while((read = getline(&line, &len, pp)) != -1){
+        q = strrchr(line, '\n');
+        *q = '\0';
 
-    QString locale = QLocale::system().name();
-    if(locale == "zh_CN")
-        setFixedHeight(280);
+        QString content = line;
+        QStringList list = content.split(" ");
+
+        list.removeAll("");
+
+        if (list.size() >= 3)
+            version = list.at(2);
+    }
+
+    free(line);
+    pclose(pp);
+    return version;
 }
 
 AboutDialog::~AboutDialog()

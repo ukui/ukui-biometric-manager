@@ -4,22 +4,23 @@ QWidget{
     font-family:droid-fallback;
 }
 
-QPushButton{
+#widgetHeader, #widgetTab {
+    background-color:#3d6be5;
+}
+
+#btnStatus{
     text-align:center;
     border: none;
     outline: none;
     background-repeat:no-repeat;
 }
-QPushButton:flat{
-    border: none;
-}
 
-#widgetHeader, #widgetTab {
-    background-color:#ffffff;
+#lblTitle{
+    color:#ffffff;
 }
 
 #widgetNote {
-    background-color:#ebebeb;
+    background-color:#ffffff;
 }
 
 #line{
@@ -29,13 +30,14 @@ QPushButton:flat{
 
 #btnDashBoard, #btnFingerPrint, #btnFingerVein, #btnIris, #btnVoicePrint {
     icon-size: 32px, 32px;
-    border-radius:6px;
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
     background-color: #ffffff;
 }
 
 #btnDashBoard::hover, #btnFingerPrint::hover, #btnFingerVein::hover,
 #btnIris::hover, #btnVoicePrint::hover {
-    background-color: #ebebeb;
+    background-color: #ffffff;
 }
 
 #btnDashBoard::pressed, #btnFingerPrint::pressed, #btnFingerVein::pressed,
@@ -61,11 +63,9 @@ QListView {
     background-color: #ebebeb;
     border-top: 0px none;
     margin: 0px;
-    border-radius:6px;
 }
 QListView::item {
     min-height:36px;
-    border-radius:6px;
 }
 QListView::item::hover {
     background-color:#e5e5e5;
@@ -197,7 +197,6 @@ QTreeView::item:selected:!active {
 
 #btnEnroll, #btnVerify, #btnSearch, #btnDelete, #btnClean {
     background-color: #ebebeb;
-    border-radius:6px;
     min-height: 32px;
     min-width: 100px;
 }

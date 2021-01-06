@@ -18,13 +18,14 @@
 #include "messagedialog.h"
 #include "ui_messagedialog.h"
 #include <QFile>
+#include "xatom-helper.h"
 
 MessageDialog::MessageDialog(int type, const QString &title, const QString &msg, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MessageDialog)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    setWindowFlags(/*Qt::FramelessWindowHint |*/ Qt::Window);
 
     ui->btnCancel->hide();
 
@@ -43,11 +44,25 @@ MessageDialog::MessageDialog(int type, const QString &title, const QString &msg,
     this->setStyleSheet(styleSheet);
     qssFile.close();
 
-    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+   // ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    ui->btnClose->setFlat(true);
+    ui->btnClose->setProperty("isWindowButton", 0x2);
+    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
+    ui->btnClose->setProperty("setIconHighlightEffectDefaultColor", ui->btnClose->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnClose->setFixedSize(30, 30);
+    ui->btnClose->setIconSize(QSize(16, 16));
+    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
+
 
     connect(ui->btnClose, &QPushButton::clicked, this, &MessageDialog::close);
     connect(ui->btnOK, &QPushButton::clicked, this, &MessageDialog::accept);
     connect(ui->btnCancel, &QPushButton::clicked, this, &MessageDialog::reject);
+
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(winId(), hints);
 }
 
 MessageDialog::~MessageDialog()
