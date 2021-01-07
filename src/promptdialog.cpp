@@ -339,6 +339,16 @@ void PromptDialog::errorCallBack(const QDBusError &error)
     accept();
 }
 
+void PromptDialog::closeEvent(QCloseEvent *event)
+{
+    QList<QVariant> args;
+    args << QVariant(deviceId) << QVariant(5);
+    serviceInterface->callWithCallback("StopOps", args, this,
+                    SLOT(StopOpsCallBack(const QDBusMessage &)),
+                    SLOT(errorCallBack(const QDBusError &)));
+
+}
+
 void PromptDialog::onStatusChanged(int drvId, int statusType)
 {
     if (!(drvId == deviceId && statusType == STATUS_NOTIFY))

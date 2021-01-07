@@ -7,6 +7,7 @@ Build-Depends: debhelper (>= 11),
                qtbase5-dev,
                libkf5windowsystem-dev,
                libx11-dev,
+               libqt5x11extras5-dev,
                pkg-config,
                libgsettings-qt-dev,
                qttools5-dev-tools
