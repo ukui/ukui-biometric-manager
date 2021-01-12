@@ -489,6 +489,14 @@ p, li { white-space: pre-wrap; }
         <source>Biometric Manager</source>
         <translation type="unfinished">Gerente biometrico</translation>
     </message>
+    <message>
+        <source>exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessageDialog</name>

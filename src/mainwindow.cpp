@@ -236,15 +236,13 @@ void MainWindow::initialize()
 void MainWindow::initSysMenu()
 {
     menu = new QMenu(this);
-    QAction *serviceStatusAction = new QAction(QIcon(":/images/assets/restart_service.png"),
-                                               tr("Restart Service"), this);
+    QAction *serviceStatusAction = new QAction(tr("Restart Service"), this);
     connect(serviceStatusAction, &QAction::triggered, this, [&]{
         if(restartService())
             updateDevice();
     });
 
-    QAction *aboutAction = new QAction(QIcon(":images/assets/about.png"),
-                                       tr("About"), this);
+    QAction *aboutAction = new QAction(tr("About"), this);
     connect(aboutAction, &QAction::triggered, this, [&]{
         if(aboutDlg == nullptr)
             aboutDlg = new AboutDialog();
@@ -253,11 +251,22 @@ void MainWindow::initSysMenu()
         int y = this->geometry().topLeft().y() + (height() - aboutDlg->height()) / 2;
 
         aboutDlg->move(x, y);
-        aboutDlg->show();
-        aboutDlg->raise();
+        aboutDlg->exec();
     });
 
-    menu->addActions({serviceStatusAction, aboutAction});
+    QAction *exitAction = new QAction(tr("exit"), this);
+    connect(exitAction, &QAction::triggered, this, [&]{
+        close();
+    });
+
+    QAction *helpAction = new QAction(tr("help"), this);
+    connect(helpAction, &QAction::triggered, this, [&]{
+        if(!daemonIsNotRunning()){
+            showGuide("biometric-manager");
+        }
+    });
+
+    menu->addActions({serviceStatusAction, helpAction,aboutAction,exitAction});
     ui->btnMenu->setPopupMode(QToolButton::InstantPopup   );
     ui->btnMenu->setMenu(menu);
 }
