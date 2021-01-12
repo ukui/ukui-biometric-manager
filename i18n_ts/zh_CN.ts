@@ -32,8 +32,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/aboutdialog.cpp" line="36"/>
         <source>         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.All functions of the software are still being perfected. Please look forward to it. </source>
-        <translation>生物特征管理工具是由麒麟团队开发
-的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。 各项功能目前还在不断完善中，敬请&gt;期待。</translation>
+        <translation>生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。 各项功能目前还在不断完善中，敬请&gt;期待。</translation>
     </message>
     <message>
         <location filename="../src/aboutdialog.cpp" line="39"/>
