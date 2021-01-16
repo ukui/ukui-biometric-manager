@@ -36,7 +36,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/aboutdialog.cpp" line="39"/>
-        <source>developers：</source>
+        <source>Service &amp; Support: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -777,7 +777,7 @@ p, li { white-space: pre-wrap; }
         <translation>Biyometrik Yönetici</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="63"/>
+        <location filename="../src/mainwindow.ui" line="66"/>
         <source>Biometirc Manager</source>
         <translation>Biyometrik Yönetici</translation>
     </message>
@@ -786,30 +786,30 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Kullanıcı Adı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="192"/>
         <source>DashBoard</source>
         <translation>Gösterge Paneli</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="208"/>
+        <location filename="../src/mainwindow.ui" line="211"/>
         <location filename="../src/mainwindow.cpp" line="569"/>
         <source>FingerPrint</source>
         <translation>Parmak İzi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="227"/>
+        <location filename="../src/mainwindow.ui" line="230"/>
         <location filename="../src/mainwindow.cpp" line="569"/>
         <source>FingerVein</source>
         <translation>Damar İzi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="265"/>
+        <location filename="../src/mainwindow.ui" line="268"/>
         <location filename="../src/mainwindow.cpp" line="570"/>
         <source>VoicePrint</source>
         <translation>Ses İzi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="383"/>
+        <location filename="../src/mainwindow.ui" line="386"/>
         <source>System components are certified using biometrics</source>
         <translation>Sistem bileşenleri biyometri kullanılarak onaylanmıştır</translation>
     </message>
@@ -818,13 +818,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">生物识别状态：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="428"/>
+        <location filename="../src/mainwindow.ui" line="431"/>
         <location filename="../src/mainwindow.cpp" line="592"/>
         <source>Closed</source>
         <translation>Kapalı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="475"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>Note</source>
         <translation>Not</translation>
     </message>
@@ -837,10 +837,10 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Tüm Aygıtlar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="662"/>
-        <location filename="../src/mainwindow.ui" line="701"/>
-        <location filename="../src/mainwindow.ui" line="752"/>
-        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.ui" line="665"/>
+        <location filename="../src/mainwindow.ui" line="704"/>
+        <location filename="../src/mainwindow.ui" line="755"/>
+        <location filename="../src/mainwindow.ui" line="794"/>
         <source>Driver Not Found</source>
         <translation>Sürücü Bulunamadı</translation>
     </message>
@@ -849,7 +849,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Damar İzi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="246"/>
+        <location filename="../src/mainwindow.ui" line="249"/>
         <location filename="../src/mainwindow.cpp" line="570"/>
         <source>Iris</source>
         <translation>Göz</translation>

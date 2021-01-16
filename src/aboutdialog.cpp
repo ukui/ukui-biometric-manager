@@ -27,16 +27,16 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle(tr("Biometric Manager"));
-    ui->ksc_about_icon_label->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(96,96)));
+    ui->AboutIconLabel->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(96,96)));
     QFont font;
     font.setPointSize(18);
-    ui->ksc_security_center_about_name_label->setFont(font);
-    ui->ksc_security_center_about_name_label->setText(tr("Biometric Manager"));
-    ui->ksc_security_center_about_version_label->setText(tr("Version number: ") + get_current_version());
-    ui->ksc_security_center_about_brief_textedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."
+    ui->AboutNameLabel->setFont(font);
+    ui->AboutNameLabel->setText(tr("Biometric Manager"));
+    ui->AboutVersionLabel->setText(tr("Version number: ") + get_current_version());
+    ui->AboutBriefTextedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."
                                                                       "All functions of the software are still being perfected. Please look forward to it. "));
-    ui->ksc_security_center_about_version_label->setStyleSheet("color:#595959;");
-    ui->ksc_security_center_about_develop_textedit->setText(tr("developers：") + "\nliuyuanpeng@kylinos.cn");
+    ui->AboutVersionLabel->setStyleSheet("color:#595959;");
+    ui->AboutDevelopTextedit->setText(tr("Service & Support: ") + "support@kylinos.cn");
     this->setBackgroundRole(QPalette::Base);
     this->setAutoFillBackground(true);
 }

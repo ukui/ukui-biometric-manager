@@ -58,7 +58,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>developers：</source>
+        <source>Service &amp; Support: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

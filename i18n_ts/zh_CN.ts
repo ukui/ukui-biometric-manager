@@ -32,12 +32,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/aboutdialog.cpp" line="36"/>
         <source>         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.All functions of the software are still being perfected. Please look forward to it. </source>
-        <translation>生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。 各项功能目前还在不断完善中，敬请&gt;期待。</translation>
+        <translation>生物特征管理工具是由麒麟团队开发的一款用于管理生物特征的辅助软件。主要功能包括生物特征认证管理、生物特征服务管理、生物特征设备驱动管理以及生物特征的管理等功能。 各项功能目前还在不断完善中，敬请期待。</translation>
     </message>
     <message>
         <location filename="../src/aboutdialog.cpp" line="39"/>
+        <source>Service &amp; Support: </source>
+        <translation>服务与支持团队：</translation>
+    </message>
+    <message>
         <source>developers：</source>
-        <translation>开发者邮箱</translation>
+        <translation type="vanished">开发者邮箱</translation>
     </message>
     <message>
         <source>About</source>
@@ -749,7 +753,7 @@ p, li { white-space: pre-wrap; }
         <translation>生物特征管理</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="63"/>
+        <location filename="../src/mainwindow.ui" line="66"/>
         <source>Biometirc Manager</source>
         <translation>生物特征管理</translation>
     </message>
@@ -758,30 +762,30 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">用户名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="192"/>
         <source>DashBoard</source>
         <translation>主界面</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="208"/>
+        <location filename="../src/mainwindow.ui" line="211"/>
         <location filename="../src/mainwindow.cpp" line="569"/>
         <source>FingerPrint</source>
         <translation>指纹</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="227"/>
+        <location filename="../src/mainwindow.ui" line="230"/>
         <location filename="../src/mainwindow.cpp" line="569"/>
         <source>FingerVein</source>
         <translation>指静脉</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="265"/>
+        <location filename="../src/mainwindow.ui" line="268"/>
         <location filename="../src/mainwindow.cpp" line="570"/>
         <source>VoicePrint</source>
         <translation>声纹</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="383"/>
+        <location filename="../src/mainwindow.ui" line="386"/>
         <source>System components are certified using biometrics</source>
         <translation>系统组件使用生物特征进行认证</translation>
     </message>
@@ -790,13 +794,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">生物特征状态：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="428"/>
+        <location filename="../src/mainwindow.ui" line="431"/>
         <location filename="../src/mainwindow.cpp" line="592"/>
         <source>Closed</source>
         <translation>关</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="475"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>Note</source>
         <translation></translation>
     </message>
@@ -809,10 +813,10 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">所有设备</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="662"/>
-        <location filename="../src/mainwindow.ui" line="701"/>
-        <location filename="../src/mainwindow.ui" line="752"/>
-        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.ui" line="665"/>
+        <location filename="../src/mainwindow.ui" line="704"/>
+        <location filename="../src/mainwindow.ui" line="755"/>
+        <location filename="../src/mainwindow.ui" line="794"/>
         <source>Driver Not Found</source>
         <translation>驱动未找到</translation>
     </message>
@@ -821,7 +825,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">指静脉</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="246"/>
+        <location filename="../src/mainwindow.ui" line="249"/>
         <location filename="../src/mainwindow.cpp" line="570"/>
         <source>Iris</source>
         <translation>虹膜</translation>
