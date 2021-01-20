@@ -459,7 +459,7 @@ void MainWindow::raiseContentPane(DeviceInfo *deviceInfo)
 
 void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 {
-	QListWidget *lw;
+    QListWidget *lw;
 	QStackedWidget *sw;
 
     switch(deviceInfo->biotype) {
@@ -516,9 +516,42 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 
 void MainWindow::initBiometricPage()
 {
-    for(int i = 0; i < __MAX_NR_BIOTYPES; i++)
-        for (auto deviceInfo : deviceInfosMap[i])
+    ui->listWidgetFingerPrint->clear();
+    for(int i = ui->stackedWidgetFingerPrint->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetFingerPrint->widget(i);
+        ui->stackedWidgetFingerPrint->removeWidget(widget);
+        widget->deleteLater();
+    }
+    ui->listWidgetFingerVein->clear();
+    for(int i = ui->stackedWidgetFingerVein->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetFingerVein->widget(i);
+        ui->stackedWidgetFingerVein->removeWidget(widget);
+        widget->deleteLater();
+    }
+    ui->listWidgetIris->clear();
+    for(int i = ui->stackedWidgetIris->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetIris->widget(i);
+        ui->stackedWidgetIris->removeWidget(widget);
+        widget->deleteLater();
+    }
+    ui->listWidgetVoicePrint->clear();
+    for(int i = ui->stackedWidgetVoicePrint->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetVoicePrint->widget(i);
+        ui->stackedWidgetVoicePrint->removeWidget(widget);
+        widget->deleteLater();
+    }
+    contentPaneMap.clear();
+
+    for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
+        for (auto deviceInfo : deviceInfosMap[i]){
+            ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
             addContentPane(deviceInfo);
+        }
+    }
     checkBiometricPage(FingerPrint);
     checkBiometricPage(FingerVein);
 	checkBiometricPage(Iris);
@@ -622,7 +655,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
     QStringList headerData;
     headerData << "    " + tr("Device Name") << tr("Device Status") << tr("Driver Status") << tr("Default")
                << "    " + tr("Device Name") << tr("Device Status") << tr("Driver Status") << tr("Default");
-
+    ui->tableWidgetDevices->hide();
     ui->tableWidgetDevices->clear();
     ui->tableWidgetDevices->setRowCount(0);
     ui->tableWidgetDevices->setColumnCount(8);
@@ -729,6 +762,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             column = (column + 4) % 8;
         }
     }
+    ui->tableWidgetDevices->show();
 }
 
 void MainWindow::onDriverStatusClicked()
@@ -893,8 +927,9 @@ void MainWindow::updateDeviceListWidget(int biotype)
         auto iter = std::find_if(list.begin(), list.end(),
                               [&](DeviceInfo *deviceInfo){
                 return deviceInfo->device_shortname == item->text(); });
+        if(iter != std::end(list))
+            item->setTextColor((*iter)->device_available ? Qt::black : Qt::gray);
 
-        item->setTextColor((*iter)->device_available ? Qt::black : Qt::gray);
     }
 }
 
@@ -904,14 +939,19 @@ void MainWindow::updateDevice()
     sleep(3);   //wait for service restart and dbus is ready
     getDeviceInfo();
     on_listWidgetDevicesType_currentRowChanged(ui->listWidgetDevicesType->currentRow());
-    for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
+   /* for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
         for(auto deviceInfo : deviceInfosMap[i]){
-            ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
-            contentPane->setDeviceInfo(deviceInfo);
-            contentPane->showFeatures();
+                ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
+                if(contentPane){
+            		contentPane->setDeviceInfo(deviceInfo);
+            		contentPane->showFeatures();
+                }else{
+                    addContentPane(deviceInfo);
+                }
         }
         updateDeviceListWidget(i);
-    }
+    }*/
+    initBiometricPage();
     setCursor(Qt::ArrowCursor);
      sortContentPane();
 }

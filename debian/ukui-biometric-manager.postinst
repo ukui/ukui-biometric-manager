@@ -1,0 +1,1 @@
+ln -sf /usr/bin/biometric-manager /usr/bin/ukui-biometric-manager
