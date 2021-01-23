@@ -58,7 +58,6 @@ private slots:
     void on_btnStatus_clicked();
     void on_listWidgetDevicesType_currentRowChanged(int);
     void on_tableWidgetDevices_cellDoubleClicked(int row, int column);
-
     void onDriverStatusClicked();
     void onDefaultDeviceChanged(bool checked);
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
@@ -66,7 +65,8 @@ private slots:
 
 public slots:
     void onServiceStatusChanged(bool activate);
-
+    void onReviceWindowMessage(QString message);
+  
 private:
 	void prettify();
     void initSysMenu();

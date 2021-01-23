@@ -17,6 +17,7 @@
 **/
 #include "mainwindow.h"
 #include <QApplication>
+#include <QtSingleApplication>
 #include <QTranslator>
 #include <QDir>
 #include <QStyleFactory>
@@ -114,14 +115,22 @@ void x11_get_screen_size(int *width,int *height)
 
 int main(int argc, char *argv[])
 {
-    checkIsRunning();
+//    checkIsRunning();
 
 
 #if(QT_VERSION>=QT_VERSION_CHECK(5,6,0))
     	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
-	QApplication a(argc, argv);
+	//QtSingleApplication a(argc, argv);
+    QString id = QString("ukui-biometric-manager" + QLatin1String(getenv("DISPLAY")));
+    QtSingleApplication a(id, argc, argv);
+
+    if (a.isRunning())
+    {
+        a.sendMessage("raise");
+        return EXIT_SUCCESS;
+    }
 
 	/* 对中文环境安装翻译 */
 	QString locale = QLocale::system().name();
@@ -154,7 +163,7 @@ int main(int argc, char *argv[])
         msgDialog.exec();
         exit(EXIT_FAILURE);
     }
-
+    
     MainWindow w(argMap.value("username"));
     w.setObjectName("MainWindow");
     MotifWmHints hints;
@@ -163,6 +172,8 @@ int main(int argc, char *argv[])
     hints.decorations = MWM_DECOR_BORDER;
     XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
     w.show();
+
+    QObject::connect(&a, SIGNAL(messageReceived(QString)), &w, SLOT(onReviceWindowMessage(QString)));
     QObject::connect(sm, &ServiceManager::serviceStatusChanged,
                      &w, &MainWindow::onServiceStatusChanged);
 

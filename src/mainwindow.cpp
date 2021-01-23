@@ -201,6 +201,17 @@ void MainWindow::setCurrentUser()
 //    ui->lblAvatar->setPixmap(QPixmap(":/images/assets/avatar.png"));
 }
 
+void MainWindow::onReviceWindowMessage(QString message)
+{
+    if (!this->isActiveWindow())
+    {
+        this->hide();
+        this->show();
+        activateWindow();
+    }
+
+}
+
 void MainWindow::initialize()
 {
 	/* 向 QDBus 类型系统注册自定义数据类型 */

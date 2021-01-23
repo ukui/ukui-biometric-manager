@@ -16,6 +16,8 @@ PREFIX = /usr/share/biometric-manager
 LIBS +=-lpthread
 LIBS +=-lX11
 
+include ($$PWD/qt-solutions/qtsingleapplication/src/qtsingleapplication.pri)
+
 TARGET = biometric-manager
 TEMPLATE = app
 CONFIG += c++11 link_pkgconfig
