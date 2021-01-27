@@ -25,6 +25,8 @@
 #include <QFontMetrics>
 #include <QtMath>
 
+#include <fcntl.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <libintl.h>
@@ -122,6 +124,30 @@ void MainWindow::on_cmbUsers_currentTextChanged(const QString &userName)
     this->userName = userName;
     ui->lblMessage->clear();
     emit userChanged(userName);
+}
+
+int MainWindow::enable_biometric_authentication()
+{
+    char conf_file[] = GET_STR(CONFIG_FILE);
+    FILE *file;
+    char line[1024], is_enable[16];
+    int i;
+
+
+    if((file = fopen(conf_file, "r")) == NULL){
+        return 0;
+    }
+    while(fgets(line, sizeof(line), file)) {
+        i = sscanf(line, "EnableAuth=%s\n",  is_enable);
+        if(i > 0) {
+            break;
+        }
+    }
+
+    fclose(file);
+    if(!strcmp(is_enable, "true"))
+        return 1;
+    return 0;
 }
 
 void MainWindow::on_btnDetails_clicked()
@@ -298,6 +324,9 @@ void MainWindow::clearEdit()
 void MainWindow::switchAuthMode(Mode mode)
 {
     enableBioAuth  = bioDevices.count() > 0;
+    if(!enable_biometric_authentication()){
+    	enableBioAuth = false;
+    }
     int uid = getUid(userName);
     if(bioDevices.getFeatureCount(uid)<1)
         enableBioAuth = false;

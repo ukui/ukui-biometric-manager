@@ -56,7 +56,7 @@ private:
     void startBioAuth();
     void switchWidget(Mode mode);
     QString check_is_pam_message(QString text);
-
+    int enable_biometric_authentication();
 private slots:
     void on_btnDetails_clicked();
     void on_lePassword_returnPressed();

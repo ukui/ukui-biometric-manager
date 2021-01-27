@@ -196,6 +196,10 @@ int parent(int pid, pam_handle_t *pamh, int need_call_conv)
         logger("The GUI-Child process terminate abnormally.\n");
 
     if (bio_result == BIO_SUCCESS) {
+	if(!enable_biometric_authentication()) {
+            logger("disable biometric authentication.\n");
+            return PAM_SYSTEM_ERR;
+        }
         logger("pam_biometric.so return PAM_SUCCESS\n");
     	return PAM_SUCCESS;
     } else if (bio_result == BIO_IGNORE) {
@@ -310,8 +314,13 @@ int biometric_auth_embeded(pam_handle_t *pamh)
 
     if (strcmp(resp, BIOMETRIC_IGNORE) == 0)
         return PAM_IGNORE;
-    else if (strcmp(resp, BIOMETRIC_SUCCESS) == 0)
+    else if (strcmp(resp, BIOMETRIC_SUCCESS) == 0){
+	if(!enable_biometric_authentication()) {
+            logger("disable biometric authentication.\n");
+            return PAM_SYSTEM_ERR;
+        }
         return PAM_SUCCESS;
+    }
     else if (strcmp(resp, BIOMETRIC_FAILED) == 0)
         return PAM_AUTH_ERR;
     else
