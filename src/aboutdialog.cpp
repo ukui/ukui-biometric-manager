@@ -34,9 +34,17 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->AboutNameLabel->setText(tr("Biometric Manager"));
     ui->AboutVersionLabel->setText(tr("Version number: ") + get_current_version());
     ui->AboutBriefTextedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."
-                                                                      "All functions of the software are still being perfected. Please look forward to it. "));
+                                                                     "All functions of the software are still being perfected. Please look forward to it. "));
     ui->AboutVersionLabel->setStyleSheet("color:#595959;");
-    ui->AboutDevelopTextedit->setText(tr("Service & Support: ") + "support@kylinos.cn");
+//    ui->AboutDevelopTextedit->setText(tr("Service & Support: ") + "support@kylinos.cn");
+    ui->AboutDevelopTextedit->setText(tr("Service & Support: ") +
+                                "<a href=\"mailto://support@kylinos.cn\""
+                                "style=\"color:#595959\">"
+                                "support@kylinos.cn</a>");
+
+    ui->AboutBriefTextedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."
+                                                                     "All functions of the software are still being perfected. Please look forward to it. "));
+  
     this->setBackgroundRole(QPalette::Base);
     this->setAutoFillBackground(true);
 }
