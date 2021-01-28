@@ -83,7 +83,7 @@ If there exists 2 more devices, users can choose one of them to use.
 <br>
 
 ## Q&A
-### Stuck in lock screen and unable to enter password
+#### Stuck in lock screen and unable to enter password
 
 1) Switch to teminal by "Ctrl + Alt + F1"
 
@@ -93,7 +93,7 @@ If there exists 2 more devices, users can choose one of them to use.
 
 4) Switch back by "Ctrl + Alt + F7" (If multiple users logged in, the command may be Ctrl + Alt + F8 and so on)
 
-### Unable to use biometric authentication
+#### Unable to use biometric authentication
 
 1) Open biometric manager
 
@@ -103,6 +103,6 @@ If there exists 2 more devices, users can choose one of them to use.
 
 4) Make sure there exits one biometric feature at least
 
-### How to close it
+#### How to close it
 Change the switch on the main interface to "Closed".
 
