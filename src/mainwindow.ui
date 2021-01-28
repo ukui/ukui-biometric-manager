@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>950</width>
-    <height>650</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>950</width>
-    <height>650</height>
+    <height>630</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>950</width>
-    <height>650</height>
+    <height>630</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -38,14 +38,20 @@
     <string notr="true"/>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <property name="spacing">
+     <number>4</number>
+    </property>
     <property name="leftMargin">
-     <number>10</number>
+     <number>8</number>
     </property>
     <property name="topMargin">
-     <number>5</number>
+     <number>4</number>
     </property>
     <property name="rightMargin">
-     <number>5</number>
+     <number>4</number>
+    </property>
+    <property name="bottomMargin">
+     <number>14</number>
     </property>
     <item>
      <widget class="QLabel" name="lblLogo">
@@ -82,30 +88,29 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="lblUserName">
+     <widget class="QToolButton" name="btnMenu">
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
-       <string>UserName</string>
+       <string/>
       </property>
      </widget>
     </item>
     <item>
-     <spacer name="horizontalSpacer_9">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>50</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item alignment="Qt::AlignTop">
-     <widget class="QPushButton" name="btnMenu">
+     <widget class="QToolButton" name="btnMin">
       <property name="minimumSize">
        <size>
         <width>32</width>
@@ -126,30 +131,8 @@
       </property>
      </widget>
     </item>
-    <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-     <widget class="QPushButton" name="btnMin">
-      <property name="minimumSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item alignment="Qt::AlignTop">
-     <widget class="QPushButton" name="btnClose">
+    <item>
+     <widget class="QToolButton" name="btnClose">
       <property name="minimumSize">
        <size>
         <width>32</width>
@@ -178,22 +161,28 @@
      <x>0</x>
      <y>50</y>
      <width>950</width>
-     <height>70</height>
+     <height>50</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <property name="spacing">
+     <number>20</number>
+    </property>
     <property name="leftMargin">
+     <number>28</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
      <widget class="QPushButton" name="btnDashBoard">
       <property name="minimumSize">
        <size>
-        <width>170</width>
-        <height>70</height>
+        <width>100</width>
+        <height>42</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -211,8 +200,8 @@
      <widget class="QPushButton" name="btnFingerPrint">
       <property name="minimumSize">
        <size>
-        <width>170</width>
-        <height>70</height>
+        <width>100</width>
+        <height>42</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -230,8 +219,8 @@
      <widget class="QPushButton" name="btnFingerVein">
       <property name="minimumSize">
        <size>
-        <width>170</width>
-        <height>70</height>
+        <width>100</width>
+        <height>42</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -249,8 +238,8 @@
      <widget class="QPushButton" name="btnIris">
       <property name="minimumSize">
        <size>
-        <width>170</width>
-        <height>70</height>
+        <width>100</width>
+        <height>42</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -268,8 +257,8 @@
      <widget class="QPushButton" name="btnVoicePrint">
       <property name="minimumSize">
        <size>
-        <width>170</width>
-        <height>70</height>
+        <width>100</width>
+        <height>42</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -302,7 +291,7 @@
    <property name="geometry">
     <rect>
      <x>1</x>
-     <y>120</y>
+     <y>100</y>
      <width>948</width>
      <height>528</height>
     </rect>
@@ -622,19 +611,19 @@
             <property name="columnCount">
              <number>0</number>
             </property>
-            <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>100</number>
-            </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
              <number>50</number>
+            </attribute>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>100</number>
             </attribute>
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
             </attribute>
-            <attribute name="verticalHeaderDefaultSectionSize">
+            <attribute name="verticalHeaderMinimumSectionSize">
              <number>36</number>
             </attribute>
-            <attribute name="verticalHeaderMinimumSectionSize">
+            <attribute name="verticalHeaderDefaultSectionSize">
              <number>36</number>
             </attribute>
            </widget>

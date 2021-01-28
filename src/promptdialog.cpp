@@ -24,6 +24,7 @@
 #include <QStandardItemModel>
 #include <pwd.h>
 #include "servicemanager.h"
+#include "xatom-helper.h"
 
 PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
                            int deviceId, int uid, QWidget *parent)
@@ -37,10 +38,15 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
       opsResult(UNDEFINED)
 {
 	ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    setWindowFlags(Qt::Window);
 
     ui->btnClose->setFlat(true);
-    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    ui->btnClose->setProperty("isWindowButton", 0x2);
+    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
+    ui->btnClose->setProperty("setIconHighlightEffectDefaultColor", ui->btnClose->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnClose->setFixedSize(30, 30);
+    ui->btnClose->setIconSize(QSize(16, 16));
+    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
 
 	/* 设置 CSS */
 	QFile qssFile(":/css/assets/promptdialog.qss");
@@ -64,6 +70,13 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
             close();
         }
     });
+
+
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(winId(), hints);
 }
 
 PromptDialog::~PromptDialog()
@@ -131,9 +144,9 @@ void PromptDialog::setSearchResult(bool isAdmin, const QList<SearchResult> &sear
 {
     QStandardItemModel *model = new QStandardItemModel(ui->treeViewResult);
     if(isAdmin)
-        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Index"), tr("UserName"), tr("FeatureName")});
+        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Serial number"), tr("UserName"), tr("FeatureName")});
     else
-        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Index"), tr("FeatureName")});
+        model->setHorizontalHeaderLabels(QStringList{"    " + tr("Serial number"), tr("FeatureName")});
 
     for(int i = 0; i < searchResultList.size(); i++) {
         SearchResult ret = searchResultList[i];
@@ -171,13 +184,13 @@ QString PromptDialog::getImage(int type)
 {
     switch(type) {
     case BIOTYPE_FINGERPRINT:
-        return ":/images/assets/fingerprint.png";
+        return "/usr/share/ukui-biometric/images/FingerPrint.png";
     case BIOTYPE_FINGERVEIN:
-        return ":/images/assets/fingervein.png";
+        return "/usr/share/ukui-biometric/images/FingerVein.png";
     case BIOTYPE_IRIS:
-        return ":/images/assets/iris.png";
+        return "/usr/share/ukui-biometric/images/Iris.png";
     case BIOTYPE_VOICEPRINT:
-        return ":/images/assets/voiceprint.png";
+        return "/usr/share/ukui-biometric/images/VoicePrint.png";
     }
     return QString();
 }
@@ -324,6 +337,16 @@ void PromptDialog::errorCallBack(const QDBusError &error)
 {
     qDebug() << "DBus Error: " << error.message();
     accept();
+}
+
+void PromptDialog::closeEvent(QCloseEvent *event)
+{
+    QList<QVariant> args;
+    args << QVariant(deviceId) << QVariant(5);
+    serviceInterface->callWithCallback("StopOps", args, this,
+                    SLOT(StopOpsCallBack(const QDBusMessage &)),
+                    SLOT(errorCallBack(const QDBusError &)));
+
 }
 
 void PromptDialog::onStatusChanged(int drvId, int statusType)

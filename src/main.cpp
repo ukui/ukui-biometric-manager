@@ -17,9 +17,10 @@
 **/
 #include "mainwindow.h"
 #include <QApplication>
+#include <QtSingleApplication>
 #include <QTranslator>
 #include <QDir>
-
+#include <QStyleFactory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,6 +29,8 @@
 
 #include "servicemanager.h"
 #include "messagedialog.h"
+#include "xatom-helper.h"
+
 #include <X11/Xlib.h>
 
 #define WORKING_DIRECTORY "/usr/share/biometric-manager"
@@ -56,7 +59,8 @@ void checkIsRunning()
     struct flock lock;
 
     const QString PID_DIR = QString("/var/run/user/%1").arg(QString::number(getuid()));
-    const QString PID_FILE = PID_DIR + "/biometric-manager.pid";
+    QString env = qgetenv("DISPLAY");
+    const QString PID_FILE = PID_DIR + QString("/biometric-manager%1.pid").arg(env);
 
     qDebug() << PID_DIR;
     QDir dir(PID_DIR);
@@ -111,15 +115,22 @@ void x11_get_screen_size(int *width,int *height)
 
 int main(int argc, char *argv[])
 {
-    checkIsRunning();
+//    checkIsRunning();
 
 
 #if(QT_VERSION>=QT_VERSION_CHECK(5,6,0))
     	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
+	//QtSingleApplication a(argc, argv);
+    QString id = QString("ukui-biometric-manager" + QLatin1String(getenv("DISPLAY")));
+    QtSingleApplication a(id, argc, argv);
 
-	QApplication a(argc, argv);
+    if (a.isRunning())
+    {
+        a.sendMessage("raise");
+        return EXIT_SUCCESS;
+    }
 
 	/* 对中文环境安装翻译 */
 	QString locale = QLocale::system().name();
@@ -152,10 +163,17 @@ int main(int argc, char *argv[])
         msgDialog.exec();
         exit(EXIT_FAILURE);
     }
-
+    
     MainWindow w(argMap.value("username"));
     w.setObjectName("MainWindow");
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
     w.show();
+
+    QObject::connect(&a, SIGNAL(messageReceived(QString)), &w, SLOT(onReviceWindowMessage(QString)));
     QObject::connect(sm, &ServiceManager::serviceStatusChanged,
                      &w, &MainWindow::onServiceStatusChanged);
 

@@ -1,17 +1,16 @@
 #PromptDialog, #InputDialog, #MessageDialog,
 #ServiceDialog, #AboutDialog {
     background-color: white;
-    border: 1px solid #0066b8;
 }
 
 #widgetHeader{
-    background-color: #0078d7;
+    background-color: #3d6be5;
 }
 
 #lblTitle {
     color: white;
 }
-
+/*
 QPushButton{
     text-align:center;
     border: none;
@@ -20,38 +19,30 @@ QPushButton{
 QPushButton:flat{
     border: none;
 }
-
-/* 标题栏 关闭按钮 */
-#btnClose{
-    background-color:#0078d7;
-    icon-size:27px, 27px;
-}
-#btnClose::hover {
-    background-color: #f82600;
-}
-#btnClose::pressed {
-    background-color: #c82102;
-}
+*/
 
 /* 标题栏 背景色*/
 #widgetTitle {
-    background-color: #0078d7;
+    background-color: #3d6be5;
 }
 
 
 #btnOK, #btnCancel {
-
-    border: 1px solid #65b0eb;
+    text-align:center;
+    border: none;
+    outline: none;
+    border: none;
+    background-color:#ebebeb;
 }
 #btnOK::focus, #btnCancel::focus {
     font-size: 14px;
-    background-color: #e1f1fe;
+    background-color: #ebebeb;
 }
 #btnOK::hover, #btnCancel::hover {
-    background-color: #308cc6;
+    background-color: #3d6be5;
 }
 #btnOK::pressed, #btnCancel::pressed{
-    background-color: #0066b8;
+    background-color: #3d6be5;
 }
 
 QLineEdit {
@@ -75,14 +66,6 @@ QLineEdit {
 
 #textAbout, #textContributor {
     border: none;
-}
-
-#btnCloseDialog {
-    border: 1px solid gray;
-}
-
-#btnCloseDialog::hover {
-    border: 1px solid #0078d7;
 }
 
 

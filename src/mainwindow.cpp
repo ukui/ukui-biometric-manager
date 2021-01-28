@@ -117,7 +117,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent */*event*/)
 
 void MainWindow::prettify()
 {
-    setWindowFlags(Qt::WindowCloseButtonHint|Qt::FramelessWindowHint);
+    setWindowFlags(Qt::WindowCloseButtonHint);
 	/* 设置窗口图标 */
     QApplication::setWindowIcon(QIcon::fromTheme("biometric-manager"));
 	/* 设置 CSS */
@@ -127,17 +127,41 @@ void MainWindow::prettify()
 	this->setStyleSheet(styleSheet);
 	qssFile.close();
 
+    ui->lblTitle->setText(tr("Biometric Manager"));
 	/* Set Icon for each tab on tabwidget */
-    ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_default.png"));
-    ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
-    ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
-    ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
-    ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_default.png"));
-    /* Set logo on lblLogo */
-    ui->lblLogo->setPixmap(QPixmap(":/images/assets/logo.png"));
-    ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
-    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
-    ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
+    ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard.png"));
+    ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint.png"));
+    ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein.png"));
+    ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
+    ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
+//    /* Set logo on lblLogo */
+    ui->lblLogo->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(24,24)));
+ //   ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
+    ui->btnMin->setProperty("isWindowButton", 0x1);
+    ui->btnMin->setProperty("useIconHighlightEffect", 0x2);
+    ui->btnMin->setProperty("setIconHighlightEffectDefaultColor", ui->btnMin->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnMin->setFixedSize(30, 30);
+    ui->btnMin->setAutoRaise(true);
+    ui->btnMin->setIconSize(QSize(16, 16));
+    ui->btnMin->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+
+  //  ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    ui->btnClose->setProperty("isWindowButton", 0x2);
+    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
+    ui->btnClose->setProperty("setIconHighlightEffectDefaultColor", ui->btnClose->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnClose->setFixedSize(30, 30);
+    ui->btnClose->setAutoRaise(true);
+   // ui->btnClose->setIconSize(QSize(16, 16));
+    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
+
+  //  ui->btnMenu->setIcon(QIcon(":/images/assets/menu.png"));
+    ui->btnMenu->setProperty("isWindowButton", 0x1);
+    ui->btnMenu->setProperty("useIconHighlightEffect", 0x2);
+    ui->btnMenu->setProperty("setIconHighlightEffectDefaultColor", ui->btnMenu->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnMenu->setFixedSize(30, 30);
+    ui->btnMenu->setIconSize(QSize(16, 16));
+    ui->btnMenu->setAutoRaise(true);
+    ui->btnMenu->setIcon(QIcon::fromTheme("open-menu-symbolic"));
 }
 
 QPixmap *MainWindow::getUserAvatar(QString username)
@@ -169,12 +193,23 @@ QPixmap *MainWindow::getUserAvatar(QString username)
 
 void MainWindow::setCurrentUser()
 {
-    struct passwd *pwd;
-    pwd = getpwuid(getuid());
-    username = QString(pwd->pw_name);
-    ui->lblUserName->setText(username);
+//    struct passwd *pwd;
+//    pwd = getpwuid(getuid());
+//    username = QString(pwd->pw_name);
+//    ui->lblUserName->setText(username);
 
-    ui->lblAvatar->setPixmap(QPixmap(":/images/assets/avatar.png"));
+//    ui->lblAvatar->setPixmap(QPixmap(":/images/assets/avatar.png"));
+}
+
+void MainWindow::onReviceWindowMessage(QString message)
+{
+    if (!this->isActiveWindow())
+    {
+        this->hide();
+        this->show();
+        activateWindow();
+    }
+
 }
 
 void MainWindow::initialize()
@@ -212,15 +247,13 @@ void MainWindow::initialize()
 void MainWindow::initSysMenu()
 {
     menu = new QMenu(this);
-    QAction *serviceStatusAction = new QAction(QIcon(":/images/assets/restart_service.png"),
-                                               tr("Restart Service"), this);
+    QAction *serviceStatusAction = new QAction(tr("Restart Service"), this);
     connect(serviceStatusAction, &QAction::triggered, this, [&]{
         if(restartService())
             updateDevice();
     });
 
-    QAction *aboutAction = new QAction(QIcon(":images/assets/about.png"),
-                                       tr("About"), this);
+    QAction *aboutAction = new QAction(tr("About"), this);
     connect(aboutAction, &QAction::triggered, this, [&]{
         if(aboutDlg == nullptr)
             aboutDlg = new AboutDialog();
@@ -229,55 +262,72 @@ void MainWindow::initSysMenu()
         int y = this->geometry().topLeft().y() + (height() - aboutDlg->height()) / 2;
 
         aboutDlg->move(x, y);
-        aboutDlg->show();
-        aboutDlg->raise();
+        aboutDlg->exec();
     });
 
-    menu->addActions({serviceStatusAction, aboutAction});
+    QAction *exitAction = new QAction(tr("exit"), this);
+    connect(exitAction, &QAction::triggered, this, [&]{
+        close();
+    });
+
+    QAction *helpAction = new QAction(tr("help"), this);
+    connect(helpAction, &QAction::triggered, this, [&]{
+        if(!daemonIsNotRunning()){
+            showGuide("biometric-manager");
+        }
+    });
+
+    menu->addActions({serviceStatusAction, helpAction,aboutAction,exitAction});
+    ui->btnMenu->setPopupMode(QToolButton::InstantPopup   );
     ui->btnMenu->setMenu(menu);
 }
 
 void MainWindow::changeBtnColor(QPushButton *btn)
 {
-    if(btn == ui->btnDashBoard) {
-        ui->btnDashBoard->setStyleSheet("background-color: #0066b8;");
-        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_click.png"));
+    if(btn != ui->btnDashBoard) {
+        ui->btnDashBoard->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard-white.png"));
     }
     else {
-        ui->btnDashBoard->setStyleSheet("background-color: #0078d7;");
-        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard_default.png"));
+        ui->btnDashBoard->setIcon(QIcon(":/images/assets/dashboard.png"));
+        ui->btnDashBoard->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                        "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
-    if(btn == ui->btnFingerPrint) {
-        ui->btnFingerPrint->setStyleSheet("background-color: #0066b8;");
-        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_click.png"));
-    }
-    else {
-        ui->btnFingerPrint->setStyleSheet("background-color: #0078d7;");
-        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint_default.png"));
-    }
-    if(btn == ui->btnFingerVein) {
-        ui->btnFingerVein->setStyleSheet("background-color: #0066b8;");
-        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_click.png"));
+    if(btn != ui->btnFingerPrint) {
+        ui->btnFingerPrint->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint-white.png"));
     }
     else {
-        ui->btnFingerVein->setStyleSheet("background-color: #0078d7;");
-        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein_default.png"));
+        ui->btnFingerPrint->setIcon(QIcon(":/images/assets/fingerprint.png"));
+        ui->btnFingerPrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                          "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
-    if(btn == ui->btnIris) {
-        ui->btnIris->setStyleSheet("background-color: #0066b8;");
-        ui->btnIris->setIcon(QIcon(":/images/assets/iris_click.png"));
-    }
-    else {
-        ui->btnIris->setStyleSheet("background-color: #0078d7;");
-        ui->btnIris->setIcon(QIcon(":/images/assets/iris_default.png"));
-    }
-    if(btn == ui->btnVoicePrint) {
-        ui->btnVoicePrint->setStyleSheet("background-color: #0066b8;");
-        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_click.png"));
+    if(btn != ui->btnFingerVein) {
+        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein-white.png"));
+        ui->btnFingerVein->setStyleSheet("background-color: #3d6be5;color:#ffffff");
     }
     else {
-        ui->btnVoicePrint->setStyleSheet("background-color: #0078d7;");
-        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint_default.png"));
+        ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein.png"));
+        ui->btnFingerVein->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                         "QPushButton:hover{background-color:#ffffff;border:none;}");
+    }
+    if(btn != ui->btnIris) {
+        ui->btnIris->setIcon(QIcon(":/images/assets/iris-white.png"));
+        ui->btnIris->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+    }
+    else {
+        ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
+        ui->btnIris->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                   "QPushButton:hover{background-color:#ffffff;border:none;}");
+    }
+    if(btn != ui->btnVoicePrint) {
+        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint-white.png"));
+        ui->btnVoicePrint->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+    }
+    else {
+        ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
+        ui->btnVoicePrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                         "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
 }
 
@@ -420,7 +470,7 @@ void MainWindow::raiseContentPane(DeviceInfo *deviceInfo)
 
 void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 {
-	QListWidget *lw;
+    QListWidget *lw;
 	QStackedWidget *sw;
 
     switch(deviceInfo->biotype) {
@@ -445,7 +495,7 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
     QListWidgetItem *item = new QListWidgetItem(deviceInfo->device_shortname);
     ContentPane *contentPane = new ContentPane(getuid(), deviceInfo);
 	item->setTextAlignment(Qt::AlignCenter);
-    if(deviceInfo->device_available==false){
+    if(deviceInfo->device_available <= 0){
         lw->insertItem(lw->count(), item);
         sw->insertWidget(sw->count(),contentPane);
     }
@@ -477,9 +527,42 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
 
 void MainWindow::initBiometricPage()
 {
-    for(int i = 0; i < __MAX_NR_BIOTYPES; i++)
-        for (auto deviceInfo : deviceInfosMap[i])
+    ui->listWidgetFingerPrint->clear();
+    for(int i = ui->stackedWidgetFingerPrint->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetFingerPrint->widget(i);
+        ui->stackedWidgetFingerPrint->removeWidget(widget);
+        widget->deleteLater();
+    }
+    ui->listWidgetFingerVein->clear();
+    for(int i = ui->stackedWidgetFingerVein->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetFingerVein->widget(i);
+        ui->stackedWidgetFingerVein->removeWidget(widget);
+        widget->deleteLater();
+    }
+    ui->listWidgetIris->clear();
+    for(int i = ui->stackedWidgetIris->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetIris->widget(i);
+        ui->stackedWidgetIris->removeWidget(widget);
+        widget->deleteLater();
+    }
+    ui->listWidgetVoicePrint->clear();
+    for(int i = ui->stackedWidgetVoicePrint->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetVoicePrint->widget(i);
+        ui->stackedWidgetVoicePrint->removeWidget(widget);
+        widget->deleteLater();
+    }
+    contentPaneMap.clear();
+
+    for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
+        for (auto deviceInfo : deviceInfosMap[i]){
+            ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
             addContentPane(deviceInfo);
+        }
+    }
     checkBiometricPage(FingerPrint);
     checkBiometricPage(FingerVein);
 	checkBiometricPage(Iris);
@@ -583,7 +666,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
     QStringList headerData;
     headerData << "    " + tr("Device Name") << tr("Device Status") << tr("Driver Status") << tr("Default")
                << "    " + tr("Device Name") << tr("Device Status") << tr("Driver Status") << tr("Default");
-
+    ui->tableWidgetDevices->hide();
     ui->tableWidgetDevices->clear();
     ui->tableWidgetDevices->setRowCount(0);
     ui->tableWidgetDevices->setColumnCount(8);
@@ -614,7 +697,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
     
     for(int i=0;i<deviceInfosMap[deviceType].count();i++)
     {
-        if(deviceInfosMap[deviceType].at(i)->device_available==true)
+        if(deviceInfosMap[deviceType].at(i)->device_available > 0)
         {
             deviceInfosMap[deviceType].move(i,0);
         }
@@ -645,9 +728,9 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             btnDrvStatus->setObjectName(deviceInfo->device_shortname + "_" + QString::number(deviceType));
             btnDrvStatus->setFixedSize(40, 20);
             if(deviceInfo->driver_enable > 0)
-                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png)");
+                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_open_small.png);text-align:center;border: none;outline: none;background-repeat:no-repeat;");
             else
-                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png)");
+                btnDrvStatus->setStyleSheet("background:url(:/images/assets/switch_close_small.png);text-align:center;border: none;outline: none;background-repeat:no-repeat;");
             connect(btnDrvStatus, &QPushButton::clicked, this, &MainWindow::onDriverStatusClicked);
 
             QVBoxLayout *layout = new QVBoxLayout(item_drvStatus);
@@ -666,11 +749,11 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             if(Configuration::instance()->getDefaultDevice() == deviceInfo->device_shortname)
                 cbDefault->setChecked(true);
             btnGroup.push_back(cbDefault);
-            cbDefault->setObjectName("cb_" + deviceInfo->device_shortname);
+            cbDefault->setObjectName(deviceInfo->device_shortname);
             connect(cbDefault, &QCheckBox::clicked, this, &MainWindow::onDefaultDeviceChanged);
             connect(Configuration::instance(), &Configuration::defaultDeviceChanged,
                     this, [&](const QString &deviceName) {
-                QString objName = "cb_" + deviceName;
+                QString objName = deviceName;
                 QCheckBox *check = findChild<QCheckBox*>(objName);
                 if(check) {
                     check->setChecked(true);
@@ -690,6 +773,7 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             column = (column + 4) % 8;
         }
     }
+    ui->tableWidgetDevices->show();
 }
 
 void MainWindow::onDriverStatusClicked()
@@ -716,7 +800,7 @@ void MainWindow::onDriverStatusClicked()
 void MainWindow::onDefaultDeviceChanged(bool checked)
 {
     QString objName = sender()->objectName();
-    QString deviceName = objName.split("_").at(1);
+    QString deviceName = objName;
 
     for(auto cb : btnGroup)
         if(cb != sender())
@@ -854,8 +938,9 @@ void MainWindow::updateDeviceListWidget(int biotype)
         auto iter = std::find_if(list.begin(), list.end(),
                               [&](DeviceInfo *deviceInfo){
                 return deviceInfo->device_shortname == item->text(); });
+        if(iter != std::end(list))
+            item->setTextColor((*iter)->device_available ? Qt::black : Qt::gray);
 
-        item->setTextColor((*iter)->device_available ? Qt::black : Qt::gray);
     }
 }
 
@@ -865,14 +950,19 @@ void MainWindow::updateDevice()
     sleep(3);   //wait for service restart and dbus is ready
     getDeviceInfo();
     on_listWidgetDevicesType_currentRowChanged(ui->listWidgetDevicesType->currentRow());
-    for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
+   /* for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
         for(auto deviceInfo : deviceInfosMap[i]){
-            ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
-            contentPane->setDeviceInfo(deviceInfo);
-            contentPane->showFeatures();
+                ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
+                if(contentPane){
+            		contentPane->setDeviceInfo(deviceInfo);
+            		contentPane->showFeatures();
+                }else{
+                    addContentPane(deviceInfo);
+                }
         }
         updateDeviceListWidget(i);
-    }
+    }*/
+    initBiometricPage();
     setCursor(Qt::ArrowCursor);
      sortContentPane();
 }

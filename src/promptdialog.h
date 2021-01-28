@@ -47,6 +47,7 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *);
+    void closeEvent(QCloseEvent *event);
 
 private:
     void setFailed();

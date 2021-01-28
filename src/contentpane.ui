@@ -386,6 +386,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="btnEnroll">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Enroll</string>
        </property>
@@ -393,6 +396,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnVerify">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Verify</string>
        </property>
@@ -400,6 +406,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnSearch">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Search</string>
        </property>
@@ -407,6 +416,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnDelete">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Delete</string>
        </property>
@@ -414,6 +426,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnClean">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Clean</string>
        </property>

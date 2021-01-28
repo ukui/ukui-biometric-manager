@@ -18,22 +18,36 @@
 #include "inputdialog.h"
 #include "ui_inputdialog.h"
 #include <QFile>
+#include "xatom-helper.h"
 
 InputDialog::InputDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InputDialog)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-
+    setWindowFlags(/*Qt::FramelessWindowHint |*/ Qt::Window);
     QFile qssFile(":/css/assets/promptdialog.qss");
     qssFile.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(qssFile.readAll());
     this->setStyleSheet(styleSheet);
     qssFile.close();
 
-    ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    //ui->btnClose->setIcon(QIcon(":/images/assets/close.png"));
+    ui->btnClose->setProperty("isWindowButton", 0x2);
+    ui->btnClose->setProperty("useIconHighlightEffect", 0x8);
+    ui->btnClose->setProperty("setIconHighlightEffectDefaultColor", ui->btnClose->palette().color(QPalette::Active, QPalette::Base));
+    ui->btnClose->setFixedSize(30, 30);
+    ui->btnClose->setIconSize(QSize(16, 16));
+    ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
+    ui->btnClose->setFlat(true);
     ui->lineEdit->setFocus();
+
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(winId(), hints);
+
 }
 
 InputDialog::~InputDialog()
@@ -44,6 +58,7 @@ InputDialog::~InputDialog()
 void InputDialog::setTitle(const QString &text)
 {
     ui->lblTitle->setText(text);
+    setWindowTitle(text);
 }
 
 void InputDialog::setPrompt(const QString &text)

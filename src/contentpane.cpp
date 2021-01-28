@@ -103,12 +103,12 @@ void ContentPane::updateWidgetStatus()
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
         ui->labelStatusText->setText(tr("Closed"));
 	}
-	ui->btnEnroll->setEnabled(deviceInfo->device_available);
-	ui->btnDelete->setEnabled(deviceInfo->device_available);
-	ui->btnVerify->setEnabled(deviceInfo->device_available);
-	ui->btnSearch->setEnabled(deviceInfo->device_available);
-    ui->btnClean->setEnabled(deviceInfo->device_available);
-	ui->treeView->setEnabled(deviceInfo->device_available);
+    ui->btnEnroll->setEnabled(deviceInfo->device_available > 0);
+    ui->btnDelete->setEnabled(deviceInfo->device_available > 0);
+    ui->btnVerify->setEnabled(deviceInfo->device_available > 0);
+    ui->btnSearch->setEnabled(deviceInfo->device_available > 0);
+    ui->btnClean->setEnabled(deviceInfo->device_available > 0);
+    ui->treeView->setEnabled(deviceInfo->device_available > 0);
 }
 
 void ContentPane::updateButtonUsefulness()
@@ -127,7 +127,7 @@ void ContentPane::updateButtonUsefulness()
  */
 bool ContentPane::deviceIsAvailable()
 {
-	return deviceInfo->device_available;
+    return deviceInfo->device_available > 0;
 }
 
 
@@ -309,6 +309,7 @@ bool ContentPane::confirmDelete(bool all)
     }
     MessageDialog dialog(MessageDialog::Question);
     dialog.setTitle(title);
+    dialog.setWindowTitle(title);
     dialog.setMessage(text);
     return dialog.exec() == QDialog::Accepted;
 }
@@ -320,8 +321,15 @@ bool ContentPane::confirmDelete(bool all)
 void ContentPane::on_btnDelete_clicked()
 {
     QModelIndexList selectedIndexList = ui->treeView->selectionModel()->selectedRows(0);
-    if(selectedIndexList.size() <= 0)
+    if(selectedIndexList.size() <= 0){
+        MessageDialog msgDialog(MessageDialog::Normal);
+        msgDialog.setTitle(tr("Feature Delete"));
+        msgDialog.setWindowTitle(tr("Feature Delete"));
+        msgDialog.setMessage(tr("Please select the feature you want to delete."));
+        msgDialog.exec();
+
         return;
+    }
     if(!confirmDelete(false))
         return;
 
@@ -375,6 +383,7 @@ void ContentPane::on_btnDelete_clicked()
 
     MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Delete"));
+    msgDialog.setWindowTitle(tr("Delete"));
     msgDialog.setMessage("             " + tr("The result of delete:"));
     msgDialog.setMessageList(resultStrings);
     msgDialog.exec();
@@ -412,6 +421,7 @@ void ContentPane::on_btnClean_clicked()
 
     MessageDialog msgDialog(MessageDialog::Normal);
     msgDialog.setTitle(tr("Clean Result"));
+    msgDialog.setWindowTitle(tr("Clean Result"));
     msgDialog.setMessage(resultString);
     msgDialog.exec();
 
@@ -432,6 +442,7 @@ void ContentPane::on_btnVerify_clicked()
     if(!currentModelIndex.isValid() || !selected){
         MessageDialog msgDialog(MessageDialog::Normal);
         msgDialog.setTitle(tr("Feature Verify"));
+        msgDialog.setWindowTitle(tr("Feature Verify"));
         msgDialog.setMessage(tr("Please select the feature you want to verify."));
         msgDialog.exec();
 
@@ -502,6 +513,7 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
     }
     MessageDialog msgDialog(type);
     msgDialog.setTitle(tr("Rename Result"));
+    msgDialog.setWindowTitle(tr("Rename Result"));
     msgDialog.setMessage(resultMessage);
     msgDialog.exec();
 }

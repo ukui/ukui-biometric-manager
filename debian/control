@@ -5,8 +5,11 @@ Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: handsome_feng <jianfengli@ubuntukylin.com>
 Build-Depends: debhelper-compat (=12),
                qtbase5-dev,
+               libkf5windowsystem-dev,
                libx11-dev,
+               libqt5x11extras5-dev,
                pkg-config,
+               libgsettings-qt-dev,
                qttools5-dev-tools
 Standards-Version: 4.2.1
 Rules-Requires-Root: no

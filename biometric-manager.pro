@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui dbus
+QT       += core gui dbus KWindowSystem dbus x11extras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,11 +13,15 @@ DEFINES += APP_API_MAJOR=0  \
             APP_API_FUNC=0
 
 PREFIX = /usr/share/biometric-manager
+LIBS +=-lpthread
+LIBS +=-lX11
+
+include ($$PWD/qt-solutions/qtsingleapplication/src/qtsingleapplication.pri)
 
 TARGET = biometric-manager
 TEMPLATE = app
 CONFIG += c++11 link_pkgconfig
-PKGCONFIG += x11
+PKGCONFIG += x11 gsettings-qt
 
 SOURCES += src/main.cpp\
     src/mainwindow.cpp \
@@ -30,7 +34,8 @@ SOURCES += src/main.cpp\
     src/messagedialog.cpp \
     src/aboutdialog.cpp \
     src/configuration.cpp \
-    src/servicemanager.cpp
+    src/servicemanager.cpp \
+    src/xatom-helper.cpp
 
 
 HEADERS  += src/mainwindow.h \
@@ -43,7 +48,8 @@ HEADERS  += src/mainwindow.h \
     src/messagedialog.h \
     src/aboutdialog.h \
     src/configuration.h \
-    src/servicemanager.h
+    src/servicemanager.h \
+    src/xatom-helper.h
 
 
 FORMS    += src/mainwindow.ui \

@@ -4,73 +4,48 @@ QWidget{
     font-family:droid-fallback;
 }
 
-#MainWindow {
-    border: 1px solid #0066b8;
+#widgetHeader, #widgetTab {
+    background-color:#3d6be5;
 }
 
-QPushButton{
+#btnStatus{
     text-align:center;
     border: none;
     outline: none;
     background-repeat:no-repeat;
 }
-QPushButton:flat{
-    border: none;
-}
 
-
-#widgetHeader, #widgetTab {
-    background-color:#0078d7;
+#lblTitle{
+    color:#ffffff;
 }
 
 #widgetNote {
-    background-color:#eff4fa;
-    border-bottom: 1px solid #c2d2e9;
+    background-color:#ffffff;
 }
 
-
-#btnMin, #btnClose, #btnMenu{
-    background-color:#0078d7;
-    icon-size:27px, 27px;
-}
-#btnMin::hover, #btnMenu::hover {
-    background-color: #4da1e3;
-}
-#btnMin::pressed, #btnMenu::hover {
-    background-color: #0066b8;
-}
-#btnClose::hover {
-    background-color: #f82600;
-}
-#btnClose::pressed {
-    background-color: #c82102;
-}
-#btnMenu::menu-indicator{
-    image:none;
+#line{
+    background-color: #ebebeb;
+    border:0px;
 }
 
 #btnDashBoard, #btnFingerPrint, #btnFingerVein, #btnIris, #btnVoicePrint {
-    color: white;
-    icon-size: 32px, 32px
+    icon-size: 32px, 32px;
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
+    background-color: #ffffff;
 }
 
 #btnDashBoard::hover, #btnFingerPrint::hover, #btnFingerVein::hover,
 #btnIris::hover, #btnVoicePrint::hover {
-    background-color: #0078d7;
-    border: 1px solid #87c7f9;
+    background-color: #ffffff;
 }
 
 #btnDashBoard::pressed, #btnFingerPrint::pressed, #btnFingerVein::pressed,
-#btnIris::pressed,  #btnVoicePrint::hover {
-    background-color: #0066b8;
-}
-
-#lblTitle, #lblUserName {
-    color: white;
+#btnIris::pressed,  #btnVoicePrint::pressed {
+    background-color: #3d6be5;
 }
 
 #lblNote{
-    color: gray;
     font-size: 13px;
 }
 
@@ -85,24 +60,21 @@ QPushButton:flat{
 }
 
 QListView {
-    background-color: #f3f3f3;
+    background-color: #ebebeb;
     border-top: 0px none;
-    border: 1px solid #e1e1e1;
     margin: 0px;
 }
 QListView::item {
     min-height:36px;
-    border-bottom: 1px solid #e1e1e1;
 }
 QListView::item::hover {
-    background-color:#dddddd;
+    background-color:#e5e5e5;
     color:black;
 }
 QListView::item::selected {
-    background-color: #0078d7;
+    background-color: #3d6be5;
     color: white;
 }
-
 
 QTableView {
     selection-color: white;
@@ -138,47 +110,39 @@ QTreeView {
 
 QTreeView::branch {
 /*    background: palette(base);*/
-    border-bottom: 1px solid lightgray;
 }
 
 /*QTreeView::branch:has-siblings:!adjoins-item {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }
 
 QTreeView::branch:has-siblings:adjoins-item {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }
 
 QTreeView::branch:!has-children:!has-siblings:adjoins-item {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }
 
 QTreeView::branch:has-children:!has-siblings:closed {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }
 
 QTreeView::branch:open:has-children:has-siblings {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }
 
 QTreeView::branch:closed:has-children:has-siblings {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }
 
 QTreeView::branch:open:has-children:!has-siblings {
     background: palette(base);
-    border-bottom: 1px solid lightgray;
 }*/
 
 
 /*QTreeView::branch::!has-siblings{
-    border-bottom: 1px solid lightgray;
+
 }
 QTreeView::branch:!has-children:!has-siblings:adjoins-item {
     border-bottom: 1px solid lightgray;
@@ -232,19 +196,16 @@ QTreeView::item:selected:!active {
 
 
 #btnEnroll, #btnVerify, #btnSearch, #btnDelete, #btnClean {
-    background-color: #f3f3f3;
-    border: 1px solid #bbbbbb;
+    background-color: #ebebeb;
     min-height: 32px;
     min-width: 100px;
 }
 
 #btnEnroll::hover, #btnVerify::hover, #btnSearch::hover,
 #btnDelete::hover, #btnClean::hover {
-    background-color: #e1f1fe;
-    border: 1px solid #65b0eb;
+    background-color: #e5e5e5;
 }
 #btnEnroll::pressed, #btnVerify::pressed, #btnSearch::pressed,
 #btnDelete::pressed, #btnClean::pressed {
-    background-color: #0078d7;
-    border: 1px solid #0066b7;
+    background-color: #3d6be5;
 }
