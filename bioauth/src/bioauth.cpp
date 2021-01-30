@@ -81,8 +81,6 @@ bool BioAuth::isAuthenticating()
 
 void BioAuth::onIdentityComplete(QDBusPendingCallWatcher *watcher)
 {
-
-
     QDBusPendingReply<qint32, qint32> reply = *watcher;
     if(reply.isError()){
         isInAuthentication = false;

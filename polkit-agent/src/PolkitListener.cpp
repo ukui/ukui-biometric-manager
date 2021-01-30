@@ -205,10 +205,11 @@ void PolkitListener::finishObtainPrivilege()
 
     if (!gainedAuthorization && !wasCancelled && (mainWindow != NULL)) {
         int deny = 0, unlock_time = 0;
+        mainWindow->stopDoubleAuth();
         if(!get_pam_tally(&deny, &unlock_time)||(deny  == 0 &&unlock_time == 0)) {
             if(!wasSwitchToBiometric)
                 mainWindow->setAuthResult(gainedAuthorization, tr("Authentication failure, please try again."));
-            startAuthentication();
+                startAuthentication();
             return;
         }
         else {
@@ -225,8 +226,9 @@ void PolkitListener::finishObtainPrivilege()
     session.data()->deleteLater();
     if (mainWindow) {
         mainWindow->hide();
+        mainWindow->stopDoubleAuth();
         mainWindow->deleteLater();
-	mainWindow = NULL;
+        mainWindow = NULL;
     }
     this->inProgress = false;
     qDebug() << "Finish obtain authorization:" << gainedAuthorization;
@@ -280,6 +282,10 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     qDebug() << "Prompt: " << prompt << "echo: " << echo;
 
     if(prompt == BIOMETRIC_PAM) {
+        mainWindow->setDoubleAuth(false);
+        mainWindow->switchAuthMode(MainWindow::BIOMETRIC);
+    }else if(prompt == BIOMETRIC_PAM_DOUBLE){
+         mainWindow->setDoubleAuth(true);
         mainWindow->switchAuthMode(MainWindow::BIOMETRIC);
     }
     else {

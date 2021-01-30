@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru">
+<TS version="2.1" language="ru">
 <context>
     <name>MainWindow</name>
     <message>
@@ -63,6 +63,10 @@
         <source>Authentication failed, please try again.</source>
         <translation>Ошибка аутентификации. Пожалуйста, попробуйте еще раз.</translation>
     </message>
+    <message>
+        <source>Please enter your password or enroll your fingerprint </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PolkitListener</name>
@@ -73,14 +77,6 @@
     <message>
         <source>Authentication failure, please try again.</source>
         <translation>Ошибка аутентификации, повторите попытку.</translation>
-    </message>
-    <message>
-        <source>Account locked %1 minutes due to %2 fail attempts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Authentication failure,there are still %1 remaining opportunities</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

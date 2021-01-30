@@ -310,7 +310,10 @@ int biometric_auth_embeded(pam_handle_t *pamh)
      * status by comparing strings.
      */
     char resp[96] = {0};
-    call_conversation(pamh, PAM_PROMPT_ECHO_OFF, BIOMETRIC_PAM, resp);
+    if(enable_biometric_auth_double())
+    	call_conversation(pamh, PAM_PROMPT_ECHO_OFF, BIOMETRIC_PAM_DOUBLE, resp);
+    else
+	call_conversation(pamh, PAM_PROMPT_ECHO_OFF, BIOMETRIC_PAM, resp);
 
     if (strcmp(resp, BIOMETRIC_IGNORE) == 0)
         return PAM_IGNORE;
@@ -389,6 +392,32 @@ int enable_biometric_authentication()
         }
     }
     
+    fclose(file);
+    if(!strcmp(is_enable, "true"))
+        return 1;
+    return 0;
+}
+
+int enable_biometric_auth_double()
+{
+    char conf_file[] = GET_STR(CONFIG_FILE);
+    FILE *file;
+    char line[1024], is_enable[16];
+    int i;
+
+
+    if((file = fopen(conf_file, "r")) == NULL){
+        logger("open configure file failed: %s\n", strerror(errno));
+        return 0;
+    }
+    while(fgets(line, sizeof(line), file)) {
+        i = sscanf(line, "DoubleAuth=%s\n",  is_enable);
+        if(i > 0) {
+            logger("DoubleAuth=%s\n", is_enable);
+            break;
+        }
+    }
+
     fclose(file);
     if(!strcmp(is_enable, "true"))
         return 1;
