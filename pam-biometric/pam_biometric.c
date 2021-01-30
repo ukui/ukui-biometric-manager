@@ -463,7 +463,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
         get_greeter_session(buf, sizeof(buf));
         logger("current greeter: %s\n", buf);
 
-        if(strcmp(buf, "ukui-greeter") == 0)
+        if(strcmp(buf, "ukui-greeter") == 0 || strcmp(buf, "ukui-greeter-wayland") == 0)
             return biometric_auth_embeded(pamh);
 //        else
 //            return biometric_auth_independent(pamh, "lightdm", 1);
