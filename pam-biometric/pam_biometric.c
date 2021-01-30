@@ -492,3 +492,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
         logger("Service <%s> slip through the service filter\n", service);
     return PAM_IGNORE;
 }
+
+int
+pam_sm_setcred (pam_handle_t *pamh, int flags UNUSED,
+        int argc UNUSED, const char **argv UNUSED)
+{
+    return PAM_SUCCESS;
+}
+
