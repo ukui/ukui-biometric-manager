@@ -753,14 +753,13 @@ void MainWindow::on_listWidgetDevicesType_currentRowChanged(int currentRow)
             connect(cbDefault, &QCheckBox::clicked, this, &MainWindow::onDefaultDeviceChanged);
             connect(Configuration::instance(), &Configuration::defaultDeviceChanged,
                     this, [&](const QString &deviceName) {
+                for(auto btn : btnGroup)
+                    btn->setChecked(false);
+
                 QString objName = deviceName;
                 QCheckBox *check = findChild<QCheckBox*>(objName);
                 if(check) {
                     check->setChecked(true);
-                }
-                else {
-                    for(auto btn : btnGroup)
-                        btn->setChecked(false);
                 }
             });
 
