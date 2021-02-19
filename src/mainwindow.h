@@ -86,6 +86,7 @@ private:
     void updateDeviceListWidget(int biotype);
     void setDeviceStatus(QTableWidgetItem *item, bool connected);
     void raiseContentPane(DeviceInfo *deviceInfo);
+    void setLastDeviceSelected();
     void sortContentPane();
     void showGuide(QString appName);
     int daemonIsNotRunning();
@@ -114,6 +115,7 @@ private:
 
     /* 服务被关闭时提示 */
     QLabel *lblPrompt;
+    DeviceInfo *lastDeviceInfo;
 };
 
 #endif // MAINWINDOW_H

@@ -45,6 +45,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
     username(usernameFromCmd),
     verificationStatus(false),
     dragWindow(false),
+    lastDeviceInfo(nullptr),
     aboutDlg(nullptr)
 {
 	ui->setupUi(this);
@@ -428,6 +429,45 @@ void MainWindow::getDeviceInfo()
 	}
 }
 
+void MainWindow::setLastDeviceSelected()
+{
+    if(!lastDeviceInfo)
+        return ;
+
+    QListWidget *lw;
+    QStackedWidget *sw;
+
+    switch(lastDeviceInfo->biotype) {
+    case BIOTYPE_FINGERPRINT:
+        lw = ui->listWidgetFingerPrint;
+        sw = ui->stackedWidgetFingerPrint;
+        break;
+    case BIOTYPE_FINGERVEIN:
+        lw = ui->listWidgetFingerVein;
+        sw = ui->stackedWidgetFingerVein;
+        break;
+    case BIOTYPE_IRIS:
+        lw = ui->listWidgetIris;
+        sw = ui->stackedWidgetIris;
+        break;
+    case BIOTYPE_VOICEPRINT:
+        lw = ui->listWidgetVoicePrint;
+        sw = ui->stackedWidgetVoicePrint;
+        break;
+    }
+
+    for(int i=0;i<lw->count();i++)
+    {
+        if(lw->item(i)->text()==lastDeviceInfo->device_shortname)
+        {
+            lw->setCurrentRow(i);
+            sw->setCurrentIndex(i);
+        }
+    }
+
+    lastDeviceInfo = nullptr;
+}
+
 void MainWindow::raiseContentPane(DeviceInfo *deviceInfo)
 {
     if(deviceInfo->device_available<=0)
@@ -466,6 +506,7 @@ void MainWindow::raiseContentPane(DeviceInfo *deviceInfo)
             sw->insertWidget(0,widget);
         }
     }
+
 }
 
 void MainWindow::addContentPane(DeviceInfo *deviceInfo)
@@ -578,6 +619,9 @@ void MainWindow::sortContentPane()
     checkBiometricPage(FingerVein);
     checkBiometricPage(Iris);
     checkBiometricPage(VoicePrint);
+
+    if(lastDeviceInfo)
+        setLastDeviceSelected();
 }
 
 #define SET_TABLE_ATTRIBUTE(tw) do {					\
@@ -852,7 +896,7 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
 //        if(!restartService())
 //            return false;
 //    }
-
+    lastDeviceInfo = deviceInfo;
     updateDevice();
 
     /*
@@ -949,6 +993,7 @@ void MainWindow::updateDevice()
     sleep(3);   //wait for service restart and dbus is ready
     getDeviceInfo();
     on_listWidgetDevicesType_currentRowChanged(ui->listWidgetDevicesType->currentRow());
+
    /* for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
         for(auto deviceInfo : deviceInfosMap[i]){
                 ContentPane *contentPane = contentPaneMap[deviceInfo->device_shortname];
