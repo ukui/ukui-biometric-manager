@@ -327,10 +327,7 @@ void PromptDialog::searchCallBack(const QDBusMessage &reply)
 void PromptDialog::StopOpsCallBack(const QDBusMessage &reply)
 {
     int ret = reply.arguments().at(0).toInt();
-    if(ret == 0) {
-        qDebug() << "Stop Successfully";
-        accept();
-    }
+    accept();
 }
 
 void PromptDialog::errorCallBack(const QDBusError &error)
