@@ -16,6 +16,10 @@ configure_file(
     ${PROJECT_SOURCE_DIR}/data/org.freedesktop.plicykit.pkexec.biodrvctl.policy.in
     ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.biodrvctl.policy
     )
+configure_file(
+    ${PROJECT_SOURCE_DIR}/data/org.freedesktop.plicykit.pkexec.biorestart.policy.in
+    ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.biorestart.policy
+    )
 
 set(pam_SRCS
     pam_biometric.c
@@ -39,6 +43,7 @@ install(FILES data/ukui-biometric.conf DESTINATION /etc/biometric-auth)
 install(FILES
     ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl.policy
     ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.biodrvctl.policy
+    ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.biorestart.policy
     DESTINATION /usr/share/polkit-1/actions
     )
-install(FILES utils/bioctl utils/biodrvctl DESTINATION bin PERMISSIONS ${CONDOR_SCRIPT_PERMS})
+install(FILES utils/bioctl utils/biodrvctl utils/biorestart DESTINATION bin PERMISSIONS ${CONDOR_SCRIPT_PERMS})

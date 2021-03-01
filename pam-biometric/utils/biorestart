@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ `whoami` != 'root' ]; then
+	echo $(gettext "Permission denied, please run by root")
+	exit 1
+fi
+
+systemctl restart biometric-authentication.service
