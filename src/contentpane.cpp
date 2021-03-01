@@ -140,8 +140,8 @@ void ContentPane::showDeviceInfo()
     QString listName = EnumToString::transferBioType(deviceInfo->biotype) + tr("List");
     QString devStatus = deviceInfo->device_available > 0 ? tr("Connected") : tr("Unconnected");
 
-	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
+    ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
+    ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
     ui->labelVerifyType->setText(verifyType);
     ui->labelBusType->setText(busType);
     ui->labelStorageType->setText(storageType);
@@ -237,7 +237,9 @@ QString ContentPane::inputFeatureName(bool isNew)
             inputDialog->setError(tr("Empty feature name"));
         }else if(text.length() > 128){
             inputDialog->setError(tr("feature name is too long"));
-        } else {
+        }else if(text.startsWith(" ") || text.endsWith(" ")){
+            inputDialog->setError(tr("Please do not use spaces as the beginning or end of the feature name"));
+        }else {
             inputDialog->accept();
         }
     });

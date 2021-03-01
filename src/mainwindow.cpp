@@ -947,7 +947,7 @@ bool MainWindow::restartService()
 //        return false;
 //    }
     QProcess process;
-    QString cmd = QString("pkexec systemctl restart %1").arg(SERVICE);
+    QString cmd = QString("pkexec biorestart");
     process.start(cmd);
     process.waitForFinished(-1);
     qDebug() << "restart service finished";
