@@ -27,7 +27,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QApplication>
-
+#include <QScreen>
 #include <fcntl.h>
 
 #include "PolkitListener.h"
@@ -121,8 +121,9 @@ void PolkitListener::initiateAuthentication(
                            actionDesc.vendorUrl());
 
     /* set the position of the mainwindow */
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect desktopRect = desktop->screen(desktop->primaryScreen())->geometry();
+ //   QDesktopWidget *desktop = QApplication::desktop();
+ //   QRect desktopRect = desktop->screen(desktop->primaryScreen())->geometry();
+    QRect desktopRect = QApplication::primaryScreen()->geometry();
     mainWindow->move(desktopRect.left() + (desktopRect.width() - mainWindow->width()) / 2,
                      desktopRect.top() + (desktopRect.height() - mainWindow->height()) / 2);
 
@@ -294,6 +295,10 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     }
 
     mainWindow->show();
+    QRect desktopRect = QApplication::primaryScreen()->geometry();
+    mainWindow->move(desktopRect.left() + (desktopRect.width() - mainWindow->width()) / 2,
+                     desktopRect.top() + (desktopRect.height() - mainWindow->height()) / 2);
+
     mainWindow->activateWindow();
 }
 
@@ -302,7 +307,6 @@ void PolkitListener::onShowError(const QString &text)
     qDebug() << "[Polkit]:"    << "Error:" << text;
 
     if(mainWindow){
-        qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
         mainWindow->setMessage(text);
     }
 }
