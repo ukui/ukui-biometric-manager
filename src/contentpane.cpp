@@ -235,7 +235,7 @@ QString ContentPane::inputFeatureName(bool isNew)
             inputDialog->setError(tr("Duplicate feature name"));
         } else if(text.isEmpty()) {
             inputDialog->setError(tr("Empty feature name"));
-        }else if(text.length() > 128){
+        }else if(text.length() > 64){
             inputDialog->setError(tr("feature name is too long"));
         }else if(text.startsWith(" ") || text.endsWith(" ")){
             inputDialog->setError(tr("Please do not use spaces as the beginning or end of the feature name"));
