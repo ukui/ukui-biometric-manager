@@ -267,6 +267,8 @@ void ContentPane::on_btnEnroll_clicked()
              << " indexName--" << indexName;
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
+    if(deviceInfo->device_shortname == "huawei")
+        promptDialog->setProcessed(true);
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
     if(promptDialog->getResult() == PromptDialog::SUCESS) {
@@ -456,9 +458,12 @@ void ContentPane::on_btnVerify_clicked()
 
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
+    if(deviceInfo->device_shortname == "huawei"){
+        promptDialog->setProcessed(true);
+    }
+
     promptDialog->verify(deviceInfo->device_id, uid, verifyIndex);
-
-
+\
     delete promptDialog;
 }
 

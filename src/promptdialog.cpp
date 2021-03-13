@@ -35,6 +35,7 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
       deviceId(deviceId),
       uid(uid),
       ops(IDLE),
+      isProcessed(false),
       opsResult(UNDEFINED)
 {
 	ui->setupUi(this);
@@ -72,11 +73,15 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
     });
 
 
+    connect(serviceInterface, SIGNAL(ProcessChanged(int,QString,int,QString)),
+            this, SLOT(onProcessChanged(int,QString,int,QString)));
+
     MotifWmHints hints;
     hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
     XAtomHelper::getInstance()->setWindowMotifHint(winId(), hints);
+
 }
 
 PromptDialog::~PromptDialog()
@@ -111,6 +116,19 @@ void PromptDialog::setPrompt(const QString &text)
     ui->lblPrompt->setText(text);
     ui->lblPrompt->setWordWrap(true);
     ui->lblPrompt->adjustSize();
+}
+
+void PromptDialog::setProcessed(bool val)
+{
+    isProcessed = val;
+    if(isProcessed){
+        ui->lblImage->setPixmap(QPixmap("/usr/share/ukui-biometric/images/huawei/00.svg"));
+    }
+    else{
+        ui->lblImage->setPixmap(getImage(type));
+        if(!movie)
+            movie = new QMovie(getGif(type));
+    }
 }
 
 void PromptDialog::keyPressEvent(QKeyEvent *event)
@@ -346,6 +364,15 @@ void PromptDialog::closeEvent(QCloseEvent *event)
 
 }
 
+void PromptDialog::onProcessChanged(int drvId,QString  aa, int statusType,QString bb)
+{
+    int count = statusType * 15 / 100;
+    QString filename = QString("/usr/share/ukui-biometric/images/huawei/") + (count < 10 ? "0" : "") +
+            QString::number(count) + ".svg";
+
+    ui->lblImage->setPixmap(QPixmap(filename));
+}
+
 void PromptDialog::onStatusChanged(int drvId, int statusType)
 {
     if (!(drvId == deviceId && statusType == STATUS_NOTIFY))
@@ -372,7 +399,7 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
         return;
     }
 
-    if(movie->state() != QMovie::Running)
+    if(!isProcessed && movie->state() != QMovie::Running)
     {
         ui->lblImage->setMovie(movie);
         movie->start();
@@ -446,7 +473,8 @@ void PromptDialog::setFailed()
 
 void PromptDialog::showClosePrompt()
 {
-    ui->lblImage->setPixmap(getImage(type));
+   // ui->lblImage->setPixmap(getImage(type));
+    ui->lblImage->setPixmap(QIcon::fromTheme("ukui-dialog-success").pixmap(QSize(64,64)));
     QString prompt = QString("<font size = '4'>%1</font>").arg(ui->lblPrompt->text())
             + "<br><br>" +
             tr("<font size='2'>the window will be closed after two second</font>");
