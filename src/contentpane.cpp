@@ -22,7 +22,9 @@
 #include "inputdialog.h"
 #include "messagedialog.h"
 #include "configuration.h"
-
+#include <QPoint>
+#include <QHoverEvent>
+#include <QEvent>
 
 #define ICON_SIZE 32
 
@@ -48,6 +50,7 @@ ContentPane::ContentPane(int uid, DeviceInfo *deviceInfo, QWidget *parent) :
 	setModel();
 	showDeviceInfo();
     showFeatures();
+
 }
 
 ContentPane::~ContentPane()
@@ -186,8 +189,9 @@ void ContentPane::showFeatures()
 
 	if (!deviceIsAvailable())
 		return;
-
-	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+	
+	setCursor(Qt::WaitCursor);
+	//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 	QList<QVariant> args;
 
 	args << QVariant(deviceInfo->device_id)
@@ -215,8 +219,9 @@ void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
         qlist[i].variant().value<QDBusArgument>() >> *featureInfo;
         dataModel->appendData(featureInfo);
 	}
+	
+	setCursor(Qt::ArrowCursor);
 
-    QApplication::restoreOverrideCursor();
 	updateButtonUsefulness();
 }
 
@@ -277,6 +282,7 @@ void ContentPane::on_btnEnroll_clicked()
     }
     delete promptDialog;
 
+
     updateButtonUsefulness();
 }
 
@@ -297,6 +303,7 @@ FeatureInfo *ContentPane::createNewFeatureInfo()
  */
 void ContentPane::errorCallback(QDBusError error)
 {
+    setCursor(Qt::ArrowCursor);
     qDebug() << "DBUS:" << error.message();
 }
 
@@ -311,7 +318,7 @@ bool ContentPane::confirmDelete(bool all)
         text = tr("Confirm whether delete the features selected?");
         title = tr("Confirm Delete");
     }
-    MessageDialog dialog(MessageDialog::Question);
+    MessageDialog dialog(MessageDialog::Question,"","",this);
     dialog.setTitle(title);
     dialog.setWindowTitle(title);
     dialog.setMessage(text);
@@ -326,7 +333,7 @@ void ContentPane::on_btnDelete_clicked()
 {
     QModelIndexList selectedIndexList = ui->treeView->selectionModel()->selectedRows(0);
     if(selectedIndexList.size() <= 0){
-        MessageDialog msgDialog(MessageDialog::Normal);
+        MessageDialog msgDialog(MessageDialog::Normal,"","",this);
         msgDialog.setTitle(tr("Feature Delete"));
         msgDialog.setWindowTitle(tr("Feature Delete"));
         msgDialog.setMessage(tr("Please select the feature you want to delete."));
@@ -385,7 +392,7 @@ void ContentPane::on_btnDelete_clicked()
         updateButtonUsefulness();
     }
 
-    MessageDialog msgDialog(MessageDialog::Normal);
+    MessageDialog msgDialog(MessageDialog::Normal,"","",this);
     msgDialog.setTitle(tr("Delete"));
     msgDialog.setWindowTitle(tr("Delete"));
     msgDialog.setMessage("             " + tr("The result of delete:"));
@@ -423,7 +430,7 @@ void ContentPane::on_btnClean_clicked()
         updateButtonUsefulness();
     }
 
-    MessageDialog msgDialog(MessageDialog::Normal);
+    MessageDialog msgDialog(MessageDialog::Normal,"","",this);
     msgDialog.setTitle(tr("Clean Result"));
     msgDialog.setWindowTitle(tr("Clean Result"));
     msgDialog.setMessage(resultString);
@@ -444,7 +451,7 @@ void ContentPane::on_btnVerify_clicked()
 
 
     if(!currentModelIndex.isValid() || !selected){
-        MessageDialog msgDialog(MessageDialog::Normal);
+        MessageDialog msgDialog(MessageDialog::Normal,"","",this);
         msgDialog.setTitle(tr("Feature Verify"));
         msgDialog.setWindowTitle(tr("Feature Verify"));
         msgDialog.setMessage(tr("Please select the feature you want to verify."));
@@ -518,7 +525,7 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
         resultMessage = getErrorMessage(RENAME, result);
         type = MessageDialog::Error;
     }
-    MessageDialog msgDialog(type);
+    MessageDialog msgDialog(type,"","",this);
     msgDialog.setTitle(tr("Rename Result"));
     msgDialog.setWindowTitle(tr("Rename Result"));
     msgDialog.setMessage(resultMessage);

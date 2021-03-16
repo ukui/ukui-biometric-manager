@@ -879,7 +879,7 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
     if (process.exitCode() != 0) {
         MessageDialog msgDialog(MessageDialog::Error,
                             tr("Fatal Error"),
-                            tr("Fail to change device status"));
+                            tr("Fail to change device status"),this);
         msgDialog.exec();
         return false;
     }

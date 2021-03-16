@@ -26,25 +26,6 @@ QPushButton:flat{
     background-color: #3d6be5;
 }
 
-
-#btnOK, #btnCancel {
-    text-align:center;
-    border: none;
-    outline: none;
-    border: none;
-    background-color:#ebebeb;
-}
-#btnOK::focus, #btnCancel::focus {
-    font-size: 14px;
-    background-color: #ebebeb;
-}
-#btnOK::hover, #btnCancel::hover {
-    background-color: #3d6be5;
-}
-#btnOK::pressed, #btnCancel::pressed{
-    background-color: #3d6be5;
-}
-
 QLineEdit {
     border: 1px solid #0078d7;
     font-size: 14px;
