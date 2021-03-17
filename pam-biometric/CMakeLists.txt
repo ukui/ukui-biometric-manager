@@ -9,8 +9,8 @@ endif()
 
 set(SCRIPTS_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin)
 configure_file(
-    ${PROJECT_SOURCE_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl.policy.in
-    ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl.policy
+    ${PROJECT_SOURCE_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl-helper.policy.in
+    ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl-helper.policy
     )
 configure_file(
     ${PROJECT_SOURCE_DIR}/data/org.freedesktop.plicykit.pkexec.biodrvctl.policy.in
@@ -41,9 +41,9 @@ install(TARGETS pam_biometric DESTINATION /lib/security)
 install(FILES pam-configs/pam-biometric DESTINATION /usr/share/pam-configs)
 install(FILES data/ukui-biometric.conf DESTINATION /etc/biometric-auth)
 install(FILES
-    ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl.policy
+    ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.bioctl-helper.policy
     ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.biodrvctl.policy
     ${PROJECT_BINARY_DIR}/data/org.freedesktop.plicykit.pkexec.biorestart.policy
     DESTINATION /usr/share/polkit-1/actions
     )
-install(FILES utils/bioctl utils/biodrvctl utils/biorestart DESTINATION bin PERMISSIONS ${CONDOR_SCRIPT_PERMS})
+install(FILES utils/bioctl utils/bioctl-helper utils/biodrvctl utils/biorestart DESTINATION bin PERMISSIONS ${CONDOR_SCRIPT_PERMS})

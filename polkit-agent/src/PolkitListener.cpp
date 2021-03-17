@@ -219,18 +219,20 @@ void PolkitListener::finishObtainPrivilege()
         }
     }
 
-    if (!session.isNull()) {
-    	session.data()->result()->setCompleted();
-    } else {
-    	result->setCompleted();
-    }
-    session.data()->deleteLater();
     if (mainWindow) {
         mainWindow->hide();
         mainWindow->stopDoubleAuth();
         mainWindow->deleteLater();
         mainWindow = NULL;
     }
+
+    if (!session.isNull()) {
+        session.data()->result()->setCompleted();
+    } else {
+        result->setCompleted();
+    }
+    session.data()->deleteLater();
+
     this->inProgress = false;
     qDebug() << "Finish obtain authorization:" << gainedAuthorization;
 }

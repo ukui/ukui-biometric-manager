@@ -379,7 +379,7 @@ void MainWindow::switchAuthMode(Mode mode)
             ui->btnBioAuth->show();
         }
 
-        if(enableBioAuth){
+        if(enableBioAuth && useDoubleAuth){
             DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
             if(device){
                 widgetBioAuth->startAuth(getUid(userName), *device);
