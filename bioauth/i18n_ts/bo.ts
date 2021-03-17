@@ -31,7 +31,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/bioauthwidget.cpp" line="105"/>
+        <location filename="../src/bioauthwidget.cpp" line="116"/>
         <source>Current Device: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,27 +39,43 @@
 <context>
     <name>BioDevices</name>
     <message>
-        <location filename="../src/biodevices.cpp" line="186"/>
+        <location filename="../src/biodevices.cpp" line="59"/>
+        <source>Unplugging of %1 device detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="69"/>
+        <source>%1 device insertion detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="78"/>
+        <location filename="../src/biodevices.cpp" line="81"/>
+        <source>biometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="240"/>
         <source>FingerPrint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="188"/>
+        <location filename="../src/biodevices.cpp" line="242"/>
         <source>FingerVein</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="190"/>
+        <location filename="../src/biodevices.cpp" line="244"/>
         <source>Iris</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="192"/>
+        <location filename="../src/biodevices.cpp" line="246"/>
         <source>Face</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="194"/>
+        <location filename="../src/biodevices.cpp" line="248"/>
         <source>VoicePrint</source>
         <translation type="unfinished"></translation>
     </message>

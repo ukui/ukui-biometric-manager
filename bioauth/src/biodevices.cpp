@@ -27,7 +27,8 @@
 
 
 BioDevices::BioDevices(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      isShowHotPlug(false)
 {
     connectToService();
     getDevicesList();
@@ -50,9 +51,40 @@ void BioDevices::connectToService()
 void BioDevices::onUSBDeviceHotPlug(int deviceId, int action, int devNumNow)
 {
     qDebug() << deviceId << action << devNumNow;
+    DeviceInfo *device;
+    QString  text = "";
+    if(action == -1){
+        DeviceInfo *device = findDevice(deviceId);
+        if(device)
+             text = tr("Unplugging of %1 device detected").arg(bioTypeToString_tr(device->biotype));
+    }
+
     getDevicesList();
 
     emit deviceCountChanged(deviceInfos.size());
+
+    if(action == 1){
+        DeviceInfo *device = findDevice(deviceId);
+        if(device)
+             text = tr("%1 device insertion detected").arg(bioTypeToString_tr(device->biotype));
+    }
+
+    if(isShowHotPlug && text != ""){
+        QDBusInterface iface("org.freedesktop.Notifications",
+                             "/org/freedesktop/Notifications",
+                             "org.freedesktop.Notifications",
+                             QDBusConnection::sessionBus());
+        QList<QVariant> args;
+        args<<(tr("biometric"))
+           <<((unsigned int) 0)
+          <<""
+         <<tr("biometric")
+        <<text
+        <<QStringList()
+        <<QVariantMap()
+        <<(int)-1;
+        iface.callWithArgumentList(QDBus::AutoDetect,"Notify",args);
+    }
 }
 
 
@@ -133,6 +165,11 @@ QList<DeviceInfo> BioDevices::getDevices(int type)
     return devices;
 }
 
+void BioDevices::setIsShowHotPlug(bool isShow)
+{
+    isShowHotPlug = isShow;
+}
+
 DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
 {
     if(deviceInfos.size() <= 0)
@@ -168,6 +205,15 @@ DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
     return findDevice(defaultDeviceName);
 }
 
+DeviceInfo* BioDevices::findDevice(const int id)
+{
+    for(auto deviceInfo : deviceInfos) {
+        if(deviceInfo->device_id == id)
+            return deviceInfo;
+    }
+    //qDebug() << deviceName << "doesn't exists";
+    return nullptr;
+}
 
 DeviceInfo* BioDevices::findDevice(const QString &deviceName)
 {

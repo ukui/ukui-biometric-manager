@@ -23,6 +23,7 @@
 #include "PolkitListener.h"
 #include "generic.h"
 #include "sessionmanager.h"
+#include "biodevices.h"
 
 bool enableDebug;
 QString logPrefix;
@@ -70,6 +71,8 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }    
 
+    BioDevices devices;
+    devices.setIsShowHotPlug(true);
 	agent.exec();
 	return EXIT_SUCCESS;
 }

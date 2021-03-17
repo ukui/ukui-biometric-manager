@@ -31,7 +31,7 @@
         <translation>Parola</translation>
     </message>
     <message>
-        <location filename="../src/bioauthwidget.cpp" line="105"/>
+        <location filename="../src/bioauthwidget.cpp" line="116"/>
         <source>Current Device: </source>
         <translation>Şuanki Aygıt：</translation>
     </message>
@@ -39,27 +39,43 @@
 <context>
     <name>BioDevices</name>
     <message>
-        <location filename="../src/biodevices.cpp" line="168"/>
+        <location filename="../src/biodevices.cpp" line="59"/>
+        <source>Unplugging of %1 device detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="69"/>
+        <source>%1 device insertion detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="78"/>
+        <location filename="../src/biodevices.cpp" line="81"/>
+        <source>biometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="240"/>
         <source>FingerPrint</source>
         <translation>Parmak İzi</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="170"/>
+        <location filename="../src/biodevices.cpp" line="242"/>
         <source>FingerVein</source>
         <translation>Damar İzi</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="172"/>
+        <location filename="../src/biodevices.cpp" line="244"/>
         <source>Iris</source>
         <translation>Göz</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="174"/>
+        <location filename="../src/biodevices.cpp" line="246"/>
         <source>Face</source>
         <translation>Yüz</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="176"/>
+        <location filename="../src/biodevices.cpp" line="248"/>
         <source>VoicePrint</source>
         <translation>Ses İzi</translation>
     </message>
