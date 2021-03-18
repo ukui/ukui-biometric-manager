@@ -692,12 +692,12 @@ void MainWindow::on_btnStatus_clicked()
     QProcess process;
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
     if (verificationStatus) {
-        process.start("pkexec bioctl disable -u " + environment.value("USER"));
+        process.start("bioctl disable");
         process.waitForFinished(-1);
         if (process.exitCode() == 0)
             setVerificationStatus(false);
     } else {
-        process.start("pkexec bioctl enable -u " + environment.value("USER"));
+        process.start("bioctl enable");
         process.waitForFinished(-1);
         if (process.exitCode() == 0)
             setVerificationStatus(true);
