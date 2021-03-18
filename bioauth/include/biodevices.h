@@ -38,6 +38,7 @@ public:
 
     int count();
     QMap<int, QList<DeviceInfo>> getAllDevices();
+    QMap<int, QList<DeviceInfo>> getUserDevices(int uid);
     QList<DeviceInfo> getDevices(int type);
     DeviceInfo* getDefaultDevice(uid_t uid);
     DeviceInfo* findDevice(const QString &deviceName);
@@ -46,6 +47,8 @@ public:
     int getFeatureCount(int uid, int indexStart = 0, int indexEnd = -1);
     static QString bioTypeToString_tr(int type);
     void setIsShowHotPlug(bool isShow);
+    int GetUserDevFeatureCount(int uid,int drvid);
+    int GetUserDevCount(int uid);
 
 private:
     void connectToService();

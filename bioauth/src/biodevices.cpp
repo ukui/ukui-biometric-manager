@@ -126,6 +126,43 @@ int BioDevices::count()
     return deviceInfos.size();
 }
 
+int BioDevices::GetUserDevCount(int uid)
+{
+    int count = 0;
+    QDBusMessage msg = serviceInterface->call("GetDevList");
+    if(msg.type() == QDBusMessage::ErrorMessage){
+        LOG() << msg.errorMessage();
+        return 0;
+    }
+
+    int deviceNum = msg.arguments().at(0).toInt();
+
+    QDBusArgument argument = msg.arguments().at(1).value<QDBusArgument>();
+    QList<QVariant> infos;
+    argument >> infos;
+
+    for(int i = 0; i < deviceNum; i++) {
+        DeviceInfo *deviceInfo = new DeviceInfo;
+        infos.at(i).value<QDBusArgument>() >> *deviceInfo;
+
+        if(deviceInfo->device_available > 0 && GetUserDevFeatureCount(uid,deviceInfo->device_id)>0)     //设备可用
+            count++;
+    }
+    return count;
+
+}
+
+int BioDevices::GetUserDevFeatureCount(int uid,int drvid)
+{
+    QDBusMessage FeatureResult = serviceInterface->call(QStringLiteral("GetFeatureList"),drvid,uid,0,-1);
+    if(FeatureResult.type() == QDBusMessage::ErrorMessage)
+    {
+            qWarning() << "GetFeatureList error:" << FeatureResult.errorMessage();
+            return 0;
+    }
+    return FeatureResult.arguments().takeFirst().toInt();
+}
+
 int BioDevices::getFeatureCount(int uid, int indexStart, int indexEnd)
 {
     int res = 0;
@@ -148,6 +185,18 @@ QMap<int, QList<DeviceInfo>> BioDevices::getAllDevices()
 
     for(auto deviceInfo : deviceInfos) {
         devices[deviceInfo->biotype].push_back(*deviceInfo);
+    }
+
+    return devices;
+}
+
+QMap<int, QList<DeviceInfo>> BioDevices::getUserDevices(int uid)
+{
+    QMap<int, QList<DeviceInfo>> devices;
+
+    for(auto deviceInfo : deviceInfos) {
+        if(GetUserDevFeatureCount(uid,deviceInfo->device_id) > 0)
+            devices[deviceInfo->biotype].push_back(*deviceInfo);
     }
 
     return devices;

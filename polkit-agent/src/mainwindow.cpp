@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&bioDevices, &BioDevices::deviceCountChanged,
             this, [&]{
-        widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
+        widgetBioAuth->setMoreDevices(bioDevices.GetUserDevCount(getUid(userName)) > 1);
     });
 
     connect(widgetBioAuth, &BioAuthWidget::authComplete,
@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(widgetBioAuth, &BioAuthWidget::selectDevice,
             this, [&]{
-        widgetBioDevices->init(getUid(userName));
+        //widgetBioDevices->init(getUid(userName));
         switchWidget(DEVICES);
     });
 
@@ -145,6 +145,7 @@ void MainWindow::on_cmbUsers_currentTextChanged(const QString &userName)
 
     this->userName = userName;
     ui->lblMessage->clear();
+    widgetBioDevices->init(getUid(userName));
     emit userChanged(userName);
 }
 
@@ -353,15 +354,12 @@ void MainWindow::switchAuthMode(Mode mode)
         accept(BIOMETRIC_SUCCESS);
         return ;
     }
-
-    enableBioAuth  = bioDevices.count() > 0;
+    int uid = getUid(userName);
+    int count = bioDevices.GetUserDevCount(getUid(userName));
+    enableBioAuth  = count > 0;
     if(!enable_biometric_authentication()){
     	enableBioAuth = false;
     }
-    int uid = getUid(userName);
-    int devCount = bioDevices.getFeatureCount(uid);
-    if(devCount < 1)
-        enableBioAuth = false;
 
     if(mode == BIOMETRIC && enableBioAuth == false)
         useDoubleAuth = false;
@@ -411,7 +409,7 @@ void MainWindow::switchAuthMode(Mode mode)
                     return;
                 }else{
                     widgetBioAuth->startAuth(getUid(userName), *device);
-                    widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
+                    widgetBioAuth->setMoreDevices(count > 1);
                 }
             }
             authMode = BIOMETRIC;
@@ -428,7 +426,7 @@ void MainWindow::switchAuthMode(Mode mode)
                         return;
                     }else{
                         widgetBioAuth->startAuth(getUid(userName), *device);
-                        widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
+                        widgetBioAuth->setMoreDevices(count > 1);
                     }
                 } else {
                     qDebug() << "No default device, switch to password";
