@@ -287,7 +287,9 @@ void PromptDialog::verifyCallBack(const QDBusMessage &reply)
         showClosePrompt();
     } else if(result == DBUS_RESULT_NOTMATCH) {
         setPrompt(tr("Not Match"));
-        showClosePrompt();
+        if(!isProcessed)
+            ui->lblImage->setPixmap(getImage(type));
+        //showClosePrompt();
     } else {
         handleErrorResult(result);
     }
@@ -473,7 +475,6 @@ void PromptDialog::setFailed()
 
 void PromptDialog::showClosePrompt()
 {
-   // ui->lblImage->setPixmap(getImage(type));
     ui->lblImage->setPixmap(QIcon::fromTheme("ukui-dialog-success").pixmap(QSize(64,64)));
     QString prompt = QString("<font size = '4'>%1</font>").arg(ui->lblPrompt->text())
             + "<br><br>" +

@@ -102,16 +102,21 @@ void ContentPane::updateWidgetStatus()
     if (deviceInfo->driver_enable > 0) {
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_open_small.png);}");
         ui->labelStatusText->setText(tr("Opened"));
-	} else {
+    } else {
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
         ui->labelStatusText->setText(tr("Closed"));
-	}
+    }
     ui->btnEnroll->setEnabled(deviceInfo->device_available > 0);
     ui->btnDelete->setEnabled(deviceInfo->device_available > 0);
     ui->btnVerify->setEnabled(deviceInfo->device_available > 0);
     ui->btnSearch->setEnabled(deviceInfo->device_available > 0);
     ui->btnClean->setEnabled(deviceInfo->device_available > 0);
     ui->treeView->setEnabled(deviceInfo->device_available > 0);
+
+    if(deviceInfo->device_shortname == "huawei"){
+        ui->btnVerify->setEnabled(false);
+        ui->btnSearch->setEnabled(false);
+    }
 }
 
 void ContentPane::updateButtonUsefulness()
@@ -121,6 +126,11 @@ void ContentPane::updateButtonUsefulness()
 	ui->btnVerify->setEnabled(enable);
 	ui->btnSearch->setEnabled(enable);
     ui->btnClean->setEnabled(enable);
+
+    if(deviceInfo->device_shortname == "huawei"){
+        ui->btnVerify->setEnabled(false);
+        ui->btnSearch->setEnabled(false);
+    }
 }
 
 /**
