@@ -139,6 +139,10 @@ void child(char *service, char *username, char *xdisp)
     _exit(BIO_IGNORE);
 }
 
+void handler()
+{
+    return;
+}
 /* PAM parent process */
 int parent(int pid, pam_handle_t *pamh, int need_call_conv)
 {
@@ -181,8 +185,18 @@ int parent(int pid, pam_handle_t *pamh, int need_call_conv)
     	waitpid(pid, &child_status, 0);
     } else {
         logger("Waiting for the GUI child process to exit...\n");
-    	waitpid(pid, &child_status, 0);
+    	//由于sudo命令在进入pam认证时，会阻塞来自终端的SIGINT以及SIGQUIT信号，导致使用
+	//pam认证时，按下Ctrl+C无反应，认证完成后，sudo会退出，这里为了简单，取消了阻塞
+	//信号，捕获信号但不做处理，在认证完成后，恢复原本阻塞状态
+    	sigset_t mask;
+        sigprocmask(SIG_BLOCK,NULL,&mask);
+        sigprocmask(SIG_UNBLOCK,&mask,NULL);
+
+        signal(SIGINT,handler);
+    
+	waitpid(pid, &child_status, 0);
         logger("GUI child process has exited.\n");
+        sigprocmask(SIG_SETMASK,&mask,NULL);
     }
 
     /*
@@ -436,7 +450,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
             log_prefix = "PAM_BIO";
         }
     }
-
+    
     logger("Invoke libpam_biometric.so module\n");
 
     char *service = 0;
