@@ -28,10 +28,13 @@
 
 BioDevices::BioDevices(QObject *parent)
     : QObject(parent),
-      isShowHotPlug(false)
+      isShowHotPlug(false),
+      useFirstDevice(false)
 {
     connectToService();
     getDevicesList();
+
+    useFirstDevice = getUseFirstDevice();
 }
 
 void BioDevices::connectToService()
@@ -219,6 +222,12 @@ void BioDevices::setIsShowHotPlug(bool isShow)
     isShowHotPlug = isShow;
 }
 
+bool BioDevices::getUseFirstDevice()
+{
+    QSettings settings("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
+    return settings.value("UseFirstDevice").toBool();
+}
+
 DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
 {
     if(deviceInfos.size() <= 0)
@@ -248,8 +257,12 @@ DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
     }
     qDebug() << "default device: " << defaultDeviceName;
 
-    if(defaultDeviceName.isEmpty())
-        return nullptr;
+    if(defaultDeviceName.isEmpty()){
+        if(!useFirstDevice)
+            return nullptr;
+        else
+            return getFirstDevice();
+    }
 
     return findDevice(defaultDeviceName);
 }

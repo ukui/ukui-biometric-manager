@@ -49,6 +49,7 @@ public:
     void setIsShowHotPlug(bool isShow);
     int GetUserDevFeatureCount(int uid,int drvid);
     int GetUserDevCount(int uid);
+    bool getUseFirstDevice();
 
 private:
     void connectToService();
@@ -64,6 +65,7 @@ private:
     QDBusInterface                  *serviceInterface;
     QList<DeviceInfo*>               deviceInfos;        //the list of al device info
     bool                             isShowHotPlug;
+    bool                        useFirstDevice;
 };
 
 
