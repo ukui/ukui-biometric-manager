@@ -131,7 +131,7 @@ Option showOption(bool showSelectDevices)
     else if(showSelectDevices && !strcmp(line, "3"))
         return OPTION_CANCEL;
     else {
-        showMessage(QObject::tr("Invaild response \"") + line + "\"", NOTIFY);
+        showMessage(QObject::tr("Invaild response \"") + line + "\"" + "," + QObject::tr("authentication will be canceld") , NOTIFY);
         showMessage(QObject::tr("AUTHENTICATION CANCELED"), START);
         exit(BIO_FAILED);
     }
@@ -166,7 +166,7 @@ DeviceInfo showDevices(const QMap<int, QList<DeviceInfo>> &devicesMap)
 
     for(auto ch : QString(line)) {
         if(!ch.isDigit()){
-            showMessage(QObject::tr("Invaild response \"") + line + "\"", NOTIFY);
+            showMessage(QObject::tr("Invaild response \"") + line + "\"" + "," +QObject::tr("authentication will be canceld") , NOTIFY);
             showMessage(QObject::tr("AUTHENTICATION CANCELED"), START);
             exit(BIO_FAILED);
         }
@@ -175,7 +175,7 @@ DeviceInfo showDevices(const QMap<int, QList<DeviceInfo>> &devicesMap)
     int deviceIndex = QString(line).toInt();
 
     if(deviceIndex > count) {
-        showMessage(QObject::tr("Invaild response \"") + line + "\"", NOTIFY);
+        showMessage(QObject::tr("Invaild response \"") + line + "\"" + "," + QObject::tr("authentication will be canceld"), NOTIFY);
         showMessage(QObject::tr("AUTHENTICATION CANCELED"), START);
         exit(BIO_FAILED);
     }

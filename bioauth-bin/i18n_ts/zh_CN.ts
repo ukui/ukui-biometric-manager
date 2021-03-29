@@ -2,34 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>BioDevices</name>
-    <message>
-        <location filename="../../bioauth/src/biodevices.cpp" line="168"/>
-        <source>FingerPrint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../bioauth/src/biodevices.cpp" line="170"/>
-        <source>FingerVein</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../bioauth/src/biodevices.cpp" line="172"/>
-        <source>Iris</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../bioauth/src/biodevices.cpp" line="174"/>
-        <source>Face</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../bioauth/src/biodevices.cpp" line="176"/>
-        <source>VoicePrint</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <location filename="../src/main.cpp" line="100"/>
@@ -56,13 +28,20 @@
         <location filename="../src/main.cpp" line="169"/>
         <location filename="../src/main.cpp" line="178"/>
         <source>Invaild response &quot;</source>
-        <translation>无效的响应 &quot;</translation>
+        <translation>不能识别的响应 &quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="134"/>
+        <location filename="../src/main.cpp" line="169"/>
+        <location filename="../src/main.cpp" line="178"/>
+        <source>authentication will be canceld</source>
+        <translation>认证将要被取消</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="135"/>
         <location filename="../src/main.cpp" line="170"/>
         <location filename="../src/main.cpp" line="179"/>
-        <location filename="../src/main.cpp" line="290"/>
+        <location filename="../src/main.cpp" line="292"/>
         <source>AUTHENTICATION CANCELED</source>
         <translation>认证被取消</translation>
     </message>
@@ -102,27 +81,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="244"/>
+        <location filename="../src/main.cpp" line="246"/>
         <source>BIOMETRIC AUTHENTICATION</source>
         <translation>生物识别认证</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="245"/>
+        <location filename="../src/main.cpp" line="247"/>
         <source>Press Q or Esc to cancel</source>
         <translation>按Q或者Esc取消</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="257"/>
+        <location filename="../src/main.cpp" line="259"/>
         <source>AUTHENTICATION SUCCESS</source>
         <translation>认证成功</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="261"/>
+        <location filename="../src/main.cpp" line="263"/>
         <source>AUTHENTICATION FAILED</source>
         <translation>认证失败</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="278"/>
+        <location filename="../src/main.cpp" line="280"/>
         <source>BIOMETRIC AUTHENTICATION END</source>
         <translation>生物识别认证结束</translation>
     </message>

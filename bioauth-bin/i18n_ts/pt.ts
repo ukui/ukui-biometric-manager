@@ -5,23 +5,23 @@
     <name>BioDevices</name>
     <message>
         <source>FingerPrint</source>
-        <translation>Impressão digital</translation>
+        <translation type="vanished">Impressão digital</translation>
     </message>
     <message>
         <source>FingerVein</source>
-        <translation>FingerVein</translation>
+        <translation type="vanished">FingerVein</translation>
     </message>
     <message>
         <source>Iris</source>
-        <translation>Íris</translation>
+        <translation type="vanished">Íris</translation>
     </message>
     <message>
         <source>Face</source>
-        <translation>Cara</translation>
+        <translation type="vanished">Cara</translation>
     </message>
     <message>
         <source>VoicePrint</source>
-        <translation>VoicePrint</translation>
+        <translation type="vanished">VoicePrint</translation>
     </message>
 </context>
 <context>
@@ -97,6 +97,10 @@
     <message>
         <source>BIOMETRIC AUTHENTICATION END</source>
         <translation>ENDEREÇO ​​DE AUTENTICAÇÃO BIOMÉTRICA</translation>
+    </message>
+    <message>
+        <source>authentication will be canceld</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
