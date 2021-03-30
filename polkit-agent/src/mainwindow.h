@@ -48,6 +48,8 @@ public:
     void setAuthResult(bool result, const QString &text="");
     void clearEdit();
     void switchAuthMode(Mode mode);
+    void setDoubleAuth(bool val);
+    void stopDoubleAuth();
 
 private:    
     uid_t getUid(const QString &userName);
@@ -56,6 +58,7 @@ private:
     void startBioAuth();
     void switchWidget(Mode mode);
     QString check_is_pam_message(QString text);
+    int enable_biometric_authentication();
 
 private slots:
     void on_btnDetails_clicked();
@@ -64,6 +67,7 @@ private slots:
     void on_cmbUsers_currentTextChanged(const QString &userName);
     void on_btnCancel_clicked();
     void on_btnAuth_clicked();
+    void restart_bio_identify();
 
 signals:
     void accept(const QString &text);
@@ -82,6 +86,8 @@ private:
     BioDevicesWidget *widgetBioDevices;
     BioAuthWidget *widgetBioAuth;
     bool isFirst;
+    bool useDoubleAuth;
+    bool isbioSuccess;
 };
 
 #endif // MAINWINDOW_H

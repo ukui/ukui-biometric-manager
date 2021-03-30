@@ -25,6 +25,8 @@
 #include <QFontMetrics>
 #include <QtMath>
 
+#include <fcntl.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <libintl.h>
@@ -38,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     enableBioAuth(false),
     receiveBioPAM(false),
+    useDoubleAuth(false),
+    isbioSuccess(false),
     authMode(UNDEFINED)
 {
     ui->setupUi(this);
@@ -62,21 +66,34 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&bioDevices, &BioDevices::deviceCountChanged,
             this, [&]{
-        widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
+        widgetBioAuth->setMoreDevices(bioDevices.GetUserDevCount(getUid(userName)) > 1);
     });
 
     connect(widgetBioAuth, &BioAuthWidget::authComplete,
             this, [&](uid_t uid, bool ret){
         qDebug() << "biometric authentication complete: " << uid << ret;
+
         if(uid == getUid(userName) && ret)
-            accept(BIOMETRIC_SUCCESS);
-//        else
-//            accept(BIOMETRIC_FAILED);
+        {
+            if(useDoubleAuth){
+                isbioSuccess = true;
+                emit switchToBiometric();
+                authMode = UNDEFINED;
+            }else{
+                accept(BIOMETRIC_SUCCESS);
+            }
+        }else if(useDoubleAuth){
+            setMessage(tr("Authentication failed, please try again."));
+           // widgetBioAuth->startAuth(getUid(userName), *device);
+            if(!isbioSuccess){
+                QTimer::singleShot(1000,this,SLOT(restart_bio_identify()));
+            }
+        }
     });
 
     connect(widgetBioAuth, &BioAuthWidget::selectDevice,
             this, [&]{
-        widgetBioDevices->init(getUid(userName));
+        //widgetBioDevices->init(getUid(userName));
         switchWidget(DEVICES);
     });
 
@@ -93,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cmbUsers->hide();
     ui->widgetDetails->hide();
     ui->btnDetails->setIcon(QIcon(":/image/assets/arrow_right.svg"));
-
+    ui->btnDetails->hide();
     switchWidget(UNDEFINED);
 }
 
@@ -102,8 +119,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::restart_bio_identify()
+{
+    DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
+    if(device)
+        widgetBioAuth->startAuth(getUid(userName), *device);
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    widgetBioAuth->stopAuth();
     emit canceled();
 
     return QWidget::closeEvent(event);
@@ -115,10 +140,37 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_cmbUsers_currentTextChanged(const QString &userName)
 {
     qDebug() << "user changed to " << userName;
+    widgetBioAuth->stopAuth();	
+    authMode=UNDEFINED;
 
     this->userName = userName;
     ui->lblMessage->clear();
+    widgetBioDevices->init(getUid(userName));
     emit userChanged(userName);
+}
+
+int MainWindow::enable_biometric_authentication()
+{
+    char conf_file[] = GET_STR(CONFIG_FILE);
+    FILE *file;
+    char line[1024], is_enable[16];
+    int i;
+
+
+    if((file = fopen(conf_file, "r")) == NULL){
+        return 0;
+    }
+    while(fgets(line, sizeof(line), file)) {
+        i = sscanf(line, "EnableAuth=%s\n",  is_enable);
+        if(i > 0) {
+            break;
+        }
+    }
+
+    fclose(file);
+    if(!strcmp(is_enable, "true"))
+        return 1;
+    return 0;
 }
 
 void MainWindow::on_btnDetails_clicked()
@@ -169,19 +221,19 @@ void MainWindow::on_btnBioAuth_clicked()
 void MainWindow::setIcon(const QString &iconName)
 {
     QIcon::setThemeName("ukui-icon-theme");
-    if(!QIcon::hasThemeIcon("dialog-password")) {
+    if(!QIcon::hasThemeIcon("ukui-polkit")) {
         QDir iconsDir("/usr/share/icons");
         auto themesList = iconsDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
         qDebug() << themesList;
         for(auto theme : themesList) {
             QIcon::setThemeName(theme);
-            if(QIcon::hasThemeIcon("dialog-password")) {
-                qDebug() << theme << "has dialog-password";
+            if(QIcon::hasThemeIcon("ukui-polkit")) {
+                qDebug() << theme << "has ukui-polkit icon";
                 break;
             }
         }
     }
-    QPixmap icon = QIcon::fromTheme("dialog-password").pixmap(64, 64);
+    QPixmap icon = QIcon::fromTheme("ukui-polkit").pixmap(64, 64);
     QPixmap actionIcon = QIcon::fromTheme(iconName).pixmap(32, 32);
     QPainter painter;
 
@@ -192,6 +244,7 @@ void MainWindow::setIcon(const QString &iconName)
     painter.drawPixmap(rect, actionIcon);
     painter.end();
 
+    setWindowIcon(icon);
     ui->lblIcon->setPixmap(icon);
 }
 
@@ -209,7 +262,6 @@ void MainWindow::setUsers(const QStringList &usersList)
 
     if(usersList.size() == 1) {
         userName = usersList.at(0);
-        return;
     }
 
     ui->cmbUsers->addItems(usersList);
@@ -232,8 +284,12 @@ void MainWindow::setPrompt(const QString &text, bool echo)
 {
     QString prompt = text;
 
-    if(text == "Password: ")
+    if(text == "Password: "){
         prompt = tr("Password: ");
+        if(useDoubleAuth){
+            setMessage(tr("Please enter your password or enroll your fingerprint "));
+        }
+    }
 
     ui->lblPrompt->setText(prompt);
     ui->lePassword->setEchoMode(echo ? QLineEdit::Normal : QLineEdit::Password);
@@ -294,12 +350,20 @@ void MainWindow::clearEdit()
 
 void MainWindow::switchAuthMode(Mode mode)
 {
-    enableBioAuth  = bioDevices.count() > 0;
-    
+    if(useDoubleAuth && isbioSuccess){
+        accept(BIOMETRIC_SUCCESS);
+        return ;
+    }
     int uid = getUid(userName);
-    if(bioDevices.getFeatureCount(uid)<1)
-        enableBioAuth = false;
-    
+    int count = bioDevices.GetUserDevCount(getUid(userName));
+    enableBioAuth  = count > 0;
+    if(!enable_biometric_authentication()){
+    	enableBioAuth = false;
+    }
+
+    if(mode == BIOMETRIC && enableBioAuth == false)
+        useDoubleAuth = false;
+
     switch(mode){
     case PASSWORD:
     {
@@ -307,8 +371,17 @@ void MainWindow::switchAuthMode(Mode mode)
 
         authMode = mode;
 
-        if(!enableBioAuth || !receiveBioPAM) {
+        if(!enableBioAuth || !receiveBioPAM || useDoubleAuth) {
             ui->btnBioAuth->hide();
+        }else{
+            ui->btnBioAuth->show();
+        }
+
+        if(enableBioAuth && useDoubleAuth){
+            DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
+            if(device){
+                widgetBioAuth->startAuth(getUid(userName), *device);
+            }
         }
     }
         break;
@@ -320,42 +393,53 @@ void MainWindow::switchAuthMode(Mode mode)
 
         if(authMode == PASSWORD) {
             emit accept(BIOMETRIC_IGNORE);
-            break;
+            return;
         }else if(!enableBioAuth){
-	    qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
+            qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
             emit accept(BIOMETRIC_IGNORE);
-            switchAuthMode(PASSWORD);
-	} 
-	else if(authMode == BIOMETRIC) {
+            return;
+        } else if(authMode == BIOMETRIC) {
             DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
             if(!device)
                 device = bioDevices.getFirstDevice();
             if(device) {
-                widgetBioAuth->startAuth(getUid(userName), *device);
-                widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
+                if(useDoubleAuth){
+                    emit accept(BIOMETRIC_IGNORE);
+                    widgetBioAuth->startAuth(getUid(userName), *device);
+                    return;
+                }else{
+                    widgetBioAuth->startAuth(getUid(userName), *device);
+                    widgetBioAuth->setMoreDevices(count > 1);
+                }
             }
             authMode = BIOMETRIC;
         } else if(authMode == UNDEFINED){
-
             authMode = BIOMETRIC;
 
             if(enableBioAuth) {
                 qDebug() << "enable biometric authenticaion";
                 DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
                 if(device) {
-                    widgetBioAuth->startAuth(getUid(userName), *device);
-                    widgetBioAuth->setMoreDevices(bioDevices.count() > 1);
+                    if(useDoubleAuth){
+                        emit accept(BIOMETRIC_IGNORE);
+                        widgetBioAuth->startAuth(getUid(userName), *device);
+                        return;
+                    }else{
+                        widgetBioAuth->startAuth(getUid(userName), *device);
+                        widgetBioAuth->setMoreDevices(count > 1);
+                    }
                 } else {
                     qDebug() << "No default device, switch to password";
                     emit accept(BIOMETRIC_IGNORE);
-                    switchAuthMode(PASSWORD);
+                    return;
                 }
 
             } else {
+
                 /* pass biometric's pam module if there are not available devices */
                 qDebug() << "It doesn't meet the condition for enabling biometric authentication, switch to password.";
                 emit accept(BIOMETRIC_IGNORE);
-                switchAuthMode(PASSWORD);
+                return;
             }
         }
     }
@@ -381,6 +465,15 @@ uid_t MainWindow::getUid(const QString &userName)
     return pwd->pw_uid;
 }
 
+void MainWindow::setDoubleAuth(bool val){
+     useDoubleAuth = val;
+}
+
+void MainWindow::stopDoubleAuth()
+{
+    if(useDoubleAuth && widgetBioAuth)
+        widgetBioAuth->stopAuth();
+}
 
 void MainWindow::switchWidget(Mode mode)
 {
@@ -395,7 +488,8 @@ void MainWindow::switchWidget(Mode mode)
         ui->widgetPasswdAuth->show();
         ui->lePassword->setFocus();
         ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
-	ui->btnAuth->show();
+            ui->btnAuth->show();
+
         break;
     case BIOMETRIC:
         setMaximumWidth(380);

@@ -139,6 +139,10 @@ void child(char *service, char *username, char *xdisp)
     _exit(BIO_IGNORE);
 }
 
+void handler()
+{
+    return;
+}
 /* PAM parent process */
 int parent(int pid, pam_handle_t *pamh, int need_call_conv)
 {
@@ -181,8 +185,18 @@ int parent(int pid, pam_handle_t *pamh, int need_call_conv)
     	waitpid(pid, &child_status, 0);
     } else {
         logger("Waiting for the GUI child process to exit...\n");
-    	waitpid(pid, &child_status, 0);
+    	//由于sudo命令在进入pam认证时，会阻塞来自终端的SIGINT以及SIGQUIT信号，导致使用
+	//pam认证时，按下Ctrl+C无反应，认证完成后，sudo会退出，这里为了简单，取消了阻塞
+	//信号，捕获信号但不做处理，在认证完成后，恢复原本阻塞状态
+    	sigset_t mask;
+        sigprocmask(SIG_BLOCK,NULL,&mask);
+        sigprocmask(SIG_UNBLOCK,&mask,NULL);
+
+        signal(SIGINT,handler);
+    
+	waitpid(pid, &child_status, 0);
         logger("GUI child process has exited.\n");
+        sigprocmask(SIG_SETMASK,&mask,NULL);
     }
 
     /*
@@ -196,6 +210,10 @@ int parent(int pid, pam_handle_t *pamh, int need_call_conv)
         logger("The GUI-Child process terminate abnormally.\n");
 
     if (bio_result == BIO_SUCCESS) {
+	if(!enable_biometric_authentication()) {
+            logger("disable biometric authentication.\n");
+            return PAM_SYSTEM_ERR;
+        }
         logger("pam_biometric.so return PAM_SUCCESS\n");
     	return PAM_SUCCESS;
     } else if (bio_result == BIO_IGNORE) {
@@ -306,12 +324,20 @@ int biometric_auth_embeded(pam_handle_t *pamh)
      * status by comparing strings.
      */
     char resp[96] = {0};
-    call_conversation(pamh, PAM_PROMPT_ECHO_OFF, BIOMETRIC_PAM, resp);
+    if(enable_biometric_auth_double())
+    	call_conversation(pamh, PAM_PROMPT_ECHO_OFF, BIOMETRIC_PAM_DOUBLE, resp);
+    else
+	call_conversation(pamh, PAM_PROMPT_ECHO_OFF, BIOMETRIC_PAM, resp);
 
     if (strcmp(resp, BIOMETRIC_IGNORE) == 0)
         return PAM_IGNORE;
-    else if (strcmp(resp, BIOMETRIC_SUCCESS) == 0)
+    else if (strcmp(resp, BIOMETRIC_SUCCESS) == 0){
+	if(!enable_biometric_authentication()) {
+            logger("disable biometric authentication.\n");
+            return PAM_SYSTEM_ERR;
+        }
         return PAM_SUCCESS;
+    }
     else if (strcmp(resp, BIOMETRIC_FAILED) == 0)
         return PAM_AUTH_ERR;
     else
@@ -386,6 +412,32 @@ int enable_biometric_authentication()
     return 0;
 }
 
+int enable_biometric_auth_double()
+{
+    char conf_file[] = GET_STR(CONFIG_FILE);
+    FILE *file;
+    char line[1024], is_enable[16];
+    int i;
+
+
+    if((file = fopen(conf_file, "r")) == NULL){
+        logger("open configure file failed: %s\n", strerror(errno));
+        return 0;
+    }
+    while(fgets(line, sizeof(line), file)) {
+        i = sscanf(line, "DoubleAuth=%s\n",  is_enable);
+        if(i > 0) {
+            logger("DoubleAuth=%s\n", is_enable);
+            break;
+        }
+    }
+
+    fclose(file);
+    if(!strcmp(is_enable, "true"))
+        return 1;
+    return 0;
+}
+
 /*
  * SPI interface
  */
@@ -398,7 +450,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
             log_prefix = "PAM_BIO";
         }
     }
-
+    
     logger("Invoke libpam_biometric.so module\n");
 
     char *service = 0;
@@ -425,7 +477,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
         get_greeter_session(buf, sizeof(buf));
         logger("current greeter: %s\n", buf);
 
-        if(strcmp(buf, "ukui-greeter") == 0)
+        if(strcmp(buf, "ukui-greeter") == 0 || strcmp(buf, "ukui-greeter-wayland") == 0)
             return biometric_auth_embeded(pamh);
 //        else
 //            return biometric_auth_independent(pamh, "lightdm", 1);
@@ -454,3 +506,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
         logger("Service <%s> slip through the service filter\n", service);
     return PAM_IGNORE;
 }
+
+int
+pam_sm_setcred (pam_handle_t *pamh, int flags ,
+        int argc , const char **argv )
+{
+    return PAM_SUCCESS;
+}
+

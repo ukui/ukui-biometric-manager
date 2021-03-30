@@ -31,7 +31,7 @@
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../src/bioauthwidget.cpp" line="105"/>
+        <location filename="../src/bioauthwidget.cpp" line="116"/>
         <source>Current Device: </source>
         <translation>当前设备：</translation>
     </message>
@@ -39,27 +39,43 @@
 <context>
     <name>BioDevices</name>
     <message>
-        <location filename="../src/biodevices.cpp" line="168"/>
+        <location filename="../src/biodevices.cpp" line="59"/>
+        <source>Unplugging of %1 device detected</source>
+        <translation>检测到%1设备拔出</translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="69"/>
+        <source>%1 device insertion detected</source>
+        <translation>检测到%1设备插入</translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="78"/>
+        <location filename="../src/biodevices.cpp" line="81"/>
+        <source>biometric</source>
+        <translation>生物特征</translation>
+    </message>
+    <message>
+        <location filename="../src/biodevices.cpp" line="240"/>
         <source>FingerPrint</source>
         <translation>指纹</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="170"/>
+        <location filename="../src/biodevices.cpp" line="242"/>
         <source>FingerVein</source>
         <translation>指静脉</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="172"/>
+        <location filename="../src/biodevices.cpp" line="244"/>
         <source>Iris</source>
         <translation>虹膜</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="174"/>
+        <location filename="../src/biodevices.cpp" line="246"/>
         <source>Face</source>
         <translation>人脸</translation>
     </message>
     <message>
-        <location filename="../src/biodevices.cpp" line="176"/>
+        <location filename="../src/biodevices.cpp" line="248"/>
         <source>VoicePrint</source>
         <translation>声纹</translation>
     </message>

@@ -27,7 +27,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QApplication>
-
+#include <QScreen>
 #include <fcntl.h>
 
 #include "PolkitListener.h"
@@ -121,8 +121,9 @@ void PolkitListener::initiateAuthentication(
                            actionDesc.vendorUrl());
 
     /* set the position of the mainwindow */
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect desktopRect = desktop->screen(desktop->primaryScreen())->geometry();
+ //   QDesktopWidget *desktop = QApplication::desktop();
+ //   QRect desktopRect = desktop->screen(desktop->primaryScreen())->geometry();
+    QRect desktopRect = QApplication::primaryScreen()->geometry();
     mainWindow->move(desktopRect.left() + (desktopRect.width() - mainWindow->width()) / 2,
                      desktopRect.top() + (desktopRect.height() - mainWindow->height()) / 2);
 
@@ -205,10 +206,11 @@ void PolkitListener::finishObtainPrivilege()
 
     if (!gainedAuthorization && !wasCancelled && (mainWindow != NULL)) {
         int deny = 0, unlock_time = 0;
+        mainWindow->stopDoubleAuth();
         if(!get_pam_tally(&deny, &unlock_time)||(deny  == 0 &&unlock_time == 0)) {
             if(!wasSwitchToBiometric)
                 mainWindow->setAuthResult(gainedAuthorization, tr("Authentication failure, please try again."));
-            startAuthentication();
+                startAuthentication();
             return;
         }
         else {
@@ -217,17 +219,20 @@ void PolkitListener::finishObtainPrivilege()
         }
     }
 
-    if (!session.isNull()) {
-    	session.data()->result()->setCompleted();
-    } else {
-    	result->setCompleted();
-    }
-    session.data()->deleteLater();
     if (mainWindow) {
         mainWindow->hide();
+        mainWindow->stopDoubleAuth();
         mainWindow->deleteLater();
-	mainWindow = NULL;
+        mainWindow = NULL;
     }
+
+    if (!session.isNull()) {
+        session.data()->result()->setCompleted();
+    } else {
+        result->setCompleted();
+    }
+    session.data()->deleteLater();
+
     this->inProgress = false;
     qDebug() << "Finish obtain authorization:" << gainedAuthorization;
 }
@@ -280,6 +285,10 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     qDebug() << "Prompt: " << prompt << "echo: " << echo;
 
     if(prompt == BIOMETRIC_PAM) {
+        mainWindow->setDoubleAuth(false);
+        mainWindow->switchAuthMode(MainWindow::BIOMETRIC);
+    }else if(prompt == BIOMETRIC_PAM_DOUBLE){
+         mainWindow->setDoubleAuth(true);
         mainWindow->switchAuthMode(MainWindow::BIOMETRIC);
     }
     else {
@@ -288,6 +297,10 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     }
 
     mainWindow->show();
+    QRect desktopRect = QApplication::primaryScreen()->geometry();
+    mainWindow->move(desktopRect.left() + (desktopRect.width() - mainWindow->width()) / 2,
+                     desktopRect.top() + (desktopRect.height() - mainWindow->height()) / 2);
+
     mainWindow->activateWindow();
 }
 
@@ -296,7 +309,6 @@ void PolkitListener::onShowError(const QString &text)
     qDebug() << "[Polkit]:"    << "Error:" << text;
 
     if(mainWindow){
-        qDebug() << "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
         mainWindow->setMessage(text);
     }
 }

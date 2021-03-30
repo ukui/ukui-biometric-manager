@@ -36,7 +36,7 @@ BioDevicesWidget::~BioDevicesWidget()
 void BioDevicesWidget::init(uid_t uid)
 {
     this->uid = uid;
-    devicesMap = bioDevices.getAllDevices();
+    devicesMap = bioDevices.getUserDevices(uid);
 
     ui->cmbDeviceTypes->clear();
 

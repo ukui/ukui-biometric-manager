@@ -21,15 +21,20 @@
 
 #include <sys/types.h>
 #include <pwd.h>
+#include <unistd.h>
 
 #include "generic.h"
 
 
 BioDevices::BioDevices(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      isShowHotPlug(false),
+      useFirstDevice(false)
 {
     connectToService();
     getDevicesList();
+
+    useFirstDevice = getUseFirstDevice();
 }
 
 void BioDevices::connectToService()
@@ -49,9 +54,40 @@ void BioDevices::connectToService()
 void BioDevices::onUSBDeviceHotPlug(int deviceId, int action, int devNumNow)
 {
     qDebug() << deviceId << action << devNumNow;
+    DeviceInfo *device;
+    QString  text = "";
+    if(action == -1){
+        DeviceInfo *device = findDevice(deviceId);
+        if(device)
+             text = tr("Unplugging of %1 device detected").arg(bioTypeToString_tr(device->biotype));
+    }
+
     getDevicesList();
 
     emit deviceCountChanged(deviceInfos.size());
+
+    if(action == 1){
+        DeviceInfo *device = findDevice(deviceId);
+        if(device)
+             text = tr("%1 device insertion detected").arg(bioTypeToString_tr(device->biotype));
+    }
+
+    if(isShowHotPlug && text != ""){
+        QDBusInterface iface("org.freedesktop.Notifications",
+                             "/org/freedesktop/Notifications",
+                             "org.freedesktop.Notifications",
+                             QDBusConnection::sessionBus());
+        QList<QVariant> args;
+        args<<(tr("biometric"))
+           <<((unsigned int) 0)
+          <<""
+         <<tr("biometric")
+        <<text
+        <<QStringList()
+        <<QVariantMap()
+        <<(int)-1;
+        iface.callWithArgumentList(QDBus::AutoDetect,"Notify",args);
+    }
 }
 
 
@@ -93,19 +129,55 @@ int BioDevices::count()
     return deviceInfos.size();
 }
 
+int BioDevices::GetUserDevCount(int uid)
+{
+    int count = 0;
+    QDBusMessage msg = serviceInterface->call("GetDevList");
+    if(msg.type() == QDBusMessage::ErrorMessage){
+        LOG() << msg.errorMessage();
+        return 0;
+    }
+
+    int deviceNum = msg.arguments().at(0).toInt();
+
+    QDBusArgument argument = msg.arguments().at(1).value<QDBusArgument>();
+    QList<QVariant> infos;
+    argument >> infos;
+
+    for(int i = 0; i < deviceNum; i++) {
+        DeviceInfo *deviceInfo = new DeviceInfo;
+        infos.at(i).value<QDBusArgument>() >> *deviceInfo;
+
+        if(deviceInfo->device_available > 0 && GetUserDevFeatureCount(uid,deviceInfo->device_id)>0)     //设备可用
+            count++;
+    }
+    return count;
+
+}
+
+int BioDevices::GetUserDevFeatureCount(int uid,int drvid)
+{
+    QDBusMessage FeatureResult = serviceInterface->call(QStringLiteral("GetFeatureList"),drvid,uid,0,-1);
+    if(FeatureResult.type() == QDBusMessage::ErrorMessage)
+    {
+            qWarning() << "GetFeatureList error:" << FeatureResult.errorMessage();
+            return 0;
+    }
+    return FeatureResult.arguments().takeFirst().toInt();
+}
+
 int BioDevices::getFeatureCount(int uid, int indexStart, int indexEnd)
 {
     int res = 0;
     for(int i = 0; i < deviceInfos.count(); i++) {
         DeviceInfo *deviceInfo = deviceInfos.at(i);
-        //QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo->device_id), QVariant(5));
-	QDBusMessage featurecount = serviceInterface->call("GetFeatureList",deviceInfo->device_id,uid,indexStart,indexEnd);
+        QDBusMessage featurecount = serviceInterface->call("GetFeatureList",deviceInfo->device_id,uid,indexStart,indexEnd);
         if(featurecount.type() == QDBusMessage::ErrorMessage)
         {
                 qWarning() << "GetFeatureList error:" << featurecount.errorMessage();
-        return 0;
+        }else{
+            res += featurecount.arguments().takeFirst().toInt();
         }
-        res += featurecount.arguments().takeFirst().toInt();
     }
     return res;
 }
@@ -121,6 +193,18 @@ QMap<int, QList<DeviceInfo>> BioDevices::getAllDevices()
     return devices;
 }
 
+QMap<int, QList<DeviceInfo>> BioDevices::getUserDevices(int uid)
+{
+    QMap<int, QList<DeviceInfo>> devices;
+
+    for(auto deviceInfo : deviceInfos) {
+        if(GetUserDevFeatureCount(uid,deviceInfo->device_id) > 0)
+            devices[deviceInfo->biotype].push_back(*deviceInfo);
+    }
+
+    return devices;
+}
+
 QList<DeviceInfo> BioDevices::getDevices(int type)
 {
     QList<DeviceInfo> devices;
@@ -131,6 +215,17 @@ QList<DeviceInfo> BioDevices::getDevices(int type)
     }
 
     return devices;
+}
+
+void BioDevices::setIsShowHotPlug(bool isShow)
+{
+    isShowHotPlug = isShow;
+}
+
+bool BioDevices::getUseFirstDevice()
+{
+    QSettings settings("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
+    return settings.value("UseFirstDevice").toBool();
 }
 
 DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
@@ -152,14 +247,35 @@ DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
         defaultDeviceName = sysConfig.value(DEFAULT_DEVICE).toString();
     }
 
+    if(defaultDeviceName.isEmpty() || !findDevice(defaultDeviceName)){
+        struct passwd *pwd1 = getpwuid(getuid());
+        QString userConfigFile = QString(pwd->pw_dir) + "/.biometric_auth/ukui_biometric.conf";
+        QSettings userConfig(userConfigFile, QSettings::IniFormat);
+        defaultDeviceName = userConfig.value(DEFAULT_DEVICE).toString();
+
+
+    }
     qDebug() << "default device: " << defaultDeviceName;
 
-    if(defaultDeviceName.isEmpty())
-        return nullptr;
+    if(defaultDeviceName.isEmpty()){
+        if(!useFirstDevice)
+            return nullptr;
+        else
+            return getFirstDevice();
+    }
 
     return findDevice(defaultDeviceName);
 }
 
+DeviceInfo* BioDevices::findDevice(const int id)
+{
+    for(auto deviceInfo : deviceInfos) {
+        if(deviceInfo->device_id == id)
+            return deviceInfo;
+    }
+    //qDebug() << deviceName << "doesn't exists";
+    return nullptr;
+}
 
 DeviceInfo* BioDevices::findDevice(const QString &deviceName)
 {

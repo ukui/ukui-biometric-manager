@@ -31,10 +31,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/main.cpp" line="134"/>
+        <location filename="../src/main.cpp" line="169"/>
+        <location filename="../src/main.cpp" line="178"/>
+        <source>authentication will be canceld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/main.cpp" line="135"/>
         <location filename="../src/main.cpp" line="170"/>
         <location filename="../src/main.cpp" line="179"/>
-        <location filename="../src/main.cpp" line="290"/>
+        <location filename="../src/main.cpp" line="292"/>
         <source>AUTHENTICATION CANCELED</source>
         <translation type="unfinished"></translation>
     </message>
@@ -74,27 +81,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="244"/>
+        <location filename="../src/main.cpp" line="246"/>
         <source>BIOMETRIC AUTHENTICATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="245"/>
+        <location filename="../src/main.cpp" line="247"/>
         <source>Press Q or Esc to cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="257"/>
+        <location filename="../src/main.cpp" line="259"/>
         <source>AUTHENTICATION SUCCESS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="261"/>
+        <location filename="../src/main.cpp" line="263"/>
         <source>AUTHENTICATION FAILED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="278"/>
+        <location filename="../src/main.cpp" line="280"/>
         <source>BIOMETRIC AUTHENTICATION END</source>
         <translation type="unfinished"></translation>
     </message>

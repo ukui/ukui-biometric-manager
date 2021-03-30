@@ -36,7 +36,8 @@ public:
 public slots:
     void startAuth(uid_t uid, const DeviceInfo &device);
     void setMoreDevices(bool hasMore);
-
+    void stopAuth();
+    void emitSwithToPassword();
 signals:
     void switchToPassword();
     void selectDevice();

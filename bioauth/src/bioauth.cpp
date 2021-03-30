@@ -63,8 +63,10 @@ void BioAuth::startAuth()
 
 void BioAuth::stopAuth()
 {
-    QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo.device_id), QVariant(5));
+    if(!isInAuthentication)
+        return ;
 
+    QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo.device_id), QVariant(5));
 
     if(!reply.isValid())
         qWarning() << "StopOps error: " << reply.error();
@@ -79,8 +81,6 @@ bool BioAuth::isAuthenticating()
 
 void BioAuth::onIdentityComplete(QDBusPendingCallWatcher *watcher)
 {
-
-
     QDBusPendingReply<qint32, qint32> reply = *watcher;
     if(reply.isError()){
         isInAuthentication = false;

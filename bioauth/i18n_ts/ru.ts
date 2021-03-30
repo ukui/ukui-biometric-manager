@@ -23,6 +23,10 @@
         <source>Password</source>
         <translation>пароль</translation>
     </message>
+    <message>
+        <source>Current Device: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BioDevices</name>
@@ -45,6 +49,18 @@
     <message>
         <source>VoicePrint</source>
         <translation>Voiceprint</translation>
+    </message>
+    <message>
+        <source>Unplugging of %1 device detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 device insertion detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>biometric</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
