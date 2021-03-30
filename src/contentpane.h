@@ -41,7 +41,7 @@ signals:
 
 /* Qt Slots */
 private slots:
-	void on_btnEnroll_clicked();
+    void on_btnEnroll_clicked();
 	void on_btnDelete_clicked();
 	void on_btnVerify_clicked();
 	void on_btnSearch_clicked();

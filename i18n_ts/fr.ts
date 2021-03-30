@@ -252,6 +252,10 @@ p, li { white-space: pre-wrap; }
         <source>Please select the feature you want to delete.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please do not use spaces as the beginning or end of the feature name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EnumToString</name>

@@ -692,12 +692,12 @@ void MainWindow::on_btnStatus_clicked()
     QProcess process;
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
     if (verificationStatus) {
-        process.start("pkexec bioctl disable -u " + environment.value("USER"));
+        process.start("bioctl disable");
         process.waitForFinished(-1);
         if (process.exitCode() == 0)
             setVerificationStatus(false);
     } else {
-        process.start("pkexec bioctl enable -u " + environment.value("USER"));
+        process.start("bioctl enable");
         process.waitForFinished(-1);
         if (process.exitCode() == 0)
             setVerificationStatus(true);
@@ -879,7 +879,7 @@ bool MainWindow::changeDeviceStatus(DeviceInfo *deviceInfo)
     if (process.exitCode() != 0) {
         MessageDialog msgDialog(MessageDialog::Error,
                             tr("Fatal Error"),
-                            tr("Fail to change device status"));
+                            tr("Fail to change device status"),this);
         msgDialog.exec();
         return false;
     }
@@ -947,7 +947,7 @@ bool MainWindow::restartService()
 //        return false;
 //    }
     QProcess process;
-    QString cmd = QString("pkexec systemctl restart %1").arg(SERVICE);
+    QString cmd = QString("pkexec biorestart");
     process.start(cmd);
     process.waitForFinished(-1);
     qDebug() << "restart service finished";

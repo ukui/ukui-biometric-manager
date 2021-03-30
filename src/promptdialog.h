@@ -39,6 +39,7 @@ public:
 public:
     void setTitle(int opsType);
     void setPrompt(const QString &text);
+    void setProcessed(bool val);
 
     int enroll(int drvId, int uid, int idx, const QString &idxName);
     int verify(int drvId, int uid, int idx);
@@ -63,6 +64,7 @@ signals:
 private slots:
     void on_btnClose_clicked();
     void onStatusChanged(int, int);
+    void onProcessChanged(int, QString,int,QString);
     void enrollCallBack(const QDBusMessage &);
     void verifyCallBack(const QDBusMessage &);
     void searchCallBack(const QDBusMessage &);
@@ -79,6 +81,7 @@ private:
     bool isEnrolling;
     enum OPS{IDLE, ENROLL, VERIFY, SEARCH} ops;
     Result opsResult;
+    bool isProcessed;
 };
 
 #endif // PROMPTDIALOG_H

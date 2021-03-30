@@ -22,7 +22,9 @@
 #include "inputdialog.h"
 #include "messagedialog.h"
 #include "configuration.h"
-
+#include <QPoint>
+#include <QHoverEvent>
+#include <QEvent>
 
 #define ICON_SIZE 32
 
@@ -48,6 +50,7 @@ ContentPane::ContentPane(int uid, DeviceInfo *deviceInfo, QWidget *parent) :
 	setModel();
 	showDeviceInfo();
     showFeatures();
+
 }
 
 ContentPane::~ContentPane()
@@ -99,16 +102,21 @@ void ContentPane::updateWidgetStatus()
     if (deviceInfo->driver_enable > 0) {
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_open_small.png);}");
         ui->labelStatusText->setText(tr("Opened"));
-	} else {
+    } else {
         ui->btnStatus->setStyleSheet("QPushButton{background:url(:/images/assets/switch_close_small.png);}");
         ui->labelStatusText->setText(tr("Closed"));
-	}
+    }
     ui->btnEnroll->setEnabled(deviceInfo->device_available > 0);
     ui->btnDelete->setEnabled(deviceInfo->device_available > 0);
     ui->btnVerify->setEnabled(deviceInfo->device_available > 0);
     ui->btnSearch->setEnabled(deviceInfo->device_available > 0);
     ui->btnClean->setEnabled(deviceInfo->device_available > 0);
     ui->treeView->setEnabled(deviceInfo->device_available > 0);
+
+    if(deviceInfo->device_shortname == "huawei"){
+        ui->btnVerify->setEnabled(false);
+        ui->btnSearch->setEnabled(false);
+    }
 }
 
 void ContentPane::updateButtonUsefulness()
@@ -118,6 +126,11 @@ void ContentPane::updateButtonUsefulness()
 	ui->btnVerify->setEnabled(enable);
 	ui->btnSearch->setEnabled(enable);
     ui->btnClean->setEnabled(enable);
+
+    if(deviceInfo->device_shortname == "huawei"){
+        ui->btnVerify->setEnabled(false);
+        ui->btnSearch->setEnabled(false);
+    }
 }
 
 /**
@@ -140,8 +153,8 @@ void ContentPane::showDeviceInfo()
     QString listName = EnumToString::transferBioType(deviceInfo->biotype) + tr("List");
     QString devStatus = deviceInfo->device_available > 0 ? tr("Connected") : tr("Unconnected");
 
-	ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
-	ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
+    ui->labelDeviceShortName->setText(deviceInfo->device_shortname);
+    ui->labelDeviceFullName->setText(deviceInfo->device_fullname);
     ui->labelVerifyType->setText(verifyType);
     ui->labelBusType->setText(busType);
     ui->labelStorageType->setText(storageType);
@@ -186,8 +199,9 @@ void ContentPane::showFeatures()
 
 	if (!deviceIsAvailable())
 		return;
-
-	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+	
+	setCursor(Qt::WaitCursor);
+	//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 	QList<QVariant> args;
 
 	args << QVariant(deviceInfo->device_id)
@@ -215,8 +229,9 @@ void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
         qlist[i].variant().value<QDBusArgument>() >> *featureInfo;
         dataModel->appendData(featureInfo);
 	}
+	
+	setCursor(Qt::ArrowCursor);
 
-    QApplication::restoreOverrideCursor();
 	updateButtonUsefulness();
 }
 
@@ -235,9 +250,11 @@ QString ContentPane::inputFeatureName(bool isNew)
             inputDialog->setError(tr("Duplicate feature name"));
         } else if(text.isEmpty()) {
             inputDialog->setError(tr("Empty feature name"));
-        }else if(text.length() > 128){
+        }else if(text.length() > 64){
             inputDialog->setError(tr("feature name is too long"));
-        } else {
+        }else if(text.startsWith(" ") || text.endsWith(" ")){
+            inputDialog->setError(tr("Please do not use spaces as the beginning or end of the feature name"));
+        }else {
             inputDialog->accept();
         }
     });
@@ -265,6 +282,8 @@ void ContentPane::on_btnEnroll_clicked()
              << " indexName--" << indexName;
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
+    if(deviceInfo->device_shortname == "huawei")
+        promptDialog->setProcessed(true);
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
     if(promptDialog->getResult() == PromptDialog::SUCESS) {
@@ -272,6 +291,7 @@ void ContentPane::on_btnEnroll_clicked()
         dataModel->insertData(featureInfo);
     }
     delete promptDialog;
+
 
     updateButtonUsefulness();
 }
@@ -293,6 +313,7 @@ FeatureInfo *ContentPane::createNewFeatureInfo()
  */
 void ContentPane::errorCallback(QDBusError error)
 {
+    setCursor(Qt::ArrowCursor);
     qDebug() << "DBUS:" << error.message();
 }
 
@@ -307,7 +328,7 @@ bool ContentPane::confirmDelete(bool all)
         text = tr("Confirm whether delete the features selected?");
         title = tr("Confirm Delete");
     }
-    MessageDialog dialog(MessageDialog::Question);
+    MessageDialog dialog(MessageDialog::Question,"","",this);
     dialog.setTitle(title);
     dialog.setWindowTitle(title);
     dialog.setMessage(text);
@@ -322,7 +343,7 @@ void ContentPane::on_btnDelete_clicked()
 {
     QModelIndexList selectedIndexList = ui->treeView->selectionModel()->selectedRows(0);
     if(selectedIndexList.size() <= 0){
-        MessageDialog msgDialog(MessageDialog::Normal);
+        MessageDialog msgDialog(MessageDialog::Normal,"","",this);
         msgDialog.setTitle(tr("Feature Delete"));
         msgDialog.setWindowTitle(tr("Feature Delete"));
         msgDialog.setMessage(tr("Please select the feature you want to delete."));
@@ -381,7 +402,7 @@ void ContentPane::on_btnDelete_clicked()
         updateButtonUsefulness();
     }
 
-    MessageDialog msgDialog(MessageDialog::Normal);
+    MessageDialog msgDialog(MessageDialog::Normal,"","",this);
     msgDialog.setTitle(tr("Delete"));
     msgDialog.setWindowTitle(tr("Delete"));
     msgDialog.setMessage("             " + tr("The result of delete:"));
@@ -419,7 +440,7 @@ void ContentPane::on_btnClean_clicked()
         updateButtonUsefulness();
     }
 
-    MessageDialog msgDialog(MessageDialog::Normal);
+    MessageDialog msgDialog(MessageDialog::Normal,"","",this);
     msgDialog.setTitle(tr("Clean Result"));
     msgDialog.setWindowTitle(tr("Clean Result"));
     msgDialog.setMessage(resultString);
@@ -440,7 +461,7 @@ void ContentPane::on_btnVerify_clicked()
 
 
     if(!currentModelIndex.isValid() || !selected){
-        MessageDialog msgDialog(MessageDialog::Normal);
+        MessageDialog msgDialog(MessageDialog::Normal,"","",this);
         msgDialog.setTitle(tr("Feature Verify"));
         msgDialog.setWindowTitle(tr("Feature Verify"));
         msgDialog.setMessage(tr("Please select the feature you want to verify."));
@@ -454,9 +475,12 @@ void ContentPane::on_btnVerify_clicked()
 
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
+    if(deviceInfo->device_shortname == "huawei"){
+        promptDialog->setProcessed(true);
+    }
+
     promptDialog->verify(deviceInfo->device_id, uid, verifyIndex);
-
-
+\
     delete promptDialog;
 }
 
@@ -511,7 +535,7 @@ void ContentPane::on_treeView_doubleClicked(const QModelIndex &index)
         resultMessage = getErrorMessage(RENAME, result);
         type = MessageDialog::Error;
     }
-    MessageDialog msgDialog(type);
+    MessageDialog msgDialog(type,"","",this);
     msgDialog.setTitle(tr("Rename Result"));
     msgDialog.setWindowTitle(tr("Rename Result"));
     msgDialog.setMessage(resultMessage);

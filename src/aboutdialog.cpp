@@ -20,7 +20,7 @@
 #include <QFile>
 #include <QIcon>
 #include <QDebug>
-
+#include <QDesktopServices>
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutDialog)
@@ -41,6 +41,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
                                 "<a href=\"mailto://support@kylinos.cn\""
                                 "style=\"color:#595959\">"
                                 "support@kylinos.cn</a>");
+    connect(ui->AboutDevelopTextedit, &QLabel::linkActivated, this, [=](const QString url){
+         QDesktopServices::openUrl(QUrl(url));
+     });
+    ui->AboutDevelopTextedit->setContextMenuPolicy(Qt::NoContextMenu);
 
     ui->AboutBriefTextedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."
                                                                      "All functions of the software are still being perfected. Please look forward to it. "));
