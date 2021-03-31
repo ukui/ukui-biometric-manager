@@ -30,7 +30,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/aboutdialog.cpp" line="36"/>
-        <location filename="../src/aboutdialog.cpp" line="45"/>
+        <location filename="../src/aboutdialog.cpp" line="49"/>
         <source>         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.All functions of the software are still being perfected. Please look forward to it. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -135,7 +135,7 @@ p, li { white-space: pre-wrap; }
         <translation>Doğrulama Türü:</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="433"/>
+        <location filename="../src/contentpane.ui" line="451"/>
         <source>Clean</source>
         <translation>Temizle</translation>
     </message>
@@ -177,24 +177,24 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Biyometrik Özellik Listesi</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="393"/>
+        <location filename="../src/contentpane.ui" line="402"/>
         <source>Enroll</source>
         <translation>Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="423"/>
-        <location filename="../src/contentpane.cpp" line="387"/>
-        <location filename="../src/contentpane.cpp" line="388"/>
+        <location filename="../src/contentpane.ui" line="441"/>
+        <location filename="../src/contentpane.cpp" line="406"/>
+        <location filename="../src/contentpane.cpp" line="407"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="403"/>
+        <location filename="../src/contentpane.ui" line="421"/>
         <source>Verify</source>
         <translation>Doğrula</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="413"/>
+        <location filename="../src/contentpane.ui" line="431"/>
         <source>Search</source>
         <translation>Ara</translation>
     </message>
@@ -219,126 +219,126 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Cihaz mevcut</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="101"/>
+        <location filename="../src/contentpane.cpp" line="104"/>
         <source>Opened</source>
         <translation>Açık</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="104"/>
+        <location filename="../src/contentpane.cpp" line="107"/>
         <source>Closed</source>
         <translation>Kapalı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="79"/>
-        <location filename="../src/contentpane.cpp" line="141"/>
+        <location filename="../src/contentpane.cpp" line="82"/>
+        <location filename="../src/contentpane.cpp" line="154"/>
         <source>Connected</source>
         <translation>Bağlı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="82"/>
-        <location filename="../src/contentpane.cpp" line="141"/>
+        <location filename="../src/contentpane.cpp" line="85"/>
+        <location filename="../src/contentpane.cpp" line="154"/>
         <source>Unconnected</source>
         <translation>Bağlı Değil</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="227"/>
+        <location filename="../src/contentpane.cpp" line="242"/>
         <source>New Feature</source>
         <translation>Yeni özellik</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="228"/>
+        <location filename="../src/contentpane.cpp" line="243"/>
         <source>Please input a name for the feature:</source>
         <translation>Lütfen özellik için bir ad girin:</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="230"/>
+        <location filename="../src/contentpane.cpp" line="245"/>
         <source>Rename Feature</source>
         <translation>Özelliği Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="235"/>
+        <location filename="../src/contentpane.cpp" line="250"/>
         <source>Duplicate feature name</source>
         <translation>Yinelenen özellik adı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="237"/>
+        <location filename="../src/contentpane.cpp" line="252"/>
         <source>Empty feature name</source>
         <translation>Boş özellik adı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="239"/>
+        <location filename="../src/contentpane.cpp" line="254"/>
         <source>feature name is too long</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="241"/>
+        <location filename="../src/contentpane.cpp" line="256"/>
         <source>Please do not use spaces as the beginning or end of the feature name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="305"/>
+        <location filename="../src/contentpane.cpp" line="324"/>
         <source>Confirm whether clean all the features?</source>
         <translation>Tüm özellikleri temizlemek istediğinizi onaylayın?</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="306"/>
+        <location filename="../src/contentpane.cpp" line="325"/>
         <source>Confirm Clean</source>
         <translation>Temizlemeyi Onayla</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="309"/>
+        <location filename="../src/contentpane.cpp" line="328"/>
         <source>Confirm whether delete the features selected?</source>
         <translation>Seçilen özelliklerin silmek istediğinizi onaylayın?</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="310"/>
+        <location filename="../src/contentpane.cpp" line="329"/>
         <source>Confirm Delete</source>
         <translation>Silmeyi Onayla</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="328"/>
-        <location filename="../src/contentpane.cpp" line="329"/>
+        <location filename="../src/contentpane.cpp" line="347"/>
+        <location filename="../src/contentpane.cpp" line="348"/>
         <source>Feature Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="330"/>
+        <location filename="../src/contentpane.cpp" line="349"/>
         <source>Please select the feature you want to delete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="375"/>
+        <location filename="../src/contentpane.cpp" line="394"/>
         <source>Delete successfully</source>
         <translation>Silme başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="389"/>
+        <location filename="../src/contentpane.cpp" line="408"/>
         <source>The result of delete:</source>
         <translation>Silme sonucu:</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="414"/>
+        <location filename="../src/contentpane.cpp" line="433"/>
         <source>Clean Failed: </source>
         <translation>Silme Başarısız: </translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="416"/>
+        <location filename="../src/contentpane.cpp" line="435"/>
         <source>Clean successfully</source>
         <translation>Silme başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="446"/>
-        <location filename="../src/contentpane.cpp" line="447"/>
+        <location filename="../src/contentpane.cpp" line="465"/>
+        <location filename="../src/contentpane.cpp" line="466"/>
         <source>Feature Verify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="448"/>
+        <location filename="../src/contentpane.cpp" line="467"/>
         <source>Please select the feature you want to verify.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="533"/>
+        <location filename="../src/contentpane.cpp" line="555"/>
         <source>DBus calling error</source>
         <translation>DBus arama hatası</translation>
     </message>
@@ -355,19 +355,19 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Temizleme Başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="425"/>
-        <location filename="../src/contentpane.cpp" line="426"/>
+        <location filename="../src/contentpane.cpp" line="444"/>
+        <location filename="../src/contentpane.cpp" line="445"/>
         <source>Clean Result</source>
         <translation>Temizleme Sonucu</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="510"/>
+        <location filename="../src/contentpane.cpp" line="532"/>
         <source>Rename Successfully</source>
         <translation>Yeniden Adlandırma Başarılı</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="517"/>
-        <location filename="../src/contentpane.cpp" line="518"/>
+        <location filename="../src/contentpane.cpp" line="539"/>
+        <location filename="../src/contentpane.cpp" line="540"/>
         <source>Rename Result</source>
         <translation>Yeniden Adlandırma Sonucu</translation>
     </message>
@@ -464,7 +464,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Liste</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="140"/>
+        <location filename="../src/contentpane.cpp" line="153"/>
         <source>List</source>
         <translation>Liste</translation>
     </message>
@@ -485,7 +485,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Özellik Yeniden Adlandırma</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="231"/>
+        <location filename="../src/contentpane.cpp" line="246"/>
         <source>Please input a new name for the feature:</source>
         <translation>Lütfen özellik için yeni bir ad girin:</translation>
     </message>
@@ -514,17 +514,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Operasyon süresi doldu</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="541"/>
+        <location filename="../src/contentpane.cpp" line="563"/>
         <source>Device is busy</source>
         <translation>Aygıt meşgul</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="545"/>
+        <location filename="../src/contentpane.cpp" line="567"/>
         <source>No such device</source>
         <translation>Böyle bir cihaz yok</translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="549"/>
+        <location filename="../src/contentpane.cpp" line="571"/>
         <source>Permission denied</source>
         <translation>İzin reddedildi</translation>
     </message>
@@ -902,9 +902,13 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Mevcut biyometrik cihaz yok veya şu anda kayıtlı özellik yok.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="681"/>
         <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
-        <translation>Biyometri kullanma süreci 1.Cihazın bağlı olduğundan emin olun 2.Bağlı cihazı varsayılan olarak ayarlayın 3. Biyometrik durum açılacaktır. 4. Parmak izi girin</translation>
+        <translation type="vanished">Biyometri kullanma süreci 1.Cihazın bağlı olduğundan emin olun 2.Bağlı cihazı varsayılan olarak ayarlayın 3. Biyometrik durum açılacaktır. 4. Parmak izi girin</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="681"/>
+        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the feature</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="711"/>
@@ -1036,22 +1040,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">İşlemler devam ediyor. Lütfen bekleyin..</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="92"/>
+        <location filename="../src/promptdialog.cpp" line="97"/>
         <source>Enroll</source>
         <translation>Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="95"/>
+        <location filename="../src/promptdialog.cpp" line="100"/>
         <source>Verify</source>
         <translation>Doğrula</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="98"/>
+        <location filename="../src/promptdialog.cpp" line="103"/>
         <source>Search</source>
         <translation>Ara</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="135"/>
+        <location filename="../src/promptdialog.cpp" line="153"/>
         <source>In progress, please wait...</source>
         <translation>Devam ediyor, lütfen bekleyin ...</translation>
     </message>
@@ -1060,56 +1064,56 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">İndeks</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="147"/>
+        <location filename="../src/promptdialog.cpp" line="165"/>
         <source>UserName</source>
         <translation>Kullanıcı Adı</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="147"/>
-        <location filename="../src/promptdialog.cpp" line="149"/>
+        <location filename="../src/promptdialog.cpp" line="165"/>
+        <location filename="../src/promptdialog.cpp" line="167"/>
         <source>FeatureName</source>
         <translation>Özellik Adı</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="147"/>
-        <location filename="../src/promptdialog.cpp" line="149"/>
+        <location filename="../src/promptdialog.cpp" line="165"/>
+        <location filename="../src/promptdialog.cpp" line="167"/>
         <source>Serial number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="205"/>
+        <location filename="../src/promptdialog.cpp" line="223"/>
         <source>Permission is required.
 Please authenticate yourself to continue</source>
         <translation>İzin gerekli.
 Lütfen devam etmek için kendinizi doğrulayın</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="232"/>
+        <location filename="../src/promptdialog.cpp" line="250"/>
         <source>Enroll successfully</source>
         <translation>Başarılı kayıt</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="268"/>
+        <location filename="../src/promptdialog.cpp" line="286"/>
         <source>Verify successfully</source>
         <translation>Doğrulama başarılı</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="271"/>
+        <location filename="../src/promptdialog.cpp" line="289"/>
         <source>Not Match</source>
         <translation>Eşleşmedi</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="304"/>
+        <location filename="../src/promptdialog.cpp" line="324"/>
         <source>Search Result</source>
         <translation>Arama sonuçları</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="320"/>
+        <location filename="../src/promptdialog.cpp" line="340"/>
         <source>No matching features Found</source>
         <translation>Eşleşen özellik bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="401"/>
+        <location filename="../src/promptdialog.cpp" line="430"/>
         <source>D-Bus calling error</source>
         <translation>D-Bus arama hatası</translation>
     </message>
@@ -1122,37 +1126,37 @@ Lütfen devam etmek için kendinizi doğrulayın</translation>
         <translation type="obsolete">İşlem süresi doldu</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="410"/>
+        <location filename="../src/promptdialog.cpp" line="439"/>
         <source>Device is busy</source>
         <translation>Aygıt meşgul</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="414"/>
+        <location filename="../src/promptdialog.cpp" line="443"/>
         <source>No such device</source>
         <translation>Böyle bir cihaz yok</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="418"/>
+        <location filename="../src/promptdialog.cpp" line="447"/>
         <source>Permission denied</source>
         <translation>İzin reddedildi</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="433"/>
+        <location filename="../src/promptdialog.cpp" line="462"/>
         <source>Failed to enroll</source>
         <translation>Kayıt yapılamadı</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="436"/>
+        <location filename="../src/promptdialog.cpp" line="465"/>
         <source>Failed to match</source>
         <translation>Eşleştirilemedi</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="439"/>
+        <location filename="../src/promptdialog.cpp" line="468"/>
         <source>Not Found</source>
         <translation>Bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="452"/>
+        <location filename="../src/promptdialog.cpp" line="481"/>
         <source>&lt;font size=&apos;2&apos;&gt;the window will be closed after two second&lt;/font&gt;</source>
         <translation>&lt;font size=&apos;2&apos;&gt;pencere iki saniye sonra kapanacak&lt;/font&gt;</translation>
     </message>

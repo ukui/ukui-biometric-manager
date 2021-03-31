@@ -486,10 +486,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Biometric Manager</source>
         <translation type="unfinished">Gerente biometrico</translation>
     </message>
@@ -499,6 +495,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the feature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

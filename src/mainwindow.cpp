@@ -679,7 +679,7 @@ void MainWindow::setVerificationStatus(bool status)
    else {
        statusText = tr("Closed");
        noteText = tr("Process of using biometrics 1.Confirm that the device is connected \
-2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint");
+2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the feature");
        statusStyle = "background:url(:/images/assets/switch_close_large.png)";
    }
    ui->lblNote->setText(noteText);

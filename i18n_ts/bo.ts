@@ -9,43 +9,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="93"/>
+        <location filename="../src/aboutdialog.ui" line="288"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans CJK SC&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/aboutdialog.cpp" line="29"/>
+        <location filename="../src/aboutdialog.cpp" line="34"/>
         <source>Biometric Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="151"/>
-        <source>About</source>
+        <location filename="../src/aboutdialog.cpp" line="35"/>
+        <source>Version number: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="196"/>
-        <source>Contributor</source>
+        <location filename="../src/aboutdialog.cpp" line="36"/>
+        <location filename="../src/aboutdialog.cpp" line="49"/>
+        <source>         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.All functions of the software are still being perfected. Please look forward to it. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutdialog.ui" line="278"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device&apos;s driver management and biometirc features management, etc.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;       &lt;/span&gt;&lt;a name=&quot;textarea-bg-text&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;ll functions of the software are still being perfected. Please look forward to it. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/aboutdialog.ui" line="294"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2016-2017 lihao &amp;lt;lihao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;© 2017-2018 yanghao &amp;lt;yanghao@kylinos.cn&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/aboutdialog.ui" line="338"/>
-        <source>Close</source>
+        <location filename="../src/aboutdialog.cpp" line="40"/>
+        <source>Service &amp; Support: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -115,160 +106,195 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="390"/>
+        <location filename="../src/contentpane.ui" line="402"/>
         <source>Enroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="397"/>
+        <location filename="../src/contentpane.ui" line="421"/>
         <source>Verify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="404"/>
+        <location filename="../src/contentpane.ui" line="431"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="411"/>
-        <location filename="../src/contentpane.cpp" line="375"/>
+        <location filename="../src/contentpane.ui" line="441"/>
+        <location filename="../src/contentpane.cpp" line="406"/>
+        <location filename="../src/contentpane.cpp" line="407"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.ui" line="418"/>
+        <location filename="../src/contentpane.ui" line="451"/>
         <source>Clean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="79"/>
-        <location filename="../src/contentpane.cpp" line="141"/>
+        <location filename="../src/contentpane.cpp" line="82"/>
+        <location filename="../src/contentpane.cpp" line="154"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="82"/>
-        <location filename="../src/contentpane.cpp" line="141"/>
+        <location filename="../src/contentpane.cpp" line="85"/>
+        <location filename="../src/contentpane.cpp" line="154"/>
         <source>Unconnected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="101"/>
+        <location filename="../src/contentpane.cpp" line="104"/>
         <source>Opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="104"/>
+        <location filename="../src/contentpane.cpp" line="107"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="140"/>
+        <location filename="../src/contentpane.cpp" line="153"/>
         <source>List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="227"/>
+        <location filename="../src/contentpane.cpp" line="242"/>
         <source>New Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="228"/>
+        <location filename="../src/contentpane.cpp" line="243"/>
         <source>Please input a name for the feature:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="230"/>
+        <location filename="../src/contentpane.cpp" line="245"/>
         <source>Rename Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="231"/>
+        <location filename="../src/contentpane.cpp" line="246"/>
         <source>Please input a new name for the feature:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="235"/>
+        <location filename="../src/contentpane.cpp" line="250"/>
         <source>Duplicate feature name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="237"/>
+        <location filename="../src/contentpane.cpp" line="252"/>
         <source>Empty feature name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="301"/>
+        <location filename="../src/contentpane.cpp" line="254"/>
+        <source>feature name is too long</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="256"/>
+        <source>Please do not use spaces as the beginning or end of the feature name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="324"/>
         <source>Confirm whether clean all the features?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="302"/>
+        <location filename="../src/contentpane.cpp" line="325"/>
         <source>Confirm Clean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="305"/>
+        <location filename="../src/contentpane.cpp" line="328"/>
         <source>Confirm whether delete the features selected?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="306"/>
+        <location filename="../src/contentpane.cpp" line="329"/>
         <source>Confirm Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="363"/>
+        <location filename="../src/contentpane.cpp" line="347"/>
+        <location filename="../src/contentpane.cpp" line="348"/>
+        <source>Feature Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="349"/>
+        <source>Please select the feature you want to delete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="394"/>
         <source>Delete successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="376"/>
+        <location filename="../src/contentpane.cpp" line="408"/>
         <source>The result of delete:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="401"/>
+        <location filename="../src/contentpane.cpp" line="433"/>
         <source>Clean Failed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="403"/>
+        <location filename="../src/contentpane.cpp" line="435"/>
         <source>Clean successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="412"/>
+        <location filename="../src/contentpane.cpp" line="444"/>
+        <location filename="../src/contentpane.cpp" line="445"/>
         <source>Clean Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="485"/>
+        <location filename="../src/contentpane.cpp" line="465"/>
+        <location filename="../src/contentpane.cpp" line="466"/>
+        <source>Feature Verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="467"/>
+        <source>Please select the feature you want to verify.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/contentpane.cpp" line="532"/>
         <source>Rename Successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="492"/>
+        <location filename="../src/contentpane.cpp" line="539"/>
+        <location filename="../src/contentpane.cpp" line="540"/>
         <source>Rename Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="507"/>
+        <location filename="../src/contentpane.cpp" line="555"/>
         <source>DBus calling error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="515"/>
+        <location filename="../src/contentpane.cpp" line="563"/>
         <source>Device is busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="519"/>
+        <location filename="../src/contentpane.cpp" line="567"/>
         <source>No such device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/contentpane.cpp" line="523"/>
+        <location filename="../src/contentpane.cpp" line="571"/>
         <source>Permission denied</source>
         <translation type="unfinished"></translation>
     </message>
@@ -394,7 +420,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/inputdialog.ui" line="200"/>
+        <location filename="../src/inputdialog.ui" line="212"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -407,139 +433,149 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="60"/>
+        <location filename="../src/mainwindow.ui" line="66"/>
         <source>Biometirc Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="87"/>
-        <source>UserName</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="203"/>
+        <location filename="../src/mainwindow.ui" line="192"/>
         <source>DashBoard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="222"/>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.ui" line="211"/>
+        <location filename="../src/mainwindow.cpp" line="657"/>
         <source>FingerPrint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="241"/>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.ui" line="230"/>
+        <location filename="../src/mainwindow.cpp" line="657"/>
         <source>FingerVein</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="260"/>
-        <location filename="../src/mainwindow.cpp" line="530"/>
+        <location filename="../src/mainwindow.ui" line="249"/>
+        <location filename="../src/mainwindow.cpp" line="658"/>
         <source>Iris</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="279"/>
-        <location filename="../src/mainwindow.cpp" line="530"/>
+        <location filename="../src/mainwindow.ui" line="268"/>
+        <location filename="../src/mainwindow.cpp" line="658"/>
         <source>VoicePrint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="397"/>
+        <location filename="../src/mainwindow.ui" line="386"/>
         <source>System components are certified using biometrics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="442"/>
-        <location filename="../src/mainwindow.cpp" line="552"/>
+        <location filename="../src/mainwindow.ui" line="431"/>
+        <location filename="../src/mainwindow.cpp" line="680"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="489"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="676"/>
-        <location filename="../src/mainwindow.ui" line="715"/>
-        <location filename="../src/mainwindow.ui" line="766"/>
-        <location filename="../src/mainwindow.ui" line="805"/>
+        <location filename="../src/mainwindow.ui" line="671"/>
+        <location filename="../src/mainwindow.ui" line="710"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
+        <location filename="../src/mainwindow.ui" line="800"/>
         <source>Driver Not Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="215"/>
+        <location filename="../src/mainwindow.cpp" line="251"/>
         <source>Restart Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="222"/>
+        <location filename="../src/mainwindow.cpp" line="257"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="546"/>
+        <location filename="../src/mainwindow.cpp" line="674"/>
         <source>Opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="547"/>
+        <location filename="../src/mainwindow.cpp" line="675"/>
         <source>Biometric Authentication can take over system authentication processes which include Login, LockScreen, sudo/su and Polkit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="553"/>
-        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the fingerprint</source>
+        <location filename="../src/mainwindow.cpp" line="131"/>
+        <source>Biometric Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="269"/>
+        <source>exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="274"/>
+        <source>help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="681"/>
+        <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="712"/>
         <source>Device Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="712"/>
         <source>Device Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="712"/>
         <source>Driver Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="583"/>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="711"/>
+        <location filename="../src/mainwindow.cpp" line="712"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="753"/>
+        <location filename="../src/mainwindow.cpp" line="881"/>
         <source>Fatal Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="754"/>
+        <location filename="../src/mainwindow.cpp" line="882"/>
         <source>Fail to change device status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="948"/>
+        <location filename="../src/mainwindow.cpp" line="1087"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="952"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>Unconnected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="968"/>
+        <location filename="../src/mainwindow.cpp" line="1107"/>
         <source>The Service is stopped</source>
         <translation type="unfinished"></translation>
     </message>
@@ -557,17 +593,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/messagedialog.ui" line="145"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/messagedialog.ui" line="217"/>
+        <location filename="../src/messagedialog.ui" line="229"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/messagedialog.ui" line="233"/>
+        <location filename="../src/messagedialog.ui" line="245"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -585,116 +616,110 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.ui" line="138"/>
-        <location filename="../src/promptdialog.ui" line="199"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/promptdialog.cpp" line="79"/>
+        <location filename="../src/promptdialog.cpp" line="97"/>
         <source>Enroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="82"/>
+        <location filename="../src/promptdialog.cpp" line="100"/>
         <source>Verify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="85"/>
+        <location filename="../src/promptdialog.cpp" line="103"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="122"/>
+        <location filename="../src/promptdialog.cpp" line="153"/>
         <source>In progress, please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="134"/>
-        <location filename="../src/promptdialog.cpp" line="136"/>
-        <source>Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/promptdialog.cpp" line="134"/>
+        <location filename="../src/promptdialog.cpp" line="165"/>
         <source>UserName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="134"/>
-        <location filename="../src/promptdialog.cpp" line="136"/>
+        <location filename="../src/promptdialog.cpp" line="165"/>
+        <location filename="../src/promptdialog.cpp" line="167"/>
         <source>FeatureName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="192"/>
+        <location filename="../src/promptdialog.cpp" line="165"/>
+        <location filename="../src/promptdialog.cpp" line="167"/>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/promptdialog.cpp" line="223"/>
         <source>Permission is required.
 Please authenticate yourself to continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="219"/>
+        <location filename="../src/promptdialog.cpp" line="250"/>
         <source>Enroll successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="255"/>
+        <location filename="../src/promptdialog.cpp" line="286"/>
         <source>Verify successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="258"/>
+        <location filename="../src/promptdialog.cpp" line="289"/>
         <source>Not Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="291"/>
+        <location filename="../src/promptdialog.cpp" line="324"/>
         <source>Search Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="307"/>
+        <location filename="../src/promptdialog.cpp" line="340"/>
         <source>No matching features Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="381"/>
+        <location filename="../src/promptdialog.cpp" line="430"/>
         <source>D-Bus calling error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="390"/>
+        <location filename="../src/promptdialog.cpp" line="439"/>
         <source>Device is busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="394"/>
+        <location filename="../src/promptdialog.cpp" line="443"/>
         <source>No such device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="398"/>
+        <location filename="../src/promptdialog.cpp" line="447"/>
         <source>Permission denied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="413"/>
+        <location filename="../src/promptdialog.cpp" line="462"/>
         <source>Failed to enroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="416"/>
+        <location filename="../src/promptdialog.cpp" line="465"/>
         <source>Failed to match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="419"/>
+        <location filename="../src/promptdialog.cpp" line="468"/>
         <source>Not Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/promptdialog.cpp" line="432"/>
+        <location filename="../src/promptdialog.cpp" line="481"/>
         <source>&lt;font size=&apos;2&apos;&gt;the window will be closed after two second&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -702,23 +727,23 @@ Please authenticate yourself to continue</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="42"/>
+        <location filename="../src/main.cpp" line="46"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="114"/>
-        <location filename="../src/main.cpp" line="123"/>
+        <location filename="../src/main.cpp" line="152"/>
+        <location filename="../src/main.cpp" line="161"/>
         <source>Fatal Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="115"/>
+        <location filename="../src/main.cpp" line="153"/>
         <source>the biometric-authentication service was not started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="124"/>
+        <location filename="../src/main.cpp" line="162"/>
         <source>API version is not compatible</source>
         <translation type="unfinished"></translation>
     </message>
