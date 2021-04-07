@@ -18,6 +18,7 @@
 #include "messagedialog.h"
 #include "ui_messagedialog.h"
 #include <QFile>
+#include <QDebug>
 #include "xatom-helper.h"
 
 MessageDialog::MessageDialog(int type, const QString &title, const QString &msg, QWidget *parent) :
@@ -78,8 +79,6 @@ void MessageDialog::setTitle(const QString &text)
 void MessageDialog::setMessage(const QString &text)
 {
     ui->lblMessage->setText(text);
-    ui->lblMessage->adjustSize();
-    ui->lblMessage->setWordWrap(true);
 }
 
 void MessageDialog::setOkText(const QString &text)
@@ -98,7 +97,6 @@ void MessageDialog::setMessageList(const QStringList &textList)
 
     for(auto text : textList) {
         QLabel *label = new QLabel(text, this);
-        label->setFont(QFont("Sans Serif", 10));
         ui->messageLayout->addWidget(label);
     }
 }

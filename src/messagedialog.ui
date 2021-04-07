@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>200</height>
+    <height>228</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -148,16 +148,14 @@
       <layout class="QVBoxLayout" name="messageLayout">
        <item>
         <widget class="QLabel" name="lblMessage">
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -219,11 +217,6 @@
          <width>70</width>
          <height>30</height>
         </size>
-       </property>
-       <property name="font">
-        <font>
-         <kerning>false</kerning>
-        </font>
        </property>
        <property name="text">
         <string>OK</string>

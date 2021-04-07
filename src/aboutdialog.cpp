@@ -28,9 +28,6 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle(tr("Biometric Manager"));
     ui->AboutIconLabel->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(96,96)));
-    QFont font;
-    font.setPointSize(18);
-    ui->AboutNameLabel->setFont(font);
     ui->AboutNameLabel->setText(tr("Biometric Manager"));
     ui->AboutVersionLabel->setText(tr("Version number: ") + get_current_version());
     ui->AboutBriefTextedit->setText(tr("         Biometric Manager is a supporting software for managing biometric identification which is developed by Kylin team.  It mainly contains biometirc verification management, biometirc service management, biometric device's driver management and biometirc features management, etc."

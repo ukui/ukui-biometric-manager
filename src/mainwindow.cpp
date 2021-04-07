@@ -1106,7 +1106,7 @@ void MainWindow::onServiceStatusChanged(bool activate)
                                ui->stackedWidgetMain->height());
         lblPrompt->setText(tr("The Service is stopped"));
         lblPrompt->setAlignment(Qt::AlignCenter);
-        lblPrompt->setStyleSheet("QLabel{color: red; font-size: 20px;}");
+        lblPrompt->setStyleSheet("QLabel{color: red; }");
         lblPrompt->show();
     }
     else

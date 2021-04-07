@@ -28,7 +28,6 @@ QPushButton:flat{
 
 QLineEdit {
     border: 1px solid #0078d7;
-    font-size: 14px;
 }
 
 #lblError {

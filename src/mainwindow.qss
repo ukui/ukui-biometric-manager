@@ -1,8 +1,6 @@
 /* Base color: #0A77B5 */
 
 /*QGroupBox {
-	font-size: 18px;
-	font-weight: bold;
 	border: 6px solid #dddddd;
 	border-radius: 6px;
 	margin-top: 0.5em;
@@ -15,7 +13,6 @@ QGroupBox::title {
 }*/
 
 /*#lblWindow {
-	font-size:30px;
 	margin-bottom: 10px;
 }*/
 
@@ -60,22 +57,18 @@ QTabWidget::Pane {
 }
 
 #lblBioAuthStatus {
-	font-size: 16px;
 }
 
 #lblAuthNote {
-	font: bold italic 15px;
 }
 
 QListWidget {
         border:none;
         border-right: 1px solid  lightgray;
         max-width: 150px;
-	font: normal normal 16px;
 }
 
 QListWidget::item {
-	font: normal normal 10px;
 /*	border-style: solid;
 	border-width: 1px;
 	border-color: #bbbbbb;
@@ -98,7 +91,6 @@ QListWidget::item:selected {
 
 #labelFeatureList {
 	margin-top: 10px;
-	font: bold normal 15px;
 }
 
 QComboBox {
@@ -115,5 +107,4 @@ QComboBox::drop-down{
 }
 
 #labelTableFingerprint, #labelTableFingervein, #labelTableIris {
-	font-size: 16px;
 }

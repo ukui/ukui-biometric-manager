@@ -46,7 +46,6 @@ QWidget{
 }
 
 #lblNote{
-    font-size: 13px;
 }
 
 #lblTypeListHeader {
@@ -100,7 +99,6 @@ QHeaderView::section {
 
 
 #lblStatusText, #lblStatus {
-    font-size: 24px;
 }
 
 

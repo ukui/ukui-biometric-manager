@@ -254,6 +254,7 @@ void PromptDialog::enrollCallBack(const QDBusMessage &reply)
     default:
         opsResult = ERROR;
         handleErrorResult(result);
+        ui->lblImage->setPixmap(QIcon::fromTheme("dialog-error").pixmap(QSize(64,64)));
         break;
     }
     ops = IDLE;
@@ -290,6 +291,7 @@ void PromptDialog::verifyCallBack(const QDBusMessage &reply)
         if(!isProcessed)
             ui->lblImage->setPixmap(getImage(type));
         //showClosePrompt();
+        ui->lblImage->setPixmap(QIcon::fromTheme("dialog-error").pixmap(QSize(64,64)));
     } else {
         handleErrorResult(result);
     }
@@ -476,9 +478,9 @@ void PromptDialog::setFailed()
 void PromptDialog::showClosePrompt()
 {
     ui->lblImage->setPixmap(QIcon::fromTheme("ukui-dialog-success").pixmap(QSize(64,64)));
-    QString prompt = QString("<font size = '4'>%1</font>").arg(ui->lblPrompt->text())
+    QString prompt = QString(ui->lblPrompt->text())
             + "<br><br>" +
-            tr("<font size='2'>the window will be closed after two second</font>");
+            tr("the window will be closed after two second");
     setPrompt(prompt);
 
     QTimer::singleShot(2000, this, [&]{accept();});
