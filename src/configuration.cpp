@@ -54,9 +54,14 @@ void Configuration::setDefaultDevice(const QString &deviceName)
     //由于greeter没有权限访问家目录，所以单独写一个配置文件
     QString configFile1 = QString("/var/lib/lightdm-data/%1/.biometric_auth/ukui_biometric.conf").arg(getenv("USER"));
     QSettings settings1(configFile1, QSettings::IniFormat);
-
+	
     settings1.setValue("DefaultDevice", deviceName);
     settings1.sync();
-
+    
+    if(QString(getenv("USER")) == "root"){
+    	QSettings settings2("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
+    	settings2.setValue("rootUserDefaultDevice", deviceName);
+	settings2.sync();
+    }
     emit defaultDeviceChanged(deviceName);
 }
