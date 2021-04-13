@@ -147,7 +147,6 @@ int BioDevices::GetUserDevCount(int uid)
     for(int i = 0; i < deviceNum; i++) {
         DeviceInfo *deviceInfo = new DeviceInfo;
         infos.at(i).value<QDBusArgument>() >> *deviceInfo;
-
         if(deviceInfo->device_available > 0 && GetUserDevFeatureCount(uid,deviceInfo->device_id)>0)     //设备可用
             count++;
     }
@@ -171,6 +170,7 @@ int BioDevices::getFeatureCount(int uid, int indexStart, int indexEnd)
     int res = 0;
     for(int i = 0; i < deviceInfos.count(); i++) {
         DeviceInfo *deviceInfo = deviceInfos.at(i);
+	QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo->device_id), QVariant(3000));
         QDBusMessage featurecount = serviceInterface->call("GetFeatureList",deviceInfo->device_id,uid,indexStart,indexEnd);
         if(featurecount.type() == QDBusMessage::ErrorMessage)
         {

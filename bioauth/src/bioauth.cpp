@@ -66,7 +66,7 @@ void BioAuth::stopAuth()
     if(!isInAuthentication)
         return ;
 
-    QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo.device_id), QVariant(5));
+    QDBusReply<int> reply = serviceInterface->call("StopOps", QVariant(deviceInfo.device_id), QVariant(3000));
 
     if(!reply.isValid())
         qWarning() << "StopOps error: " << reply.error();
