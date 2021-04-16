@@ -1047,6 +1047,7 @@ void MainWindow::onUSBDeviceHotPlug(int drvid, int action, int devNumNow)
 {
     qDebug() << "device"<< (action > 0 ? "insert:" : "pull out:");
     qDebug() << "id:" << drvid;
+    sleep(1);
     for(int type : deviceInfosMap.keys()) {
         auto &deviceInfoList = deviceInfosMap[type];
         for(int i = 0; i < deviceInfoList.size(); i++) {
