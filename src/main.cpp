@@ -18,8 +18,10 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QtSingleApplication>
+#include <QScreen>
 #include <QTranslator>
 #include <QDir>
+#include <QRect>
 #include <QStyleFactory>
 #include <stdio.h>
 #include <stdlib.h>
@@ -171,6 +173,9 @@ int main(int argc, char *argv[])
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
     XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
+
+    QRect desktopRect = QApplication::primaryScreen()->geometry();
+    w.move(desktopRect.left() + (desktopRect.width() - w.width())/2,desktopRect.top() + (desktopRect.height() - w.height())/2);
     w.show();
 
     QObject::connect(&a, SIGNAL(messageReceived(QString)), &w, SLOT(onReviceWindowMessage(QString)));
