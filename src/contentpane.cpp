@@ -113,7 +113,7 @@ void ContentPane::updateWidgetStatus()
     ui->btnClean->setEnabled(deviceInfo->device_available > 0);
     ui->treeView->setEnabled(deviceInfo->device_available > 0);
 
-    if(deviceInfo->device_shortname == "huawei"){
+    if(deviceInfo->device_shortname == "gdxfp"){
         ui->btnVerify->setEnabled(false);
         ui->btnSearch->setEnabled(false);
     }
@@ -127,7 +127,7 @@ void ContentPane::updateButtonUsefulness()
 	ui->btnSearch->setEnabled(enable);
     ui->btnClean->setEnabled(enable);
 
-    if(deviceInfo->device_shortname == "huawei"){
+    if(deviceInfo->device_shortname == "gdxfp"){
         ui->btnVerify->setEnabled(false);
         ui->btnSearch->setEnabled(false);
     }
@@ -282,7 +282,7 @@ void ContentPane::on_btnEnroll_clicked()
              << " indexName--" << indexName;
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
-    if(deviceInfo->device_shortname == "huawei")
+    if(deviceInfo->device_shortname == "gdxfp")
         promptDialog->setProcessed(true);
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
@@ -475,7 +475,7 @@ void ContentPane::on_btnVerify_clicked()
 
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
-    if(deviceInfo->device_shortname == "huawei"){
+    if(deviceInfo->device_shortname == "gdxfp"){
         promptDialog->setProcessed(true);
     }
 
