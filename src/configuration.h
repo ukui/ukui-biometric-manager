@@ -30,12 +30,13 @@ private:
     Configuration& operator =(const Configuration &rhs) = delete;
 
 public:
+    static QString configFile;
+
     static Configuration *instance();
     QString getDefaultDevice();
     void setDefaultDevice(const QString &deviceName);
 
 private:
-    static QString configFile;
     static Configuration *instance_;
 
 signals:

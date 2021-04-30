@@ -19,6 +19,7 @@
 #include "configuration.h"
 #include <QSettings>
 #include <QDir>
+#include <QFileSystemWatcher>
 #include <QDebug>
 
 QString Configuration::configFile = QDir::homePath() +
@@ -61,7 +62,8 @@ void Configuration::setDefaultDevice(const QString &deviceName)
     if(QString(getenv("USER")) == "root"){
     	QSettings settings2("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
     	settings2.setValue("rootUserDefaultDevice", deviceName);
-	settings2.sync();
+        settings2.sync();
     }
     emit defaultDeviceChanged(deviceName);
 }
+

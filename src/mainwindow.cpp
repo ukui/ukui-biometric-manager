@@ -54,6 +54,14 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 
     initialize();
     setWindowIcon(QIcon::fromTheme("biometric-manager"));
+
+    QFileSystemWatcher *mWatcher = new QFileSystemWatcher(this);
+    mWatcher->addPath(Configuration::configFile);
+    connect(mWatcher,&QFileSystemWatcher::fileChanged,this,[=](const QString &path){
+        mWatcher->addPath(Configuration::configFile);
+        QString deviceName = Configuration::instance()->getDefaultDevice();
+        Configuration::instance()->defaultDeviceChanged(deviceName);
+    });
 }
 
 MainWindow::~MainWindow()
