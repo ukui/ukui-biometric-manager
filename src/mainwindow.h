@@ -21,6 +21,7 @@
 #include <QMainWindow>
 #include <QTableWidgetItem>
 #include <QCheckBox>
+#include <QFileSystemWatcher>
 #include "customtype.h"
 #include "contentpane.h"
 
@@ -116,6 +117,8 @@ private:
     /* 服务被关闭时提示 */
     QLabel *lblPrompt;
     DeviceInfo *lastDeviceInfo;
+
+    QFileSystemWatcher *mWatcher;
 };
 
 #endif // MAINWINDOW_H

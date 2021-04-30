@@ -45,6 +45,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
     username(usernameFromCmd),
     verificationStatus(false),
     dragWindow(false),
+    mWatcher(nullptr),
     lastDeviceInfo(nullptr),
     aboutDlg(nullptr)
 {
@@ -650,6 +651,16 @@ void MainWindow::initDashboardBioAuthSection()
     else {
         setVerificationStatus(false);
     }
+
+    if(!mWatcher){
+        mWatcher = new QFileSystemWatcher(this);
+        mWatcher->addPath("/etc/biometric-auth/ukui-biometric.conf");
+        connect(mWatcher,&QFileSystemWatcher::fileChanged,this,[=](const QString &path){
+            mWatcher->addPath("/etc/biometric-auth/ukui-biometric.conf");
+            initDashboardBioAuthSection();
+        });
+    }
+
 }
 
 void MainWindow::initDeviceTypeList()
