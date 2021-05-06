@@ -290,7 +290,7 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     }else if(prompt == BIOMETRIC_PAM_DOUBLE){
         mainWindow->setDoubleAuth(true);
         mainWindow->switchAuthMode(MainWindow::BIOMETRIC);
-	//这时候不需要显示授权弹窗，下一次收到prompt请求的时候再显示
+        //这时候不需要显示授权弹窗，下一次收到prompt请求的时候再显示
         return;
     }
     else {

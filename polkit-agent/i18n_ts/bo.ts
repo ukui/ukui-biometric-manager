@@ -59,27 +59,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="206"/>
+        <location filename="../src/mainwindow.cpp" line="93"/>
+        <source>Too many unsuccessful attempts,please enter password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="219"/>
         <source>in authentication, please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="253"/>
+        <location filename="../src/mainwindow.cpp" line="266"/>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="287"/>
+        <location filename="../src/mainwindow.cpp" line="300"/>
         <source>Password: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="289"/>
+        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Please enter your password or enroll your fingerprint </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="86"/>
+        <location filename="../src/mainwindow.cpp" line="98"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>Authentication failed, please try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -92,7 +98,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/PolkitListener.cpp" line="211"/>
+        <location filename="../src/PolkitListener.cpp" line="212"/>
         <source>Authentication failure, please try again.</source>
         <translation type="unfinished"></translation>
     </message>

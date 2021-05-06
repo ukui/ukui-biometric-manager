@@ -88,6 +88,8 @@ private:
     bool isFirst;
     bool useDoubleAuth;
     bool isbioSuccess;
+    QMap<qint32,int> m_failMap;
+    int  maxFailedTimes;
 };
 
 #endif // MAINWINDOW_H

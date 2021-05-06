@@ -67,6 +67,10 @@
         <source>Please enter your password or enroll your fingerprint </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Too many unsuccessful attempts,please enter password.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PolkitListener</name>

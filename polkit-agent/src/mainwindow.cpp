@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     widgetBioDevices = new BioDevicesWidget(this);
     ui->formLayout->addWidget(widgetBioAuth);
     ui->formLayout->addWidget(widgetBioDevices);
+    maxFailedTimes = bioDevices.getFailedTimes();
 
     connect(widgetBioDevices, &BioDevicesWidget::deviceChanged,
             this, [&](const DeviceInfo &device){
@@ -83,6 +84,16 @@ MainWindow::MainWindow(QWidget *parent) :
                 accept(BIOMETRIC_SUCCESS);
             }
         }else if(useDoubleAuth){
+            if(m_failMap.contains(getUid(userName))){
+                m_failMap[getUid(userName)] = m_failMap[getUid(userName)] + 1;
+            }else{
+                m_failMap[getUid(userName)] = 1;
+            }
+            if(m_failMap[getUid(userName)] >= maxFailedTimes){
+                setMessage(tr("Too many unsuccessful attempts,please enter password."));
+                return ;
+            }
+
             setMessage(tr("Authentication failed, please try again."));
            // widgetBioAuth->startAuth(getUid(userName), *device);
             if(!isbioSuccess){
@@ -122,8 +133,10 @@ MainWindow::~MainWindow()
 void MainWindow::restart_bio_identify()
 {
     DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
-    if(device)
+    if(device){
         widgetBioAuth->startAuth(getUid(userName), *device);
+        setMessage(tr("Please enter your password or enroll your fingerprint "));
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -286,8 +299,10 @@ void MainWindow::setPrompt(const QString &text, bool echo)
 
     if(text == "Password: "){
         prompt = tr("Password: ");
-        if(useDoubleAuth){
-            setMessage(tr("Please enter your password or enroll your fingerprint "));
+        if(useDoubleAuth ){
+            uid_t m_uid = getUid(userName);
+            if(!m_failMap.contains(m_uid) || m_failMap[m_uid] < maxFailedTimes)
+                setMessage(tr("Please enter your password or enroll your fingerprint "));
         }
     }
 
@@ -360,9 +375,11 @@ void MainWindow::switchAuthMode(Mode mode)
     if(!enable_biometric_authentication()){
     	enableBioAuth = false;
     }
-
-    if(mode == BIOMETRIC && enableBioAuth == false)
-        useDoubleAuth = false;
+    if(useDoubleAuth && m_failMap.contains(uid) && m_failMap[uid] >= maxFailedTimes){
+        enableBioAuth = false;
+    }
+//    if(mode == BIOMETRIC && enableBioAuth == false)
+//        useDoubleAuth = false;
 
     switch(mode){
     case PASSWORD:

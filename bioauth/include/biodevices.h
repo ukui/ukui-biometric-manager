@@ -50,6 +50,7 @@ public:
     int GetUserDevFeatureCount(int uid,int drvid);
     int GetUserDevCount(int uid);
     bool getUseFirstDevice();
+    int getFailedTimes();
 
 private:
     void connectToService();

@@ -95,22 +95,27 @@
         <translation type="obsolete">授权</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="206"/>
+        <location filename="../src/mainwindow.cpp" line="93"/>
+        <source>Too many unsuccessful attempts,please enter password.</source>
+        <translation>指纹验证失败达最大次数，请使用密码解锁</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="219"/>
         <source>in authentication, please wait...</source>
         <translation>认证中，请稍等...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="253"/>
+        <location filename="../src/mainwindow.cpp" line="266"/>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
         <translation>一个程序正试图执行一个需要特权的动作。要求授权以执行该动作。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="287"/>
+        <location filename="../src/mainwindow.cpp" line="300"/>
         <source>Password: </source>
         <translation type="unfinished">密码： </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="289"/>
+        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Please enter your password or enroll your fingerprint </source>
         <translation>请输入密码或者录入指纹</translation>
     </message>
@@ -123,7 +128,8 @@
         <translation type="obsolete">密码：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="86"/>
+        <location filename="../src/mainwindow.cpp" line="98"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>Authentication failed, please try again.</source>
         <translation>认证失败，请重试。</translation>
     </message>
@@ -140,7 +146,7 @@
         <translation>有另外一个客户端正在认证，请稍后重试。</translation>
     </message>
     <message>
-        <location filename="../src/PolkitListener.cpp" line="211"/>
+        <location filename="../src/PolkitListener.cpp" line="212"/>
         <source>Authentication failure, please try again.</source>
         <translation>认证失败，请重试。</translation>
     </message>

@@ -228,6 +228,15 @@ bool BioDevices::getUseFirstDevice()
     return settings.value("UseFirstDevice").toBool();
 }
 
+int BioDevices::getFailedTimes()
+{
+    QSettings sysSettings("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
+    if(sysSettings.contains("MaxFailedTime"))
+        return sysSettings.value("MaxFailedTime").toInt();
+    else
+        return 3;
+}
+
 DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
 {
     if(deviceInfos.size() <= 0)
