@@ -101,6 +101,11 @@ void BioAuthWidget::setImage()
     qDebug() << "set pixmap " << typeString;
 }
 
+void BioAuthWidget::hidePasswdButton()
+{
+    ui->btnPasswdAuth->hide();
+}
+
 void BioAuthWidget::stopAuth()
 {
     if(bioAuth){

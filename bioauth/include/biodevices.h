@@ -51,6 +51,7 @@ public:
     int GetUserDevCount(int uid);
     bool getUseFirstDevice();
     int getFailedTimes();
+    bool GetHiddenSwitchButton();
 
 private:
     void connectToService();

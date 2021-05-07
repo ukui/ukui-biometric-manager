@@ -53,6 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->formLayout->addWidget(widgetBioAuth);
     ui->formLayout->addWidget(widgetBioDevices);
     maxFailedTimes = bioDevices.getFailedTimes();
+    isHiddenSwitchButton = bioDevices.GetHiddenSwitchButton();
+
+    if(isHiddenSwitchButton)
+        widgetBioAuth->hidePasswdButton();
 
     connect(widgetBioDevices, &BioDevicesWidget::deviceChanged,
             this, [&](const DeviceInfo &device){
@@ -393,6 +397,9 @@ void MainWindow::switchAuthMode(Mode mode)
         }else{
             ui->btnBioAuth->show();
         }
+	
+	if(isHiddenSwitchButton)
+	    ui->btnBioAuth->hide();
 
         if(enableBioAuth && useDoubleAuth){
             DeviceInfo *device = bioDevices.getDefaultDevice(getUid(userName));
@@ -505,8 +512,7 @@ void MainWindow::switchWidget(Mode mode)
         ui->widgetPasswdAuth->show();
         ui->lePassword->setFocus();
         ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
-            ui->btnAuth->show();
-
+	ui->btnAuth->show();
         break;
     case BIOMETRIC:
         setMaximumWidth(380);

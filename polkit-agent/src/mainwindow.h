@@ -90,6 +90,7 @@ private:
     bool isbioSuccess;
     QMap<qint32,int> m_failMap;
     int  maxFailedTimes;
+    bool isHiddenSwitchButton;
 };
 
 #endif // MAINWINDOW_H

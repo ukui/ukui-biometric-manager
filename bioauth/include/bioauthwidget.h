@@ -32,6 +32,7 @@ class BioAuthWidget : public QWidget
 public:
     explicit BioAuthWidget(QWidget *parent = 0);
     ~BioAuthWidget();
+    void hidePasswdButton();
 
 public slots:
     void startAuth(uid_t uid, const DeviceInfo &device);

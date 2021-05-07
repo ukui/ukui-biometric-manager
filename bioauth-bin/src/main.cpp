@@ -238,13 +238,15 @@ int main(int argc, char *argv[])
 
     BioDevices bioDevices;
     DeviceInfo *deviceInfo = bioDevices.getDefaultDevice(uid);
+    bool isHiddenSwitchButton = bioDevices.GetHiddenSwitchButton();
     if(!deviceInfo)
         exit(BIO_ERROR);
     if(bioDevices.getFeatureCount(uid)<1)
 	exit(BIO_ERROR);
 
     showMessage(QObject::tr("BIOMETRIC AUTHENTICATION"), START);
-    showMessage(QObject::tr("Press Q or Esc to cancel"), PROMPT);
+    if(!isHiddenSwitchButton)
+        showMessage(QObject::tr("Press Q or Esc to cancel"), PROMPT);
 
     BioAuth bioAuth(uid, *deviceInfo);
     KeyWatcher watcher;
@@ -277,9 +279,14 @@ int main(int argc, char *argv[])
                 break;
             }
             case OPTION_CANCEL:
-                showMessage(QObject::tr("BIOMETRIC AUTHENTICATION END"), START);
-                exit(BIO_FAILED);
-                break;
+	        if(isHiddenSwitchButton)
+		{
+		    exit(BIO_ERROR);
+		}else{
+                    showMessage(QObject::tr("BIOMETRIC AUTHENTICATION END"), START);
+                    exit(BIO_IGNORE);
+                    break;
+		}
             default:
                 break;
             }
@@ -287,12 +294,13 @@ int main(int argc, char *argv[])
     });
     bioAuth.startAuth();
 
-
-    QObject::connect(&watcher, &KeyWatcher::exit, &a, [&]{
-        showMessage(QObject::tr("AUTHENTICATION CANCELED"), START);
-        bioAuth.stopAuth();
-        exit(BIO_ERROR);
-    });
+    if(!isHiddenSwitchButton){
+        QObject::connect(&watcher, &KeyWatcher::exit, &a, [&]{
+            showMessage(QObject::tr("AUTHENTICATION CANCELED"), START);
+            bioAuth.stopAuth();
+            exit(BIO_IGNORE);
+        });
+    }
     watcher.start();
 
     return a.exec();

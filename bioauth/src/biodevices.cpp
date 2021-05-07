@@ -228,6 +228,15 @@ bool BioDevices::getUseFirstDevice()
     return settings.value("UseFirstDevice").toBool();
 }
 
+bool BioDevices::GetHiddenSwitchButton()
+{
+    QSettings sysSettings("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
+    if(sysSettings.contains("HiddenSwitchButton"))
+        return sysSettings.value("HiddenSwitchButton").toBool();
+    else
+        return false;
+}
+
 int BioDevices::getFailedTimes()
 {
     QSettings sysSettings("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
