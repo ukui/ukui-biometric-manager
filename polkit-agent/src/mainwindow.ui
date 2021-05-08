@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>380</width>
-    <height>550</height>
+    <height>581</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -111,6 +111,9 @@
               <width>0</width>
               <height>30</height>
              </size>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
             </property>
            </widget>
           </item>

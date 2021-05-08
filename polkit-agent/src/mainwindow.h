@@ -34,6 +34,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
 
     enum Mode{UNDEFINED, PASSWORD, BIOMETRIC, DEVICES};
 

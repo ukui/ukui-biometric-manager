@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 #include <QMovie>
 #include <QFile>
+#include <QKeyEvent>
 #include <QDir>
 #include <QPainter>
 #include <QPixmap>
@@ -126,6 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->widgetDetails->hide();
     ui->btnDetails->setIcon(QIcon(":/image/assets/arrow_right.svg"));
     ui->btnDetails->hide();
+    ui->lePassword->installEventFilter(this);
     switchWidget(UNDEFINED);
 }
 
@@ -149,6 +151,20 @@ void MainWindow::closeEvent(QCloseEvent *event)
     emit canceled();
 
     return QWidget::closeEvent(event);
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == ui->lePassword){
+        if(event->type() == QEvent::KeyPress){ //禁止复制粘贴功能。
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            if(keyEvent->matches(QKeySequence::Copy) || keyEvent->matches(QKeySequence::Cut) || keyEvent->matches(QKeySequence::Paste)){
+                event->ignore();
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 
@@ -512,7 +528,7 @@ void MainWindow::switchWidget(Mode mode)
         ui->widgetPasswdAuth->show();
         ui->lePassword->setFocus();
         ui->lePassword->setAttribute(Qt::WA_InputMethodEnabled, false);
-	ui->btnAuth->show();
+        ui->btnAuth->show();
         break;
     case BIOMETRIC:
         setMaximumWidth(380);
