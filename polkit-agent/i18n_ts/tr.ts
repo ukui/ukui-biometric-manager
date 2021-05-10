@@ -4,12 +4,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="48"/>
+        <location filename="../src/mainwindow.cpp" line="49"/>
         <source>Authentication</source>
         <translation>Kimlik Doğrulama</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="101"/>
+        <location filename="../src/mainwindow.cpp" line="102"/>
         <source>Fingerprint authentication failed, you still have %1 verification opportunities</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31,7 +31,7 @@
         <translation type="obsolete">Parola</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="168"/>
+        <location filename="../src/mainwindow.ui" line="171"/>
         <source>Biometric</source>
         <translation>Biyometrik</translation>
     </message>
@@ -44,7 +44,7 @@
         <translation type="obsolete">Geri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="206"/>
+        <location filename="../src/mainwindow.ui" line="209"/>
         <source>Details</source>
         <translation>Ayrıntılar</translation>
     </message>
@@ -53,12 +53,12 @@
         <translation type="obsolete">İşlem Kimliği:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="352"/>
+        <location filename="../src/mainwindow.ui" line="355"/>
         <source>Description:</source>
         <translation>Açıklama：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="416"/>
         <source>Polkit.subject-pid:</source>
         <translation>Polkit.subject-pid：</translation>
     </message>
@@ -71,27 +71,27 @@
         <translation type="obsolete">Aygıt türü：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="282"/>
+        <location filename="../src/mainwindow.ui" line="285"/>
         <source>Vendor:</source>
         <translation>Vendor：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="400"/>
+        <location filename="../src/mainwindow.ui" line="403"/>
         <source>Action:</source>
         <translation>Eylem：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="365"/>
+        <location filename="../src/mainwindow.ui" line="368"/>
         <source>Polkit.caller-pid:</source>
         <translation>Polkit.caller-pid：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="458"/>
+        <location filename="../src/mainwindow.ui" line="461"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="474"/>
+        <location filename="../src/mainwindow.ui" line="477"/>
         <source>Authenticate</source>
         <translation>Kimlik Doğrulaması</translation>
     </message>
@@ -100,21 +100,30 @@
         <translation type="obsolete">Kimlik Doğrulaması</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="97"/>
+        <location filename="../src/mainwindow.cpp" line="98"/>
         <source>Too many unsuccessful attempts,please enter password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="145"/>
+        <location filename="../src/mainwindow.cpp" line="326"/>
+        <source>Please enter your password or enroll your fingerprint </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="241"/>
         <source>in authentication, please wait...</source>
-        <translation type="vanished">kimlik doğrulanırken lütfen bekleyin ...</translation>
+        <translation>kimlik doğrulanırken lütfen bekleyin ...</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="288"/>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
-        <translation type="vanished">Bir uygulama, ayrıcalıklar gerektiren bir eylem gerçekleştirmeye çalışıyor. Bu işlemi gerçekleştirmek için kimlik doğrulaması gerekiyor.</translation>
+        <translation>Bir uygulama, ayrıcalıklar gerektiren bir eylem gerçekleştirmeye çalışıyor. Bu işlemi gerçekleştirmek için kimlik doğrulaması gerekiyor.</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="322"/>
         <source>Password: </source>
-        <translation type="obsolete">Parola： </translation>
+        <translation type="unfinished">Parola： </translation>
     </message>
     <message>
         <source>_Password: </source>
@@ -125,8 +134,9 @@
         <translation type="obsolete">_Parola：</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="372"/>
         <source>Authentication failed, please try again.</source>
-        <translation type="vanished">Kimlik doğrulama başarısız, lütfen tekrar deneyin.</translation>
+        <translation>Kimlik doğrulama başarısız, lütfen tekrar deneyin.</translation>
     </message>
     <message>
         <source>Authentication failed, please try again</source>

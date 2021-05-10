@@ -49,19 +49,19 @@
     </message>
     <message>
         <source>in authentication, please wait...</source>
-        <translation type="vanished">в аутентификации, пожалуйста, подождите ...</translation>
+        <translation>в аутентификации, пожалуйста, подождите ...</translation>
     </message>
     <message>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
-        <translation type="vanished">Приложение пытается выполнить действие, требующее привилегий. Для выполнения этого действия требуется аутентификация.</translation>
+        <translation>Приложение пытается выполнить действие, требующее привилегий. Для выполнения этого действия требуется аутентификация.</translation>
     </message>
     <message>
         <source>Password: </source>
-        <translation type="vanished">Пароль: </translation>
+        <translation>Пароль: </translation>
     </message>
     <message>
         <source>Authentication failed, please try again.</source>
-        <translation type="vanished">Ошибка аутентификации. Пожалуйста, попробуйте еще раз.</translation>
+        <translation>Ошибка аутентификации. Пожалуйста, попробуйте еще раз.</translation>
     </message>
     <message>
         <source>Too many unsuccessful attempts,please enter password.</source>
@@ -69,6 +69,10 @@
     </message>
     <message>
         <source>Fingerprint authentication failed, you still have %1 verification opportunities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter your password or enroll your fingerprint </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
