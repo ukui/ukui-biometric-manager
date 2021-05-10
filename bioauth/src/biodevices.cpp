@@ -240,8 +240,8 @@ bool BioDevices::GetHiddenSwitchButton()
 int BioDevices::getFailedTimes()
 {
     QSettings sysSettings("/etc/biometric-auth/ukui-biometric.conf", QSettings::IniFormat);
-    if(sysSettings.contains("MaxFailedTime"))
-        return sysSettings.value("MaxFailedTime").toInt();
+    if(sysSettings.contains("MaxFailedTimes"))
+        return sysSettings.value("MaxFailedTimes").toInt();
     else
         return 3;
 }

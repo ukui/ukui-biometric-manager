@@ -99,7 +99,8 @@ MainWindow::MainWindow(QWidget *parent) :
                 return ;
             }
 
-            setMessage(tr("Authentication failed, please try again."));
+            setMessage(tr("Fingerprint authentication failed, you still have %1 verification opportunities")\
+                          .arg(maxFailedTimes - m_failMap[getUid(userName)]));
            // widgetBioAuth->startAuth(getUid(userName), *device);
             if(!isbioSuccess){
                 QTimer::singleShot(1000,this,SLOT(restart_bio_identify()));

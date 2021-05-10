@@ -49,26 +49,26 @@
     </message>
     <message>
         <source>in authentication, please wait...</source>
-        <translation>na autenticação, por favor aguarde ...</translation>
+        <translation type="vanished">na autenticação, por favor aguarde ...</translation>
     </message>
     <message>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
-        <translation>Um aplicativo está tentando executar uma ação que requer privilégios. A autenticação é necessária para executar esta ação.</translation>
+        <translation type="vanished">Um aplicativo está tentando executar uma ação que requer privilégios. A autenticação é necessária para executar esta ação.</translation>
     </message>
     <message>
         <source>Password: </source>
-        <translation>Senha: </translation>
+        <translation type="vanished">Senha: </translation>
     </message>
     <message>
         <source>Authentication failed, please try again.</source>
-        <translation>Autenticação falhou. Por favor, tente novamente.</translation>
-    </message>
-    <message>
-        <source>Please enter your password or enroll your fingerprint </source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Autenticação falhou. Por favor, tente novamente.</translation>
     </message>
     <message>
         <source>Too many unsuccessful attempts,please enter password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fingerprint authentication failed, you still have %1 verification opportunities</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

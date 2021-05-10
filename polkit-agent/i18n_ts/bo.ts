@@ -59,34 +59,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="93"/>
+        <location filename="../src/mainwindow.cpp" line="97"/>
         <source>Too many unsuccessful attempts,please enter password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="219"/>
-        <source>in authentication, please wait...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="266"/>
-        <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="300"/>
-        <source>Password: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="302"/>
-        <source>Please enter your password or enroll your fingerprint </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="98"/>
-        <location filename="../src/mainwindow.cpp" line="348"/>
-        <source>Authentication failed, please try again.</source>
+        <location filename="../src/mainwindow.cpp" line="101"/>
+        <source>Fingerprint authentication failed, you still have %1 verification opportunities</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

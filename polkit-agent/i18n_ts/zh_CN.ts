@@ -9,6 +9,11 @@
         <translation>授权</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="101"/>
+        <source>Fingerprint authentication failed, you still have %1 verification opportunities</source>
+        <translation>指纹验证失败，您还有%1次尝试机会</translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="26"/>
         <source>Form</source>
         <translation></translation>
@@ -95,29 +100,25 @@
         <translation type="obsolete">授权</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="93"/>
+        <location filename="../src/mainwindow.cpp" line="97"/>
         <source>Too many unsuccessful attempts,please enter password.</source>
         <translation>指纹验证失败达最大次数，请使用密码解锁</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="219"/>
         <source>in authentication, please wait...</source>
-        <translation>认证中，请稍等...</translation>
+        <translation type="vanished">认证中，请稍等...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="266"/>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
-        <translation>一个程序正试图执行一个需要特权的动作。要求授权以执行该动作。</translation>
+        <translation type="vanished">一个程序正试图执行一个需要特权的动作。要求授权以执行该动作。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="300"/>
         <source>Password: </source>
-        <translation type="unfinished">密码： </translation>
+        <translation type="obsolete">密码： </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Please enter your password or enroll your fingerprint </source>
-        <translation>请输入密码或者录入指纹</translation>
+        <translation type="vanished">请输入密码或者录入指纹</translation>
     </message>
     <message>
         <source>_Password: </source>
@@ -128,10 +129,8 @@
         <translation type="obsolete">密码：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="98"/>
-        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>Authentication failed, please try again.</source>
-        <translation>认证失败，请重试。</translation>
+        <translation type="vanished">认证失败，请重试。</translation>
     </message>
     <message>
         <source>Authentication failed, please try again</source>

@@ -9,6 +9,11 @@
         <translation>Kimlik Doğrulama</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="101"/>
+        <source>Fingerprint authentication failed, you still have %1 verification opportunities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="26"/>
         <source>Form</source>
         <translation></translation>
@@ -95,29 +100,21 @@
         <translation type="obsolete">Kimlik Doğrulaması</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="93"/>
+        <location filename="../src/mainwindow.cpp" line="97"/>
         <source>Too many unsuccessful attempts,please enter password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="219"/>
         <source>in authentication, please wait...</source>
-        <translation>kimlik doğrulanırken lütfen bekleyin ...</translation>
+        <translation type="vanished">kimlik doğrulanırken lütfen bekleyin ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="266"/>
         <source>An application is attempting to perform an action that requires privileges. Authentication is required to perform this action.</source>
-        <translation>Bir uygulama, ayrıcalıklar gerektiren bir eylem gerçekleştirmeye çalışıyor. Bu işlemi gerçekleştirmek için kimlik doğrulaması gerekiyor.</translation>
+        <translation type="vanished">Bir uygulama, ayrıcalıklar gerektiren bir eylem gerçekleştirmeye çalışıyor. Bu işlemi gerçekleştirmek için kimlik doğrulaması gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="300"/>
         <source>Password: </source>
-        <translation type="unfinished">Parola： </translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="302"/>
-        <source>Please enter your password or enroll your fingerprint </source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Parola： </translation>
     </message>
     <message>
         <source>_Password: </source>
@@ -128,10 +125,8 @@
         <translation type="obsolete">_Parola：</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="98"/>
-        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>Authentication failed, please try again.</source>
-        <translation>Kimlik doğrulama başarısız, lütfen tekrar deneyin.</translation>
+        <translation type="vanished">Kimlik doğrulama başarısız, lütfen tekrar deneyin.</translation>
     </message>
     <message>
         <source>Authentication failed, please try again</source>
