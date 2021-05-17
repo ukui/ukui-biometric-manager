@@ -24,6 +24,8 @@
 #include <PolkitQt1/ActionDescription>
 #include <qdialogbuttonbox.h>
 
+#include <QPoint>
+#include <QCursor>
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QApplication>
@@ -124,8 +126,16 @@ void PolkitListener::initiateAuthentication(
  //   QDesktopWidget *desktop = QApplication::desktop();
  //   QRect desktopRect = desktop->screen(desktop->primaryScreen())->geometry();
     QRect desktopRect = QApplication::primaryScreen()->geometry();
-    mainWindow->move(desktopRect.left() + (desktopRect.width() - mainWindow->width()) / 2,
-                     desktopRect.top() + (desktopRect.height() - mainWindow->height()) / 2);
+
+    QPoint pos = QCursor::pos();
+    for(auto screen : QGuiApplication::screens())
+    {
+        if(screen->geometry().contains(pos))
+        {
+            mainWindow->move(screen->geometry().left() + (screen->geometry().width() - mainWindow->width()) / 2,
+                             screen->geometry().top() + (screen->geometry().height() - mainWindow->height()) / 2);
+        }
+    }
 
     connect(mainWindow, &MainWindow::accept, this, &PolkitListener::onResponse);
     connect(mainWindow, &MainWindow::canceled, this, [&]{
@@ -299,9 +309,15 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     }
 
     mainWindow->show();
-    QRect desktopRect = QApplication::primaryScreen()->geometry();
-    mainWindow->move(desktopRect.left() + (desktopRect.width() - mainWindow->width()) / 2,
-                     desktopRect.top() + (desktopRect.height() - mainWindow->height()) / 2);
+    QPoint pos = QCursor::pos();
+    for(auto screen : QGuiApplication::screens())
+    {
+        if(screen->geometry().contains(pos))
+        {
+            mainWindow->move(screen->geometry().left() + (screen->geometry().width() - mainWindow->width()) / 2,
+                             screen->geometry().top() + (screen->geometry().height() - mainWindow->height()) / 2);
+        }
+    }
 
     mainWindow->activateWindow();
 }
