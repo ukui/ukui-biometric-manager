@@ -320,7 +320,7 @@ void MainWindow::setPrompt(const QString &text, bool echo)
 
     if(text == "Password: "){
         prompt = tr("Password: ");
-        if(useDoubleAuth ){
+        if(useDoubleAuth && widgetBioAuth && widgetBioAuth->isAuthenticating()){
             uid_t m_uid = getUid(userName);
             if(!m_failMap.contains(m_uid) || m_failMap[m_uid] < maxFailedTimes)
                 setMessage(tr("Please enter your password or enroll your fingerprint "));

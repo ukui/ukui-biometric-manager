@@ -106,6 +106,14 @@ void BioAuthWidget::hidePasswdButton()
     ui->btnPasswdAuth->hide();
 }
 
+bool BioAuthWidget::isAuthenticating()
+{
+    if(bioAuth){
+    	return bioAuth->isAuthenticating();
+    }
+    return false;
+}
+
 void BioAuthWidget::stopAuth()
 {
     if(bioAuth){

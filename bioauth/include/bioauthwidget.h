@@ -33,6 +33,7 @@ public:
     explicit BioAuthWidget(QWidget *parent = 0);
     ~BioAuthWidget();
     void hidePasswdButton();
+    bool isAuthenticating();
 
 public slots:
     void startAuth(uid_t uid, const DeviceInfo &device);
