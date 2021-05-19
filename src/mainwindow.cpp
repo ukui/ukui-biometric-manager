@@ -28,6 +28,7 @@
 #include <QDBusInterface>
 #include <QCheckBox>
 #include <QSettings>
+#include <QGSettings>
 #include <unistd.h>
 #include <pwd.h>
 #include "contentpane.h"
@@ -38,6 +39,7 @@
 
 
 #define ICON_SIZE 32
+#define ICON_TYPE_SCHENA "org.ukui.style"
 
 MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	QMainWindow(parent),
@@ -53,7 +55,7 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
 	prettify();
 
     initialize();
-    setWindowIcon(QIcon::fromTheme("biometric-manager"));
+    //setWindowIcon(QIcon::fromTheme("biometric-manager"));
 
     QFileSystemWatcher *mWatcher = new QFileSystemWatcher(this);
     mWatcher->addPath(Configuration::configFile);
@@ -62,11 +64,24 @@ MainWindow::MainWindow(QString usernameFromCmd, QWidget *parent) :
         QString deviceName = Configuration::instance()->getDefaultDevice();
         Configuration::instance()->defaultDeviceChanged(deviceName);
     });
+
+    if(QGSettings::isSchemaInstalled(ICON_TYPE_SCHENA)){
+        QGSettings *icon_type = new QGSettings(ICON_TYPE_SCHENA);
+        connect(icon_type, &QGSettings::changed,
+            this, &MainWindow::onConfigurationChanged);
+    }
+
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::onConfigurationChanged(QString key)
+{
+    if(key == "iconThemeName") 
+    	ui->lblLogo->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(24,24)));
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)

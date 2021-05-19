@@ -63,7 +63,7 @@ private slots:
     void onDefaultDeviceChanged(bool checked);
     bool changeDeviceStatus(DeviceInfo *deviceInfo);
     void onUSBDeviceHotPlug(int, int, int);
-
+    void onConfigurationChanged(QString key);
 public slots:
     void onServiceStatusChanged(bool activate);
     void onReviceWindowMessage(QString message);
