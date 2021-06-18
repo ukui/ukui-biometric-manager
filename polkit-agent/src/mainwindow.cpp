@@ -39,6 +39,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWindow),
+    users(new Users(this)),
     enableBioAuth(false),
     receiveBioPAM(false),
     authMode(UNDEFINED),
@@ -168,19 +169,24 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     return false;
 }
 
-
 /*** main ***/
-
 void MainWindow::on_cmbUsers_currentTextChanged(const QString &userName)
 {
     qDebug() << "user changed to " << userName;
     widgetBioAuth->stopAuth();	
     authMode=UNDEFINED;
 
+    QList<UserItem> accountUsers = users->getUsers();
     this->userName = userName;
+    for(UserItem user:accountUsers){
+        if(user.realName == userName){
+            this->userName = user.name;
+        }
+    }
+
     ui->lblMessage->clear();
-    widgetBioDevices->init(getUid(userName));
-    emit userChanged(userName);
+    widgetBioDevices->init(getUid(this->userName));
+    emit userChanged(this->userName);
 }
 
 int MainWindow::enable_biometric_authentication()
@@ -287,6 +293,7 @@ void MainWindow::setHeader(const QString &text)
     ui->lblHeader->setText(text);
     ui->lblContent->setText(tr("An application is attempting to perform an action that requires privileges."
                             " Authentication is required to perform this action."));
+
 }
 
 void MainWindow::setUsers(const QStringList &usersList)
@@ -295,10 +302,26 @@ void MainWindow::setUsers(const QStringList &usersList)
         return;
 
     if(usersList.size() == 1) {
-        userName = usersList.at(0);
+        UserItem user = users->getUserByName(usersList.at(0));
+        if(user.realName != ""){
+            userName = user.realName;
+        }else{
+            userName = usersList.at(0);
+        }
     }
 
-    ui->cmbUsers->addItems(usersList);
+    QList<UserItem> accountUsers = users->getUsers();
+    for(QString identifyUser:usersList){
+        for(UserItem user:accountUsers){
+            if(identifyUser == user.name){
+                if(user.realName != "")
+                    ui->cmbUsers->addItem(user.realName);
+                else
+                    ui->cmbUsers->addItem(user.name);
+            }
+        }
+    }
+
     ui->cmbUsers->show();
 }
 

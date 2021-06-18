@@ -30,6 +30,7 @@ set(polkit_SRCS
     src/mainwindow.cpp
     src/PolkitListener.cpp
     src/sessionmanager.cpp
+    src/users.cpp
     ../common/generic.cpp
     )
 

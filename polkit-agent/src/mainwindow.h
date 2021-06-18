@@ -21,6 +21,7 @@
 #include <QWidget>
 #include <QLabel>
 #include "biometric.h"
+#include "users.h"
 
 namespace Ui {
 class MainWindow;
@@ -79,6 +80,7 @@ signals:
 
 private:
     Ui::MainWindow *ui;
+    Users    *users;
     QString userName;
     bool enableBioAuth;
     bool receiveBioPAM;
@@ -92,6 +94,7 @@ private:
     QMap<qint32,int> m_failMap;
     int  maxFailedTimes;
     bool isHiddenSwitchButton;
+
 };
 
 #endif // MAINWINDOW_H
