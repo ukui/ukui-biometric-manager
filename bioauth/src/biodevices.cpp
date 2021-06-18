@@ -54,7 +54,6 @@ void BioDevices::connectToService()
 void BioDevices::onUSBDeviceHotPlug(int deviceId, int action, int devNumNow)
 {
     qDebug() << deviceId << action << devNumNow;
-    DeviceInfo *device;
     QString  text = "";
     if(action == -1){
         DeviceInfo *device = findDevice(deviceId);
@@ -266,7 +265,6 @@ DeviceInfo* BioDevices::getDefaultDevice(uid_t uid)
     }
 
     if(defaultDeviceName.isEmpty() || !findDevice(defaultDeviceName)){
-        struct passwd *pwd1 = getpwuid(getuid());
         QString userConfigFile = QString(pwd->pw_dir) + "/.biometric_auth/ukui_biometric.conf";
         QSettings userConfig(userConfigFile, QSettings::IniFormat);
         defaultDeviceName = userConfig.value(DEFAULT_DEVICE).toString();

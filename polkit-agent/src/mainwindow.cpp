@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     enableBioAuth(false),
     receiveBioPAM(false),
+    authMode(UNDEFINED),
     useDoubleAuth(false),
-    isbioSuccess(false),
-    authMode(UNDEFINED)
+    isbioSuccess(false)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Authentication"));

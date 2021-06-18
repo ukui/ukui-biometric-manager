@@ -123,10 +123,6 @@ void PolkitListener::initiateAuthentication(
                            actionDesc.vendorUrl());
 
     /* set the position of the mainwindow */
- //   QDesktopWidget *desktop = QApplication::desktop();
- //   QRect desktopRect = desktop->screen(desktop->primaryScreen())->geometry();
-    QRect desktopRect = QApplication::primaryScreen()->geometry();
-
     QPoint pos = QCursor::pos();
     for(auto screen : QGuiApplication::screens())
     {
@@ -218,9 +214,10 @@ void PolkitListener::finishObtainPrivilege()
         int deny = 0, unlock_time = 0;
         mainWindow->stopDoubleAuth();
         if(!get_pam_tally(&deny, &unlock_time)||(deny  == 0 &&unlock_time == 0)) {
-            if(!wasSwitchToBiometric)
+            if(!wasSwitchToBiometric){
                 mainWindow->setAuthResult(gainedAuthorization, tr("Authentication failure, please try again."));
-                startAuthentication();
+            }
+            startAuthentication();
             return;
         }
         else {
