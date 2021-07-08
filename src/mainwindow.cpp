@@ -159,6 +159,7 @@ void MainWindow::prettify()
     ui->btnFingerVein->setIcon(QIcon(":/images/assets/fingervein.png"));
     ui->btnIris->setIcon(QIcon(":/images/assets/iris.png"));
     ui->btnVoicePrint->setIcon(QIcon(":/images/assets/voiceprint.png"));
+    ui->btnFace->setIcon(QIcon(":/images/assets/face.png"));
 //    /* Set logo on lblLogo */
     ui->lblLogo->setPixmap(QIcon::fromTheme("biometric-manager").pixmap(QSize(24,24)));
  //   ui->btnMin->setIcon(QIcon(":/images/assets/min.png"));
@@ -354,6 +355,17 @@ void MainWindow::changeBtnColor(QPushButton *btn)
         ui->btnVoicePrint->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
                                          "QPushButton:hover{background-color:#ffffff;border:none;}");
     }
+    if(btn != ui->btnFace) {
+        ui->btnFace->setIcon(QIcon(":/images/assets/face-white.png"));
+        ui->btnFace->setStyleSheet("background-color: #3d6be5;color:#ffffff");
+    }
+    else {
+        ui->btnFace->setIcon(QIcon(":/images/assets/face.png"));
+        ui->btnFace->setStyleSheet("QPushButton{border:none;background-color:#ffffff;}"
+                                         "QPushButton:hover{background-color:#ffffff;border:none;}");
+    }
+
+
 }
 
 void MainWindow::on_btnDashBoard_clicked()
@@ -391,6 +403,12 @@ void MainWindow::on_btnVoicePrint_clicked()
     changeBtnColor(ui->btnVoicePrint);
 }
 
+void MainWindow::on_btnFace_clicked()
+{
+    ui->stackedWidgetMain->setCurrentWidget(ui->pageFace);
+
+    changeBtnColor(ui->btnFace);
+}
 /**
  * @brief 设备类型到索引的映射
  */
@@ -403,8 +421,10 @@ int MainWindow::bioTypeToIndex(int type)
         return 1;
     case BIOTYPE_IRIS:
         return 2;
-    case BIOTYPE_VOICEPRINT:
+    case BIOTYPE_FACE:
         return 3;
+    case BIOTYPE_VOICEPRINT:
+        return 4;
     }
     return -1;
 }
@@ -474,6 +494,10 @@ void MainWindow::setLastDeviceSelected()
         lw = ui->listWidgetIris;
         sw = ui->stackedWidgetIris;
         break;
+    case BIOTYPE_FACE:
+        lw = ui->listWidgetFace;
+        sw = ui->stackedWidgetFace;
+        break;
     case BIOTYPE_VOICEPRINT:
         lw = ui->listWidgetVoicePrint;
         sw = ui->stackedWidgetVoicePrint;
@@ -513,6 +537,10 @@ void MainWindow::raiseContentPane(DeviceInfo *deviceInfo)
         lw = ui->listWidgetIris;
         sw = ui->stackedWidgetIris;
         break;
+    case BIOTYPE_FACE:
+        lw = ui->listWidgetFace;
+        sw = ui->stackedWidgetFace;
+        break;
     case BIOTYPE_VOICEPRINT:
         lw = ui->listWidgetVoicePrint;
         sw = ui->stackedWidgetVoicePrint;
@@ -550,6 +578,10 @@ void MainWindow::addContentPane(DeviceInfo *deviceInfo)
     case BIOTYPE_IRIS:
         lw = ui->listWidgetIris;
         sw = ui->stackedWidgetIris;
+        break;
+    case BIOTYPE_FACE:
+        lw = ui->listWidgetFace;
+        sw = ui->stackedWidgetFace;
         break;
     case BIOTYPE_VOICEPRINT:
         lw = ui->listWidgetVoicePrint;
@@ -620,6 +652,13 @@ void MainWindow::initBiometricPage()
         ui->stackedWidgetVoicePrint->removeWidget(widget);
         widget->deleteLater();
     }
+    ui->listWidgetFace->clear();
+    for(int i = ui->stackedWidgetFace->count(); i >= 0; i--)
+    {
+        QWidget* widget = ui->stackedWidgetFace->widget(i);
+        ui->stackedWidgetFace->removeWidget(widget);
+        widget->deleteLater();
+    }
     contentPaneMap.clear();
 
     for(int i = 0; i < __MAX_NR_BIOTYPES; i++){
@@ -632,6 +671,7 @@ void MainWindow::initBiometricPage()
     checkBiometricPage(FingerVein);
 	checkBiometricPage(Iris);
     checkBiometricPage(VoicePrint);
+    checkBiometricPage(Face);
 }
 
 void MainWindow::sortContentPane()
@@ -643,7 +683,7 @@ void MainWindow::sortContentPane()
     checkBiometricPage(FingerVein);
     checkBiometricPage(Iris);
     checkBiometricPage(VoicePrint);
-
+    checkBiometricPage(Face);
     if(lastDeviceInfo)
         setLastDeviceSelected();
 }
@@ -689,7 +729,7 @@ void MainWindow::initDashboardBioAuthSection()
 void MainWindow::initDeviceTypeList()
 {
     QStringList devicesTypeText = {tr("FingerPrint"), tr("FingerVein"),
-                                   tr("Iris"), tr("VoicePrint")};
+                                   tr("Iris"), tr("Face"), tr("VoicePrint")};
     for(int i = 0; i < devicesTypeText.size(); i++)
         ui->listWidgetDevicesType->insertItem(ui->listWidgetDevicesType->count(),
                                               "    " + devicesTypeText[i]);
@@ -1002,6 +1042,9 @@ void MainWindow::updateDeviceListWidget(int biotype)
     case BIOTYPE_IRIS:
         lw = ui->listWidgetIris;
         break;
+    case BIOTYPE_FACE:
+        lw = ui->listWidgetFace;
+        break;
     case BIOTYPE_VOICEPRINT:
         lw = ui->listWidgetVoicePrint;
         break;
@@ -1067,6 +1110,10 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
         case BIOTYPE_IRIS:
             lw = ui->listWidgetIris;
             ui->btnIris->click();
+            break;
+        case BIOTYPE_FACE:
+            lw = ui->listWidgetFace;
+            ui->btnFace->click();
             break;
         case BIOTYPE_VOICEPRINT:
             lw = ui->listWidgetVoicePrint;

@@ -194,6 +194,8 @@ QString PromptDialog::getGif(int type)
         return ":/images/assets/iris.gif";
     case BIOTYPE_VOICEPRINT:
         return ":/images/assets/voiceprint.gif";
+    case BIOTYPE_FACE:
+        return ":/images/assets/face.gif";
     }
     return QString();
 }
@@ -209,6 +211,8 @@ QString PromptDialog::getImage(int type)
         return "/usr/share/ukui-biometric/images/Iris.png";
     case BIOTYPE_VOICEPRINT:
         return "/usr/share/ukui-biometric/images/VoicePrint.png";
+    case BIOTYPE_FACE:
+        return "/usr/share/ukui-biometric/images/Face.png";
     }
     return QString();
 }

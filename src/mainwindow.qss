@@ -83,7 +83,7 @@ QListWidget::item:selected {
         color:white;
 }
 
-#stackedWidgetFingerprint, #stackedWidgetFingervein, #stackedWidgetIris {
+#stackedWidgetFingerprint, #stackedWidgetFingervein, #stackedWidgetIris,#stackedWidgetFace,#stackedWidgetVoicePrint{
 	border-style: solid;
 	border-width: 1px;
 	border-color: #bbbbbb;

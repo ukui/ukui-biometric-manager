@@ -501,6 +501,10 @@ p, li { white-space: pre-wrap; }
         <source>Process of using biometrics 1.Confirm that the device is connected 2.Set the connected device as the default 3. The biometric status is to be turned on. 4.Finally enter the feature</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Face</source>
+        <translation type="unfinished">Visage</translation>
+    </message>
 </context>
 <context>
     <name>MessageDialog</name>

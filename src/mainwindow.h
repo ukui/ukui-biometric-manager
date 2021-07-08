@@ -56,6 +56,7 @@ private slots:
     void on_btnFingerVein_clicked();
     void on_btnIris_clicked();
     void on_btnVoicePrint_clicked();
+    void on_btnFace_clicked();
     void on_btnStatus_clicked();
     void on_listWidgetDevicesType_currentRowChanged(int);
     void on_tableWidgetDevices_cellDoubleClicked(int row, int column);

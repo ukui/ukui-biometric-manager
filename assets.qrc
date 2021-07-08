@@ -10,6 +10,9 @@
         <file>assets/min.png</file>
         <file>assets/close.png</file>
         <file>assets/logo.png</file>
+	<file>assets/face.gif</file>
+	<file>assets/face.png</file>
+	<file>assets/face-white.png</file>
         <file>assets/fingerprint.gif</file>
         <file>assets/fingerprint.png</file>
         <file>assets/fingerprint-white.png</file>
