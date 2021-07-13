@@ -52,6 +52,7 @@ public:
     void switchAuthMode(Mode mode);
     void setDoubleAuth(bool val);
     void stopDoubleAuth();
+    QString check_is_pam_message(QString text);
 
 private:    
     uid_t getUid(const QString &userName);
@@ -59,7 +60,6 @@ private:
     void setPixmap();
     void startBioAuth();
     void switchWidget(Mode mode);
-    QString check_is_pam_message(QString text);
     int enable_biometric_authentication();
 
 private slots:

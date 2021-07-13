@@ -139,6 +139,30 @@
         <translation>认证失败，请重试。</translation>
     </message>
     <message>
+        <source>days left</source>
+        <translation>天后解锁</translation>
+    </message>
+    <message>
+        <source>hours left</source>
+        <translation>小时后解锁</translation>
+    </message>
+    <message>
+        <source>minutes left</source>
+        <translation>分钟后解锁</translation>
+    </message>
+    <message>
+        <source>seconds left</source>
+        <translation>秒后解锁</translation>
+    </message>
+    <message>
+        <source>Account locked,</source>
+        <translation>账户已锁定，</translation>
+    </message>
+    <message>
+        <source>Password cannot be empty</source>
+        <translation>密码不能为空</translation>
+    </message>
+    <message>
         <source>Authentication failed, please try again</source>
         <translation type="obsolete">认证失败，请重试</translation>
     </message>

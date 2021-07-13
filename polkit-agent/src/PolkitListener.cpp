@@ -319,20 +319,24 @@ void PolkitListener::onShowPrompt(const QString &prompt, bool echo)
     mainWindow->activateWindow();
 }
 
+//目前返回的pam错误就onShowError，onShowInfo两类
 void PolkitListener::onShowError(const QString &text)
 {
     qDebug() << "[Polkit]:"    << "Error:" << text;
 
     if(mainWindow){
-        mainWindow->setMessage(text);
+        QString strText = mainWindow->check_is_pam_message(text);
+        mainWindow->setMessage(strText);
     }
 }
 
 void PolkitListener::onShowInfo(const QString &text)
 {
     qDebug() << "[Polkit]:"    << "Info:" << text;
-    if(mainWindow)
-        mainWindow->setMessage(text);
+    if(mainWindow){
+        QString strText = mainWindow->check_is_pam_message(text);
+        mainWindow->setMessage(strText);
+    }
 }
 
 void PolkitListener::onResponse(const QString &text)

@@ -355,27 +355,46 @@ void MainWindow::setPrompt(const QString &text, bool echo)
     switchWidget(PASSWORD);
 }
 
+/*
+    转换pam英文提示，目前转换的就3个翻译
+    Authenticated failed, account locked!
+    Authenticated failed, 1 login attemps left
+    Account locked, 4 minutes left
+*/
 QString MainWindow::check_is_pam_message(QString text)
 {
-    if(!(text.startsWith("Authenticated failed, ")&&text.endsWith(" login attemps left")) \
-            &&!(text.startsWith("Account locked ")&&text.endsWith(" fail attempts")))
-        return text;
-
-
     setlocale(LC_ALL,"");
     bindtextdomain("Linux-PAM","/usr/share/locale");
     bind_textdomain_codeset("Linux-PAM","UTF-8");
     textdomain("Linux-PAM");
     char*  str;
+    QString strTrans = "";
     QByteArray ba = text.toLatin1(); // must
     str=ba.data();
 
     int a,b;
     if(sscanf(str,"Authenticated failed, %d login attemps left",&a))
           sprintf(str,_("Authenticated failed, %d login attemps left"),a);
-
-    if(sscanf(str,"Account locked %d minutes due to %d fail attempts",&a,&b))
-          sprintf(str,_("Account locked %d minutes due to %d fail attempts"),a,b);
+    else if(text.contains("days",Qt::CaseSensitive) && sscanf(str,"Account locked, %d days left",&a)){
+        strTrans = tr("Account locked,") + QString("%1 ").arg(a) + tr("days left");
+        return strTrans;
+    }
+    else if(text.contains("hours",Qt::CaseSensitive) && sscanf(str,"Account locked, %d hours left",&a)){
+        strTrans = tr("Account locked,") + QString("%1 ").arg(a) + tr("hours left");
+        return strTrans;
+    }
+    else if(text.contains("minutes",Qt::CaseSensitive) && sscanf(str,"Account locked, %d minutes left",&a)){
+        strTrans = tr("Account locked,") + QString("%1 ").arg(a) + tr("minutes left");
+        return strTrans;
+    }
+    else if(text.contains("seconds",Qt::CaseSensitive) && sscanf(str,"Account locked, %d seconds left",&a)){
+        strTrans = tr("Account locked,") + QString("%1 ").arg(a) + tr("seconds left");
+        return strTrans;
+    }
+    else{
+        str = _(str);
+    }
+          
     qDebug()<<"str = "<<str;
     return QString(str);
 
@@ -383,8 +402,8 @@ QString MainWindow::check_is_pam_message(QString text)
 
 void MainWindow::setMessage(const QString &text)
 {
-    QString message = this->check_is_pam_message(text);
-    ui->lblMessage->setText(message);
+    // QString message = this->check_is_pam_message(text);
+    ui->lblMessage->setText(text);
 }
 
 void MainWindow::setAuthResult(bool result, const QString &text)
