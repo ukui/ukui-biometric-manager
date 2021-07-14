@@ -19,6 +19,7 @@
 #include "generic.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <pwd.h>
 #include <security/pam_modules.h>
 #include <security/_pam_macros.h>
 #include <string.h>
@@ -34,6 +35,9 @@
 extern int enable_debug;
 extern char *log_prefix;
 extern int logger(char *format, ...);
+
+static int ukui_biometric_lock = 0;
+int enable_biometric_authentication(pam_handle_t *pamh);
 
 /* GUI child process alive status */
 static int child_alive = 1;
@@ -210,7 +214,7 @@ int parent(int pid, pam_handle_t *pamh, int need_call_conv)
         logger("The GUI-Child process terminate abnormally.\n");
 
     if (bio_result == BIO_SUCCESS) {
-	if(!enable_biometric_authentication()) {
+	if(!enable_biometric_authentication(pamh)) {
             logger("disable biometric authentication.\n");
             return PAM_SYSTEM_ERR;
         }
@@ -218,11 +222,13 @@ int parent(int pid, pam_handle_t *pamh, int need_call_conv)
     	return PAM_SUCCESS;
     } else if (bio_result == BIO_IGNORE) {
     	/* Override msg1 to empty the label. We are ready to enter the password module. */
-                call_conversation(pamh, PAM_TEXT_INFO, "", NULL);
+        call_conversation(pamh, PAM_TEXT_INFO, "", NULL);
+	ukui_biometric_lock = 1;
         logger("pam_biometric.so return PAM_IGNORE\n");
     	return PAM_IGNORE;
     } else {
         logger("pam_biometric.so return PAM_SYSTEM_ERR\n");
+	ukui_biometric_lock = 1;
     	return PAM_SYSTEM_ERR;
     }
 }
@@ -332,7 +338,7 @@ int biometric_auth_embeded(pam_handle_t *pamh)
     if (strcmp(resp, BIOMETRIC_IGNORE) == 0)
         return PAM_IGNORE;
     else if (strcmp(resp, BIOMETRIC_SUCCESS) == 0){
-	if(!enable_biometric_authentication()) {
+	if(!enable_biometric_authentication(pamh)) {
             logger("disable biometric authentication.\n");
             return PAM_SYSTEM_ERR;
         }
@@ -386,7 +392,7 @@ int enable_by_polkit()
     return 0;
 }
 
-int enable_biometric_authentication()
+int enable_biometric_authentication(pam_handle_t *pamh)
 {
     char conf_file[] = GET_STR(CONFIG_FILE);
     FILE *file;
@@ -455,7 +461,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
 
     char *service = 0;
 
-    if(!enable_biometric_authentication()) {
+    if(!enable_biometric_authentication(pamh) || ukui_biometric_lock) {
         logger("disable biometric authentication.\n");
     	return PAM_IGNORE;
     }
