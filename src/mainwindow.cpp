@@ -86,17 +86,21 @@ void MainWindow::onConfigurationChanged(QString key)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+ /*
     if(event->button() == Qt::LeftButton) {
         dragPos = event->globalPos() - pos();
         dragWindow = true;
     }
+ */
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
+ /*
     if(dragWindow) {
         move(event->globalPos() - dragPos);
     }
+ */   
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
