@@ -19,6 +19,13 @@
 #include "ui_bioauthwidget.h"
 #include <QMovie>
 #include "generic.h"
+#include <unistd.h>
+#include <pwd.h>
+#include "giodbus.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 BioAuthWidget::BioAuthWidget(QWidget *parent) :
     QWidget(parent),
@@ -68,12 +75,15 @@ void BioAuthWidget::onBioAuthNotify(const QString &notifyMsg)
 void BioAuthWidget::onBioAuthComplete(uid_t uid, bool ret)
 {
     setImage();
-
+    dup_fd = -1;
     Q_EMIT authComplete(uid, ret);
 }
 
 void BioAuthWidget::setMovie()
 {
+    if(device.biotype == BIOTYPE_FACE)
+        return ;
+
     QString typeString = bioTypeToString(device.biotype);
     QString moviePath = QString("%1/images/%2.gif").arg(GET_STR(UKUI_BIOMETRIC)).arg(typeString);
     QMovie *movie = new QMovie(moviePath);
@@ -89,6 +99,8 @@ void BioAuthWidget::setMovie()
 
 void BioAuthWidget::setImage()
 {
+    if(device.biotype == BIOTYPE_FACE)
+        return ;
     QString typeString = bioTypeToString(device.biotype);
     QString pixmapPath = QString("%1/images/%2.png").arg(GET_STR(UKUI_BIOMETRIC)).arg(typeString);
     QPixmap pixmap(pixmapPath);
@@ -99,6 +111,27 @@ void BioAuthWidget::setImage()
     ui->btnRetry->setVisible(true);
 
     qDebug() << "set pixmap " << typeString;
+}
+
+void BioAuthWidget::onFrameWritten(int deviceId)
+{
+    if(dup_fd == -1){
+        dup_fd = get_server_gvariant_stdout(deviceId);
+    }
+
+    cv::Mat img;
+    lseek(dup_fd, 0, SEEK_SET);
+    char base64_bufferData[1024*1024];
+    int rc = read(dup_fd, base64_bufferData, 1024*1024);
+    printf("rc = %d\n", rc);
+
+    cv::Mat mat2(1, sizeof(base64_bufferData), CV_8U, base64_bufferData);
+    img = cv::imdecode(mat2, cv::IMREAD_COLOR);
+
+    QImage srcQImage = QImage((uchar*)(img.data), img.cols, img.rows, QImage::Format_RGB888);
+    ui->lblBioImage->setPixmap(QPixmap::fromImage(srcQImage).scaled(ui->lblBioImage->size()));
+
+    ui->btnRetry->setVisible(false);
 }
 
 void BioAuthWidget::hidePasswdButton()
@@ -139,8 +172,12 @@ void BioAuthWidget::startAuth(uid_t uid, const DeviceInfo &device)
     bioAuth = new BioAuth(uid, device, this);
     connect(bioAuth, &BioAuth::notify, this, &BioAuthWidget::onBioAuthNotify);
     connect(bioAuth, &BioAuth::authComplete, this, &BioAuthWidget::onBioAuthComplete);
+    connect(bioAuth, &BioAuth::frameWritten,this,&BioAuthWidget::onFrameWritten);
 
+    dup_fd = -1;
+    fd = -1;
     bioAuth->startAuth();
+
 }
 
 void BioAuthWidget::setMoreDevices(bool hasMore)

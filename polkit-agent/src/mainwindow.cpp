@@ -278,9 +278,9 @@ void MainWindow::setIcon(const QString &iconName)
     QPainter painter;
 
     painter.begin(&icon);
-    QRect rect(icon.width() - actionIcon.width(),
-               icon.height() - actionIcon.height(),
-               actionIcon.width(), actionIcon.height());
+    QRect rect(32,
+               32,
+               32, 32);
     painter.drawPixmap(rect, actionIcon);
     painter.end();
 

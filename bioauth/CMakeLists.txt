@@ -10,6 +10,7 @@ qt5_wrap_cpp(BioAuth_SRC
 qt5_wrap_cpp(BioAuthWidgets_SRC
     include/bioauthwidget.h
 	include/biodeviceswidget.h
+	include/giodbus.h
 	)
 
 set(BioAuth_SRC
@@ -23,19 +24,20 @@ set(BioAuthWidgets_SRC
     ${BioAuthWidgets_SRC}
     src/bioauthwidget.cpp
 	src/biodeviceswidget.cpp
+	src/giodbus.cpp
 	)
-
 include_directories(
 	${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
+        ${Qt5Widgets_INCLUDE_DIRS}
 	${Qt5DBus_INCLUDE_DIRS}
+	${GLIB2_INCLUDE_DIRS}
 	include
-    ../common
+        ../common
 	)
 add_library(BioAuth STATIC ${BioAuth_SRC})
 target_link_libraries(BioAuth Qt5::Core Qt5::DBus)
 add_library(BioAuthWidgets STATIC ${BioAuthWidgets_SRC})
-target_link_libraries(BioAuthWidgets BioAuth Qt5::Widgets)
+target_link_libraries(BioAuthWidgets BioAuth Qt5::Widgets ${OpenCV_LIBS} ${GIOUNIX2_LIBRARIES})
 #add_library(BioAuth OBJECT ${BioAuth_SRC})
 #add_library(BioAuthWidgets OBJECT ${BioAuth_SRC} ${BioAuthWidgets_SRC})
 

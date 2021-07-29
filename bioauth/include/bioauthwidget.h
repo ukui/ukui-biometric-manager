@@ -52,6 +52,7 @@ private slots:
 
     void onBioAuthNotify(const QString &notifyMsg);
     void onBioAuthComplete(uid_t uid, bool ret);
+    void onFrameWritten(int deviceId);
 
 private:
     void setMovie();
@@ -62,6 +63,8 @@ private:
     BioAuth *bioAuth;
     uid_t uid;
     DeviceInfo device;
+    int fd = -1;
+    int dup_fd = -1;
 };
 
 #endif // BIOAUTHWIDGET_H

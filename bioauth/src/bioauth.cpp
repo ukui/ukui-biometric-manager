@@ -31,6 +31,10 @@ BioAuth::BioAuth(qint32 uid, const DeviceInfo &deviceInfo, QObject *parent)
 
     connect(serviceInterface, SIGNAL(StatusChanged(int, int)),
             this, SLOT(onStatusChanged(int,int)));
+    
+    connect(serviceInterface, SIGNAL(FrameWritten(int)),
+            this, SLOT(onFrameWritten(int)));
+    
     serviceInterface->setTimeout(2147483647);
 }
 
@@ -104,6 +108,10 @@ void BioAuth::onIdentityComplete(QDBusPendingCallWatcher *watcher)
     }
 }
 
+void BioAuth::onFrameWritten(int deviceId)
+{
+    Q_EMIT frameWritten(deviceId);
+}
 
 void BioAuth::onStatusChanged(int deviceId, int statusType)
 {

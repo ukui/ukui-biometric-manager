@@ -42,10 +42,12 @@ public:
 signals:
     void authComplete(uid_t uid, bool result);
     void notify(const QString &message);
+    void frameWritten(int deviceId);
 
 private slots:
     void onIdentityComplete(QDBusPendingCallWatcher *watcher);
     void onStatusChanged(int deviceId, int statusType);
+    void onFrameWritten(int drvid);
 
 private:
     QDBusInterface      *serviceInterface;
