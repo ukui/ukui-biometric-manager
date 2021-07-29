@@ -12,18 +12,24 @@ DEFINES += APP_API_MAJOR=0  \
             APP_API_MINOR=11    \
             APP_API_FUNC=0
 
+
+INCLUDEPATH +=\
+            /usr/include/opencv4
+
 PREFIX = /usr/share/biometric-manager
 LIBS +=-lpthread
 LIBS +=-lX11
+
 
 include ($$PWD/qt-solutions/qtsingleapplication/src/qtsingleapplication.pri)
 
 TARGET = biometric-manager
 TEMPLATE = app
 CONFIG += c++11 link_pkgconfig
-PKGCONFIG += x11 gsettings-qt
+PKGCONFIG += x11 gsettings-qt opencv4 gio-2.0
 
 SOURCES += src/main.cpp\
+    src/giodbus.cpp \
     src/mainwindow.cpp \
     src/customtype.cpp \
     src/promptdialog.cpp \
@@ -40,6 +46,7 @@ SOURCES += src/main.cpp\
 
 HEADERS  += src/mainwindow.h \
     src/customtype.h \
+    src/giodbus.h \
     src/promptdialog.h \
     src/contentpane.h \
     src/treeitem.h \

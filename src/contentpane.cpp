@@ -284,6 +284,10 @@ void ContentPane::on_btnEnroll_clicked()
                                     deviceInfo->device_id, currentUid, this);
     if(deviceInfo->device_shortname == "gdxfp")
         promptDialog->setProcessed(true);
+
+    if(deviceInfo->biotype == BIOTYPE_FACE)
+        promptDialog->setIsFace(true);
+
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
     if(promptDialog->getResult() == PromptDialog::SUCESS) {
@@ -479,8 +483,11 @@ void ContentPane::on_btnVerify_clicked()
         promptDialog->setProcessed(true);
     }
 
+    if(deviceInfo->biotype == BIOTYPE_FACE)
+        promptDialog->setIsFace(true);
+
     promptDialog->verify(deviceInfo->device_id, uid, verifyIndex);
-\
+
     delete promptDialog;
 }
 
@@ -492,6 +499,10 @@ void ContentPane::on_btnSearch_clicked()
 {
     promptDialog = new PromptDialog(serviceInterface, deviceInfo->biotype,
                                     deviceInfo->device_id, currentUid, this);
+
+    if(deviceInfo->biotype == BIOTYPE_FACE)
+        promptDialog->setIsFace(true);
+
     promptDialog->search(deviceInfo->device_id, currentUid, 0, -1);
 
     delete promptDialog;

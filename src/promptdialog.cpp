@@ -18,13 +18,20 @@
 #include "promptdialog.h"
 #include "ui_promptdialog.h"
 #include <QMovie>
+#include <QProcess>
 #include <QPushButton>
+#include <QDBusUnixFileDescriptor>
 #include <QDebug>
 #include <QKeyEvent>
 #include <QStandardItemModel>
 #include <pwd.h>
+#include <unistd.h>
+
+#include <opencv2/opencv.hpp>
+
 #include "servicemanager.h"
 #include "xatom-helper.h"
+#include "giodbus.h"
 
 PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
                            int deviceId, int uid, QWidget *parent)
@@ -76,6 +83,9 @@ PromptDialog::PromptDialog(QDBusInterface *service,  int bioType,
     connect(serviceInterface, SIGNAL(ProcessChanged(int,QString,int,QString)),
             this, SLOT(onProcessChanged(int,QString,int,QString)));
 
+    connect(serviceInterface, SIGNAL(FrameWritten(int)),
+            this, SLOT(onFrameWritten(int)));
+
     MotifWmHints hints;
     hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
@@ -116,6 +126,11 @@ void PromptDialog::setPrompt(const QString &text)
     ui->lblPrompt->setText(text);
     ui->lblPrompt->setWordWrap(true);
     ui->lblPrompt->adjustSize();
+}
+
+void PromptDialog::setIsFace(bool val)
+{
+    isFace = val;
 }
 
 void PromptDialog::setProcessed(bool val)
@@ -243,6 +258,7 @@ int PromptDialog::enroll(int drvId, int uid, int idx, const QString &idxName)
 void PromptDialog::enrollCallBack(const QDBusMessage &reply)
 {
     int result;
+    dup_fd = -1;
     result = reply.arguments()[0].value<int>();
     qDebug() << "Enroll result: " << result;
 
@@ -283,6 +299,7 @@ int PromptDialog::verify(int drvId, int uid, int idx)
 void PromptDialog::verifyCallBack(const QDBusMessage &reply)
 {
     int result;
+    dup_fd = -1;
     result = reply.arguments()[0].value<int>();
     qDebug() << "Verify result: " << result;
 
@@ -323,6 +340,7 @@ int PromptDialog::search(int drvId, int uid, int idxStart, int idxEnd)
 void PromptDialog::searchCallBack(const QDBusMessage &reply)
 {
     int result;
+    dup_fd = -1;
     result = reply.arguments()[0].value<int>();
     qDebug() << "Verify result: " << result;
 
@@ -347,17 +365,19 @@ void PromptDialog::searchCallBack(const QDBusMessage &reply)
     else
         handleErrorResult(result);
 
-    ui->lblImage->setPixmap(getImage(type));
+   // ui->lblImage->setPixmap(getImage(type));
 }
 
 void PromptDialog::StopOpsCallBack(const QDBusMessage &reply)
 {
+    dup_fd = -1;
     int ret = reply.arguments().at(0).toInt();
     accept();
 }
 
 void PromptDialog::errorCallBack(const QDBusError &error)
 {
+    dup_fd = -1;
     qDebug() << "DBus Error: " << error.message();
     accept();
 }
@@ -370,6 +390,28 @@ void PromptDialog::closeEvent(QCloseEvent *event)
                     SLOT(StopOpsCallBack(const QDBusMessage &)),
                     SLOT(errorCallBack(const QDBusError &)));
 
+}
+
+void PromptDialog::onFrameWritten(int drvId)
+{
+    if(dup_fd == -1){
+        dup_fd = get_server_gvariant_stdout(drvId);
+    }
+
+    if(dup_fd < 0)
+        return ;
+
+    cv::Mat img;
+    lseek(dup_fd, 0, SEEK_SET);
+    char base64_bufferData[1024*1024];
+    int rc = read(dup_fd, base64_bufferData, 1024*1024);
+    printf("rc = %d\n", rc);
+
+    cv::Mat mat2(1, sizeof(base64_bufferData), CV_8U, base64_bufferData);
+    img = cv::imdecode(mat2, cv::IMREAD_COLOR);
+
+    QImage srcQImage = QImage((uchar*)(img.data), img.cols, img.rows, QImage::Format_RGB888);
+    ui->lblImage->setPixmap(QPixmap::fromImage(srcQImage).scaled(QSize(160,160)));
 }
 
 void PromptDialog::onProcessChanged(int drvId,QString  aa, int statusType,QString bb)
@@ -407,7 +449,7 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
         return;
     }
 
-    if(!isProcessed && movie->state() != QMovie::Running)
+    if(!isProcessed && movie->state() != QMovie::Running && !isFace)
     {
         ui->lblImage->setMovie(movie);
         movie->start();
@@ -426,6 +468,7 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
 
 void PromptDialog::handleErrorResult(int error)
 {
+    dup_fd = -1;
     switch(error) {
     case DBUS_RESULT_ERROR: {
         //操作失败，需要进一步获取失败原因
