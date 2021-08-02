@@ -1,3 +1,9 @@
+ukui-biometric-manager (1.0.2-1~0802) focal; urgency=medium
+
+  * New upstream release.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Mon, 02 Aug 2021 15:24:56 +0800
+
 ukui-biometric-manager (1.0.1-0ubuntu1) unstable; urgency=medium
 
   * Bugfix:the application gets the auth results but has
