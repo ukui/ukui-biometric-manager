@@ -1,8 +1,8 @@
-ukui-biometric-manager (1.0.2-1~0802) focal; urgency=medium
+ukui-biometric-manager (1.0.2.1-1~0802) unstable; urgency=medium
 
   * New upstream release.
 
- -- handsome_feng <jianfengli@ubuntukylin.com>  Mon, 02 Aug 2021 15:24:56 +0800
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 05 Aug 2021 14:14:24 +0800
 
 ukui-biometric-manager (1.0.1-0ubuntu1) unstable; urgency=medium
 
