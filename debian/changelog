@@ -1,8 +1,14 @@
-ukui-biometric-auth (1.2.1-1~0802) focal; urgency=medium
+ukui-biometric-auth (1.2.2-1~0802) unstable; urgency=medium
 
   * New upstream release.
 
  -- handsome_feng <jianfengli@ubuntukylin.com>  Mon, 02 Aug 2021 15:37:37 +0800
+
+ukui-biometric-auth (1.2.1-1) unstable; urgency=medium
+
+  * New upstream bugfix release.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Sun, 27 Sep 2020 14:57:48 +0800
 
 ukui-biometric-auth (1.2.0-1) unstable; urgency=medium
 
