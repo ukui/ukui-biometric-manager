@@ -9,6 +9,7 @@ Build-Depends: debhelper-compat (=12),
                libx11-dev,
                libqt5x11extras5-dev,
                libglib2.0-dev,
+	       libopencv-dev,
                pkg-config,
                libgsettings-qt-dev,
                qttools5-dev-tools
