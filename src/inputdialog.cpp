@@ -40,6 +40,7 @@ InputDialog::InputDialog(QWidget *parent) :
     ui->btnClose->setIconSize(QSize(16, 16));
     ui->btnClose->setIcon(QIcon::fromTheme("window-close-symbolic"));
     ui->btnClose->setFlat(true);
+    ui->lineEdit->setContextMenuPolicy(Qt::NoContextMenu);
     ui->lineEdit->setFocus();
 
     MotifWmHints hints;
