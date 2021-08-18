@@ -13,7 +13,7 @@ Build-Depends: debhelper-compat (=12),
                pkg-config,
                libgsettings-qt-dev,
                qttools5-dev-tools
-Standards-Version: 4.2.1
+Standards-Version: 4.5.1
 Rules-Requires-Root: no
 Homepage: https://github.com/ukui/ukui-biometric-manager
 Vcs-Git: https://github.com/ukui/ukui-biometric-manager.git
