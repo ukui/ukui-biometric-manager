@@ -1028,8 +1028,14 @@ bool MainWindow::restartService()
     QString cmd = QString("pkexec biorestart");
     process.start(cmd);
     process.waitForFinished(-1);
-    qDebug() << "restart service finished";
-    return true;
+    //点击授权按钮
+    if (process.exitCode() == 0){
+        qDebug() << "restart service finished";
+        return true;
+    }else{//点击关闭按钮或者取消
+        qDebug() << "restart service failed,User cancelled";
+        return false;
+    }
 }
 
 void MainWindow::updateDeviceListWidget(int biotype)
