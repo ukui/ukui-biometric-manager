@@ -443,6 +443,11 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
         if(!(devStatus >= 201 && devStatus < 203)) {
             return;
         }
+
+        //认证结束后，重新获取fd，刷新录入界面
+        if(devStatus == 201 && statusType == STATUS_NOTIFY) {
+            dup_fd = -1;
+        }
     }
     else if(ops == IDLE)
     {
