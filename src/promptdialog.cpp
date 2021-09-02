@@ -409,6 +409,7 @@ void PromptDialog::onFrameWritten(int drvId)
 
     cv::Mat mat2(1, sizeof(base64_bufferData), CV_8U, base64_bufferData);
     img = cv::imdecode(mat2, cv::IMREAD_COLOR);
+    cv::cvtColor(img,img,cv::COLOR_BGR2RGB);
 
     QImage srcQImage = QImage((uchar*)(img.data), img.cols, img.rows, QImage::Format_RGB888);
     ui->lblImage->setPixmap(QPixmap::fromImage(srcQImage).scaled(QSize(160,160)));
