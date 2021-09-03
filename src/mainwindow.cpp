@@ -272,6 +272,8 @@ void MainWindow::initialize()
 
     connect(serviceInterface, SIGNAL(USBDeviceHotPlug(int, int, int)),
             this, SLOT(onUSBDeviceHotPlug(int,int,int)));
+    connect(serviceInterface, SIGNAL(FeatureChanged(int, int, int)),
+            this, SLOT(onUpdateDevice(int,int,int)));
 }
 
 void MainWindow::initSysMenu()
@@ -1131,6 +1133,21 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
             break;
         }
         lw->setCurrentRow(index);
+    }
+}
+
+void MainWindow::onUpdateDevice(int drvid,int uid,int cType)
+{
+    for(int type : deviceInfosMap.keys()) {
+        auto &deviceInfoList = deviceInfosMap[type];
+        for(int i = 0; i < deviceInfoList.size(); i++) {
+            auto deviceInfo = deviceInfoList[i];
+            if(deviceInfo->device_id == drvid) {
+                ContentPane *pane = contentPaneMap[deviceInfo->device_shortname];
+	        if(!pane->getIsShowDialog())
+		    pane->showFeatures();
+	    }
+        }
     }
 }
 

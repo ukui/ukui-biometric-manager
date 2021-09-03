@@ -68,7 +68,7 @@ public:
     void setDeviceInfo(DeviceInfo *deviceInfo);
     int featuresCount();
     void showFeatures();
-
+    bool getIsShowDialog();
 /* DBus */
 private slots:
     void showFeaturesCallback(QDBusMessage callbackReply);
@@ -89,6 +89,7 @@ private:
 	/* 进度提示弹框 */
 	PromptDialog *promptDialog;
 	QString promptDialogGIF;
+	bool isShowDialog = false;
 };
 
 #endif // CONTENTPANE_H

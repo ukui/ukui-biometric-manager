@@ -275,7 +275,7 @@ void ContentPane::on_btnEnroll_clicked()
     indexName = inputFeatureName(true);
     if(indexName.isEmpty())
         return;
-
+	
     /* 录入的特征索引 */
     freeIndex = dataModel->freeIndex();
     qDebug() << "Enroll: uid--" << currentUid << " index--" << freeIndex
@@ -287,17 +287,23 @@ void ContentPane::on_btnEnroll_clicked()
 
     if(deviceInfo->biotype == BIOTYPE_FACE)
         promptDialog->setIsFace(true);
-
+    
+    isShowDialog = true;
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
     if(promptDialog->getResult() == PromptDialog::SUCESS) {
-        FeatureInfo *featureInfo = createNewFeatureInfo();
-        dataModel->insertData(featureInfo);
+	showFeatures();
     }
     delete promptDialog;
 
 
     updateButtonUsefulness();
+    isShowDialog = false;
+}
+
+bool ContentPane::getIsShowDialog()
+{
+    return isShowDialog;	
 }
 
 FeatureInfo *ContentPane::createNewFeatureInfo()
@@ -380,7 +386,7 @@ void ContentPane::on_btnDelete_clicked()
             idxStart = idxEnd = index.data(Qt::UserRole).toInt();
         }
         qDebug() << "Delete: uid--" << uid << " index--" << idxStart << idxEnd;
-
+	
         QDBusPendingReply<int> reply = serviceInterface->call("Clean",
                 deviceInfo->device_id, uid, idxStart, idxEnd);
         reply.waitForFinished();
