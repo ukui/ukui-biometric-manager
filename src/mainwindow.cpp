@@ -1144,9 +1144,9 @@ void MainWindow::onUpdateDevice(int drvid,int uid,int cType)
             auto deviceInfo = deviceInfoList[i];
             if(deviceInfo->device_id == drvid) {
                 ContentPane *pane = contentPaneMap[deviceInfo->device_shortname];
-	        if(!pane->getIsShowDialog())
-		    pane->showFeatures();
-	    }
+                if(!pane->getIsShowDialog())
+                    pane->showFeatures();
+            }
         }
     }
 }
