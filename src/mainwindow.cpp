@@ -272,6 +272,8 @@ void MainWindow::initialize()
 
     connect(serviceInterface, SIGNAL(USBDeviceHotPlug(int, int, int)),
             this, SLOT(onUSBDeviceHotPlug(int,int,int)));
+    connect(serviceInterface, SIGNAL(FeatureChanged(int, int, int)),
+            this, SLOT(onUpdateDevice(int,int,int)));
 }
 
 void MainWindow::initSysMenu()
@@ -1028,8 +1030,14 @@ bool MainWindow::restartService()
     QString cmd = QString("pkexec biorestart");
     process.start(cmd);
     process.waitForFinished(-1);
-    qDebug() << "restart service finished";
-    return true;
+    //点击授权按钮
+    if (process.exitCode() == 0){
+        qDebug() << "restart service finished";
+        return true;
+    }else{//点击关闭按钮或者取消
+        qDebug() << "restart service failed,User cancelled";
+        return false;
+    }
 }
 
 void MainWindow::updateDeviceListWidget(int biotype)
@@ -1125,6 +1133,21 @@ void MainWindow::on_tableWidgetDevices_cellDoubleClicked(int row, int column)
             break;
         }
         lw->setCurrentRow(index);
+    }
+}
+
+void MainWindow::onUpdateDevice(int drvid,int uid,int cType)
+{
+    for(int type : deviceInfosMap.keys()) {
+        auto &deviceInfoList = deviceInfosMap[type];
+        for(int i = 0; i < deviceInfoList.size(); i++) {
+            auto deviceInfo = deviceInfoList[i];
+            if(deviceInfo->device_id == drvid) {
+                ContentPane *pane = contentPaneMap[deviceInfo->device_shortname];
+                if(!pane->getIsShowDialog())
+                    pane->showFeatures();
+            }
+        }
     }
 }
 

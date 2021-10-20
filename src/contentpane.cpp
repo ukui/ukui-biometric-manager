@@ -211,12 +211,30 @@ void ContentPane::showFeatures()
 						SLOT(errorCallback(QDBusError)));
 }
 
+#include <QDBusVariant>
+
+bool compareBarData(const QDBusVariant &feature1, const QDBusVariant &feature2)
+{
+    FeatureInfo *featureInfo1 = new FeatureInfo;
+    FeatureInfo *featureInfo2 = new FeatureInfo;
+
+    feature1.variant().value<QDBusArgument>() >> *featureInfo1;
+    feature2.variant().value<QDBusArgument>() >> *featureInfo2;
+    if (featureInfo1->index_name < featureInfo2->index_name)
+    {
+       return true;
+    }
+    return false;
+}
+
 /**
  * @brief 特征列表返回后回调函数进行显示
  * @param callbackReply
  */
 void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
 {
+    dataModel->removeAll();
+
     QList<QDBusVariant> qlist;
     FeatureInfo *featureInfo;
 	int listsize;
@@ -224,6 +242,8 @@ void ContentPane::showFeaturesCallback(QDBusMessage callbackReply)
 	QList<QVariant> variantList = callbackReply.arguments();
 	listsize = variantList[0].value<int>();
 	variantList[1].value<QDBusArgument>() >> qlist;
+    qSort(qlist.begin(), qlist.end(), compareBarData);
+
 	for (int i = 0; i < listsize; i++) {
         featureInfo = new FeatureInfo;
         qlist[i].variant().value<QDBusArgument>() >> *featureInfo;
@@ -287,17 +307,23 @@ void ContentPane::on_btnEnroll_clicked()
 
     if(deviceInfo->biotype == BIOTYPE_FACE)
         promptDialog->setIsFace(true);
-
+    
+    isShowDialog = true;
     promptDialog->enroll(deviceInfo->device_id, currentUid, freeIndex, indexName);
     qDebug() << "Enroll result: ----- " << promptDialog->getResult();
     if(promptDialog->getResult() == PromptDialog::SUCESS) {
-        FeatureInfo *featureInfo = createNewFeatureInfo();
-        dataModel->insertData(featureInfo);
+        showFeatures();
     }
     delete promptDialog;
 
 
     updateButtonUsefulness();
+    isShowDialog = false;
+}
+
+bool ContentPane::getIsShowDialog()
+{
+    return isShowDialog;	
 }
 
 FeatureInfo *ContentPane::createNewFeatureInfo()
@@ -338,7 +364,6 @@ bool ContentPane::confirmDelete(bool all)
     dialog.setMessage(text);
     return dialog.exec() == QDialog::Accepted;
 }
-
 
 /**
  * @brief 删除生物特征
@@ -381,6 +406,7 @@ void ContentPane::on_btnDelete_clicked()
         }
         qDebug() << "Delete: uid--" << uid << " index--" << idxStart << idxEnd;
 
+        isShowDialog = true;
         QDBusPendingReply<int> reply = serviceInterface->call("Clean",
                 deviceInfo->device_id, uid, idxStart, idxEnd);
         reply.waitForFinished();
@@ -406,6 +432,7 @@ void ContentPane::on_btnDelete_clicked()
         updateButtonUsefulness();
     }
 
+    isShowDialog = false;
     MessageDialog msgDialog(MessageDialog::Normal,"","",this);
     msgDialog.setTitle(tr("Delete"));
     msgDialog.setWindowTitle(tr("Delete"));

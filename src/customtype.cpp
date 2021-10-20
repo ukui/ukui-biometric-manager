@@ -174,5 +174,7 @@ QString EnumToString::transferIdentifyType(int type)
  */
 bool isAdmin(int uid)
 {
-    return uid == ADMIN_UID;
+    //root用户暂无法管理其他用户指纹，指纹列表目前只显示当前用户指纹
+    return false;
+    // return uid == ADMIN_UID;
 }

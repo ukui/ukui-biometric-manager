@@ -57,7 +57,7 @@ QString AboutDialog::get_current_version()
     size_t len = 0;
     ssize_t read;
     char *q = NULL;
-    QString version = "none";
+    QString version = "1.0.1-1kylin1~43";
 
     pp = popen("dpkg -l  ukui-biometric-manager | grep  ukui-biometric-manager", "r");
     if(NULL == pp)

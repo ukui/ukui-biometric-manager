@@ -409,6 +409,7 @@ void PromptDialog::onFrameWritten(int drvId)
 
     cv::Mat mat2(1, sizeof(base64_bufferData), CV_8U, base64_bufferData);
     img = cv::imdecode(mat2, cv::IMREAD_COLOR);
+    cv::cvtColor(img,img,cv::COLOR_BGR2RGB);
 
     QImage srcQImage = QImage((uchar*)(img.data), img.cols, img.rows, QImage::Format_RGB888);
     ui->lblImage->setPixmap(QPixmap::fromImage(srcQImage).scaled(QSize(160,160)));
@@ -442,6 +443,11 @@ void PromptDialog::onStatusChanged(int drvId, int statusType)
 
         if(!(devStatus >= 201 && devStatus < 203)) {
             return;
+        }
+
+        //认证结束后，重新获取fd，刷新录入界面
+        if(devStatus == 201 && statusType == STATUS_NOTIFY) {
+            dup_fd = -1;
         }
     }
     else if(ops == IDLE)
